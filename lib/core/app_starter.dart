@@ -4,8 +4,9 @@ import 'dart:developer';
 import 'package:flutter/widgets.dart';
 
 import '../presentation/app.dart';
+import 'flavors.dart';
 
-Future<void> startApp() async {
+Future<void> startApp(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   FlutterError.onError = (details) {
@@ -17,7 +18,16 @@ Future<void> startApp() async {
 
   runZonedGuarded(
     () => runApp(
-      const MyApp(),
+      flavor == Flavor.prod
+          ? const MyApp()
+          : Directionality(
+              textDirection: TextDirection.ltr,
+              child: Banner(
+                message: flavor.tag,
+                location: BannerLocation.topStart,
+                child: const MyApp(),
+              ),
+            ),
     ),
     (error, stackTrace) => log(
       error.toString(),

@@ -93,6 +93,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Center(
+              child: Image.asset(
+                'assets/app_icon/${kAppFlavor.tag.toLowerCase()}-icon.512.png',
+              ),
+            ),
             Text(
               '${kAppFlavor.tag} flavor',
             ),

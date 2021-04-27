@@ -4,10 +4,13 @@ import 'dart:developer';
 import 'package:flutter/widgets.dart';
 
 import '../presentation/app.dart';
+import 'dependency_injection.dart';
 import 'flavors.dart';
 
 Future<void> startApp(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  getIt.registerSingleton(flavor);
 
   FlutterError.onError = (details) {
     log(

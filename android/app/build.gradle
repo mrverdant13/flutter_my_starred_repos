@@ -46,14 +46,17 @@ android {
         prod {
             dimension "app-flavor"
             applicationIdSuffix ""
+            versionNameSuffix ""
         }
         stg {
             dimension "app-flavor"
             applicationIdSuffix ".stg"
+            versionNameSuffix "-stg"
         }        
         dev {
             dimension "app-flavor"
             applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
         }
     }
 

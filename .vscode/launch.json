@@ -8,18 +8,36 @@
             "name": "App (dev)",
             "request": "launch",
             "type": "dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "--target",
+                "lib/main_dev.dart"
+            ],
             "program": "lib/main_dev.dart"
         },
         {
             "name": "App (stg)",
             "request": "launch",
             "type": "dart",
+            "args": [
+                "--flavor",
+                "stg",
+                "--target",
+                "lib/main_stg.dart"
+            ],
             "program": "lib/main_stg.dart"
         },
         {
             "name": "App (prod)",
             "request": "launch",
             "type": "dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "--target",
+                "lib/main_prod.dart"
+            ],
             "program": "lib/main_prod.dart"
         }
     ]

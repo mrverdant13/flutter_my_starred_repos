@@ -88,10 +88,10 @@ $ flutter run --flavor prod --target lib/main_prod.dart
 
    ```sh
    # If pub global scripts are on your path
-   remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
+   $ remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
 
    # Otherwise (might change depending on pub setup)
-   pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
+   $ pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
    ```
 
 3. To generate coverage report within the `coverage` folder, run one of the following commands set according to your OS:

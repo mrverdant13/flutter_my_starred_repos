@@ -128,11 +128,13 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 
 ## References
 
+- [Android official documentation][android_official_documentation_link]
 - [Very Good CLI][very_good_cli_link]
 - [Flutter official documentation][flutter_link]
 
 <!-- LINKS -->
 
+[android_official_documentation_link]: https://developer.android.com/
 [chocolatey_link]: https://chocolatey.org/
 [flutter_link]: https://flutter.dev/
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html

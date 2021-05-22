@@ -6,28 +6,26 @@
   Please look at the following checklist to ensure that your PR can be accepted quickly:
 -->
 
-## Description
+# Description
 
 <!--- Describe your changes in detail -->
 
-## Type of Change
+# Type of Change
 
-<!--- Put an `x` in all the boxes that apply: -->
+<!--- Uncomment in all the lines that apply: -->
 
-- [ ] 🛠️ Bug fix
-- [ ] ✅ Build configuration change
-- [ ] 🗑️ Chore
-- [ ] ⚡️ Continuous integration
-- [ ] 📝 Documentation
-- [ ] ✨ New feature
-- [ ] 🚀 Performance improvement
-- [ ] 🧹 Code refactor
-- [ ] ⏪ Reversion
-- [ ] 🎭 Style
-- [ ] 🧪 Test
+<!-- - 🛠️ Bug fix -->
+<!-- - ✅ Build configuration change -->
+<!-- - 🗑️ Chore -->
+<!-- - ⚡️ Continuous integration -->
+<!-- - 📝 Documentation -->
+<!-- - ✨ New feature -->
+<!-- - 🚀 Performance improvement -->
+<!-- - 🧹 Code refactor -->
+<!-- - ⏪ Reversion -->
+<!-- - 🎭 Style -->
+<!-- - 🧪 Test -->
 
-## Any breaking changes?
+<!--- Uncomment the following line only if the pull request includes a FIX or a FEATURE with no backwards compatibility -->
 
-<!--- Put an `x` in the box only if the pull request includes a FIX or a FEATURE with no backwards compatibility -->
-
-- [ ] ❌ Breaking change (**fix** or **feature** that would cause existing functionality to change)
+<!-- ❌❌❌ Breaking change ❌❌❌ -->

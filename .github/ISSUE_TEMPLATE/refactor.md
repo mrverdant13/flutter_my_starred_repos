@@ -1,14 +1,14 @@
 ---
 name: Refactor
-about: Suggest a code change that neither fixes a bug nor adds a feature.
+about: "Suggest a code change that neither fixes a bug nor adds a feature: code readability improvements."
 title: "refactor: "
 labels: refactor
 ---
 
-**Description**
+# Description
 
 Clearly describe what needs to be refactored any why.
 
-**Requirements**
+# Requirements
 
 - [ ] There is no drop in test coverage.

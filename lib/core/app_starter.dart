@@ -17,7 +17,9 @@ Future<void> startApp(Flavor flavor) async {
       FlutterError.onError = (details) {
         log(
           details.exceptionAsString(),
+          error: details.exception,
           stackTrace: details.stack,
+          name: 'Flutter',
         );
       };
 
@@ -36,7 +38,9 @@ Future<void> startApp(Flavor flavor) async {
     },
     (error, stackTrace) => log(
       error.toString(),
+      error: error,
       stackTrace: stackTrace,
+      name: 'App',
     ),
   );
 }

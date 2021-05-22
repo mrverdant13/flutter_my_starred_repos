@@ -1,15 +1,15 @@
 ---
 name: Revert Commit
-about: Revert a previous commit.
+about: Revert a previous commit(s) or change(s).
 title: "revert: "
 labels: revert
 ---
 
-**Description**
+# Description
 
 Provide a link to a PR/Commit that you are looking to revert and why.
 
-**Requirements**
+# Requirements
 
 - [ ] Change has been reverted.
 - [ ] No change in test coverage has happened.

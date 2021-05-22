@@ -1,6 +1,6 @@
 ---
 name: Chore
-about: "Suggest changes that do not modify source or test files: comments removal, legacy code removal, unused packages removal, code re-generation."
+about: "Suggest changes that do not modify source or test files: comments removal, legacy code removal, unused packages removal, code re-generation, gitignore updates, issue or pull request template updates."
 title: "chore: "
 labels: chore
 ---

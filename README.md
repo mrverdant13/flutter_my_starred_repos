@@ -1,8 +1,9 @@
 # Flutter app template
 
+[![platform: flutter][flutter_badge_link]][flutter_link]
 [![style: lint][lint_badge]][lint_package_link]
 
-An app project template made with Flutter by [mrverdant13][mrverdant13_link].
+An app project template made with [Flutter][flutter_link] by [mrverdant13][mrverdant13_link].
 
 ---
 
@@ -268,6 +269,7 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 
 [android_official_documentation_link]: https://developer.android.com/
 [chocolatey_link]: https://chocolatey.org/
+[flutter_badge_link]: https://img.shields.io/badge/platform-flutter-blue.svg
 [flutter_link]: https://flutter.dev/
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
 [internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization

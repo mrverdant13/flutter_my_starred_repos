@@ -1,0 +1,19 @@
+{
+    "@@locale": "es",
+    "appTitle": "App",
+    "@appTitle": {
+        "description": "Nombre de la aplicación."
+    },
+    "counterScreenTitle": "Contador",
+    "@counterScreenTitle": {
+        "description": "Título de la pantalla del contadora."
+    },
+    "currentCountMessage": "Has presionado el botón esta cantidad de veces:",
+    "@currentCountMessage": {
+        "description": "Mensaje a ser mostrado para indicar el número de veces que el botón fue presionado."
+    },
+    "increaserButtonTooltip": "Incrementar",
+    "@increaserButtonTooltip": {
+        "description": "Información de acción del botón de incremento."
+    }
+}

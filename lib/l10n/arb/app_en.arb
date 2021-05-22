@@ -1,0 +1,19 @@
+{
+    "@@locale": "en",
+    "appTitle": "App",
+    "@appTitle": {
+        "description": "Application name."
+    },
+    "counterScreenTitle": "Counter",
+    "@counterScreenTitle": {
+        "description": "Counter screen title"
+    },
+    "currentCountMessage": "You have pushed the button this many times:",
+    "@currentCountMessage": {
+        "description": "Message to be shown to indicate the number of times the button was tapped."
+    },
+    "increaserButtonTooltip": "Increment",
+    "@increaserButtonTooltip": {
+        "description": "Increaser button tooltip."
+    }
+}

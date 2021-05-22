@@ -5,14 +5,14 @@ title: "feat: "
 labels: feature
 ---
 
-**Description**
+# Description
 
 Clearly describe what you are looking to add. The more context the better.
 
-**Requirements**
+# Requirements
 
 - [ ] Checklist of requirements to be fulfilled.
 
-**Additional Context**
+# Additional Context
 
 Add any other context or screenshots about the feature request go here.

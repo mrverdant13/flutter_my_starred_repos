@@ -1,14 +1,14 @@
 ---
 name: Performance Improvement
-about: Suggest a code change that improves performance.
+about: "Suggest a code change that improves performance: implementation improvements and performance-related linting."
 title: "perf: "
 labels: perf
 ---
 
-**Description**
+# Description
 
 Clearly describe what code needs to be changed and what the performance impact is going to be. Bonus point's if you can tie this directly to user experience.
 
-**Requirements**
+# Requirements
 
 - [ ] There is no drop in test coverage.

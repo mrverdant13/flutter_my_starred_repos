@@ -9,3 +9,4 @@ linter:
   rules:
     sort_constructors_first: true
     prefer_single_quotes: true
+    sort_pub_dependencies: false

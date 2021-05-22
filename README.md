@@ -17,7 +17,7 @@ An app project template made with Flutter by [mrverdant13][mrverdant13_link].
 | Different app splash per flavor           |   ✔️    | ❌  | 🤔  |  🤔   |   🤔    |  🤔   |
 | Different app splash per dark/light theme |   ✔️    | 🤔  | 🤔  |  🤔   |   🤔    |  🤔   |
 | App signing pre-configuration             |   ✔️    | 🤔  | 🤔  |  🤔   |   🤔    |  🤔   |
-| Internationalization                      |   ❌    | ❌  | 🤔  |  🤔   |   🤔    |  🤔   |
+| Internationalization                      |   ✔️    | ❌  | 🤔  |  🤔   |   🤔    |  🤔   |
 
 | Tag | Description         |
 | :-: | :------------------ |
@@ -55,9 +55,28 @@ An app project template made with Flutter by [mrverdant13][mrverdant13_link].
 
 ---
 
-## App flavors
+# App flavors
 
-This project supports 3 Flutter-level and native flavors (**Android only**) that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
+## Flutter-level flavors
+
+This project supports 3 Flutter-level flavors that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
+
+```sh
+# Development
+$ flutter run --target lib/main_dev.dart
+
+# Staging
+$ flutter run --target lib/main_stg.dart
+
+# Production
+$ flutter run --target lib/main_prod.dart
+```
+
+> **Note:** The target path separator (`\` or `/`) might change according to the OS.
+
+## Native flavors
+
+This project supports 3 native flavors (**Android only**) that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
 
 ```sh
 # Development
@@ -70,9 +89,122 @@ $ flutter run --flavor stg --target lib/main_stg.dart
 $ flutter run --flavor prod --target lib/main_prod.dart
 ```
 
-> **Note:** The target path separator (`\` or `/`) might change according to your OS.
->
-> **Note:** The `--flavor` option only applies for Android and iOS platforms (at the moment, this project only supports Android flavoring). For other platforms, this option is ignored.
+> **Note:** The target path separator (`\` or `/`) might change according to the OS.
+
+---
+
+# Internationalization (app languages)
+
+This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
+
+## Adding localized values
+
+1. To add a new localizable string, open the `app_<locale ID>.arb` file at the `lib/l10n/arb/` folder.
+
+   ```arb
+   {
+       "@@locale": "<locale ID>",
+
+       ···
+
+       "<valueKey>": "<value>",
+       "@<valueKey>": {
+           "description": "<description>"
+       },
+
+       ···
+
+   }
+   ```
+
+2. Then add a new key, value and description
+
+   ```arb
+   {
+       "@@locale": "<locale ID>",
+
+       ···
+
+       "<valueKey>": "<value>",
+       "@<valueKey>": {
+           "description": "<description>"
+       },
+
+       ···
+
+       "<newValueKey>": "<new value>",
+       "@<newValueKey>": {
+           "description": "<new value description>"
+       }
+   }
+   ```
+
+3. Use the new string
+
+   ```dart
+   import 'package:<app_package_name>/l10n/l10n.dart';
+
+   ···
+
+     @override
+     Widget build(BuildContext context) {
+       final l10n = context.l10n;
+       return Text(l10n.<newValueKey>);
+     }
+
+   ···
+
+   ```
+
+## Adding translations
+
+1. For each supported locale, add a new ARB file in `lib/l10n/arb`.
+
+   ```
+   ├── lib
+   │   ├── l10n
+   │   │   ├── arb
+   │   │   │   ├── app_<locale ID>.arb
+   │   │   │   └── app_<new locale ID>.arb
+   ```
+
+2. Add the translated strings to each `.arb` file:
+
+   `app_<locale ID>.arb`
+
+   ```arb
+   {
+       "@@locale": "<locale ID>",
+
+       ···
+
+       "<valueKey>": "<value for locale ID>",
+       "@<valueKey>": {
+           "description": "<description for locale ID>",
+       },
+
+       ···
+
+   }
+   ```
+
+   `app_<new locale ID>.arb`
+
+   ```arb
+   {
+       "@@locale": "<new locale ID>",
+
+       ···
+
+       "<valueKey>": "<value for new locale ID>",
+       "@<valueKey>": {
+           "description": "<description for new locale ID>"
+       },
+
+       ···
+
+   }
+   ```
 
 ---
 

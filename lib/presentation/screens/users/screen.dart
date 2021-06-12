@@ -10,7 +10,7 @@ class UsersScreen extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(l10n.usersScreenTitle),
+        title: Text(l10n.usersScreenTitle),
       ),
     );
   }

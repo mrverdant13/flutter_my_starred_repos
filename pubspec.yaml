@@ -46,6 +46,9 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
 
+  # State management
+  flutter_bloc: ^7.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

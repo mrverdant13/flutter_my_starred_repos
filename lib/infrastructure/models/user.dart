@@ -1,7 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../domain/entities/user.dart';
+
 part 'user.freezed.dart';
 part 'user.g.dart';
+part 'user_converters.dart';
 
 @freezed
 class UserR with _$UserR {

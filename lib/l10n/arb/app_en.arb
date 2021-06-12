@@ -6,7 +6,7 @@
     },
     "counterScreenTitle": "Counter",
     "@counterScreenTitle": {
-        "description": "Counter screen title"
+        "description": "Counter screen title."
     },
     "currentCountMessage": "You have pushed the button this many times:",
     "@currentCountMessage": {
@@ -15,5 +15,9 @@
     "increaserButtonTooltip": "Increment",
     "@increaserButtonTooltip": {
         "description": "Increaser button tooltip."
+    },
+    "usersScreenTitle": "Users",
+    "@usersScreenTitle": {
+        "description": "Users screen title."
     }
 }

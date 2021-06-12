@@ -15,5 +15,9 @@
     "increaserButtonTooltip": "Incrementar",
     "@increaserButtonTooltip": {
         "description": "Información de acción del botón de incremento."
+    },
+    "usersScreenTitle": "Usuarios",
+    "@usersScreenTitle": {
+        "description": "Título de la pantalla de usuarios."
     }
 }

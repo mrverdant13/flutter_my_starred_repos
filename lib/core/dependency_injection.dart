@@ -18,7 +18,7 @@ Future<void> injectDependencies(Flavor flavor) async {
   getIt.registerLazySingleton<Dio>(
     () => Dio(
       BaseOptions(
-        baseUrl: 'https://api.github.com',
+        baseUrl: 'http://jsonplaceholder.typicode.com',
       ),
     ),
   );

@@ -31,6 +31,9 @@ dependencies:
   # Dependency injection
   get_it: ^6.1.1
 
+  # Functional programming
+  dartz: ^0.10.0-nullsafety.2
+
   # Immutable elements
   freezed_annotation: ^0.14.2
 

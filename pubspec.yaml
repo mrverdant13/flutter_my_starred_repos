@@ -34,6 +34,9 @@ dependencies:
   # Functional programming
   dartz: ^0.10.0-nullsafety.2
 
+  # HTTP client
+  dio: ^4.0.0
+
   # Immutable elements
   freezed_annotation: ^0.14.2
   kt_dart: ^0.9.1

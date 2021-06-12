@@ -36,6 +36,7 @@ dependencies:
 
   # Immutable elements
   freezed_annotation: ^0.14.2
+  kt_dart: ^0.9.1
 
   # Internationalization
   flutter_localizations:

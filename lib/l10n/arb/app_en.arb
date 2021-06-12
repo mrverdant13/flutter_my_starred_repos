@@ -19,5 +19,9 @@
     "usersScreenTitle": "Users",
     "@usersScreenTitle": {
         "description": "Users screen title."
+    },
+    "noUsersMessage": "No users found",
+    "@noUsersMessage": {
+        "description": "Message shown when no users are found."
     }
 }

@@ -19,5 +19,9 @@
     "usersScreenTitle": "Usuarios",
     "@usersScreenTitle": {
         "description": "Título de la pantalla de usuarios."
+    },
+    "noUsersMessage": "No se encontraron usuarios",
+    "@noUsersMessage": {
+        "description": "Mensaje mostrado al no encontrar usuarios."
     }
 }

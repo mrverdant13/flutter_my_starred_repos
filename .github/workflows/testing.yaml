@@ -9,6 +9,7 @@ on:
       - "lib/**"
       - "test/**"
       - "web/**"
+      - "analysis_options.yaml"
       - "pubspec.yaml"
   push:
     paths:
@@ -18,6 +19,7 @@ on:
       - "lib/**"
       - "web/**"
       - "test/**"
+      - "analysis_options.yaml"
       - "pubspec.yaml"
 
 jobs:

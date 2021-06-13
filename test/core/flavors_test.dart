@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test(
     '''
+
 GIVEN a correct flavor tag
 WHEN the tag is parsed to a flavor
 THEN the correct flavor is returned

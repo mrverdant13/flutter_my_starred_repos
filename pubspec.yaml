@@ -18,7 +18,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
   # The following adds the Cupertino Icons font to your application.
@@ -30,18 +30,52 @@ dependencies:
 
   # Dependency injection
   get_it: ^6.1.1
+  provider: ^5.0.0
+
+  # Functional programming
+  dartz: ^0.10.0-nullsafety.2
+
+  # HTTP client
+  dio: ^4.0.0
+
+  # Immutable elements
+  freezed_annotation: ^0.14.2
+  kt_dart: ^0.9.1
 
   # Internationalization
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
 
+  # Routing/Navigation
+  auto_route: ^2.2.0
+
+  # State management
+  flutter_bloc: ^7.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # Code generation
+  build_runner: any
+
+  # Immutable elements
+  freezed: any
+
   # Linting
-  lint: ^1.5.3
+  lint: any
+
+  # Routing/Navigation
+  auto_route_generator: any
+
+  # Serialization
+  json_serializable: ^4.1.1
+
+  # Testing
+  bloc_test: ^8.0.2
+  mocktail: ^0.1.4
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

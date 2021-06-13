@@ -6,7 +6,7 @@
     },
     "counterScreenTitle": "Counter",
     "@counterScreenTitle": {
-        "description": "Counter screen title"
+        "description": "Counter screen title."
     },
     "currentCountMessage": "You have pushed the button this many times:",
     "@currentCountMessage": {
@@ -15,5 +15,13 @@
     "increaserButtonTooltip": "Increment",
     "@increaserButtonTooltip": {
         "description": "Increaser button tooltip."
+    },
+    "usersScreenTitle": "Users",
+    "@usersScreenTitle": {
+        "description": "Users screen title."
+    },
+    "noUsersMessage": "No users found",
+    "@noUsersMessage": {
+        "description": "Message shown when no users are found."
     }
 }

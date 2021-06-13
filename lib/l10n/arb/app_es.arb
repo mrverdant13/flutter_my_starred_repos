@@ -15,5 +15,13 @@
     "increaserButtonTooltip": "Incrementar",
     "@increaserButtonTooltip": {
         "description": "Información de acción del botón de incremento."
+    },
+    "usersScreenTitle": "Usuarios",
+    "@usersScreenTitle": {
+        "description": "Título de la pantalla de usuarios."
+    },
+    "noUsersMessage": "No se encontraron usuarios",
+    "@noUsersMessage": {
+        "description": "Mensaje mostrado al no encontrar usuarios."
     }
 }

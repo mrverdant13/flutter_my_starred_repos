@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/flavors.dart';
 import '../../../l10n/l10n.dart';
+import '../../widgets/drawer.dart';
 
 class CounterScreen extends StatefulWidget {
   const CounterScreen();
@@ -26,6 +27,7 @@ class _CounterScreenState extends State<CounterScreen> {
       appBar: AppBar(
         title: Text(l10n.counterScreenTitle),
       ),
+      drawer: const AppDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

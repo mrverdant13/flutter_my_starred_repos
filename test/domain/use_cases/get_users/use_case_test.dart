@@ -20,7 +20,7 @@ void main() {
   test(
     '''
 
-GIVEN a users repo
+GIVEN a users getter use case
 WHEN the users list is requested
 THEN a collection of users is returned
 ''',

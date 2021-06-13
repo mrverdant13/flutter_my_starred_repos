@@ -27,12 +27,12 @@ class UsersRepoImp extends UsersRepo {
       );
     }
 
-    final users = usersR
-        .map(
-          (userR) => userR.asEntity,
-        )
-        .toImmutableSet();
+    final users = usersR.map(
+      (userR) => userR.asEntity,
+    );
 
-    return Right(users);
+    return Right(
+      users.toImmutableSet(),
+    );
   }
 }

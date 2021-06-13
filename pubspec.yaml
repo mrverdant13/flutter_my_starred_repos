@@ -66,11 +66,14 @@ dev_dependencies:
   # Linting
   lint: any
 
+  # Routing/Navigation
+  auto_route_generator: any
+
   # Serialization
   json_serializable: ^4.1.1
 
-  # Routing/Navigation
-  auto_route_generator: any
+  # Testing
+  mocktail: ^0.1.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

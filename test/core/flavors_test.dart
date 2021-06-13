@@ -24,6 +24,7 @@ THEN the correct flavor is returned
 
   test(
     '''
+
 GIVEN an incorrect flavor tag
 WHEN the tag is parsed to a flavor
 THEN an unsupported error is thrown
@@ -42,6 +43,7 @@ THEN an unsupported error is thrown
 
   test(
     '''
+
 GIVEN all available flavors
 WHEN they are parsed to their tags
 THEN the correct string tags are obtained

@@ -1,9 +1,21 @@
-import 'dart:io';
-
 import 'package:graphql/client.dart';
 
 import '../../../models/user.dart';
 import 'interface.dart';
+
+final getUsersDoc = gql(
+  '''
+query getUsers {
+  users {
+    data {
+      id
+      name
+      username
+    }
+  }
+}
+''',
+);
 
 class UsersRDSImp extends UsersRDS {
   const UsersRDSImp({
@@ -18,21 +30,7 @@ class UsersRDSImp extends UsersRDS {
     // https://graphqlzero.almansi.me/
 
     final queryResult = await gqlClient.query(
-      QueryOptions(
-        document: gql(
-          '''
-query getUsers {
-  users {
-    data {
-      id
-      name
-      username
-    }
-  }
-}
-''',
-        ),
-      ),
+      QueryOptions(document: getUsersDoc),
     );
 
     if (queryResult.exception?.linkException is NetworkException) {

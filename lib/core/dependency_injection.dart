@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import '../application/cubit/users/users_cubit.dart';
 import '../domain/facades/users_repo.dart';
 import '../domain/use_cases/get_users/use_case.dart';
-import '../infrastructure/data_sources/users/remote/implementation.dart';
+import '../infrastructure/data_sources/users/remote/http_implementation.dart';
 import '../infrastructure/data_sources/users/remote/interface.dart';
 import '../infrastructure/facades/users_repo.dart';
 import 'flavors.dart';

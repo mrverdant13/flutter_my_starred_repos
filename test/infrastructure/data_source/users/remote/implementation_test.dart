@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app_template/infrastructure/data_sources/users/remote/implementation.dart';
+import 'package:flutter_app_template/infrastructure/data_sources/users/remote/http_implementation.dart';
 import 'package:flutter_app_template/infrastructure/data_sources/users/remote/interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_app_template/infrastructure/models/user.dart';

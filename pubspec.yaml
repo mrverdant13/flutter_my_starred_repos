@@ -35,6 +35,9 @@ dependencies:
   # Functional programming
   dartz: ^0.10.0-nullsafety.2
 
+  # GraphQL client
+  graphql: ^5.0.0
+
   # HTTP client
   dio: ^4.0.0
 

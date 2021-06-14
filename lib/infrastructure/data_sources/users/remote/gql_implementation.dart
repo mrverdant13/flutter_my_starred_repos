@@ -40,10 +40,21 @@ class UsersRDSImp extends UsersRDS {
     final jsonUsers = queryResult.data!['users']['data'] as List;
 
     final users = jsonUsers.map(
-      (jsonUser) {
-        jsonUser['id'] = int.tryParse(jsonUser['id'] as String);
+      (_jsonUser) {
+        final jsonUser = (_jsonUser as Map<String, dynamic>).map(
+          (key, value) => MapEntry(
+            key,
+            key == 'id' ? int.tryParse(value as String) : value,
+          ),
+        );
         return UserR.fromJson(
-          jsonUser as Map<String, dynamic>,
+          jsonUser,
+          // HACK: Does not work with tests.
+          // (jsonUser as Map<String, dynamic>)
+          //   ..update(
+          //     'id',
+          //     (idStr) => int.tryParse(idStr as String),
+          //   ),
         );
       },
     );

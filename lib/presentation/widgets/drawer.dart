@@ -8,26 +8,31 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Drawer(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // TODO: Add translations.
-              const Text('Examples'),
-              ElevatedButton(
-                onPressed: () => context.router.push(
-                  const CounterScreenRoute(),
+        child: ListView(
+          children: <Widget>[
+            // TODO: Add translations.
+            const DrawerHeader(
+              child: Text('Examples'),
+            ),
+            Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.plus_one),
+                  title: const Text('Counter'),
+                  onTap: () async => context.router.push(
+                    const CounterScreenRoute(),
+                  ),
                 ),
-                child: const Text('Counter'),
-              ),
-              ElevatedButton(
-                onPressed: () => context.router.push(
-                  const UsersScreenRoute(),
+                ListTile(
+                  leading: const Icon(Icons.groups),
+                  title: const Text('Users'),
+                  onTap: () async => context.router.push(
+                    const UsersScreenRoute(),
+                  ),
                 ),
-                child: const Text('Users'),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       );
 }

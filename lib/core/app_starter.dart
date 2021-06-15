@@ -1,7 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
 
+import 'package:emoji_lumberdash/emoji_lumberdash.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lumberdash/lumberdash.dart' as logger;
 
 import '../presentation/app.dart';
 import 'dependency_injection.dart';
@@ -12,14 +14,22 @@ Future<void> startApp(Flavor flavor) async {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
+      logger.putLumberdashToWork(
+        withClients: [
+          if (kDebugMode)
+            EmojiLumberdash(
+              errorMethodCount: 10,
+              lineLength: 80,
+            ),
+        ],
+      );
+
       await injectDependencies(flavor);
 
       FlutterError.onError = (details) {
-        log(
-          details.exceptionAsString(),
-          error: details.exception,
-          stackTrace: details.stack,
-          name: 'Flutter',
+        logger.logError(
+          details.exception,
+          stacktrace: details.stack,
         );
       };
 
@@ -36,11 +46,9 @@ Future<void> startApp(Flavor flavor) async {
               ),
       );
     },
-    (error, stackTrace) => log(
-      error.toString(),
-      error: error,
-      stackTrace: stackTrace,
-      name: 'App',
+    (error, stackTrace) => logger.logError(
+      error,
+      stacktrace: stackTrace,
     ),
   );
 }

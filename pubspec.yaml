@@ -50,6 +50,10 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
 
+  # Logging
+  emoji_lumberdash: ^2.0.0
+  lumberdash: ^3.0.0
+
   # Routing/Navigation
   auto_route: ^2.2.0
 

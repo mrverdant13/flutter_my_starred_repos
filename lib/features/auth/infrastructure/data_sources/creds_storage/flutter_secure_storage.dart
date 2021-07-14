@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:oauth2/oauth2.dart';
 
@@ -15,19 +16,21 @@ class CredsStorageImp extends CredsStorage {
   final FlutterSecureStorage _flutterSecureStorage;
 
   /// The key to store credentials with.
-  static const _credsKey = 'creds';
+  @visibleForTesting
+  static const credsKey = 'creds';
 
   /// The cached stored credentials.
-  Credentials? _creds;
+  @visibleForTesting
+  Credentials? creds;
 
   @override
   Future<void> clear() async {
     // Removes the credentials from the secure storage.
     await _flutterSecureStorage.delete(
-      key: _credsKey,
+      key: credsKey,
     );
     // Removes the in-memory-cached credentials.
-    _creds = null;
+    creds = null;
   }
 
   @override
@@ -36,21 +39,21 @@ class CredsStorageImp extends CredsStorage {
   ) async {
     // Stores the given credentials after their serialization.
     await _flutterSecureStorage.write(
-      key: _credsKey,
+      key: credsKey,
       value: credentials.toJson(),
     );
     // Chaches the credentials in memory.
-    _creds = credentials;
+    creds = credentials;
   }
 
   @override
   Future<Credentials?> get() async {
     // Returns the cached credentials if they exist.
-    if (_creds != null) return _creds;
+    if (creds != null) return creds;
 
     // Reads the stored serialized credentials.
     final credsJson = await _flutterSecureStorage.read(
-      key: _credsKey,
+      key: credsKey,
     );
 
     // Returns the deserialized credentials if they exist.

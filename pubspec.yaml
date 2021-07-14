@@ -39,6 +39,9 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
 
+  # Local storage
+  flutter_secure_storage: ^4.2.0
+
   # Logging
   emoji_lumberdash: ^2.0.0
   lumberdash: ^3.0.0

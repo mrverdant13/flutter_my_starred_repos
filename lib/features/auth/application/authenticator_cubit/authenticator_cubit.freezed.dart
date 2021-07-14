@@ -28,6 +28,7 @@ const $AuthenticatorFailure = _$AuthenticatorFailureTearOff();
 
 /// @nodoc
 mixin _$AuthenticatorFailure {
+  /// A login failure.
   LogInFailure get failure => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
@@ -141,6 +142,8 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
   const _$_AuthenticatorFailureLogIn(this.failure);
 
   @override
+
+  /// A login failure.
   final LogInFailure failure;
 
   @override
@@ -213,6 +216,8 @@ abstract class _AuthenticatorFailureLogIn implements AuthenticatorFailure {
       _$_AuthenticatorFailureLogIn;
 
   @override
+
+  /// A login failure.
   LogInFailure get failure => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

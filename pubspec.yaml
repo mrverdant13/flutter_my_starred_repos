@@ -52,6 +52,9 @@ dependencies:
   # State management
   flutter_bloc: ^7.0.1
 
+  # UI
+  material_design_icons_flutter: ^5.0.5955-rc.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

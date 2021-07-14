@@ -5,10 +5,30 @@ import 'package:oauth2/oauth2.dart';
 import '../../../domain/log_in_method.dart';
 import 'interface.dart';
 
+typedef AuthResponseHandlerCallback = Future<Client> Function({
+  required AuthorizationCodeGrant grant,
+  required Uri redirectEndpoint,
+});
+
+@visibleForTesting
+Future<Client> handleAuthorizationResponse({
+  required AuthorizationCodeGrant grant,
+  required Uri redirectEndpoint,
+}) async {
+  return grant.handleAuthorizationResponse(
+    redirectEndpoint.queryParameters,
+  );
+}
+
 /// An authenticator implementation that uses the GitHub API.
 class AuthenticatorImp extends Authenticator {
   /// Creates an authenticator implementation.
-  const AuthenticatorImp();
+  const AuthenticatorImp([
+    AuthResponseHandlerCallback? authResponseHandlerCallback,
+  ]) : _authResponseHandlerCallback =
+            authResponseHandlerCallback ?? handleAuthorizationResponse;
+
+  final AuthResponseHandlerCallback _authResponseHandlerCallback;
 
   /// The endpoint that holds the base authorization URL and that is used to
   /// interact withthe user to get the authorization to access the protected
@@ -55,6 +75,8 @@ class AuthenticatorImp extends Authenticator {
     'read:user',
     'repo',
   ];
+  @visibleForTesting
+  static final expectedReturnedScopes = [_scopes.join(',')];
 
   /// Creates a grant holding data needed to obtain GitHub credentials via an
   /// [authorization code grant].
@@ -70,7 +92,7 @@ class AuthenticatorImp extends Authenticator {
         _authorizationBaseEndpoint,
         _tokenEndpoint,
         secret: _clientSecret,
-        httpClient: _OAuthHttpClient(),
+        httpClient: OAuthHttpClient(),
       );
 
   /// Constructs the actual endpoint used to interact with the user to get the
@@ -113,8 +135,9 @@ class AuthenticatorImp extends Authenticator {
     // from it.
     late final Client httpClient;
     try {
-      httpClient = await grant.handleAuthorizationResponse(
-        redirectEndpoint.queryParameters,
+      httpClient = await _authResponseHandlerCallback(
+        grant: grant,
+        redirectEndpoint: redirectEndpoint,
       );
     } on AuthorizationException {
       throw const LogInException.missingPermissions();
@@ -122,7 +145,7 @@ class AuthenticatorImp extends Authenticator {
     final creds = httpClient.credentials;
 
     // Check if all scopes were granted.
-    if (listEquals(creds.scopes, _scopes)) {
+    if (!listEquals(creds.scopes, expectedReturnedScopes)) {
       throw const LogInException.missingPermissions();
     }
 
@@ -134,16 +157,17 @@ class AuthenticatorImp extends Authenticator {
 
 /// An HTTP client that sets the `Accept` header to `application/json` for every
 /// request it performs.
-class _OAuthHttpClient extends http.BaseClient {
-  _OAuthHttpClient();
+@visibleForTesting
+class OAuthHttpClient extends http.BaseClient {
+  OAuthHttpClient([http.Client? client]) : _client = client ?? http.Client();
 
   /// The default HTTP client to be used for the authentication flow.
-  final _defaultClient = http.Client();
+  final http.Client _client;
 
   /// Sends a request after adding the `Accept` header to use JSON format.
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
     request.headers['Accept'] = 'application/json';
-    return _defaultClient.send(request);
+    return _client.send(request);
   }
 }

@@ -23,5 +23,21 @@
     "noUsersMessage": "No users found",
     "@noUsersMessage": {
         "description": "Message shown when no users are found."
+    },
+    "loginButtonLabel": "LOG IN",
+    "@loginButtonLabel": {
+        "description": "Label of the button that launches the auth screen."
+    },
+    "loginCanceledMessage": "Login canceled",
+    "@loginCanceledMessage": {
+        "description": "Message shown when the login process is canceled."
+    },
+    "missingLoginPermissionsMessage": "Some permissions were not granted.",
+    "@missingLoginPermissionsMessage": {
+        "description": "Message shown when not all of the required login permissions were granted."
+    },
+    "loginOfflineMessage": "No Internet connection",
+    "@loginOfflineMessage": {
+        "description": "Message shown when the there is no Internet connection while trying to login."
     }
 }

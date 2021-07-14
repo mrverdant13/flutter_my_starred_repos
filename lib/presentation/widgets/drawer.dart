@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../features/auth/application/authenticator_cubit/authenticator_cubit.dart';
 import '../routers/app_router.gr.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -29,6 +31,11 @@ class AppDrawer extends StatelessWidget {
                   onTap: () async => context.router.push(
                     const UsersScreenRoute(),
                   ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Log out'),
+                  onTap: () => context.read<AuthenticatorCubit>().logOut(),
                 ),
               ],
             ),

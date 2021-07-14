@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lumberdash/lumberdash.dart' as logger;
 
+import '../features/auth/core/dependency_injection.dart' as auth;
 import '../presentation/app.dart';
 import 'dependency_injection.dart';
 import 'flavors.dart';
@@ -25,6 +26,7 @@ Future<void> startApp(Flavor flavor) async {
       );
 
       await injectDependencies(flavor);
+      await auth.injectDependencies();
 
       FlutterError.onError = (details) {
         logger.logError(

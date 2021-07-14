@@ -23,5 +23,21 @@
     "noUsersMessage": "No se encontraron usuarios",
     "@noUsersMessage": {
         "description": "Mensaje mostrado al no encontrar usuarios."
+    },
+    "loginButtonLabel": "ACCEDER",
+    "@loginButtonLabel": {
+        "description": "Etiqueta del botón que lanza la pantalla de autorización."
+    },
+    "loginCanceledMessage": "Inicio de sesión cancelado",
+    "@loginCanceledMessage": {
+        "description": "Mensaje mostrado al cancelar el proceso de inicio de sesión."
+    },
+    "missingLoginPermissionsMessage": "Algunos permisos no fueron cedidos.",
+    "@missingLoginPermissionsMessage": {
+        "description": "Mensaje mostrado cuando no todos los permisos de acceso requeridos son cedidos."
+    },
+    "loginOfflineMessage": "Sin conexión a Internet",
+    "@loginOfflineMessage": {
+        "description": "Mensaje mostrado cuando la conexión a Internet es nula al intentar iniciar sesión."
     }
 }

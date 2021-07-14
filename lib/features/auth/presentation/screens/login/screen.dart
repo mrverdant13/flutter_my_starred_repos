@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../l10n/l10n.dart';
 import '../../../../../presentation/routers/app_router.gr.dart';
 import '../../../application/authenticator_cubit/authenticator_cubit.dart';
 import '../../../domain/log_in_method.dart';
 
 part 'dimensions.dart';
+part 'l10n.dart';
 
 /// {@template LoginScreen}
 /// A screen that displays the available login options.
@@ -36,13 +38,14 @@ class LoginScreen extends StatelessWidget {
                             Icons.cancel,
                             color: Colors.white,
                           ),
+                          const SizedBox(width: 5.0),
                           Expanded(
                             child: Text(
                               failure.when(
-                                canceled: () => 'Login canceled',
+                                canceled: () => context.loginCanceledMessage,
                                 missingPermissions: () =>
-                                    'Some permissions were not granted',
-                                offline: () => 'No Internet connection',
+                                    context.missingLoginPermissionsMessage,
+                                offline: () => context.loginOfflineMessage,
                               ),
                             ),
                           ),
@@ -81,7 +84,7 @@ class LoginScreen extends StatelessWidget {
                             primary: Colors.green,
                           ),
                           onPressed: () async => context.logInWithOAuth(),
-                          child: const Text('LOG IN'),
+                          child: Text(context.loginButtonLabel),
                         ),
                       ),
                     ),

@@ -242,8 +242,7 @@ AND there is Internet connection
 WHEN a OAuth login is triggered
 AND the user grants all permissions
 AND the user does not complete the process
-THEN new credentials are obtained
-AND the new credentials are stored
+THEN a failure indicating that the action was canceled is returned
 ''',
         () async {
           // ARRANGE

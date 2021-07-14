@@ -58,7 +58,7 @@ class CredsStorageImp extends CredsStorage {
 
     // Returns the deserialized credentials if they exist.
     if (credsJson == null) return null;
-    return Credentials.fromJson(
+    return creds = Credentials.fromJson(
       credsJson,
     );
   }

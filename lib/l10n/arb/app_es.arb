@@ -8,9 +8,16 @@
     "@counterScreenTitle": {
         "description": "Título de la pantalla del contadora."
     },
-    "currentCountMessage": "Has presionado el botón esta cantidad de veces:",
+    "currentCountMessage": "{pushedTimes,plural, =0{Aún no has presionado el botón} =1{Has presionado el botón {pushedTimes} vez} other{Has presionado el botón {pushedTimes} veces}}",
     "@currentCountMessage": {
-        "description": "Mensaje a ser mostrado para indicar el número de veces que el botón fue presionado."
+        "description": "Mensaje a ser mostrado para indicar el número de veces que el botón fue presionado.",
+        "placeholders": {
+            "pushedTimes": {
+                "type": "int",
+                "description": "Número de veces que el botón fue presionado.",
+                "format": "compact"
+            }
+        }
     },
     "increaserButtonTooltip": "Incrementar",
     "@increaserButtonTooltip": {

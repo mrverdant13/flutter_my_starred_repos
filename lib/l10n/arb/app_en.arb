@@ -8,9 +8,16 @@
     "@counterScreenTitle": {
         "description": "Counter screen title."
     },
-    "currentCountMessage": "You have pushed the button this many times:",
+    "currentCountMessage": "{pushedTimes,plural, =0{You haven't push the button yet} =1{You have pushed the button once} =2{You have pushed the button twice} other{You have pushed the button {pushedTimes} times}}",
     "@currentCountMessage": {
-        "description": "Message to be shown to indicate the number of times the button was tapped."
+        "description": "Message to be shown to indicate the number of times the button was tapped.",
+        "placeholders": {
+            "pushedTimes": {
+                "type": "int",
+                "description": "Number of times the button was tapped.",
+                "format": "compact"
+            }
+        }
     },
     "increaserButtonTooltip": "Increment",
     "@increaserButtonTooltip": {

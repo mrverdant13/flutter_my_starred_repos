@@ -40,7 +40,7 @@ class _CounterScreenState extends State<CounterScreen> {
             Text(
               '${kAppFlavor.tag} flavor',
             ),
-            Text(l10n.currentCountMessage),
+            Text(l10n.currentCountMessage(_counter)),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,

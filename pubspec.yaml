@@ -14,6 +14,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Authentication
+  oauth2: ^2.0.0
+
   # Dependency injection
   get_it: ^6.1.1
   provider: ^5.0.0

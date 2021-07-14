@@ -7,9 +7,10 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
-import '../../features/auth/presentation/screens/auth/screen.dart' as _i4;
+import '../../features/auth/presentation/screens/auth/screen.dart' as _i5;
+import '../../features/auth/presentation/screens/login/screen.dart' as _i4;
 import '../screens/counter/screen.dart' as _i3;
-import '../screens/users/screen.dart' as _i5;
+import '../screens/users/screen.dart' as _i6;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -24,11 +25,18 @@ class AppRouter extends _i1.RootStackRouter {
         },
         opaque: true,
         barrierDismissible: false),
+    LoginScreenRoute.name: (routeData) => _i1.CustomPage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i4.LoginScreen();
+        },
+        opaque: true,
+        barrierDismissible: false),
     AuthScreenRoute.name: (routeData) => _i1.CustomPage<Uri>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<AuthScreenRouteArgs>();
-          return _i4.AuthScreen(
+          return _i5.AuthScreen(
               authorizationEndpoint: args.authorizationEndpoint,
               redirectBaseEndpoint: args.redirectBaseEndpoint);
         },
@@ -37,7 +45,7 @@ class AppRouter extends _i1.RootStackRouter {
     UsersScreenRoute.name: (routeData) => _i1.CustomPage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i5.UsersScreen();
+          return _i6.UsersScreen();
         },
         opaque: true,
         barrierDismissible: false)
@@ -46,6 +54,7 @@ class AppRouter extends _i1.RootStackRouter {
   @override
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig(CounterScreenRoute.name, path: '/'),
+        _i1.RouteConfig(LoginScreenRoute.name, path: '/login-screen'),
         _i1.RouteConfig(AuthScreenRoute.name, path: '/auth-screen'),
         _i1.RouteConfig(UsersScreenRoute.name, path: '/users-screen')
       ];
@@ -55,6 +64,12 @@ class CounterScreenRoute extends _i1.PageRouteInfo {
   const CounterScreenRoute() : super(name, path: '/');
 
   static const String name = 'CounterScreenRoute';
+}
+
+class LoginScreenRoute extends _i1.PageRouteInfo {
+  const LoginScreenRoute() : super(name, path: '/login-screen');
+
+  static const String name = 'LoginScreenRoute';
 }
 
 class AuthScreenRoute extends _i1.PageRouteInfo<AuthScreenRouteArgs> {

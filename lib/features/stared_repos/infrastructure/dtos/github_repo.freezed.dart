@@ -43,10 +43,19 @@ const $GithubRepoDto = _$GithubRepoDtoTearOff();
 
 /// @nodoc
 mixin _$GithubRepoDto {
+  /// The GitHub user that owns this repository.
   UserDto get owner => throw _privateConstructorUsedError;
+
+  /// The name of this repository.
   String get name => throw _privateConstructorUsedError;
+
+  /// The description of this repository.
+  ///
+  /// The description could be empty.
   @JsonKey(defaultValue: '')
   String get description => throw _privateConstructorUsedError;
+
+  /// The amount of starts of this repository.
   @JsonKey(name: 'stargazers_count')
   int get starsCount => throw _privateConstructorUsedError;
 
@@ -183,13 +192,23 @@ class _$_GithubRepoDto implements _GithubRepoDto {
       _$_$_GithubRepoDtoFromJson(json);
 
   @override
+
+  /// The GitHub user that owns this repository.
   final UserDto owner;
   @override
+
+  /// The name of this repository.
   final String name;
   @override
+
+  /// The description of this repository.
+  ///
+  /// The description could be empty.
   @JsonKey(defaultValue: '')
   final String description;
   @override
+
+  /// The amount of starts of this repository.
   @JsonKey(name: 'stargazers_count')
   final int starsCount;
 
@@ -245,13 +264,23 @@ abstract class _GithubRepoDto implements GithubRepoDto {
       _$_GithubRepoDto.fromJson;
 
   @override
+
+  /// The GitHub user that owns this repository.
   UserDto get owner => throw _privateConstructorUsedError;
   @override
+
+  /// The name of this repository.
   String get name => throw _privateConstructorUsedError;
   @override
+
+  /// The description of this repository.
+  ///
+  /// The description could be empty.
   @JsonKey(defaultValue: '')
   String get description => throw _privateConstructorUsedError;
   @override
+
+  /// The amount of starts of this repository.
   @JsonKey(name: 'stargazers_count')
   int get starsCount => throw _privateConstructorUsedError;
   @override

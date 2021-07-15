@@ -39,8 +39,11 @@ const $UserDto = _$UserDtoTearOff();
 
 /// @nodoc
 mixin _$UserDto {
+  /// The nickname or username of this user.
   @JsonKey(name: 'login')
   String get username => throw _privateConstructorUsedError;
+
+  /// The avatar URL of this user.
   @JsonKey(name: 'avatar_url')
   String get avatarUrl => throw _privateConstructorUsedError;
 
@@ -132,9 +135,13 @@ class _$_UserDto implements _UserDto {
       _$_$_UserDtoFromJson(json);
 
   @override
+
+  /// The nickname or username of this user.
   @JsonKey(name: 'login')
   final String username;
   @override
+
+  /// The avatar URL of this user.
   @JsonKey(name: 'avatar_url')
   final String avatarUrl;
 
@@ -180,9 +187,13 @@ abstract class _UserDto implements UserDto {
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
 
   @override
+
+  /// The nickname or username of this user.
   @JsonKey(name: 'login')
   String get username => throw _privateConstructorUsedError;
   @override
+
+  /// The avatar URL of this user.
   @JsonKey(name: 'avatar_url')
   String get avatarUrl => throw _privateConstructorUsedError;
   @override

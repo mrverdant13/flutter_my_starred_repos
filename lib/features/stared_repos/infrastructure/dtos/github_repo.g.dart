@@ -11,7 +11,7 @@ _$_GithubRepoDto _$_$_GithubRepoDtoFromJson(Map<String, dynamic> json) {
     owner: UserDto.fromJson(json['owner'] as Map<String, dynamic>),
     name: json['name'] as String,
     description: json['description'] as String,
-    starsCount: json['starsCount'] as int,
+    starsCount: json['stargazers_count'] as int,
   );
 }
 
@@ -20,5 +20,5 @@ Map<String, dynamic> _$_$_GithubRepoDtoToJson(_$_GithubRepoDto instance) =>
       'owner': instance.owner,
       'name': instance.name,
       'description': instance.description,
-      'starsCount': instance.starsCount,
+      'stargazers_count': instance.starsCount,
     };

@@ -10,7 +10,7 @@ class GithubRepoDto with _$GithubRepoDto {
     required UserDto owner,
     required String name,
     required String description,
-    required int starsCount,
+    @JsonKey(name: 'stargazers_count') required int starsCount,
   }) = _GithubRepoDto;
 
   factory GithubRepoDto.fromJson(Map<String, dynamic> json) =>

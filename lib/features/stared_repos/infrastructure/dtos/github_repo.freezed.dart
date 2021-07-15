@@ -24,7 +24,7 @@ class _$GithubRepoDtoTearOff {
       {required UserDto owner,
       required String name,
       required String description,
-      required int starsCount}) {
+      @JsonKey(name: 'stargazers_count') required int starsCount}) {
     return _GithubRepoDto(
       owner: owner,
       name: name,
@@ -46,6 +46,7 @@ mixin _$GithubRepoDto {
   UserDto get owner => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'stargazers_count')
   int get starsCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -59,7 +60,11 @@ abstract class $GithubRepoDtoCopyWith<$Res> {
   factory $GithubRepoDtoCopyWith(
           GithubRepoDto value, $Res Function(GithubRepoDto) then) =
       _$GithubRepoDtoCopyWithImpl<$Res>;
-  $Res call({UserDto owner, String name, String description, int starsCount});
+  $Res call(
+      {UserDto owner,
+      String name,
+      String description,
+      @JsonKey(name: 'stargazers_count') int starsCount});
 
   $UserDtoCopyWith<$Res> get owner;
 }
@@ -115,7 +120,11 @@ abstract class _$GithubRepoDtoCopyWith<$Res>
           _GithubRepoDto value, $Res Function(_GithubRepoDto) then) =
       __$GithubRepoDtoCopyWithImpl<$Res>;
   @override
-  $Res call({UserDto owner, String name, String description, int starsCount});
+  $Res call(
+      {UserDto owner,
+      String name,
+      String description,
+      @JsonKey(name: 'stargazers_count') int starsCount});
 
   @override
   $UserDtoCopyWith<$Res> get owner;
@@ -167,7 +176,7 @@ class _$_GithubRepoDto implements _GithubRepoDto {
       {required this.owner,
       required this.name,
       required this.description,
-      required this.starsCount});
+      @JsonKey(name: 'stargazers_count') required this.starsCount});
 
   factory _$_GithubRepoDto.fromJson(Map<String, dynamic> json) =>
       _$_$_GithubRepoDtoFromJson(json);
@@ -179,6 +188,7 @@ class _$_GithubRepoDto implements _GithubRepoDto {
   @override
   final String description;
   @override
+  @JsonKey(name: 'stargazers_count')
   final int starsCount;
 
   @override
@@ -223,10 +233,11 @@ class _$_GithubRepoDto implements _GithubRepoDto {
 
 abstract class _GithubRepoDto implements GithubRepoDto {
   const factory _GithubRepoDto(
-      {required UserDto owner,
-      required String name,
-      required String description,
-      required int starsCount}) = _$_GithubRepoDto;
+          {required UserDto owner,
+          required String name,
+          required String description,
+          @JsonKey(name: 'stargazers_count') required int starsCount}) =
+      _$_GithubRepoDto;
 
   factory _GithubRepoDto.fromJson(Map<String, dynamic> json) =
       _$_GithubRepoDto.fromJson;
@@ -238,6 +249,7 @@ abstract class _GithubRepoDto implements GithubRepoDto {
   @override
   String get description => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'stargazers_count')
   int get starsCount => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

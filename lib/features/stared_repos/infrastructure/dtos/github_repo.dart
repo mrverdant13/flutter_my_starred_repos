@@ -9,7 +9,7 @@ class GithubRepoDto with _$GithubRepoDto {
   const factory GithubRepoDto({
     required UserDto owner,
     required String name,
-    required String description,
+    @JsonKey(defaultValue: '') required String description,
     @JsonKey(name: 'stargazers_count') required int starsCount,
   }) = _GithubRepoDto;
 

@@ -23,7 +23,7 @@ class _$GithubRepoDtoTearOff {
   _GithubRepoDto call(
       {required UserDto owner,
       required String name,
-      required String description,
+      @JsonKey(defaultValue: '') required String description,
       @JsonKey(name: 'stargazers_count') required int starsCount}) {
     return _GithubRepoDto(
       owner: owner,
@@ -45,6 +45,7 @@ const $GithubRepoDto = _$GithubRepoDtoTearOff();
 mixin _$GithubRepoDto {
   UserDto get owner => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: '')
   String get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'stargazers_count')
   int get starsCount => throw _privateConstructorUsedError;
@@ -63,7 +64,7 @@ abstract class $GithubRepoDtoCopyWith<$Res> {
   $Res call(
       {UserDto owner,
       String name,
-      String description,
+      @JsonKey(defaultValue: '') String description,
       @JsonKey(name: 'stargazers_count') int starsCount});
 
   $UserDtoCopyWith<$Res> get owner;
@@ -123,7 +124,7 @@ abstract class _$GithubRepoDtoCopyWith<$Res>
   $Res call(
       {UserDto owner,
       String name,
-      String description,
+      @JsonKey(defaultValue: '') String description,
       @JsonKey(name: 'stargazers_count') int starsCount});
 
   @override
@@ -175,7 +176,7 @@ class _$_GithubRepoDto implements _GithubRepoDto {
   const _$_GithubRepoDto(
       {required this.owner,
       required this.name,
-      required this.description,
+      @JsonKey(defaultValue: '') required this.description,
       @JsonKey(name: 'stargazers_count') required this.starsCount});
 
   factory _$_GithubRepoDto.fromJson(Map<String, dynamic> json) =>
@@ -186,6 +187,7 @@ class _$_GithubRepoDto implements _GithubRepoDto {
   @override
   final String name;
   @override
+  @JsonKey(defaultValue: '')
   final String description;
   @override
   @JsonKey(name: 'stargazers_count')
@@ -235,7 +237,7 @@ abstract class _GithubRepoDto implements GithubRepoDto {
   const factory _GithubRepoDto(
           {required UserDto owner,
           required String name,
-          required String description,
+          @JsonKey(defaultValue: '') required String description,
           @JsonKey(name: 'stargazers_count') required int starsCount}) =
       _$_GithubRepoDto;
 
@@ -247,6 +249,7 @@ abstract class _GithubRepoDto implements GithubRepoDto {
   @override
   String get name => throw _privateConstructorUsedError;
   @override
+  @JsonKey(defaultValue: '')
   String get description => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'stargazers_count')

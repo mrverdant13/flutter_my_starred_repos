@@ -29,7 +29,10 @@ const $User = _$UserTearOff();
 
 /// @nodoc
 mixin _$User {
+  /// The nickname or username of this user.
   String get username => throw _privateConstructorUsedError;
+
+  /// The avatar URL of this user.
   String get avatarUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -110,8 +113,12 @@ class _$_User implements _User {
   const _$_User({required this.username, required this.avatarUrl});
 
   @override
+
+  /// The nickname or username of this user.
   final String username;
   @override
+
+  /// The avatar URL of this user.
   final String avatarUrl;
 
   @override
@@ -148,8 +155,12 @@ abstract class _User implements User {
       _$_User;
 
   @override
+
+  /// The nickname or username of this user.
   String get username => throw _privateConstructorUsedError;
   @override
+
+  /// The avatar URL of this user.
   String get avatarUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

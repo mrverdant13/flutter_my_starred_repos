@@ -35,9 +35,18 @@ const $GithubRepo = _$GithubRepoTearOff();
 
 /// @nodoc
 mixin _$GithubRepo {
+  /// The GitHub user that owns this repository.
   User get owner => throw _privateConstructorUsedError;
+
+  /// The name of this repository.
   String get name => throw _privateConstructorUsedError;
+
+  /// The description of this repository.
+  ///
+  /// The description could be empty.
   String get description => throw _privateConstructorUsedError;
+
+  /// The amount of starts of this repository.
   int get starsCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -158,12 +167,22 @@ class _$_GithubRepo implements _GithubRepo {
       required this.starsCount});
 
   @override
+
+  /// The GitHub user that owns this repository.
   final User owner;
   @override
+
+  /// The name of this repository.
   final String name;
   @override
+
+  /// The description of this repository.
+  ///
+  /// The description could be empty.
   final String description;
   @override
+
+  /// The amount of starts of this repository.
   final int starsCount;
 
   @override
@@ -209,12 +228,22 @@ abstract class _GithubRepo implements GithubRepo {
       required int starsCount}) = _$_GithubRepo;
 
   @override
+
+  /// The GitHub user that owns this repository.
   User get owner => throw _privateConstructorUsedError;
   @override
+
+  /// The name of this repository.
   String get name => throw _privateConstructorUsedError;
   @override
+
+  /// The description of this repository.
+  ///
+  /// The description could be empty.
   String get description => throw _privateConstructorUsedError;
   @override
+
+  /// The amount of starts of this repository.
   int get starsCount => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

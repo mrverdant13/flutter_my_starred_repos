@@ -20,7 +20,9 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) {
 class _$UserDtoTearOff {
   const _$UserDtoTearOff();
 
-  _UserDto call({required String username, required String avatarUrl}) {
+  _UserDto call(
+      {@JsonKey(name: 'login') required String username,
+      @JsonKey(name: 'avatar_url') required String avatarUrl}) {
     return _UserDto(
       username: username,
       avatarUrl: avatarUrl,
@@ -37,7 +39,9 @@ const $UserDto = _$UserDtoTearOff();
 
 /// @nodoc
 mixin _$UserDto {
+  @JsonKey(name: 'login')
   String get username => throw _privateConstructorUsedError;
+  @JsonKey(name: 'avatar_url')
   String get avatarUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +53,9 @@ mixin _$UserDto {
 abstract class $UserDtoCopyWith<$Res> {
   factory $UserDtoCopyWith(UserDto value, $Res Function(UserDto) then) =
       _$UserDtoCopyWithImpl<$Res>;
-  $Res call({String username, String avatarUrl});
+  $Res call(
+      {@JsonKey(name: 'login') String username,
+      @JsonKey(name: 'avatar_url') String avatarUrl});
 }
 
 /// @nodoc
@@ -83,7 +89,9 @@ abstract class _$UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
   factory _$UserDtoCopyWith(_UserDto value, $Res Function(_UserDto) then) =
       __$UserDtoCopyWithImpl<$Res>;
   @override
-  $Res call({String username, String avatarUrl});
+  $Res call(
+      {@JsonKey(name: 'login') String username,
+      @JsonKey(name: 'avatar_url') String avatarUrl});
 }
 
 /// @nodoc
@@ -116,14 +124,18 @@ class __$UserDtoCopyWithImpl<$Res> extends _$UserDtoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserDto implements _UserDto {
-  const _$_UserDto({required this.username, required this.avatarUrl});
+  const _$_UserDto(
+      {@JsonKey(name: 'login') required this.username,
+      @JsonKey(name: 'avatar_url') required this.avatarUrl});
 
   factory _$_UserDto.fromJson(Map<String, dynamic> json) =>
       _$_$_UserDtoFromJson(json);
 
   @override
+  @JsonKey(name: 'login')
   final String username;
   @override
+  @JsonKey(name: 'avatar_url')
   final String avatarUrl;
 
   @override
@@ -162,13 +174,16 @@ class _$_UserDto implements _UserDto {
 
 abstract class _UserDto implements UserDto {
   const factory _UserDto(
-      {required String username, required String avatarUrl}) = _$_UserDto;
+      {@JsonKey(name: 'login') required String username,
+      @JsonKey(name: 'avatar_url') required String avatarUrl}) = _$_UserDto;
 
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
 
   @override
+  @JsonKey(name: 'login')
   String get username => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'avatar_url')
   String get avatarUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

@@ -118,6 +118,7 @@ class __$AppConfigCopyWithImpl<$Res> extends _$AppConfigCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@visibleForTesting
 class _$_AppConfig implements _AppConfig {
   const _$_AppConfig({required this.githubAuthConfig});
 
@@ -290,6 +291,7 @@ class __$GithubAuthConfigCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@visibleForTesting
 class _$_GithubAuthConfig implements _GithubAuthConfig {
   const _$_GithubAuthConfig(
       {required this.clientId, required this.clientSecret});

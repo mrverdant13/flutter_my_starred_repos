@@ -6,6 +6,7 @@ import '../infrastructure/data_sources/authenticator/github.dart';
 import '../infrastructure/data_sources/authenticator/interface.dart';
 import '../infrastructure/data_sources/creds_storage/flutter_secure_storage.dart';
 import '../infrastructure/data_sources/creds_storage/interface.dart';
+import '../infrastructure/external/dio_interceptors.dart';
 import '../infrastructure/facades/auth_service/implementation.dart';
 import '../infrastructure/facades/auth_service/interface.dart';
 
@@ -14,6 +15,11 @@ Future<void> injectDependencies() async {
   // External
   getIt.registerLazySingleton(
     () => const FlutterSecureStorage(),
+  );
+  getIt.registerLazySingleton(
+    () => AuthInterceptor(
+      credsStorage: getIt(),
+    ),
   );
 
   // Data sources

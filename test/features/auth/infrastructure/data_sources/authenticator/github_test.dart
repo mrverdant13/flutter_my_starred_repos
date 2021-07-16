@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_app_template/core/config.dart';
 import 'package:flutter_app_template/features/auth/infrastructure/data_sources/authenticator/github.dart';
 import 'package:flutter_app_template/features/auth/infrastructure/data_sources/authenticator/interface.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -62,8 +63,15 @@ AND the redirect endpoint query parameters is used
   group(
     '''
 
-GIVEN an authenticator''',
+GIVEN an authenticator
+AND a GitHub config data holder''',
     () {
+      // Config
+      const githubAuthConfig = GithubAuthConfig(
+        clientId: 'clientId',
+        clientSecret: 'clientSecret',
+      );
+
       // Remota data source
       late AuthenticatorImp authenticator;
 
@@ -83,7 +91,8 @@ THEN new credentials are returned
           );
 
           authenticator = AuthenticatorImp(
-            ({
+            githubAuthConfig: githubAuthConfig,
+            authResponseHandlerCallback: ({
               required AuthorizationCodeGrant grant,
               required Uri redirectEndpoint,
             }) async {
@@ -123,7 +132,8 @@ THEN an exception indicating permission issues is thrown
           );
 
           authenticator = AuthenticatorImp(
-            ({
+            githubAuthConfig: githubAuthConfig,
+            authResponseHandlerCallback: ({
               required AuthorizationCodeGrant grant,
               required Uri redirectEndpoint,
             }) async {
@@ -168,7 +178,8 @@ THEN an exception indicating that the action was canceled is thrown
           );
 
           authenticator = AuthenticatorImp(
-            ({
+            githubAuthConfig: githubAuthConfig,
+            authResponseHandlerCallback: ({
               required AuthorizationCodeGrant grant,
               required Uri redirectEndpoint,
             }) async {
@@ -210,7 +221,8 @@ THEN an exception indicating permission issues is thrown
         () async {
           // ARRANGE
           authenticator = AuthenticatorImp(
-            ({
+            githubAuthConfig: githubAuthConfig,
+            authResponseHandlerCallback: ({
               required AuthorizationCodeGrant grant,
               required Uri redirectEndpoint,
             }) async {

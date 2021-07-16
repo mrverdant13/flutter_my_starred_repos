@@ -87,3 +87,4 @@ flutter:
 
   assets:
     - assets/app_icon/
+    - assets/config/

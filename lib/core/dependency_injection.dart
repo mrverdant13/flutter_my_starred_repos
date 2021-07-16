@@ -11,12 +11,19 @@ import '../infrastructure/data_sources/users/remote/http_implementation.dart'
     as http_users_rds;
 import '../infrastructure/data_sources/users/remote/interface.dart';
 import '../infrastructure/facades/users_repo.dart';
+import 'config.dart';
 import 'flavors.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> injectDependencies(Flavor flavor) async {
   getIt.registerSingleton(flavor);
+
+  final appConfig = await AppConfig.create(flavor: flavor);
+
+  getIt.registerLazySingleton<GithubAuthConfig>(
+    () => appConfig.githubAuthConfig,
+  );
 
   // External
   switch (flavor) {

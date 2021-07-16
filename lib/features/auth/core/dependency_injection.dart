@@ -18,7 +18,9 @@ Future<void> injectDependencies() async {
 
   // Data sources
   getIt.registerLazySingleton<Authenticator>(
-    () => const AuthenticatorImp(),
+    () => AuthenticatorImp(
+      githubAuthConfig: getIt(),
+    ),
   );
   getIt.registerLazySingleton<CredsStorage>(
     () => CredsStorageImp(

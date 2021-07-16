@@ -1,5 +1,7 @@
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/github_repo.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../domain/page.dart';
+import '../../dtos/github_repo.dart';
 
 part 'interface.freezed.dart';
 
@@ -12,7 +14,7 @@ abstract class StaredReposRDS {
   ///
   /// Throws a [GetStaredReposPageException.offline] exception when there is no
   /// Internet connection.
-  Future<List<GithubRepoDto>> getStaredReposPage({
+  Future<Page<GithubRepoDto>> getStaredReposPage({
     required int page,
   });
 }

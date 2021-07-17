@@ -17,9 +17,8 @@ class AuthInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     if (options.extra[extraEntry.key] == extraEntry.value) {
-      late final String? accessToken;
       final creds = await _credsStorage.get();
-      accessToken = creds?.accessToken;
+      final accessToken = creds?.accessToken;
 
       if (accessToken != null) {
         options.headers.addAll(

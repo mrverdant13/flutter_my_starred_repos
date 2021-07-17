@@ -8,7 +8,7 @@ part 'interface.freezed.dart';
 /// A data source to interact with stared repos hosted in GitHub.
 abstract class StaredReposRDS {
   /// Creates a stared repositories remote data source.
-  const StaredReposRDS();
+  const StaredReposRDS(); // coverage:ignore-line
 
   /// Retrieves a page of GitHub stared repositories.
   ///

@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_app_template/application/cubit/users/users_cubit.dart';
+import 'package:flutter_app_template/core/config.dart';
 import 'package:flutter_app_template/core/dependency_injection.dart';
 import 'package:flutter_app_template/core/flavors.dart';
 import 'package:flutter_app_template/domain/facades/users_repo.dart';
 import 'package:flutter_app_template/domain/use_cases/get_users/use_case.dart';
 import 'package:flutter_app_template/infrastructure/data_sources/users/remote/interface.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:graphql/client.dart';
 
 void main() {
@@ -14,6 +15,14 @@ void main() {
   
 GIVEN an injector function''',
     () {
+      const githubAuthConfig = GithubAuthConfig(
+        clientId: 'clientId',
+        clientSecret: 'clientSecret',
+      );
+      const appConfig = AppConfig(
+        githubAuthConfig: githubAuthConfig,
+      );
+
       for (final flavor in Flavor.values) {
         group(
           '''
@@ -24,7 +33,10 @@ WHEN the injection process is triggered''',
             setUp(
               () async {
                 getIt.reset();
-                await injectDependencies(flavor);
+                await injectDependencies(
+                  config: appConfig,
+                  flavor: flavor,
+                );
               },
             );
 

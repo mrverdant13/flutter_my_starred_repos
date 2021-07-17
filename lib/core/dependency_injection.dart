@@ -16,13 +16,14 @@ import 'flavors.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> injectDependencies(Flavor flavor) async {
+Future<void> injectDependencies({
+  required Flavor flavor,
+  required AppConfig config,
+}) async {
   getIt.registerSingleton(flavor);
 
-  final appConfig = await AppConfig.create(flavor: flavor);
-
-  getIt.registerLazySingleton<GithubAuthConfig>(
-    () => appConfig.githubAuthConfig,
+  getIt.registerLazySingleton<AppConfig>(
+    () => config,
   );
 
   // External

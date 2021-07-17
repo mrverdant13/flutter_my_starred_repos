@@ -1,10 +1,5 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
-import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'flavors.dart';
 
 part 'config.freezed.dart';
 part 'config.g.dart';
@@ -22,22 +17,6 @@ class AppConfig with _$AppConfig {
   /// Creates an app sesitive data holder from the [json] JSON object.
   factory AppConfig.fromJson(Map<String, dynamic> json) =>
       _$AppConfigFromJson(json);
-
-  /// Creates an app sesitive data holder from the bundled JSON object according
-  /// to the specified [flavor].
-  static Future<AppConfig> create({
-    required Flavor flavor,
-  }) async {
-    final configString = await rootBundle.loadString(
-      'assets/config/app_config.${flavor.tag.toLowerCase()}.json',
-    );
-
-    final config = json.decode(configString) as Map<String, dynamic>;
-
-    return AppConfig.fromJson(
-      config,
-    );
-  }
 }
 
 /// An object that holds data required for GitHub auth processes.

@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 
 import '../../features/auth/presentation/screens/auth/screen.dart';
 import '../../features/auth/presentation/screens/login/screen.dart';
+import '../../features/stared_repos/presentation/screens/starred_repos/screen.dart';
 import '../screens/counter/screen.dart';
 import '../screens/users/screen.dart';
 
@@ -20,6 +21,9 @@ import '../screens/users/screen.dart';
     ),
     CustomRoute(
       page: UsersScreen,
+    ),
+    CustomRoute(
+      page: StarredReposScreen,
     ),
   ],
 )

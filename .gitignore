@@ -51,3 +51,6 @@ app.*.map.json
 # VSC
 .vscode/*
 !.vscode/launch.json
+
+# Config
+**/app_config.*.json

@@ -33,6 +33,13 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ),
                 ListTile(
+                  leading: const Icon(Icons.star_border),
+                  title: const Text('Starred Repos'),
+                  onTap: () async => context.router.push(
+                    const StarredReposScreenRoute(),
+                  ),
+                ),
+                ListTile(
                   leading: const Icon(Icons.logout),
                   title: const Text('Log out'),
                   onTap: () => context.read<AuthenticatorCubit>().logOut(),

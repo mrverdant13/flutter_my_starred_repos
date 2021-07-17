@@ -9,6 +9,8 @@ import 'package:flutter/material.dart' as _i2;
 
 import '../../features/auth/presentation/screens/auth/screen.dart' as _i5;
 import '../../features/auth/presentation/screens/login/screen.dart' as _i4;
+import '../../features/stared_repos/presentation/screens/starred_repos/screen.dart'
+    as _i7;
 import '../screens/counter/screen.dart' as _i3;
 import '../screens/users/screen.dart' as _i6;
 
@@ -48,6 +50,13 @@ class AppRouter extends _i1.RootStackRouter {
           return _i6.UsersScreen();
         },
         opaque: true,
+        barrierDismissible: false),
+    StarredReposScreenRoute.name: (routeData) => _i1.CustomPage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i7.StarredReposScreen();
+        },
+        opaque: true,
         barrierDismissible: false)
   };
 
@@ -56,7 +65,9 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(CounterScreenRoute.name, path: '/'),
         _i1.RouteConfig(LoginScreenRoute.name, path: '/login-screen'),
         _i1.RouteConfig(AuthScreenRoute.name, path: '/auth-screen'),
-        _i1.RouteConfig(UsersScreenRoute.name, path: '/users-screen')
+        _i1.RouteConfig(UsersScreenRoute.name, path: '/users-screen'),
+        _i1.RouteConfig(StarredReposScreenRoute.name,
+            path: '/starred-repos-screen')
       ];
 }
 
@@ -98,4 +109,10 @@ class UsersScreenRoute extends _i1.PageRouteInfo {
   const UsersScreenRoute() : super(name, path: '/users-screen');
 
   static const String name = 'UsersScreenRoute';
+}
+
+class StarredReposScreenRoute extends _i1.PageRouteInfo {
+  const StarredReposScreenRoute() : super(name, path: '/starred-repos-screen');
+
+  static const String name = 'StarredReposScreenRoute';
 }

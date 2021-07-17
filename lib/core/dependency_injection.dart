@@ -11,12 +11,20 @@ import '../infrastructure/data_sources/users/remote/http_implementation.dart'
     as http_users_rds;
 import '../infrastructure/data_sources/users/remote/interface.dart';
 import '../infrastructure/facades/users_repo.dart';
+import 'config.dart';
 import 'flavors.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> injectDependencies(Flavor flavor) async {
+Future<void> injectDependencies({
+  required Flavor flavor,
+  required AppConfig config,
+}) async {
   getIt.registerSingleton(flavor);
+
+  getIt.registerLazySingleton<AppConfig>(
+    () => config,
+  );
 
   // External
   switch (flavor) {

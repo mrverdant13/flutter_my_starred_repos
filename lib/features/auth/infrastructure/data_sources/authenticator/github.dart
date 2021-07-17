@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart';
 
+import '../../../../../core/config.dart';
 import '../../../domain/log_in_method.dart';
 import 'interface.dart';
 
@@ -23,10 +24,13 @@ Future<Client> handleAuthorizationResponse({
 /// An authenticator implementation that uses the GitHub API.
 class AuthenticatorImp extends Authenticator {
   /// Creates an authenticator implementation.
-  const AuthenticatorImp([
+  AuthenticatorImp({
+    required GithubAuthConfig githubAuthConfig,
     AuthResponseHandlerCallback? authResponseHandlerCallback,
-  ]) : _authResponseHandlerCallback =
-            authResponseHandlerCallback ?? handleAuthorizationResponse;
+  })  : _authResponseHandlerCallback =
+            authResponseHandlerCallback ?? handleAuthorizationResponse,
+        _clientId = githubAuthConfig.clientId,
+        _clientSecret = githubAuthConfig.clientSecret;
 
   final AuthResponseHandlerCallback _authResponseHandlerCallback;
 
@@ -65,10 +69,10 @@ class AuthenticatorImp extends Authenticator {
   );
 
   /// The identifier for this app, which asks for authorization.
-  static const _clientId = '0f0c27d78fe935de4c8e';
+  final String _clientId;
 
   /// The secret key for this app.
-  static const _clientSecret = 'fe50f02ff543981b0a4ef91ebb5e18121d14b4c4';
+  final String _clientSecret;
 
   /// A list of permissions that this app requires.
   static const _scopes = [

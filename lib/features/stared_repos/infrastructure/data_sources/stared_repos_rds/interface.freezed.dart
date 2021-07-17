@@ -1,0 +1,160 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+
+part of 'interface.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+/// @nodoc
+class _$GetStaredReposPageExceptionTearOff {
+  const _$GetStaredReposPageExceptionTearOff();
+
+  _GetStaredReposPageExceptionOffline offline() {
+    return const _GetStaredReposPageExceptionOffline();
+  }
+}
+
+/// @nodoc
+const $GetStaredReposPageException = _$GetStaredReposPageExceptionTearOff();
+
+/// @nodoc
+mixin _$GetStaredReposPageException {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() offline,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? offline,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetStaredReposPageExceptionOffline value)
+        offline,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetStaredReposPageExceptionOffline value)? offline,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GetStaredReposPageExceptionCopyWith<$Res> {
+  factory $GetStaredReposPageExceptionCopyWith(
+          GetStaredReposPageException value,
+          $Res Function(GetStaredReposPageException) then) =
+      _$GetStaredReposPageExceptionCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$GetStaredReposPageExceptionCopyWithImpl<$Res>
+    implements $GetStaredReposPageExceptionCopyWith<$Res> {
+  _$GetStaredReposPageExceptionCopyWithImpl(this._value, this._then);
+
+  final GetStaredReposPageException _value;
+  // ignore: unused_field
+  final $Res Function(GetStaredReposPageException) _then;
+}
+
+/// @nodoc
+abstract class _$GetStaredReposPageExceptionOfflineCopyWith<$Res> {
+  factory _$GetStaredReposPageExceptionOfflineCopyWith(
+          _GetStaredReposPageExceptionOffline value,
+          $Res Function(_GetStaredReposPageExceptionOffline) then) =
+      __$GetStaredReposPageExceptionOfflineCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$GetStaredReposPageExceptionOfflineCopyWithImpl<$Res>
+    extends _$GetStaredReposPageExceptionCopyWithImpl<$Res>
+    implements _$GetStaredReposPageExceptionOfflineCopyWith<$Res> {
+  __$GetStaredReposPageExceptionOfflineCopyWithImpl(
+      _GetStaredReposPageExceptionOffline _value,
+      $Res Function(_GetStaredReposPageExceptionOffline) _then)
+      : super(_value, (v) => _then(v as _GetStaredReposPageExceptionOffline));
+
+  @override
+  _GetStaredReposPageExceptionOffline get _value =>
+      super._value as _GetStaredReposPageExceptionOffline;
+}
+
+/// @nodoc
+
+class _$_GetStaredReposPageExceptionOffline
+    implements _GetStaredReposPageExceptionOffline {
+  const _$_GetStaredReposPageExceptionOffline();
+
+  @override
+  String toString() {
+    return 'GetStaredReposPageException.offline()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _GetStaredReposPageExceptionOffline);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() offline,
+  }) {
+    return offline();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? offline,
+    required TResult orElse(),
+  }) {
+    if (offline != null) {
+      return offline();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetStaredReposPageExceptionOffline value)
+        offline,
+  }) {
+    return offline(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetStaredReposPageExceptionOffline value)? offline,
+    required TResult orElse(),
+  }) {
+    if (offline != null) {
+      return offline(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetStaredReposPageExceptionOffline
+    implements GetStaredReposPageException {
+  const factory _GetStaredReposPageExceptionOffline() =
+      _$_GetStaredReposPageExceptionOffline;
+}

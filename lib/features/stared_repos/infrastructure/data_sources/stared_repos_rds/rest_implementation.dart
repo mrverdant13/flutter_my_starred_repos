@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
 
 import '../../../../auth/infrastructure/external/dio_interceptors.dart';
 import '../../../domain/page.dart';
@@ -31,7 +32,12 @@ class StaredReposRDSImp implements StaredReposRDS {
   ///
   /// [User's starred repos endpoint]:
   /// https://docs.github.com/en/rest/reference/activity#list-repositories-starred-by-the-authenticated-user
-  static const _endpoint = 'https://api.github.com/user/starred';
+  @visibleForTesting
+  static const endpoint = 'https://api.github.com/user/starred';
+
+  /// The quantity of starred repositories to retrieve per page.
+  @visibleForTesting
+  static const pageLength = 5;
 
   @override
   Future<Page<GithubRepoDto>> getStaredReposPage({
@@ -41,10 +47,10 @@ class StaredReposRDSImp implements StaredReposRDS {
 
     try {
       response = await _dio.get(
-        _endpoint,
+        endpoint,
         queryParameters: {
           'page': page,
-          'per_page': 5,
+          'per_page': pageLength,
         },
         options: Options(
           headers: {

@@ -22,11 +22,11 @@ GIVEN an injector function''',
       const appConfig = AppConfig(
         githubAuthConfig: githubAuthConfig,
       );
-
       for (final flavor in Flavor.values) {
         group(
           '''
   
+AND the app config data
 AND the ${flavor.tag} flavor
 WHEN the injection process is triggered''',
           () {
@@ -56,6 +56,25 @@ THEN the flavor should be injected
                   true,
                 );
                 expect(kAppFlavor, flavor);
+              },
+            );
+
+            test(
+              '''
+
+THEN the app congig should be injected
+''',
+              () async {
+                // ARRANGE
+
+                // ACT
+                final registeredAppConfig = getIt<AppConfig>();
+
+                // ASSERT
+                expect(
+                  registeredAppConfig,
+                  appConfig,
+                );
               },
             );
 

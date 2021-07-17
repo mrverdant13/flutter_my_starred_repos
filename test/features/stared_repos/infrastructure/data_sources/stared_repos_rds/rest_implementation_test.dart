@@ -11,8 +11,6 @@ import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/u
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-// ignore_for_file: prefer_const_constructors
-
 class MockDio extends Mock implements Dio {}
 
 class DioOptionsMatcher extends CustomMatcher {

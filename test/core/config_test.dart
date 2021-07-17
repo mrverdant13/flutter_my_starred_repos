@@ -5,7 +5,10 @@ void main() {
   test(
     '''
   
-GIVEN a JSON representation of the app config''',
+GIVEN a JSON representation of the app config
+WHEN it is deserialized
+THEN a coherent app config data holder is created
+''',
     () {
       // ARRANGE
       const configJson = <String, dynamic>{

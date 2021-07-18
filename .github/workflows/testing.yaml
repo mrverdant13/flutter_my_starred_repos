@@ -48,7 +48,7 @@ jobs:
         run: mkdir -p assets/config && flutter analyze --no-pub --fatal-infos --fatal-warnings
 
       - name: Ensure up-to-date code generation
-        run: flutter test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
+        run: flutter pub run test --run-skipped -t ci-only
 
   build:
     name: Test app implementation

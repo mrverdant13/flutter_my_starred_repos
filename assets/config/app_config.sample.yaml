@@ -1,0 +1,6 @@
+# GitHub auth config data.
+githubAuthConfig:
+  # GitHub app client identifier.
+  clientId: client_id
+  # GitHub app client secret.
+  clientSecret: client_secret

@@ -53,4 +53,5 @@ app.*.map.json
 !.vscode/launch.json
 
 # Config
-**/app_config.*.json
+**/app_config.*.yaml
+!**/app_config.sample.yaml

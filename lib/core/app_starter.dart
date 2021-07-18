@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:emoji_lumberdash/emoji_lumberdash.dart';
 import 'package:flutter/foundation.dart';
@@ -30,13 +29,11 @@ Future<void> startApp(Flavor flavor) async {
         ],
       );
 
-      final configJsonString = await rootBundle.loadString(
-        'assets/config/app_config.${flavor.tag.toLowerCase()}.json',
+      final configYamlString = await rootBundle.loadString(
+        'assets/config/app_config.${flavor.tag.toLowerCase()}.yaml',
       );
 
-      final appConfig = AppConfig.fromJson(
-        json.decode(configJsonString) as Map<String, dynamic>,
-      );
+      final appConfig = AppConfig.fromYamlString(configYamlString);
 
       await injectDependencies(
         flavor: flavor,

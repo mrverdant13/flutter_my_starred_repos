@@ -11,12 +11,11 @@ THEN a coherent app config data holder is created
 ''',
     () {
       // ARRANGE
-      const configJson = <String, dynamic>{
-        'githubAuthConfig': {
-          'clientId': 'clientId',
-          'clientSecret': 'clientSecret',
-        },
-      };
+      const configYamlString = '''
+githubAuthConfig:
+  clientId: clientId
+  clientSecret: clientSecret
+''';
       const config = AppConfig(
         githubAuthConfig: GithubAuthConfig(
           clientId: 'clientId',
@@ -25,7 +24,7 @@ THEN a coherent app config data holder is created
       );
 
       // ACT
-      final result = AppConfig.fromJson(configJson);
+      final result = AppConfig.fromYamlString(configYamlString);
 
       // ASSERT
       expect(result, config);

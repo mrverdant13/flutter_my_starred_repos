@@ -23,11 +23,11 @@ on:
       - "pubspec.yaml"
 
 jobs:
-  app-test:
-    name: Format, analyze and test the app
+  setup:
+    name: Format, analyze and ensure up-to-date code generation
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
+      - name: Check out repo code
         uses: actions/checkout@v2
 
       - name: Setup Java actions
@@ -44,13 +44,34 @@ jobs:
       - name: Format Dart files within `lib` and `test` folders and abort on formatting changes
         run: flutter format --set-exit-if-changed lib test
 
-      - name: Analyze Dart files within `lib` and `test` considering infos and warnings
+      - name: Analyze Dart files considering infos and warnings as failures
         run: mkdir -p assets/config && flutter analyze --no-pub --fatal-infos --fatal-warnings
 
-      - name: Run tests
-        run: flutter test --coverage --no-pub --test-randomize-ordering-seed random
+      - name: Ensure up-to-date code generation
+        run: flutter pub run test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
 
-      - name: CHeck 100% code coverage
+  build:
+    name: Test app implementation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v2
+
+      - name: Setup Java actions
+        uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+
+      - name: Setup Flutter actions
+        uses: subosito/flutter-action@v1
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests adn generate coverage
+        run: flutter test --coverage --no-pub -x ci-only --test-randomize-ordering-seed random
+
+      - name: Check 100% code coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
         with:
           exclude: "**/*.freezed.dart **/*.g.dart **/*.gr.dart"

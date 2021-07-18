@@ -9,10 +9,11 @@ import 'package:flutter/material.dart' as _i2;
 
 import '../../features/auth/presentation/screens/auth/screen.dart' as _i5;
 import '../../features/auth/presentation/screens/login/screen.dart' as _i4;
+import '../../features/counter/presentation/screens/counter/screen.dart' as _i3;
 import '../../features/stared_repos/presentation/screens/starred_repos/screen.dart'
     as _i7;
-import '../screens/counter/screen.dart' as _i3;
-import '../screens/users/screen.dart' as _i6;
+import '../../features/users_placeholder/presentation/screens/users/screen.dart'
+    as _i6;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])

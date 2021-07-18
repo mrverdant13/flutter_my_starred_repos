@@ -3,9 +3,9 @@ import 'package:auto_route/auto_route.dart';
 
 import '../../features/auth/presentation/screens/auth/screen.dart';
 import '../../features/auth/presentation/screens/login/screen.dart';
+import '../../features/counter/presentation/screens/counter/screen.dart';
 import '../../features/stared_repos/presentation/screens/starred_repos/screen.dart';
-import '../screens/counter/screen.dart';
-import '../screens/users/screen.dart';
+import '../../features/users_placeholder/presentation/screens/users/screen.dart';
 
 @CustomAutoRouter(
   routes: [

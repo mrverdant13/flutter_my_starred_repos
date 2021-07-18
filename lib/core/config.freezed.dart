@@ -12,22 +12,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-AppConfig _$AppConfigFromJson(Map<String, dynamic> json) {
-  return _AppConfig.fromJson(json);
-}
-
 /// @nodoc
 class _$AppConfigTearOff {
   const _$AppConfigTearOff();
 
-  _AppConfig call({required GithubAuthConfig githubAuthConfig}) {
+  _AppConfig call(
+      {@JsonKey(required: true, disallowNullValue: true)
+          required GithubAuthConfig githubAuthConfig}) {
     return _AppConfig(
       githubAuthConfig: githubAuthConfig,
     );
-  }
-
-  AppConfig fromJson(Map<String, Object> json) {
-    return AppConfig.fromJson(json);
   }
 }
 
@@ -37,9 +31,9 @@ const $AppConfig = _$AppConfigTearOff();
 /// @nodoc
 mixin _$AppConfig {
   /// Holder of GitHub auth data.
+  @JsonKey(required: true, disallowNullValue: true)
   GithubAuthConfig get githubAuthConfig => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $AppConfigCopyWith<AppConfig> get copyWith =>
       throw _privateConstructorUsedError;
@@ -49,7 +43,9 @@ mixin _$AppConfig {
 abstract class $AppConfigCopyWith<$Res> {
   factory $AppConfigCopyWith(AppConfig value, $Res Function(AppConfig) then) =
       _$AppConfigCopyWithImpl<$Res>;
-  $Res call({GithubAuthConfig githubAuthConfig});
+  $Res call(
+      {@JsonKey(required: true, disallowNullValue: true)
+          GithubAuthConfig githubAuthConfig});
 
   $GithubAuthConfigCopyWith<$Res> get githubAuthConfig;
 }
@@ -88,7 +84,9 @@ abstract class _$AppConfigCopyWith<$Res> implements $AppConfigCopyWith<$Res> {
           _AppConfig value, $Res Function(_AppConfig) then) =
       __$AppConfigCopyWithImpl<$Res>;
   @override
-  $Res call({GithubAuthConfig githubAuthConfig});
+  $Res call(
+      {@JsonKey(required: true, disallowNullValue: true)
+          GithubAuthConfig githubAuthConfig});
 
   @override
   $GithubAuthConfigCopyWith<$Res> get githubAuthConfig;
@@ -117,17 +115,18 @@ class __$AppConfigCopyWithImpl<$Res> extends _$AppConfigCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
-@visibleForTesting
-class _$_AppConfig implements _AppConfig {
-  const _$_AppConfig({required this.githubAuthConfig});
 
-  factory _$_AppConfig.fromJson(Map<String, dynamic> json) =>
-      _$_$_AppConfigFromJson(json);
+@visibleForTesting
+@JsonSerializable(anyMap: true, checked: true, disallowUnrecognizedKeys: true)
+class _$_AppConfig implements _AppConfig {
+  const _$_AppConfig(
+      {@JsonKey(required: true, disallowNullValue: true)
+          required this.githubAuthConfig});
 
   @override
 
   /// Holder of GitHub auth data.
+  @JsonKey(required: true, disallowNullValue: true)
   final GithubAuthConfig githubAuthConfig;
 
   @override
@@ -153,23 +152,17 @@ class _$_AppConfig implements _AppConfig {
   @override
   _$AppConfigCopyWith<_AppConfig> get copyWith =>
       __$AppConfigCopyWithImpl<_AppConfig>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_AppConfigToJson(this);
-  }
 }
 
 abstract class _AppConfig implements AppConfig {
-  const factory _AppConfig({required GithubAuthConfig githubAuthConfig}) =
-      _$_AppConfig;
-
-  factory _AppConfig.fromJson(Map<String, dynamic> json) =
-      _$_AppConfig.fromJson;
+  const factory _AppConfig(
+      {@JsonKey(required: true, disallowNullValue: true)
+          required GithubAuthConfig githubAuthConfig}) = _$_AppConfig;
 
   @override
 
   /// Holder of GitHub auth data.
+  @JsonKey(required: true, disallowNullValue: true)
   GithubAuthConfig get githubAuthConfig => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
@@ -186,7 +179,10 @@ class _$GithubAuthConfigTearOff {
   const _$GithubAuthConfigTearOff();
 
   _GithubAuthConfig call(
-      {required String clientId, required String clientSecret}) {
+      {@JsonKey(required: true, disallowNullValue: true)
+          required String clientId,
+      @JsonKey(required: true, disallowNullValue: true)
+          required String clientSecret}) {
     return _GithubAuthConfig(
       clientId: clientId,
       clientSecret: clientSecret,
@@ -204,9 +200,11 @@ const $GithubAuthConfig = _$GithubAuthConfigTearOff();
 /// @nodoc
 mixin _$GithubAuthConfig {
   /// GitHub client ID.
+  @JsonKey(required: true, disallowNullValue: true)
   String get clientId => throw _privateConstructorUsedError;
 
   /// GitHub client secret.
+  @JsonKey(required: true, disallowNullValue: true)
   String get clientSecret => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -220,7 +218,9 @@ abstract class $GithubAuthConfigCopyWith<$Res> {
   factory $GithubAuthConfigCopyWith(
           GithubAuthConfig value, $Res Function(GithubAuthConfig) then) =
       _$GithubAuthConfigCopyWithImpl<$Res>;
-  $Res call({String clientId, String clientSecret});
+  $Res call(
+      {@JsonKey(required: true, disallowNullValue: true) String clientId,
+      @JsonKey(required: true, disallowNullValue: true) String clientSecret});
 }
 
 /// @nodoc
@@ -257,7 +257,9 @@ abstract class _$GithubAuthConfigCopyWith<$Res>
           _GithubAuthConfig value, $Res Function(_GithubAuthConfig) then) =
       __$GithubAuthConfigCopyWithImpl<$Res>;
   @override
-  $Res call({String clientId, String clientSecret});
+  $Res call(
+      {@JsonKey(required: true, disallowNullValue: true) String clientId,
+      @JsonKey(required: true, disallowNullValue: true) String clientSecret});
 }
 
 /// @nodoc
@@ -290,11 +292,15 @@ class __$GithubAuthConfigCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 @visibleForTesting
+@JsonSerializable(anyMap: true, checked: true, disallowUnrecognizedKeys: true)
 class _$_GithubAuthConfig implements _GithubAuthConfig {
   const _$_GithubAuthConfig(
-      {required this.clientId, required this.clientSecret});
+      {@JsonKey(required: true, disallowNullValue: true)
+          required this.clientId,
+      @JsonKey(required: true, disallowNullValue: true)
+          required this.clientSecret});
 
   factory _$_GithubAuthConfig.fromJson(Map<String, dynamic> json) =>
       _$_$_GithubAuthConfigFromJson(json);
@@ -302,10 +308,12 @@ class _$_GithubAuthConfig implements _GithubAuthConfig {
   @override
 
   /// GitHub client ID.
+  @JsonKey(required: true, disallowNullValue: true)
   final String clientId;
   @override
 
   /// GitHub client secret.
+  @JsonKey(required: true, disallowNullValue: true)
   final String clientSecret;
 
   @override
@@ -344,8 +352,10 @@ class _$_GithubAuthConfig implements _GithubAuthConfig {
 
 abstract class _GithubAuthConfig implements GithubAuthConfig {
   const factory _GithubAuthConfig(
-      {required String clientId,
-      required String clientSecret}) = _$_GithubAuthConfig;
+      {@JsonKey(required: true, disallowNullValue: true)
+          required String clientId,
+      @JsonKey(required: true, disallowNullValue: true)
+          required String clientSecret}) = _$_GithubAuthConfig;
 
   factory _GithubAuthConfig.fromJson(Map<String, dynamic> json) =
       _$_GithubAuthConfig.fromJson;
@@ -353,10 +363,12 @@ abstract class _GithubAuthConfig implements GithubAuthConfig {
   @override
 
   /// GitHub client ID.
+  @JsonKey(required: true, disallowNullValue: true)
   String get clientId => throw _privateConstructorUsedError;
   @override
 
   /// GitHub client secret.
+  @JsonKey(required: true, disallowNullValue: true)
   String get clientSecret => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

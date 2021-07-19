@@ -7,7 +7,7 @@ import '../../../domain/repo.dart';
 /// A starred GitHub repositories repository.
 abstract class StarredReposRepo {
   /// Creates a starred GitHub repositories repository.
-  const StarredReposRepo();
+  const StarredReposRepo(); // coverage:ignore-line
 
   /// Returns the [page]-th page of the available starred GitHub repositories.
   Future<Either<GetStaredReposFailure, Page<GithubRepo>>> getStarredReposPage({

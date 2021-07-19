@@ -22,16 +22,13 @@ class StarredReposCubit extends Cubit<StarredReposState> {
   /// repositories if [autoLoad] indicates so.
   StarredReposCubit({
     required StarredReposRepo starredReposRepo,
-    bool autoLoad = false,
   })  : _starredReposRepo = starredReposRepo,
         _starredRepos = [],
-        _lastCheckedPage = 0,
-        _lastAvailblePage = 1,
+        lastCheckedPage = 0,
+        lastAvailblePage = 1,
         super(
           const StarredReposState.loaded(),
-        ) {
-    if (autoLoad) load();
-  }
+        );
 
   /// The facade that actually performs actions on starred repos.
   final StarredReposRepo _starredReposRepo;
@@ -43,14 +40,16 @@ class StarredReposCubit extends Cubit<StarredReposState> {
   KtList<GithubRepo> get starredRepos => _starredRepos.toImmutableList();
 
   /// The last retrieved page of starred repositories.
-  int _lastCheckedPage;
+  @visibleForTesting
+  int lastCheckedPage;
 
   /// The number of the last available page of starred repositories.
-  int _lastAvailblePage;
+  @visibleForTesting
+  int lastAvailblePage;
 
   /// The flag that indicates whether there are more starred repositories to
   /// retrieve or not.
-  bool get _canLoadMore => _lastAvailblePage > _lastCheckedPage;
+  bool get _canLoadMore => lastAvailblePage > lastCheckedPage;
 
   /// The flag that indicates whether more starred repositories are being
   /// loaded.
@@ -64,7 +63,7 @@ class StarredReposCubit extends Cubit<StarredReposState> {
 
     final failureOrStarredReposPage =
         await _starredReposRepo.getStarredReposPage(
-      page: _lastCheckedPage + 1,
+      page: lastCheckedPage + 1,
     );
 
     emit(
@@ -75,8 +74,8 @@ class StarredReposCubit extends Cubit<StarredReposState> {
           ),
         ),
         (starredReposPage) {
-          _lastCheckedPage++;
-          _lastAvailblePage = starredReposPage.lastPage;
+          lastCheckedPage++;
+          lastAvailblePage = starredReposPage.lastPage;
           _starredRepos.addAll(starredReposPage.elements);
           return const StarredReposState.loaded();
         },
@@ -86,8 +85,8 @@ class StarredReposCubit extends Cubit<StarredReposState> {
 
   /// Reloads all starred GitHub repositories.
   Future<void> reload() async {
-    _lastCheckedPage = 0;
-    _lastAvailblePage = 1;
+    lastCheckedPage = 0;
+    lastAvailblePage = 1;
     _starredRepos.clear();
     await load();
   }

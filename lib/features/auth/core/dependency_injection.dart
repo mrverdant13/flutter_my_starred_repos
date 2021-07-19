@@ -51,7 +51,7 @@ Future<void> injectDependencies() async {
   // State managers
   getIt.registerFactory(
     () => AuthenticatorCubit(
-      authService: getIt()..isLoggedIn(),
+      authService: getIt(),
     ),
   );
 }

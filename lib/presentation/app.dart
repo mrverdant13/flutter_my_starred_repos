@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
             create: (context) => AppRouter(),
           ),
           BlocProvider(
-            create: (context) => getIt<AuthenticatorCubit>(),
+            create: (context) => getIt<AuthenticatorCubit>()..checkAuthStatus(),
           ),
         ],
         builder: (context, _) =>

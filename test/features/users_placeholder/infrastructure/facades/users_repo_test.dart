@@ -1,13 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app_template/features/users_placeholder/domain/get_users_failure.dart';
-import 'package:flutter_app_template/features/users_placeholder/domain/user.dart';
 import 'package:flutter_app_template/features/users_placeholder/infrastructure/converters/user.dart';
 import 'package:flutter_app_template/features/users_placeholder/infrastructure/data_sources/users_rds/interface.dart';
 import 'package:flutter_app_template/features/users_placeholder/infrastructure/dto/user.dart';
 import 'package:flutter_app_template/features/users_placeholder/infrastructure/facades/implementation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kt_dart/collection.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockUsersRDS extends Mock implements UsersRDS {}

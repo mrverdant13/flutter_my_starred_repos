@@ -9,6 +9,8 @@ import 'package:lumberdash/lumberdash.dart' as logger;
 import '../features/auth/core/dependency_injection.dart' as auth;
 import '../features/stared_repos/core/dependency_injection.dart'
     as starred_repos;
+import '../features/users_placeholder/core/dependency_injection.dart'
+    as users_placeholder;
 import '../presentation/app.dart';
 import 'config.dart';
 import 'dependency_injection.dart';
@@ -38,6 +40,9 @@ Future<void> startApp(Flavor flavor) async {
       await injectDependencies(
         flavor: flavor,
         config: appConfig,
+      );
+      await users_placeholder.injectDependencies(
+        flavor: flavor,
       );
       await auth.injectDependencies();
       await starred_repos.injectDependencies();

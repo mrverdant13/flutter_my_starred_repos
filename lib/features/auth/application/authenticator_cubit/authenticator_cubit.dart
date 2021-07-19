@@ -16,18 +16,13 @@ class AuthenticatorCubit extends Cubit<AuthenticatorState> {
   ///
   /// {@macro AuthenticatorCubit}
   ///
-  /// It uses a [authService] to run auth processes and it can automatically
-  /// start checking if a user has already been authenticated if [autoCheck]
-  /// indicates so.
+  /// It uses a [authService] to run auth processes.
   AuthenticatorCubit({
     required AuthService authService,
-    bool autoCheck = false,
   })  : _authService = authService,
         super(
           const AuthenticatorState.loading(),
-        ) {
-    if (autoCheck) checkAuthStatus();
-  }
+        );
 
   /// The auth service that actually performs auth actions.
   final AuthService _authService;
@@ -67,6 +62,7 @@ class AuthenticatorCubit extends Cubit<AuthenticatorState> {
 
   /// Starts the logout process.
   Future<void> logOut() async {
+    emit(const AuthenticatorState.loading());
     await _authService.logOut();
     emit(const AuthenticatorState.unauthenticated());
   }

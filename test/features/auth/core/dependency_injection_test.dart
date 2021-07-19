@@ -9,57 +9,96 @@ import 'package:get_it/get_it.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test(
+  group(
     '''
-  
+
 GIVEN an injector function
 AND a previously injected app config
-WHEN the injection process is triggered
+WHEN the injection process is triggered''',
+    () {
+      final getIt = GetIt.instance;
+
+      setUp(
+        () async {
+          // ARRANGE
+          await getIt.reset();
+          const githubAuthConfig = GithubAuthConfig(
+            clientId: 'clientId',
+            clientSecret: 'clientSecret',
+          );
+          const appConfig = AppConfig(
+            githubAuthConfig: githubAuthConfig,
+          );
+          getIt.registerLazySingleton(() => appConfig);
+
+          // ACT
+          await injectDependencies();
+        },
+      );
+      test(
+        '''
+  
 THEN a single GitHub auth config should be injected
 AND a single Flutter secure storage should be injected
 AND a single auth interceptor should be injected
 AND a single authenticator data source should be injected
 AND a single auth service should be injected
 AND a single auth cubit should be injected''',
-    () async {
-      // ARRANGE
-      final getIt = GetIt.instance;
-      const githubAuthConfig = GithubAuthConfig(
-        clientId: 'clientId',
-        clientSecret: 'clientSecret',
+        () async {
+          // ASSERT
+          expect(
+            getIt.isRegistered<GithubAuthConfig>(),
+            true,
+          );
+          expect(
+            getIt.isRegistered<FlutterSecureStorage>(),
+            true,
+          );
+          expect(
+            getIt.isRegistered<AuthInterceptor>(),
+            true,
+          );
+          expect(
+            getIt.isRegistered<Authenticator>(),
+            true,
+          );
+          expect(
+            getIt.isRegistered<AuthService>(),
+            true,
+          );
+          expect(
+            getIt.isRegistered<AuthenticatorCubit>(),
+            true,
+          );
+        },
       );
-      const appConfig = AppConfig(
-        githubAuthConfig: githubAuthConfig,
-      );
-      getIt.registerLazySingleton(() => appConfig);
 
-      // ACT
-      await injectDependencies();
+      test(
+        '''
 
-      // ASSERT
-      expect(
-        getIt.isRegistered<GithubAuthConfig>(),
-        true,
+THEN a single authenticator cubit can be accessed
+''',
+        () async {
+          // ASSERT
+          expect(
+            getIt.get<AuthenticatorCubit>(),
+            isNotNull,
+          );
+        },
       );
-      expect(
-        getIt.isRegistered<FlutterSecureStorage>(),
-        true,
-      );
-      expect(
-        getIt.isRegistered<AuthInterceptor>(),
-        true,
-      );
-      expect(
-        getIt.isRegistered<Authenticator>(),
-        true,
-      );
-      expect(
-        getIt.isRegistered<AuthService>(),
-        true,
-      );
-      expect(
-        getIt.isRegistered<AuthenticatorCubit>(),
-        true,
+
+      test(
+        '''
+
+THEN a single auth interceptor can be accessed
+''',
+        () async {
+          // ASSERT
+          expect(
+            getIt.get<AuthInterceptor>(),
+            isNotNull,
+          );
+        },
       );
     },
   );

@@ -41,7 +41,6 @@ Future<void> injectDependencies() async {
   getIt.registerFactory(
     () => StarredReposCubit(
       starredReposRepo: getIt(),
-      autoLoad: true,
     ),
   );
 }

@@ -17,7 +17,7 @@ class _Wrapper extends StatelessWidget {
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           BlocProvider<StarredReposCubit>(
-            create: (context) => getIt(),
+            create: (context) => getIt()..load(),
           ),
         ],
         builder: (context, child) => builder(context),

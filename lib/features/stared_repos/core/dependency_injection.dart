@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/dependency_injection.dart';
 import '../../auth/infrastructure/external/dio_interceptors.dart';
@@ -8,6 +9,7 @@ import '../infrastructure/data_sources/stared_repos_rds/rest_implementation.dart
 import '../infrastructure/facades/starred_repos_repo/implementation.dart';
 import '../infrastructure/facades/starred_repos_repo/interface.dart';
 
+@visibleForTesting
 const starredRepoDioName = 'starred_repos_dio';
 
 /// Injects all instances required for starred repos funcionality.

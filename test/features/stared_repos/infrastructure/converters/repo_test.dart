@@ -33,7 +33,7 @@ THEN a GitHub repository entity with same data is created
       );
 
       const expectedRepoOwner = User(
-        username:ownerUsername ,
+        username: ownerUsername,
         avatarUrl: ownerAvatarUrl,
       );
       const expectedRepo = GithubRepo(

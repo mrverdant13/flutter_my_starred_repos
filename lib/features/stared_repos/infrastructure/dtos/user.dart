@@ -9,6 +9,7 @@ part 'user.g.dart';
 @freezed
 class UserDto with _$UserDto {
   /// Creates a GitHub user DTO.
+  @JsonSerializable(explicitToJson: true)
   const factory UserDto({
     /// The nickname or username of this user.
     @JsonKey(name: 'login') required String username,

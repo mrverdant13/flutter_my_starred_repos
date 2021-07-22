@@ -1,12 +1,12 @@
-import 'package:dartz/dartz.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/converters/page.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/converters/repo.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/github_repo.dart';
-
-import '../../../domain/get_stared_repos_failure.dart';
+import '../../../domain/get_starred_repos_warnings.dart';
 import '../../../domain/page.dart';
+import '../../../domain/payload.dart';
 import '../../../domain/repo.dart';
+import '../../converters/page.dart';
+import '../../converters/repo.dart';
 import '../../data_sources/stared_repos_rds/interface.dart';
+import '../../data_sources/starred_repos_lds/interface.dart';
+import '../../dtos/github_repo.dart';
 import 'interface.dart';
 
 /// A starred GitHub repositories repository implementation.
@@ -15,34 +15,55 @@ class StarredReposRepoImp extends StarredReposRepo {
   /// [starredReposRDS].
   const StarredReposRepoImp({
     required StaredReposRDS starredReposRDS,
-  }) : _starredReposRDS = starredReposRDS;
+    required StarredReposLDS starredReposLDS,
+  })  : _starredReposRDS = starredReposRDS,
+        _starredReposLDS = starredReposLDS;
 
   /// The remota data source to be used to retrieve the starred GitHub
   /// repositories.
   final StaredReposRDS _starredReposRDS;
+  final StarredReposLDS _starredReposLDS;
 
   @override
-  Future<Either<GetStaredReposFailure, Page<GithubRepo>>> getStarredReposPage({
+  Future<Payload<Page<GithubRepo>, GetStaredReposWarning>> getStarredReposPage({
     required int page,
   }) async {
-    late final Page<GithubRepoDto> starredReposDtosPage;
+    late final Page<GithubRepoDto>? reposDtosPage;
 
     try {
-      starredReposDtosPage = await _starredReposRDS.getStaredReposPage(
+      reposDtosPage = await _starredReposRDS.getStaredReposPage(
         page: page,
       );
     } on GetStaredReposPageException catch (e) {
-      return Left(
-        e.when(
-          offline: () => const GetStaredReposFailure.offline(),
+      final starredReposDtosPage = await _starredReposLDS.get(
+        page: page,
+      );
+      final cachedReposPage = starredReposDtosPage?.map<GithubRepo>(
+            (reposDtos) => reposDtos.asEntity,
+          ) ??
+          Page<GithubRepo>(
+            lastPage: page,
+            elements: [],
+          );
+      return e.when(
+        offline: () => Payload.withWarning(
+          data: cachedReposPage,
+          warning: const GetStaredReposWarning.offline(),
+        ),
+        unmodified: () => Payload(
+          cachedReposPage,
         ),
       );
     }
 
-    final starredReposPage = starredReposDtosPage.map(
-      (starredRepoDto) => starredRepoDto.asEntity,
+    await _starredReposLDS.set(
+      page: page,
+      starredReposPage: reposDtosPage,
     );
-
-    return Right(starredReposPage);
+    return Payload(
+      reposDtosPage.map<GithubRepo>(
+        (starredRepoDto) => starredRepoDto.asEntity,
+      ),
+    );
   }
 }

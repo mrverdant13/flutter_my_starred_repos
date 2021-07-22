@@ -6,10 +6,7 @@ class StarredReposFailure with _$StarredReposFailure {
   /// A failure that can occur when starred repos are being retrieved.
   ///
   /// [failure] is the actual failure.
-  const factory StarredReposFailure.onRetrieve(
-    /// A starred repos retrieving failure.
-    GetStaredReposFailure failure,
-  ) = _StarredReposFailureOnRetrieve;
+  const factory StarredReposFailure.offline() = _StarredReposFailureOffline;
 }
 
 /// A union of [StarredReposCubit]'s states.

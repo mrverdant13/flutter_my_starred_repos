@@ -1,7 +1,6 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../domain/get_stared_repos_failure.dart';
+import '../../../domain/get_starred_repos_warnings.dart';
 import '../../../domain/page.dart';
+import '../../../domain/payload.dart';
 import '../../../domain/repo.dart';
 
 /// A starred GitHub repositories repository.
@@ -10,7 +9,7 @@ abstract class StarredReposRepo {
   const StarredReposRepo(); // coverage:ignore-line
 
   /// Returns the [page]-th page of the available starred GitHub repositories.
-  Future<Either<GetStaredReposFailure, Page<GithubRepo>>> getStarredReposPage({
+  Future<Payload<Page<GithubRepo>, GetStaredReposWarning>> getStarredReposPage({
     required int page,
   });
 }

@@ -10,11 +10,12 @@ class StarredReposLDSImp extends StarredReposLDS {
   StarredReposLDSImp({
     required Database sembastDatabase,
   })  : _db = sembastDatabase,
-        _store = StoreRef(storeName);
+        store = StoreRef(storeName);
 
   final Database _db;
 
-  final StoreRef<int, Map<String, dynamic>> _store;
+  @visibleForTesting
+  final StoreRef<int, Map<String, dynamic>> store;
 
   @visibleForTesting
   static const storeName = 'starred_repos';
@@ -24,7 +25,7 @@ class StarredReposLDSImp extends StarredReposLDS {
     required int page,
     required Page<GithubRepoDto> starredReposPage,
   }) async {
-    await _store.record(page).put(
+    await store.record(page).put(
           _db,
           starredReposPage.toJson(
             (repoDto) => repoDto.toJson(),
@@ -36,7 +37,7 @@ class StarredReposLDSImp extends StarredReposLDS {
   Future<Page<GithubRepoDto>?> get({
     required int page,
   }) async {
-    final starredReposPageJson = await _store.record(page).get(_db);
+    final starredReposPageJson = await store.record(page).get(_db);
     if (starredReposPageJson == null) return null;
     return ConvertiblePage.fromJson(
       starredReposPageJson,

@@ -7,11 +7,12 @@ class PagesEtagsLDSImp extends PagesEtagsLDS {
   PagesEtagsLDSImp({
     required Database sembastDatabase,
   })  : _db = sembastDatabase,
-        _store = StoreRef(storeName);
+        store = StoreRef(storeName);
 
   final Database _db;
 
-  final StoreRef<int, String> _store;
+  @visibleForTesting
+  final StoreRef<int, String> store;
 
   @visibleForTesting
   static const storeName = 'etags';
@@ -21,13 +22,13 @@ class PagesEtagsLDSImp extends PagesEtagsLDS {
     required int page,
     required String etag,
   }) async {
-    await _store.record(page).put(_db, etag);
+    await store.record(page).put(_db, etag);
   }
 
   @override
   Future<String?> get({
     required int page,
   }) {
-    return _store.record(page).get(_db);
+    return store.record(page).get(_db);
   }
 }

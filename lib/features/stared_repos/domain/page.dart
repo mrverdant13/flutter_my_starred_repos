@@ -7,5 +7,5 @@ class Page<T> with _$Page<T> {
   const factory Page({
     required int lastPage,
     required List<T> elements,
-  }) = _Page;
+  }) = _Page<T>;
 }

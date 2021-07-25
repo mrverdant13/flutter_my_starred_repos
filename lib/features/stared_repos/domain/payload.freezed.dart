@@ -136,8 +136,8 @@ class __$PayloadCopyWithImpl<D, W, $Res>
 
 /// @nodoc
 
-class _$_Payload<D, W> extends _Payload<D, W> {
-  const _$_Payload(this.data) : super._();
+class _$_Payload<D, W> implements _Payload<D, W> {
+  const _$_Payload(this.data);
 
   @override
   final D data;
@@ -209,9 +209,8 @@ class _$_Payload<D, W> extends _Payload<D, W> {
   }
 }
 
-abstract class _Payload<D, W> extends Payload<D, W> {
+abstract class _Payload<D, W> implements Payload<D, W> {
   const factory _Payload(D data) = _$_Payload<D, W>;
-  const _Payload._() : super._();
 
   @override
   D get data => throw _privateConstructorUsedError;
@@ -263,9 +262,8 @@ class __$PayloadWithWarningCopyWithImpl<D, W, $Res>
 
 /// @nodoc
 
-class _$_PayloadWithWarning<D, W> extends _PayloadWithWarning<D, W> {
-  const _$_PayloadWithWarning({required this.data, required this.warning})
-      : super._();
+class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
+  const _$_PayloadWithWarning({required this.data, required this.warning});
 
   @override
   final D data;
@@ -344,10 +342,9 @@ class _$_PayloadWithWarning<D, W> extends _PayloadWithWarning<D, W> {
   }
 }
 
-abstract class _PayloadWithWarning<D, W> extends Payload<D, W> {
+abstract class _PayloadWithWarning<D, W> implements Payload<D, W> {
   const factory _PayloadWithWarning({required D data, required W warning}) =
       _$_PayloadWithWarning<D, W>;
-  const _PayloadWithWarning._() : super._();
 
   @override
   D get data => throw _privateConstructorUsedError;

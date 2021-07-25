@@ -71,15 +71,17 @@ class StarredReposCubit extends Cubit<StarredReposState> {
     lastAvailblePage = cacheableStarredReposPage.data.lastPage;
     _starredRepos.addAll(cacheableStarredReposPage.data.elements);
 
-    if (cacheableStarredReposPage.hasWarning) {
-      emit(
+    cacheableStarredReposPage.maybeWhen(
+      null,
+      withWarning: (_, w) => emit(
         StarredReposState.failure(
-          cacheableStarredReposPage.warning!.when(
+          w.when(
             offline: () => const StarredReposFailure.offline(),
           ),
         ),
-      );
-    }
+      ),
+      orElse: () {},
+    );
 
     emit(const StarredReposState.loaded());
   }

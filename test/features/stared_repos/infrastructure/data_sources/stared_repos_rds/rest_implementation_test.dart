@@ -8,6 +8,7 @@ import 'package:flutter_app_template/features/stared_repos/infrastructure/data_s
 import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/stared_repos_rds/rest_implementation.dart';
 import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/github_repo.dart';
 import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/user.dart';
+import 'package:flutter_app_template/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
@@ -149,6 +150,7 @@ THEN a starred repos page data holder is returned
                   },
                   extra: Map.fromEntries([
                     AuthInterceptor.extraEntry,
+                    EtagsInterceptor.extraEntry,
                   ]),
                 ),
               ),
@@ -240,6 +242,7 @@ THEN a starred repos page data holder is returned
                   },
                   extra: Map.fromEntries([
                     AuthInterceptor.extraEntry,
+                    EtagsInterceptor.extraEntry,
                   ]),
                 ),
               ),
@@ -303,6 +306,78 @@ THEN an exception is thrown
                   },
                   extra: Map.fromEntries([
                     AuthInterceptor.extraEntry,
+                    EtagsInterceptor.extraEntry,
+                  ]),
+                ),
+              ),
+            ),
+          ).called(1);
+          verifyNoMoreInteractions(mockDio);
+        },
+      );
+
+      test(
+        '''
+
+AND no modifications detected by the server
+WHEN the user requests for a starred repos page
+THEN an exception is thrown
+      ''',
+        () async {
+          // ARRANGE
+          const page = 4;
+          when(
+            () => mockDio.get(
+              any(),
+              queryParameters: any(named: 'queryParameters'),
+              options: any(named: 'options'),
+            ),
+          ).thenThrow(
+            DioError(
+              requestOptions: RequestOptions(
+                path: '',
+              ),
+              type: DioErrorType.response,
+              response: Response(
+                requestOptions: RequestOptions(
+                  path: '',
+                ),
+                statusCode: 304,
+              ),
+            ),
+          );
+
+          // ACT
+          Future<void> action() async => starredReposRDS.getStaredReposPage(
+                page: page,
+              );
+
+          // ASSERT
+          expect(
+            action,
+            throwsA(
+              const GetStaredReposPageException.unmodified(),
+            ),
+          );
+          verify(
+            () => mockDio.get(
+              StaredReposRDSImp.endpoint,
+              queryParameters: any(
+                named: 'queryParameters',
+                that: equals({
+                  'page': page,
+                  'per_page': StaredReposRDSImp.pageLength,
+                }),
+              ),
+              options: any(
+                named: 'options',
+                that: DioOptionsMatcher(
+                  headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                  },
+                  extra: Map.fromEntries([
+                    AuthInterceptor.extraEntry,
+                    EtagsInterceptor.extraEntry,
                   ]),
                 ),
               ),

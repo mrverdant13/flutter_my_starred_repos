@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:bloc_test/bloc_test.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter_app_template/features/stared_repos/application/starred_repos_cubit/cubit.dart';
-import 'package:flutter_app_template/features/stared_repos/domain/get_stared_repos_failure.dart';
+import 'package:flutter_app_template/features/stared_repos/domain/get_starred_repos_warnings.dart';
 import 'package:flutter_app_template/features/stared_repos/domain/page.dart';
+import 'package:flutter_app_template/features/stared_repos/domain/payload.dart';
 import 'package:flutter_app_template/features/stared_repos/domain/repo.dart';
 import 'package:flutter_app_template/features/stared_repos/domain/user.dart';
 import 'package:flutter_app_template/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
@@ -75,13 +75,13 @@ THEN its initial state is loaded
           lastPage: expectedLastPage,
           elements: starredRepos,
         );
-        const possibleGetStarredReposFailures = [
-          GetStaredReposFailure.offline(),
-        ];
-        final expectedGetStarredReposFailure =
-            possibleGetStarredReposFailures[r.nextInt(
-          possibleGetStarredReposFailures.length,
-        )];
+        // const possibleGetStarredReposFailures = [
+        //   GetStaredReposFailure.offline(),
+        // ];
+        // final expectedGetStarredReposFailure =
+        //     possibleGetStarredReposFailures[r.nextInt(
+        //   possibleGetStarredReposFailures.length,
+        // )];
 
         blocTest<StarredReposCubit, StarredReposState>(
           '''
@@ -101,7 +101,7 @@ AND the resulting starred repos are loaded
                 page: any(named: 'page'),
               ),
             ).thenAnswer(
-              (_) async => Right(
+              (_) async => Payload(
                 expectedResultingPage,
               ),
             );
@@ -145,7 +145,10 @@ THEN a failure state is emited wrapping the actual failure
                 page: any(named: 'page'),
               ),
             ).thenAnswer(
-              (_) async => Left(expectedGetStarredReposFailure),
+              (_) async => Payload.withWarning(
+                data: expectedResultingPage,
+                warning: const GetStaredReposWarning.offline(),
+              ),
             );
 
             return starredReposCubit;
@@ -155,16 +158,15 @@ THEN a failure state is emited wrapping the actual failure
           },
           expect: () => [
             const StarredReposState.loading(),
-            StarredReposState.failure(
-              StarredReposFailure.onRetrieve(
-                expectedGetStarredReposFailure,
-              ),
-            ),
+            const StarredReposState.failure(StarredReposFailure.offline()),
+            const StarredReposState.loaded(),
           ],
           verify: (bloc) {
-            verify(() => mockStarredReposRepo.getStarredReposPage(
-                  page: page,
-                )).called(1);
+            verify(
+              () => mockStarredReposRepo.getStarredReposPage(
+                page: page,
+              ),
+            ).called(1);
             verifyNoMoreInteractions(mockStarredReposRepo);
           },
         );
@@ -184,7 +186,7 @@ AND the resulting starred repos are loaded
                 page: any(named: 'page'),
               ),
             ).thenAnswer(
-              (_) async => Right(
+              (_) async => Payload(
                 expectedResultingPage,
               ),
             );

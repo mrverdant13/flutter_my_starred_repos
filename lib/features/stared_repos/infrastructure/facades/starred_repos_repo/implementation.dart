@@ -56,10 +56,7 @@ class StarredReposRepoImp extends StarredReposRepo {
       );
     }
 
-    await _starredReposLDS.set(
-      page: page,
-      starredReposPage: reposDtosPage,
-    );
+    await _starredReposLDS.set(page: page, starredReposPage: reposDtosPage);
     return Payload(
       reposDtosPage.map<GithubRepo>(
         (starredRepoDto) => starredRepoDto.asEntity,

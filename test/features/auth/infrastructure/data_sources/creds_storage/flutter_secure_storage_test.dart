@@ -1,4 +1,4 @@
-import 'package:flutter_app_template/features/auth/infrastructure/data_sources/creds_storage/flutter_secure_storage.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/creds_storage/flutter_secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

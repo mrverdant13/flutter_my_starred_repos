@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app_template/features/users_placeholder/application/users_cubit/cubit.dart';
-import 'package:flutter_app_template/features/users_placeholder/domain/get_users_failure.dart';
-import 'package:flutter_app_template/features/users_placeholder/domain/user.dart';
-import 'package:flutter_app_template/features/users_placeholder/infrastructure/facades/interface.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/application/users_cubit/cubit.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/domain/get_users_failure.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/domain/user.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/infrastructure/facades/interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:mocktail/mocktail.dart';

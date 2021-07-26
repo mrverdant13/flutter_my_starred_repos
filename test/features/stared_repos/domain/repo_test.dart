@@ -1,5 +1,5 @@
-import 'package:flutter_app_template/features/stared_repos/domain/repo.dart';
-import 'package:flutter_app_template/features/stared_repos/domain/user.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/repo.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/user.dart';
 import 'package:test/test.dart';
 
 void main() {

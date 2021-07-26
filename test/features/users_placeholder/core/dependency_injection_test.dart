@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_app_template/core/flavors.dart';
-import 'package:flutter_app_template/features/users_placeholder/application/users_cubit/cubit.dart';
-import 'package:flutter_app_template/features/users_placeholder/core/dependency_injection.dart';
-import 'package:flutter_app_template/features/users_placeholder/infrastructure/data_sources/users_rds/interface.dart';
-import 'package:flutter_app_template/features/users_placeholder/infrastructure/facades/interface.dart';
+import 'package:flutter_my_starred_repos/core/flavors.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/application/users_cubit/cubit.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/core/dependency_injection.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/infrastructure/data_sources/users_rds/interface.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/infrastructure/facades/interface.dart';
 import 'package:get_it/get_it.dart';
 import 'package:test/test.dart';
 import 'package:graphql/client.dart';

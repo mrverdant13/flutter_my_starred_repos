@@ -1,4 +1,4 @@
-import 'package:flutter_app_template/core/config.dart';
+import 'package:flutter_my_starred_repos/core/config.dart';
 import 'package:test/test.dart';
 
 void main() {

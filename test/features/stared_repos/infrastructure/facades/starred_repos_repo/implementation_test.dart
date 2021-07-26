@@ -1,13 +1,13 @@
-import 'package:flutter_app_template/features/stared_repos/domain/get_starred_repos_warnings.dart';
-import 'package:flutter_app_template/features/stared_repos/domain/page.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/converters/page.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/converters/repo.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/github_repo.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/user.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/facades/starred_repos_repo/implementation.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/get_starred_repos_warnings.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/page.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/page.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/repo.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/github_repo.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/user.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/implementation.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

@@ -1,9 +1,9 @@
-# Flutter app template
+# Flutter App - My Starred Repos
 
 [![platform: flutter][flutter_badge_link]][flutter_link]
 [![style: lint][lint_badge_link]][lint_package_link]
 
-An app project template made with [Flutter][flutter_link] by [mrverdant13][mrverdant13_link].
+A demo app project made with [Flutter][flutter_link] by [mrverdant13][mrverdant13_link].
 
 ---
 
@@ -322,7 +322,7 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 <!-- Personal links -->
 
 [mrverdant13_link]: https://github.com/mrverdant13/
-[mrverdant13_flutter_project_template]: https://github.com/mrverdant13/flutter_app_template
+[mrverdant13_flutter_my_starred_repos]: https://github.com/mrverdant13/flutter_my_starred_repos
 [new_project_issues_link]: https://github.com/mrverdant13/git_history/issues/new/choose
 
 <!-- Visual Studio Code documentation -->

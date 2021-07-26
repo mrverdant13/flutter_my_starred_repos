@@ -1,6 +1,6 @@
 {
-    "name": "flutter_app_template",
-    "short_name": "flutter_app_template",
+    "name": "flutter_my_starred_repos",
+    "short_name": "flutter_my_starred_repod",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -23,4 +23,8 @@ class GithubRepo with _$GithubRepo {
     /// The amount of starts of this repository.
     required int starsCount,
   }) = _GithubRepo;
+
+  const GithubRepo._();
+
+  String get id => '${owner.username}/$name';
 }

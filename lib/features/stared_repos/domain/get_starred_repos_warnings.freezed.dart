@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'get_stared_repos_failure.dart';
+part of 'get_starred_repos_warnings.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,19 +13,19 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$GetStaredReposFailureTearOff {
-  const _$GetStaredReposFailureTearOff();
+class _$GetStaredReposWarningTearOff {
+  const _$GetStaredReposWarningTearOff();
 
-  _GetStaredReposFailureOffline offline() {
-    return const _GetStaredReposFailureOffline();
+  _GetStaredReposWarningOffline offline() {
+    return const _GetStaredReposWarningOffline();
   }
 }
 
 /// @nodoc
-const $GetStaredReposFailure = _$GetStaredReposFailureTearOff();
+const $GetStaredReposWarning = _$GetStaredReposWarningTearOff();
 
 /// @nodoc
-mixin _$GetStaredReposFailure {
+mixin _$GetStaredReposWarning {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() offline,
@@ -39,69 +39,69 @@ mixin _$GetStaredReposFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GetStaredReposFailureOffline value) offline,
+    required TResult Function(_GetStaredReposWarningOffline value) offline,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetStaredReposFailureOffline value)? offline,
+    TResult Function(_GetStaredReposWarningOffline value)? offline,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GetStaredReposFailureCopyWith<$Res> {
-  factory $GetStaredReposFailureCopyWith(GetStaredReposFailure value,
-          $Res Function(GetStaredReposFailure) then) =
-      _$GetStaredReposFailureCopyWithImpl<$Res>;
+abstract class $GetStaredReposWarningCopyWith<$Res> {
+  factory $GetStaredReposWarningCopyWith(GetStaredReposWarning value,
+          $Res Function(GetStaredReposWarning) then) =
+      _$GetStaredReposWarningCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$GetStaredReposFailureCopyWithImpl<$Res>
-    implements $GetStaredReposFailureCopyWith<$Res> {
-  _$GetStaredReposFailureCopyWithImpl(this._value, this._then);
+class _$GetStaredReposWarningCopyWithImpl<$Res>
+    implements $GetStaredReposWarningCopyWith<$Res> {
+  _$GetStaredReposWarningCopyWithImpl(this._value, this._then);
 
-  final GetStaredReposFailure _value;
+  final GetStaredReposWarning _value;
   // ignore: unused_field
-  final $Res Function(GetStaredReposFailure) _then;
+  final $Res Function(GetStaredReposWarning) _then;
 }
 
 /// @nodoc
-abstract class _$GetStaredReposFailureOfflineCopyWith<$Res> {
-  factory _$GetStaredReposFailureOfflineCopyWith(
-          _GetStaredReposFailureOffline value,
-          $Res Function(_GetStaredReposFailureOffline) then) =
-      __$GetStaredReposFailureOfflineCopyWithImpl<$Res>;
+abstract class _$GetStaredReposWarningOfflineCopyWith<$Res> {
+  factory _$GetStaredReposWarningOfflineCopyWith(
+          _GetStaredReposWarningOffline value,
+          $Res Function(_GetStaredReposWarningOffline) then) =
+      __$GetStaredReposWarningOfflineCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$GetStaredReposFailureOfflineCopyWithImpl<$Res>
-    extends _$GetStaredReposFailureCopyWithImpl<$Res>
-    implements _$GetStaredReposFailureOfflineCopyWith<$Res> {
-  __$GetStaredReposFailureOfflineCopyWithImpl(
-      _GetStaredReposFailureOffline _value,
-      $Res Function(_GetStaredReposFailureOffline) _then)
-      : super(_value, (v) => _then(v as _GetStaredReposFailureOffline));
+class __$GetStaredReposWarningOfflineCopyWithImpl<$Res>
+    extends _$GetStaredReposWarningCopyWithImpl<$Res>
+    implements _$GetStaredReposWarningOfflineCopyWith<$Res> {
+  __$GetStaredReposWarningOfflineCopyWithImpl(
+      _GetStaredReposWarningOffline _value,
+      $Res Function(_GetStaredReposWarningOffline) _then)
+      : super(_value, (v) => _then(v as _GetStaredReposWarningOffline));
 
   @override
-  _GetStaredReposFailureOffline get _value =>
-      super._value as _GetStaredReposFailureOffline;
+  _GetStaredReposWarningOffline get _value =>
+      super._value as _GetStaredReposWarningOffline;
 }
 
 /// @nodoc
 
-class _$_GetStaredReposFailureOffline implements _GetStaredReposFailureOffline {
-  const _$_GetStaredReposFailureOffline();
+class _$_GetStaredReposWarningOffline implements _GetStaredReposWarningOffline {
+  const _$_GetStaredReposWarningOffline();
 
   @override
   String toString() {
-    return 'GetStaredReposFailure.offline()';
+    return 'GetStaredReposWarning.offline()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _GetStaredReposFailureOffline);
+    return identical(this, other) || (other is _GetStaredReposWarningOffline);
   }
 
   @override
@@ -130,7 +130,7 @@ class _$_GetStaredReposFailureOffline implements _GetStaredReposFailureOffline {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GetStaredReposFailureOffline value) offline,
+    required TResult Function(_GetStaredReposWarningOffline value) offline,
   }) {
     return offline(this);
   }
@@ -138,7 +138,7 @@ class _$_GetStaredReposFailureOffline implements _GetStaredReposFailureOffline {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetStaredReposFailureOffline value)? offline,
+    TResult Function(_GetStaredReposWarningOffline value)? offline,
     required TResult orElse(),
   }) {
     if (offline != null) {
@@ -148,7 +148,7 @@ class _$_GetStaredReposFailureOffline implements _GetStaredReposFailureOffline {
   }
 }
 
-abstract class _GetStaredReposFailureOffline implements GetStaredReposFailure {
-  const factory _GetStaredReposFailureOffline() =
-      _$_GetStaredReposFailureOffline;
+abstract class _GetStaredReposWarningOffline implements GetStaredReposWarning {
+  const factory _GetStaredReposWarningOffline() =
+      _$_GetStaredReposWarningOffline;
 }

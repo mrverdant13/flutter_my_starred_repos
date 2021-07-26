@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/kt.dart';
 
-import '../../domain/get_stared_repos_failure.dart';
 import '../../domain/repo.dart';
 import '../../infrastructure/facades/starred_repos_repo/interface.dart';
 
@@ -37,7 +36,10 @@ class StarredReposCubit extends Cubit<StarredReposState> {
   final List<GithubRepo> _starredRepos;
 
   /// The found starred GitHub repositories.
-  KtList<GithubRepo> get starredRepos => _starredRepos.toImmutableList();
+  KtList<GithubRepo> get starredRepos =>
+      _starredRepos.toImmutableList().distinctBy(
+            (repo) => repo.id,
+          );
 
   /// The last retrieved page of starred repositories.
   @visibleForTesting
@@ -61,26 +63,27 @@ class StarredReposCubit extends Cubit<StarredReposState> {
 
     emit(const StarredReposState.loading());
 
-    final failureOrStarredReposPage =
+    final cacheableStarredReposPage =
         await _starredReposRepo.getStarredReposPage(
       page: lastCheckedPage + 1,
     );
+    lastCheckedPage++;
+    lastAvailblePage = cacheableStarredReposPage.data.lastPage;
+    _starredRepos.addAll(cacheableStarredReposPage.data.elements);
 
-    emit(
-      failureOrStarredReposPage.fold(
-        (failure) => StarredReposState.failure(
-          StarredReposFailure.onRetrieve(
-            failure,
+    cacheableStarredReposPage.maybeWhen(
+      null,
+      withWarning: (_, w) => emit(
+        StarredReposState.failure(
+          w.when(
+            offline: () => const StarredReposFailure.offline(),
           ),
         ),
-        (starredReposPage) {
-          lastCheckedPage++;
-          lastAvailblePage = starredReposPage.lastPage;
-          _starredRepos.addAll(starredReposPage.elements);
-          return const StarredReposState.loaded();
-        },
       ),
+      orElse: () {},
     );
+
+    emit(const StarredReposState.loaded());
   }
 
   /// Reloads all starred GitHub repositories.

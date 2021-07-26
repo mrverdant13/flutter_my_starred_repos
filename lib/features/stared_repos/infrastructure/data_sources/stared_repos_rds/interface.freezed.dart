@@ -19,6 +19,10 @@ class _$GetStaredReposPageExceptionTearOff {
   _GetStaredReposPageExceptionOffline offline() {
     return const _GetStaredReposPageExceptionOffline();
   }
+
+  _GetStaredReposPageExceptionUnmodified unmodified() {
+    return const _GetStaredReposPageExceptionUnmodified();
+  }
 }
 
 /// @nodoc
@@ -29,11 +33,13 @@ mixin _$GetStaredReposPageException {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() offline,
+    required TResult Function() unmodified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? offline,
+    TResult Function()? unmodified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -41,11 +47,14 @@ mixin _$GetStaredReposPageException {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetStaredReposPageExceptionOffline value)
         offline,
+    required TResult Function(_GetStaredReposPageExceptionUnmodified value)
+        unmodified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetStaredReposPageExceptionOffline value)? offline,
+    TResult Function(_GetStaredReposPageExceptionUnmodified value)? unmodified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -94,8 +103,8 @@ class __$GetStaredReposPageExceptionOfflineCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GetStaredReposPageExceptionOffline
-    implements _GetStaredReposPageExceptionOffline {
-  const _$_GetStaredReposPageExceptionOffline();
+    extends _GetStaredReposPageExceptionOffline {
+  const _$_GetStaredReposPageExceptionOffline() : super._();
 
   @override
   String toString() {
@@ -115,6 +124,7 @@ class _$_GetStaredReposPageExceptionOffline
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() offline,
+    required TResult Function() unmodified,
   }) {
     return offline();
   }
@@ -123,6 +133,7 @@ class _$_GetStaredReposPageExceptionOffline
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? offline,
+    TResult Function()? unmodified,
     required TResult orElse(),
   }) {
     if (offline != null) {
@@ -136,6 +147,8 @@ class _$_GetStaredReposPageExceptionOffline
   TResult map<TResult extends Object?>({
     required TResult Function(_GetStaredReposPageExceptionOffline value)
         offline,
+    required TResult Function(_GetStaredReposPageExceptionUnmodified value)
+        unmodified,
   }) {
     return offline(this);
   }
@@ -144,6 +157,7 @@ class _$_GetStaredReposPageExceptionOffline
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetStaredReposPageExceptionOffline value)? offline,
+    TResult Function(_GetStaredReposPageExceptionUnmodified value)? unmodified,
     required TResult orElse(),
   }) {
     if (offline != null) {
@@ -154,7 +168,105 @@ class _$_GetStaredReposPageExceptionOffline
 }
 
 abstract class _GetStaredReposPageExceptionOffline
-    implements GetStaredReposPageException {
+    extends GetStaredReposPageException {
   const factory _GetStaredReposPageExceptionOffline() =
       _$_GetStaredReposPageExceptionOffline;
+  const _GetStaredReposPageExceptionOffline._() : super._();
+}
+
+/// @nodoc
+abstract class _$GetStaredReposPageExceptionUnmodifiedCopyWith<$Res> {
+  factory _$GetStaredReposPageExceptionUnmodifiedCopyWith(
+          _GetStaredReposPageExceptionUnmodified value,
+          $Res Function(_GetStaredReposPageExceptionUnmodified) then) =
+      __$GetStaredReposPageExceptionUnmodifiedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$GetStaredReposPageExceptionUnmodifiedCopyWithImpl<$Res>
+    extends _$GetStaredReposPageExceptionCopyWithImpl<$Res>
+    implements _$GetStaredReposPageExceptionUnmodifiedCopyWith<$Res> {
+  __$GetStaredReposPageExceptionUnmodifiedCopyWithImpl(
+      _GetStaredReposPageExceptionUnmodified _value,
+      $Res Function(_GetStaredReposPageExceptionUnmodified) _then)
+      : super(
+            _value, (v) => _then(v as _GetStaredReposPageExceptionUnmodified));
+
+  @override
+  _GetStaredReposPageExceptionUnmodified get _value =>
+      super._value as _GetStaredReposPageExceptionUnmodified;
+}
+
+/// @nodoc
+
+class _$_GetStaredReposPageExceptionUnmodified
+    extends _GetStaredReposPageExceptionUnmodified {
+  const _$_GetStaredReposPageExceptionUnmodified() : super._();
+
+  @override
+  String toString() {
+    return 'GetStaredReposPageException.unmodified()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _GetStaredReposPageExceptionUnmodified);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() offline,
+    required TResult Function() unmodified,
+  }) {
+    return unmodified();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? offline,
+    TResult Function()? unmodified,
+    required TResult orElse(),
+  }) {
+    if (unmodified != null) {
+      return unmodified();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetStaredReposPageExceptionOffline value)
+        offline,
+    required TResult Function(_GetStaredReposPageExceptionUnmodified value)
+        unmodified,
+  }) {
+    return unmodified(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetStaredReposPageExceptionOffline value)? offline,
+    TResult Function(_GetStaredReposPageExceptionUnmodified value)? unmodified,
+    required TResult orElse(),
+  }) {
+    if (unmodified != null) {
+      return unmodified(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetStaredReposPageExceptionUnmodified
+    extends GetStaredReposPageException {
+  const factory _GetStaredReposPageExceptionUnmodified() =
+      _$_GetStaredReposPageExceptionUnmodified;
+  const _GetStaredReposPageExceptionUnmodified._() : super._();
 }

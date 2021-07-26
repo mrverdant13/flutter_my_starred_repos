@@ -16,10 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$StarredReposFailureTearOff {
   const _$StarredReposFailureTearOff();
 
-  _StarredReposFailureOnRetrieve onRetrieve(GetStaredReposFailure failure) {
-    return _StarredReposFailureOnRetrieve(
-      failure,
-    );
+  _StarredReposFailureOffline offline() {
+    return const _StarredReposFailureOffline();
   }
 }
 
@@ -28,34 +26,27 @@ const $StarredReposFailure = _$StarredReposFailureTearOff();
 
 /// @nodoc
 mixin _$StarredReposFailure {
-  /// A starred repos retrieving failure.
-  GetStaredReposFailure get failure => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetStaredReposFailure failure) onRetrieve,
+    required TResult Function() offline,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetStaredReposFailure failure)? onRetrieve,
+    TResult Function()? offline,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_StarredReposFailureOnRetrieve value) onRetrieve,
+    required TResult Function(_StarredReposFailureOffline value) offline,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_StarredReposFailureOnRetrieve value)? onRetrieve,
+    TResult Function(_StarredReposFailureOffline value)? offline,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $StarredReposFailureCopyWith<StarredReposFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -64,9 +55,6 @@ abstract class $StarredReposFailureCopyWith<$Res> {
   factory $StarredReposFailureCopyWith(
           StarredReposFailure value, $Res Function(StarredReposFailure) then) =
       _$StarredReposFailureCopyWithImpl<$Res>;
-  $Res call({GetStaredReposFailure failure});
-
-  $GetStaredReposFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -77,117 +65,63 @@ class _$StarredReposFailureCopyWithImpl<$Res>
   final StarredReposFailure _value;
   // ignore: unused_field
   final $Res Function(StarredReposFailure) _then;
-
-  @override
-  $Res call({
-    Object? failure = freezed,
-  }) {
-    return _then(_value.copyWith(
-      failure: failure == freezed
-          ? _value.failure
-          : failure // ignore: cast_nullable_to_non_nullable
-              as GetStaredReposFailure,
-    ));
-  }
-
-  @override
-  $GetStaredReposFailureCopyWith<$Res> get failure {
-    return $GetStaredReposFailureCopyWith<$Res>(_value.failure, (value) {
-      return _then(_value.copyWith(failure: value));
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$StarredReposFailureOnRetrieveCopyWith<$Res>
-    implements $StarredReposFailureCopyWith<$Res> {
-  factory _$StarredReposFailureOnRetrieveCopyWith(
-          _StarredReposFailureOnRetrieve value,
-          $Res Function(_StarredReposFailureOnRetrieve) then) =
-      __$StarredReposFailureOnRetrieveCopyWithImpl<$Res>;
-  @override
-  $Res call({GetStaredReposFailure failure});
-
-  @override
-  $GetStaredReposFailureCopyWith<$Res> get failure;
+abstract class _$StarredReposFailureOfflineCopyWith<$Res> {
+  factory _$StarredReposFailureOfflineCopyWith(
+          _StarredReposFailureOffline value,
+          $Res Function(_StarredReposFailureOffline) then) =
+      __$StarredReposFailureOfflineCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$StarredReposFailureOnRetrieveCopyWithImpl<$Res>
+class __$StarredReposFailureOfflineCopyWithImpl<$Res>
     extends _$StarredReposFailureCopyWithImpl<$Res>
-    implements _$StarredReposFailureOnRetrieveCopyWith<$Res> {
-  __$StarredReposFailureOnRetrieveCopyWithImpl(
-      _StarredReposFailureOnRetrieve _value,
-      $Res Function(_StarredReposFailureOnRetrieve) _then)
-      : super(_value, (v) => _then(v as _StarredReposFailureOnRetrieve));
+    implements _$StarredReposFailureOfflineCopyWith<$Res> {
+  __$StarredReposFailureOfflineCopyWithImpl(_StarredReposFailureOffline _value,
+      $Res Function(_StarredReposFailureOffline) _then)
+      : super(_value, (v) => _then(v as _StarredReposFailureOffline));
 
   @override
-  _StarredReposFailureOnRetrieve get _value =>
-      super._value as _StarredReposFailureOnRetrieve;
-
-  @override
-  $Res call({
-    Object? failure = freezed,
-  }) {
-    return _then(_StarredReposFailureOnRetrieve(
-      failure == freezed
-          ? _value.failure
-          : failure // ignore: cast_nullable_to_non_nullable
-              as GetStaredReposFailure,
-    ));
-  }
+  _StarredReposFailureOffline get _value =>
+      super._value as _StarredReposFailureOffline;
 }
 
 /// @nodoc
 
-class _$_StarredReposFailureOnRetrieve
-    implements _StarredReposFailureOnRetrieve {
-  const _$_StarredReposFailureOnRetrieve(this.failure);
-
-  @override
-
-  /// A starred repos retrieving failure.
-  final GetStaredReposFailure failure;
+class _$_StarredReposFailureOffline implements _StarredReposFailureOffline {
+  const _$_StarredReposFailureOffline();
 
   @override
   String toString() {
-    return 'StarredReposFailure.onRetrieve(failure: $failure)';
+    return 'StarredReposFailure.offline()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _StarredReposFailureOnRetrieve &&
-            (identical(other.failure, failure) ||
-                const DeepCollectionEquality().equals(other.failure, failure)));
+    return identical(this, other) || (other is _StarredReposFailureOffline);
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failure);
-
-  @JsonKey(ignore: true)
-  @override
-  _$StarredReposFailureOnRetrieveCopyWith<_StarredReposFailureOnRetrieve>
-      get copyWith => __$StarredReposFailureOnRetrieveCopyWithImpl<
-          _StarredReposFailureOnRetrieve>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetStaredReposFailure failure) onRetrieve,
+    required TResult Function() offline,
   }) {
-    return onRetrieve(failure);
+    return offline();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetStaredReposFailure failure)? onRetrieve,
+    TResult Function()? offline,
     required TResult orElse(),
   }) {
-    if (onRetrieve != null) {
-      return onRetrieve(failure);
+    if (offline != null) {
+      return offline();
     }
     return orElse();
   }
@@ -195,36 +129,26 @@ class _$_StarredReposFailureOnRetrieve
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_StarredReposFailureOnRetrieve value) onRetrieve,
+    required TResult Function(_StarredReposFailureOffline value) offline,
   }) {
-    return onRetrieve(this);
+    return offline(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_StarredReposFailureOnRetrieve value)? onRetrieve,
+    TResult Function(_StarredReposFailureOffline value)? offline,
     required TResult orElse(),
   }) {
-    if (onRetrieve != null) {
-      return onRetrieve(this);
+    if (offline != null) {
+      return offline(this);
     }
     return orElse();
   }
 }
 
-abstract class _StarredReposFailureOnRetrieve implements StarredReposFailure {
-  const factory _StarredReposFailureOnRetrieve(GetStaredReposFailure failure) =
-      _$_StarredReposFailureOnRetrieve;
-
-  @override
-
-  /// A starred repos retrieving failure.
-  GetStaredReposFailure get failure => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(ignore: true)
-  _$StarredReposFailureOnRetrieveCopyWith<_StarredReposFailureOnRetrieve>
-      get copyWith => throw _privateConstructorUsedError;
+abstract class _StarredReposFailureOffline implements StarredReposFailure {
+  const factory _StarredReposFailureOffline() = _$_StarredReposFailureOffline;
 }
 
 /// @nodoc

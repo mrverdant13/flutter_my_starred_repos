@@ -180,7 +180,8 @@ class __$GithubRepoDtoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_GithubRepoDto implements _GithubRepoDto {
   const _$_GithubRepoDto(
       {required this.owner,

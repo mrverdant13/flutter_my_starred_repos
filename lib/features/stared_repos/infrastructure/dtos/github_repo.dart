@@ -1,5 +1,6 @@
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'user.dart';
 
 part 'github_repo.freezed.dart';
 part 'github_repo.g.dart';
@@ -10,6 +11,7 @@ part 'github_repo.g.dart';
 @freezed
 class GithubRepoDto with _$GithubRepoDto {
   /// Creates a GitHub repository DTO.
+  @JsonSerializable(explicitToJson: true)
   const factory GithubRepoDto({
     /// The GitHub user that owns this repository.
     required UserDto owner,

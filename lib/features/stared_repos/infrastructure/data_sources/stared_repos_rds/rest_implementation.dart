@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import '../../../../auth/infrastructure/external/dio_interceptors.dart';
 import '../../../domain/page.dart';
 import '../../dtos/github_repo.dart';
+import '../../external/etags_dio_interceptor.dart';
 import 'interface.dart';
 
 /// {@macro StaredReposRDS}
@@ -58,6 +59,7 @@ class StaredReposRDSImp implements StaredReposRDS {
           },
           extra: {}..addEntries([
               AuthInterceptor.extraEntry,
+              EtagsInterceptor.extraEntry,
             ]),
         ),
       );
@@ -66,6 +68,11 @@ class StaredReposRDSImp implements StaredReposRDS {
         case DioErrorType.other:
           if (e.error != null && e.error is SocketException) {
             throw const GetStaredReposPageException.offline();
+          }
+          break;
+        case DioErrorType.response:
+          if (e.response?.statusCode == 304) {
+            throw const GetStaredReposPageException.unmodified();
           }
           break;
         default:

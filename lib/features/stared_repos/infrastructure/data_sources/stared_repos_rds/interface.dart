@@ -7,13 +7,18 @@ part 'interface.freezed.dart';
 
 /// A data source to interact with stared repos hosted in GitHub.
 abstract class StaredReposRDS {
-  /// Creates a stared repositories remote data source.
-  const StaredReposRDS(); // coverage:ignore-line
+  // TODO: Add const constructor.
+  // Creates a stared repositories remote data source.
+  // const StaredReposRDS();
 
-  /// Retrieves a page of GitHub stared repositories.
+  /// Retrieves a [Page] of starred [GithubRepoDto]s by the [page] they belong
+  /// to.
   ///
   /// Throws a [GetStaredReposPageException.offline] exception when there is no
   /// Internet connection.
+  ///
+  /// Throws a [GetStaredReposPageException.unmodified] exception when there is no
+  /// changes in data compared to the previously fetched version.
   Future<Page<GithubRepoDto>> getStaredReposPage({
     required int page,
   });
@@ -23,7 +28,16 @@ abstract class StaredReposRDS {
 /// stared repositories.
 @freezed
 class GetStaredReposPageException with _$GetStaredReposPageException {
+  const GetStaredReposPageException._();
+
   /// An exception thrown when there is no Internet connection.
   const factory GetStaredReposPageException.offline() =
       _GetStaredReposPageExceptionOffline;
+
+  /// An exception thrown when the data has not been modified compared to the
+  /// previously fetched one.
+  const factory GetStaredReposPageException.unmodified() =
+      _GetStaredReposPageExceptionUnmodified;
+
+  // bool get isOffline => this is _GetStaredReposPageExceptionOffline
 }

@@ -125,7 +125,8 @@ class __$UserDtoCopyWithImpl<$Res> extends _$UserDtoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_UserDto implements _UserDto {
   const _$_UserDto(
       {@JsonKey(name: 'login') required this.username,

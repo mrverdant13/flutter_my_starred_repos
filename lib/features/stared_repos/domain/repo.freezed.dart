@@ -159,12 +159,13 @@ class __$GithubRepoCopyWithImpl<$Res> extends _$GithubRepoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GithubRepo implements _GithubRepo {
+class _$_GithubRepo extends _GithubRepo {
   const _$_GithubRepo(
       {required this.owner,
       required this.name,
       required this.description,
-      required this.starsCount});
+      required this.starsCount})
+      : super._();
 
   @override
 
@@ -220,12 +221,13 @@ class _$_GithubRepo implements _GithubRepo {
       __$GithubRepoCopyWithImpl<_GithubRepo>(this, _$identity);
 }
 
-abstract class _GithubRepo implements GithubRepo {
+abstract class _GithubRepo extends GithubRepo {
   const factory _GithubRepo(
       {required User owner,
       required String name,
       required String description,
       required int starsCount}) = _$_GithubRepo;
+  const _GithubRepo._() : super._();
 
   @override
 

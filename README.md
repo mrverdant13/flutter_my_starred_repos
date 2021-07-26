@@ -5,31 +5,37 @@
 
 A demo app project made with [Flutter][flutter_link] by [mrverdant13][mrverdant13_link].
 
+This app shows your favorites GitHub repositories. You can search for other repos, preview them, and star or unstar them.
+
 ---
 
-## Features
+# Features
 
-### Platform-specific features
+## Platform-specific setup features
 
 |                                           | Android | iOS | Web | Linux | Windows | MacOS |
 | :---------------------------------------- | :-----: | :-: | :-: | :---: | :-----: | :---: |
-| Native flavors                            |   ✔️    | ❌  | ➖  |  ➖   |   ➖    |  ➖   |
-| Different app icon per flavor             |   ✔️    | ❌  | 🤔  |  🤔   |   🤔    |  🤔   |
-| Different app splash per flavor           |   ✔️    | ❌  | 🤔  |  🤔   |   🤔    |  🤔   |
-| Different app splash per dark/light theme |   ✔️    | 🤔  | 🤔  |  🤔   |   🤔    |  🤔   |
-| App signing pre-configuration             |   ✔️    | 🤔  | 🤔  |  🤔   |   🤔    |  🤔   |
-| Internationalization                      |   ✔️    | ❌  | 🤔  |  🤔   |   🤔    |  🤔   |
+| Native flavors                            |   ✔️    | 📌  | ➖  |  ➖   |   ➖    |  ➖   |
+| Different app icon per flavor             |   ✔️    | 📌  | 🔍  |  🔍   |   🔍    |  🔍   |
+| Different app splash per flavor           |   ✔️    | 📌  | 🔍  |  🔍   |   🔍    |  🔍   |
+| Different app splash per dark/light theme |   ✔️    | 🔍  | 🔍  |  🔍   |   🔍    |  🔍   |
+| App signing pre-configuration             |   ✔️    | 🔍  | 🔍  |  🔍   |   🔍    |  🔍   |
+| Internationalization                      |   ✔️    | 📌  | 🔍  |  🔍   |   🔍    |  🔍   |
 
-| Tag | Description         |
-| :-: | :------------------ |
-| ✔️  | Supported           |
-| ❌  | Not supported       |
-| ➖  | Not applicable      |
-| 🤔  | Under investigation |
+<br/>
 
-### Project-wide features
+| Tag | Description           |
+| :-: | :-------------------- |
+| ✔️  | Implemented           |
+| 📌  | Not implemented (yet) |
+| ➖  | Not applicable        |
+| 🔍  | Under investigation   |
+
+## Project-wide setup features
 
 - Flutter-level flavors by using different entry points per flavor.
+- Conditional features implementation based on the selected build flavor and a given config file.
+- Modular and composable logger with the [lumberdash package][lumberdash_package_link], which can be easily integrated with [Firebase Analytics][firebase_analytics_link] or [Sentry][sentry_link].
 - CI/CD:
   - GitHub Actions:
     - Code formatting
@@ -42,18 +48,57 @@ A demo app project made with [Flutter][flutter_link] by [mrverdant13][mrverdant1
 - IDE launch setup:
   - Visual Studio Code
 
+## Functional features
+
+- Raw OAuth flow implementation with GitHub specifications.
+- ETag-based data caching for basic offline mode support.
+- REST API server integration.
+- GraphQL server integration.
+
 ---
 
-## Prerequisites
+# Prerequisites
 
-### Required
+## Required
 
 - [Flutter 2][flutter_link] to build and test the project.
 
-### Optional
+  You could follow the [official docs about installation][flutter_installation_link].
+
+- A [GitHub OAuth App][github_oauth_apps_link] to provide auth functionality.
+
+  You could check the [official docs about GitHub OAuth apps creation][github_oauth_apps_creation_link] considering the following parameters:
+
+  - Homepage URL: `http://localhost:8080`
+  - Authorization callback URL: `http://localhost:3000/callback`
+
+  > **NOTE:** The client ID and a client secret are necessary.
+
+## Optional
 
 - [Chocolatey][chocolatey_link] on Windows to install and use `lcov` utils.
 - [remove_from_coverage][remove_from_coverage_package_link] package to ignore generated files in coverage info.
+
+---
+
+# App configuration
+
+This project uses a YAML file as config data provider and it should be placed inside the `assets/config/` folder.
+
+Its name should be `app_config.`_`<env_tag>`_`.yaml`, where _`<env_tag>`_ should be replaced by `dev`, `stg` or `prod` according to your desired flavor.
+
+The schema of this config file should be as described below:
+
+```yaml
+# GitHub auth config data.
+githubAuthConfig:
+  # GitHub app client identifier.
+  clientId: client_id
+  # GitHub app client secret.
+  clientSecret: client_secret
+```
+
+For easy setup, you can take the `assets/config/app_config.sample.yaml` sample file.
 
 ---
 
@@ -74,7 +119,9 @@ $ flutter run --target lib/main_stg.dart
 $ flutter run --target lib/main_prod.dart
 ```
 
-> **Note:** The target path separator (`\` or `/`) might change according to the OS.
+> **Note 1:** The target path separator (`\` or `/`) might change according to the OS.
+
+> **Note 2:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
 
 ## Native flavors
 
@@ -91,11 +138,13 @@ $ flutter run --flavor stg --target lib/main_stg.dart
 $ flutter run --flavor prod --target lib/main_prod.dart
 ```
 
-> **Note:** The target path separator (`\` or `/`) might change according to the OS.
+> **Note 1:** The target path separator (`\` or `/`) might change according to the OS.
 
-## IDE debugging
+> **Note 2:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
 
-### Visual Studio Code
+# IDE debugging
+
+## Visual Studio Code
 
 Follow these steps on [Visual Studio Code][vsc_link]:
 
@@ -222,15 +271,22 @@ This project relies on [flutter_localizations][flutter_localizations_link] and f
    }
    ```
 
----
+## Complex use cases
 
-## Testing
+For more complex needs, you could check the following resources:
+
+- [Flutter Internationalization User Guide][flutter_internationalization_user_guide_link]
+- [Application Resource Bundle Specification][application_resource_bundle_specification_link]
+
+# Testing
 
 1.  To run all unit and widget tests, execute the following command:
 
     ```sh
-    $ flutter test --coverage -r expanded --test-randomize-ordering-seed random
+    $ flutter test -x ci-only --coverage -r expanded --test-randomize-ordering-seed random
     ```
+
+    > **Note:** The `-x ci-only` excludes tests tagged as `ci-only`, which indicated that they should be run on CI/CD envs only.
 
 2.  To remove generated files from coverage info, install the [remove_from_coverage package][remove_from_coverage_package_link] and run one of the following commands:
 
@@ -280,17 +336,18 @@ This project relies on [flutter_localizations][flutter_localizations_link] and f
 
 ---
 
-## Issues
+# Issues
 
 Submit a [new issue report][new_project_issues_link] if you find any bug or have any suggestion.
 
 ---
 
-## References
+# References
 
 - [Android official documentation][android_official_documentation_link]
 - [Very Good CLI][very_good_cli_package_link]
 - [Flutter official documentation][flutter_link]
+- [GitHub official documentation][github_docs_link]
 
 <!-- ? LINKS AND LOCAL PATHS -->
 
@@ -307,8 +364,15 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 
 [chocolatey_link]: https://chocolatey.org/
 
+<!-- Firebase Analytics -->
+
+[firebase_analytics_link]: https://firebase.google.com/docs/analytics
+
 <!-- Flutter documentation -->
 
+[application_resource_bundle_specification_link]: https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification
+[flutter_installation_link]: https://flutter.dev/docs/get-started/install
+[flutter_internationalization_user_guide_link]: http://flutter.dev/go/i18n-user-guide
 [flutter_link]: https://flutter.dev/
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
 [flutter_internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
@@ -316,14 +380,25 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 <!-- Flutter packages -->
 
 [lint_package_link]: https://pub.dev/packages/lint
+[lumberdash_package_link]: https://pub.dev/packages/lumberdash
 [remove_from_coverage_package_link]: https://pub.dev/packages/remove_from_coverage
 [very_good_cli_package_link]: https://pub.dev/packages/very_good_cli
+
+<!-- GitHub documentation -->
+
+[github_docs_link]: https://docs.github.com/
+[github_oauth_apps_creation_link]: https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app
+[github_oauth_apps_link]: https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#about-oauth-apps
 
 <!-- Personal links -->
 
 [mrverdant13_link]: https://github.com/mrverdant13/
 [mrverdant13_flutter_my_starred_repos]: https://github.com/mrverdant13/flutter_my_starred_repos
 [new_project_issues_link]: https://github.com/mrverdant13/git_history/issues/new/choose
+
+<!-- Sentry links -->
+
+[sentry_link]: https://sentry.io/
 
 <!-- Visual Studio Code documentation -->
 

@@ -282,24 +282,6 @@ THEN the data with no warning is returned
         () async {
           // ARRANGE
           const page = 9;
-          const pageLength = 3;
-          const lastPage = 12;
-
-          final initialStarredReposDtosPage = Page(
-            lastPage: lastPage,
-            elements: List.generate(
-              pageLength,
-              (idx) => GithubRepoDto(
-                owner: UserDto(
-                  username: 'username $idx',
-                  avatarUrl: 'avatar url $idx',
-                ),
-                name: 'repo $idx',
-                description: 'description $idx',
-                starsCount: idx,
-              ),
-            ),
-          );
           const expectedStarredReposPage = Page(
             lastPage: page,
             elements: [],

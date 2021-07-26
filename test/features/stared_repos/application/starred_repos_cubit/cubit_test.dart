@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_app_template/features/stared_repos/application/starred_repos_cubit/cubit.dart';
 import 'package:flutter_app_template/features/stared_repos/domain/get_starred_repos_warnings.dart';
@@ -55,7 +53,6 @@ THEN its initial state is loaded
       );
 
       {
-        final r = Random();
         const page = 5;
         const pageLength = 8;
         final starredRepos = List.generate(

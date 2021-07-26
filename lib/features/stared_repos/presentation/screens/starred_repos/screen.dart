@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../../core/dependency_injection.dart';
 import '../../../application/starred_repos_cubit/cubit.dart';
-import '../../../domain/repo.dart';
 
 part 'wrapper.dart';
 

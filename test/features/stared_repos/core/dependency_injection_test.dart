@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/external/dio_interceptors.dart';
-import 'package:flutter_app_template/features/stared_repos/application/starred_repos_cubit/cubit.dart';
-import 'package:flutter_app_template/features/stared_repos/core/dependency_injection.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/application/starred_repos_cubit/cubit.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';

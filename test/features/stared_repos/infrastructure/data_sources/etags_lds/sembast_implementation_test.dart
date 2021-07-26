@@ -1,4 +1,4 @@
-import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/etags_lds/sembast_implementation.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/etags_lds/sembast_implementation.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'package:test/test.dart';

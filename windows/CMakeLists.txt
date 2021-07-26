@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(flutter_app_template LANGUAGES CXX)
+project(flutter_my_starred_repos LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_app_template")
+set(BINARY_NAME "flutter_my_starred_repos")
 
 cmake_policy(SET CMP0063 NEW)
 

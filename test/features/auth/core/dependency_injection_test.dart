@@ -1,9 +1,9 @@
-import 'package:flutter_app_template/core/config.dart';
-import 'package:flutter_app_template/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
-import 'package:flutter_app_template/features/auth/core/dependency_injection.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/data_sources/authenticator/interface.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/external/dio_interceptors.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/facades/auth_service/interface.dart';
+import 'package:flutter_my_starred_repos/core/config.dart';
+import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
+import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/authenticator/interface.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/interface.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:test/test.dart';

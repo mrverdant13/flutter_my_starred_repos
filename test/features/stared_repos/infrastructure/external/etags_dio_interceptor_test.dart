@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/etags_lds/interface.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/etags_lds/interface.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

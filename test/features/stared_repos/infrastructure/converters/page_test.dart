@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app_template/features/stared_repos/domain/page.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/converters/page.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/page.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/page.dart';
 import 'package:test/test.dart';
 
 void main() {

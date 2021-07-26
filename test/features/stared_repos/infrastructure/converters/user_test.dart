@@ -1,6 +1,6 @@
-import 'package:flutter_app_template/features/stared_repos/domain/user.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/converters/user.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/user.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/user.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/user.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/user.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

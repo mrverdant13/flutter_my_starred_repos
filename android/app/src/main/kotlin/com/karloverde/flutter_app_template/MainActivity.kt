@@ -1,4 +1,4 @@
-package com.karloverde.flutter_app_template
+package com.mrverdant13.flutter_my_starred_repos
 
 import io.flutter.embedding.android.FlutterActivity
 

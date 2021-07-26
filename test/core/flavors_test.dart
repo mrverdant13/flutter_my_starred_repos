@@ -1,4 +1,4 @@
-import 'package:flutter_app_template/core/flavors.dart';
+import 'package:flutter_my_starred_repos/core/flavors.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

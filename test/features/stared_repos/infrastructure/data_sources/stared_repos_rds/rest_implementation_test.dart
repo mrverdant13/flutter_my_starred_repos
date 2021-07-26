@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/external/dio_interceptors.dart';
-import 'package:flutter_app_template/features/stared_repos/domain/page.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/stared_repos_rds/rest_implementation.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/github_repo.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/user.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/page.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/rest_implementation.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/github_repo.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/user.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

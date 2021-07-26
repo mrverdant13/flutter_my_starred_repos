@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app_template/features/users_placeholder/infrastructure/data_sources/users_rds/gql_implementation.dart';
-import 'package:flutter_app_template/features/users_placeholder/infrastructure/data_sources/users_rds/interface.dart';
-import 'package:flutter_app_template/features/users_placeholder/infrastructure/dto/user.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/infrastructure/data_sources/users_rds/gql_implementation.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/infrastructure/data_sources/users_rds/interface.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/infrastructure/dto/user.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphql/client.dart';
 import 'package:mocktail/mocktail.dart';

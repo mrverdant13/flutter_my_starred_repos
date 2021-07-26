@@ -1,5 +1,5 @@
-name: flutter_app_template
-description: A new Flutter project.
+name: flutter_my_starred_repos
+description: A Flutter app to check personal GitHub starred repositories.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 

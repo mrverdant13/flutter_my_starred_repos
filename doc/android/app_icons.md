@@ -1,6 +1,6 @@
 # Android app icons setup
 
-For the Android platform, **this template uses a different app icon per flavor** defined by using [source sets][source_sets_link]. Thus, it is recommended to check the [template documentation on Android flavor-specific source sets][flavor_specific_source_sets].
+For the Android platform, **this app uses a different app icon per flavor** defined by using [source sets][source_sets_link]. Thus, it is recommended to check the [template documentation on Android flavor-specific source sets][flavor_specific_source_sets].
 
 ---
 
@@ -8,13 +8,13 @@ For the Android platform, **this template uses a different app icon per flavor**
 
 Android has two ways to display an app icon or a launcher icon: [adaptive and legacy icon][adaptive_legacy_launcher_icons_link].
 
-**This project template only implements Android legacy icons for now.**
+**This project only implements Android legacy icons for now.**
 
 These legacy icons are intended for use on devices running Android 7.1 (API level 25) or lower, which don't support adaptive icons. However, when no adaptive icons are set, the legacy ones serve as fallback.
 
 Legacy icons consist of PNG images [located in the `res/mipmap-<density qualifier>` directories][legacy_icons_location_link] within the appropriate flavor source set, where [_"density qualifier"_ is an identifier for a density bucket][density_buckets_qualifiers_link].
 
-For this project template, the images are named `ic_launcher.png`, which is the default name employed for the app icon asset for Android.
+For this app, the images are named `ic_launcher.png`, which is the default name employed for the app icon asset for Android.
 
 ---
 
@@ -31,9 +31,9 @@ The following list shows some of them:
 
 <!-- ? LINKS -->
 
-<!-- Template documentation -->
+<!-- Project documentation -->
 
-[flavor_specific_source_sets]: https://github.com/mrverdant13/flutter_app_template/blob/main/doc/android/flavors.md#flavor-specific-source-sets
+[flavor_specific_source_sets]: https://github.com/mrverdant13/flutter_my_starred_repos/blob/main/doc/android/flavors.md#flavor-specific-source-sets
 
 <!-- Android documentation -->
 

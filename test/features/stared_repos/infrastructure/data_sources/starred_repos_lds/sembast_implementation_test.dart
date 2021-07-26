@@ -1,8 +1,8 @@
-import 'package:flutter_app_template/features/stared_repos/domain/page.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/converters/page.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/data_sources/starred_repos_lds/sembast_implementation.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/github_repo.dart';
-import 'package:flutter_app_template/features/stared_repos/infrastructure/dtos/user.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/page.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/page.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/sembast_implementation.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/github_repo.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/user.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'package:test/test.dart';

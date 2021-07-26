@@ -4,7 +4,7 @@ As described in the [Flutter docs][app_signing_docs_link], to publish on the Pla
 
 > On Android, there are two signing keys: deployment and upload. The end-users download the `.apk` signed with the ‘deployment key’. An ‘upload key’ is used to authenticate the `.aab`/`.apk` uploaded by developers onto the Play Store and is re-signed with the deployment key once in the Play Store.
 
-**This project template has a default implementation for app signing by using an upload keystore.**
+**This project has a default implementation for app signing by using an upload keystore.**
 
 ---
 
@@ -44,7 +44,7 @@ Check [this documentation][keystore_generation_link].
 
 ## Reference de keystore from the app
 
-This template offers two methods to reference the upload keystore from the app: with a properties file and with environment variables.
+This project offers two methods to reference the upload keystore from the app: with a properties file and with environment variables.
 
 <!-- TODO: Since `keyAlias` and `storeFile` do not change, they can be hardcoded in the gradle config and then ignored in the setup process. -->
 

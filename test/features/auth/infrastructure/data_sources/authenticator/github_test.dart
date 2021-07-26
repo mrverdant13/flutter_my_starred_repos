@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter_app_template/core/config.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/data_sources/authenticator/github.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/data_sources/authenticator/interface.dart';
+import 'package:flutter_my_starred_repos/core/config.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/authenticator/github.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/authenticator/interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';

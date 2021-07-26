@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app_template/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
-import 'package:flutter_app_template/features/auth/domain/log_in_failure.dart';
-import 'package:flutter_app_template/features/auth/domain/log_in_method.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/facades/auth_service/interface.dart';
+import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
+import 'package:flutter_my_starred_repos/features/auth/domain/log_in_failure.dart';
+import 'package:flutter_my_starred_repos/features/auth/domain/log_in_method.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/interface.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/data_sources/creds_storage/interface.dart';
-import 'package:flutter_app_template/features/auth/infrastructure/external/dio_interceptors.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/creds_storage/interface.dart';
+import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:test/test.dart';

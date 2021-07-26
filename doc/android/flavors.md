@@ -1,6 +1,6 @@
 # Flavors
 
-This template supports three different flavors for the Android platform which are implemented following the [official flavoring documentation][product_flavors_configuration_link]:
+This project supports three different flavors for the Android platform which are implemented following the [official flavoring documentation][product_flavors_configuration_link]:
 
 - Development
 - Staging

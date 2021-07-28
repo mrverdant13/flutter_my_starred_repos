@@ -5,20 +5,29 @@ void main() {
   test(
     '''
 
-GIVEN a correct flavor tag
-WHEN the tag is parsed to a flavor
-THEN the correct flavor is returned
+GIVEN all available flavor tags
+WHEN they are parsed to their flavors
+THEN the correct flavors are returned
 ''',
     () async {
       // ARRANGE
-      const inputFlavorTag = 'DEV';
-      const outputFlavor = Flavor.dev;
+      final testMap = {
+        FlavorTag.dev: Flavor.dev,
+        FlavorTag.prod: Flavor.prod,
+        FlavorTag.stg: Flavor.stg,
+      };
 
-      // ACT
-      final result = inputFlavorTag.flavor;
+      for (final flavorKeyValue in testMap.entries) {
+        // ARRANGE
+        final flavorTag = flavorKeyValue.key;
+        final expectedFlavor = flavorKeyValue.value;
 
-      // ASSERT
-      expect(result, outputFlavor);
+        // ACT
+        final result = flavorTag.flavor;
+
+        // ASSERT
+        expect(result, expectedFlavor);
+      }
     },
   );
 
@@ -46,7 +55,7 @@ THEN an unsupported error is thrown
 
 GIVEN all available flavors
 WHEN they are parsed to their tags
-THEN the correct string tags are obtained
+THEN the correct string tags are returned
 ''',
     () async {
       // ARRANGE
@@ -57,6 +66,7 @@ THEN the correct string tags are obtained
       };
 
       for (final flavorKeyValue in testMap.entries) {
+        // ARRANGE
         final flavor = flavorKeyValue.key;
         final expectedFlavorTag = flavorKeyValue.value;
 

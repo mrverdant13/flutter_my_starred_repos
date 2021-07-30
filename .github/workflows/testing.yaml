@@ -69,7 +69,7 @@ jobs:
         run: flutter pub get
 
       - name: Run tests adn generate coverage
-        run: flutter test --coverage --no-pub -x ci-only --test-randomize-ordering-seed random
+        run: flutter test --coverage --no-pub -x ci-only -r expanded --test-randomize-ordering-seed random
 
       - name: Check 100% code coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1.1.1

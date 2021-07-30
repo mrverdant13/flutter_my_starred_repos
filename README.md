@@ -11,7 +11,7 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
 # Features
 
-## Platform-specific setup features
+## Platform-specific features
 
 |                                           | Android | iOS | Web | Linux | Windows | MacOS |
 | :---------------------------------------- | :-----: | :-: | :-: | :---: | :-----: | :---: |
@@ -31,7 +31,7 @@ This app shows your favorites GitHub repositories. You can search for other repo
 | ➖  | Not applicable        |
 | 🔍  | Under investigation   |
 
-## Project-wide setup features
+## Project-wide features
 
 - Flutter-level flavors by using different entry points per flavor.
 - Conditional features implementation based on the selected build flavor and a given config file.
@@ -47,9 +47,8 @@ This app shows your favorites GitHub repositories. You can search for other repo
 - Strong lint rules with the [lint package][lint_package_link].
 - IDE launch setup:
   - Visual Studio Code
-
-## Functional features
-
+- Secure app configuration based on a bundled config file (looking for a safer method 🔍).
+- Dependency injection independent of the widgets tree.
 - Raw OAuth flow implementation with GitHub specifications.
 - ETag-based data caching for basic offline mode support.
 - REST API server integration.

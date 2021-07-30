@@ -11,7 +11,7 @@ void main() {
 
 GIVEN a GitHub repository DTO
 WHEN it is mapped to a GitHub repository entity
-THEN a GitHub repository entity with same data is created
+THEN a GitHub repository entity with same semantic data should be created
 ''',
     () async {
       // ARRANGE

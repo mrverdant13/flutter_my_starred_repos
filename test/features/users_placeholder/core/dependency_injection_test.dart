@@ -14,7 +14,9 @@ void main() {
   
 GIVEN an injector function''',
     () {
+      // ARRANGE
       final getIt = GetIt.instance;
+
       for (final flavor in Flavor.values) {
         group(
           '''
@@ -24,7 +26,10 @@ WHEN the injection process is triggered''',
           () {
             setUp(
               () async {
+                // ARRANGE
                 getIt.reset();
+
+                // ACT
                 await injectDependencies(
                   flavor: flavor,
                 );
@@ -39,41 +44,21 @@ AND a single users repo should be injected
 AND a single users cubit should be injected
 ''',
               () async {
-                // ARRANGE
-
-                // ACT
-
                 // ASSERT
-                expect(
-                  getIt.isRegistered<UsersRDS>(),
-                  true,
-                );
-                expect(
-                  getIt.isRegistered<UsersRepo>(),
-                  true,
-                );
-                expect(
-                  getIt.isRegistered<UsersCubit>(),
-                  true,
-                );
+                expect(getIt.isRegistered<UsersRDS>(), isTrue);
+                expect(getIt.isRegistered<UsersRepo>(), isTrue);
+                expect(getIt.isRegistered<UsersCubit>(), isTrue);
               },
             );
 
             test(
               '''
 
-THEN a single users cubit can be accessed
+THEN a single users cubit should be available
 ''',
               () async {
-                // ARRANGE
-
-                // ACT
-
                 // ASSERT
-                expect(
-                  getIt.get<UsersCubit>(),
-                  isNotNull,
-                );
+                expect(getIt.get<UsersCubit>(), isNotNull);
               },
             );
 
@@ -81,36 +66,22 @@ THEN a single users cubit can be accessed
               test(
                 '''
 
-THEN a single HTTP client is injected
+THEN a single HTTP client should be injected
 ''',
                 () async {
-                  // ARRANGE
-
-                  // ACT
-
                   // ASSERT
-                  expect(
-                    getIt.isRegistered<Dio>(),
-                    true,
-                  );
+                  expect(getIt.isRegistered<Dio>(), isTrue);
                 },
               );
             } else if (flavor == Flavor.stg) {
               test(
                 '''
 
-THEN a single GraphQL client is injected
+THEN a single GraphQL client should be injected
 ''',
                 () async {
-                  // ARRANGE
-
-                  // ACT
-
                   // ASSERT
-                  expect(
-                    getIt.isRegistered<GraphQLClient>(),
-                    true,
-                  );
+                  expect(getIt.isRegistered<GraphQLClient>(), isTrue);
                 },
               );
             }

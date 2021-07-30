@@ -9,7 +9,7 @@ void main() {
 
 GIVEN a user DTO
 WHEN it is mapped to a user entity
-THEN a user entity with same data is created
+THEN a user entity with same semantic data should be created
 ''',
     () async {
       // ARRANGE

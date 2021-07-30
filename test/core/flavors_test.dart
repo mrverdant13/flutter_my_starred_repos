@@ -7,7 +7,7 @@ void main() {
 
 GIVEN all available flavor tags
 WHEN they are parsed to their flavors
-THEN the correct flavors are returned
+THEN the correct flavors should be returned
 ''',
     () async {
       // ARRANGE
@@ -36,7 +36,7 @@ THEN the correct flavors are returned
 
 GIVEN an incorrect flavor tag
 WHEN the tag is parsed to a flavor
-THEN an unsupported error is thrown
+THEN an unsupported error should be thrown
 ''',
     () async {
       // ARRANGE
@@ -55,7 +55,7 @@ THEN an unsupported error is thrown
 
 GIVEN all available flavors
 WHEN they are parsed to their tags
-THEN the correct string tags are returned
+THEN the correct string tags should be returned
 ''',
     () async {
       // ARRANGE

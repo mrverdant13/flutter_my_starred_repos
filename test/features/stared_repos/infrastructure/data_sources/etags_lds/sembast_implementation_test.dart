@@ -7,13 +7,15 @@ void main() {
   group(
     '''
 
-GIVEN an etags local data source''',
+GIVEN an etags local data source
+├─ THAT uses a Sembast database''',
     () {
-      // External dependencies
+      // ARRANGE
       late Database sembastDb;
-
-      // Remote data source
       late PagesEtagsLDSImp pagesEtagsLDS;
+
+      const page = 3;
+      const etag = 'etag';
 
       setUp(
         () async {
@@ -30,15 +32,18 @@ GIVEN an etags local data source''',
       test(
         '''
 
+AND no persisted repos page ETag
 AND a starred repos page
 AND a starred repos page ETag
-WHEN the ETag is sent to be persisted
-THEN the ETag is stored
+WHEN the ETag is sent to be stored
+THEN the ETag should be persisted
+├─ BY storing the ETag in the Sembast database
       ''',
         () async {
-          // ARRANGE
-          const page = 3;
-          const etag = 'etag';
+          // ARRANGE-ASSERT
+          String? storedEtag =
+              await pagesEtagsLDS.store.record(page).get(sembastDb);
+          expect(storedEtag, isNull);
 
           // ACT
           await pagesEtagsLDS.set(
@@ -47,8 +52,7 @@ THEN the ETag is stored
           );
 
           // ASSERT
-          final storedEtag =
-              await pagesEtagsLDS.store.record(page).get(sembastDb);
+          storedEtag = await pagesEtagsLDS.store.record(page).get(sembastDb);
           expect(storedEtag, etag);
         },
       );
@@ -56,19 +60,22 @@ THEN the ETag is stored
       test(
         '''
 
-AND a starred repos page
 AND a previously persisted starred repos page ETag
+AND a starred repos page
 WHEN the ETag linked to the page is requested
-THEN the ETag is returned
+THEN the ETag should be returned
+├─ BY retrieving the persisted ETag from the Sembast database
+├─ AND returning the ETag
       ''',
         () async {
-          // ARRANGE
-          const page = 3;
-          const etag = 'etag';
+          // ARRANGE-ASSERT
           await pagesEtagsLDS.store.record(page).put(sembastDb, etag);
+          String? storedEtag =
+              await pagesEtagsLDS.store.record(page).get(sembastDb);
+          expect(storedEtag, etag);
 
           // ACT
-          final storedEtag = await pagesEtagsLDS.get(
+          storedEtag = await pagesEtagsLDS.get(
             page: page,
           );
 

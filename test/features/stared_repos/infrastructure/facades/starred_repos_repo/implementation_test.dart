@@ -1,5 +1,6 @@
 import 'package:flutter_my_starred_repos/features/stared_repos/domain/get_starred_repos_warnings.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/domain/page.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/payload.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/page.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/repo.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
@@ -18,17 +19,46 @@ class MockStarredReposLDS extends Mock implements StarredReposLDS {}
 class FakeReposPage extends Fake implements Page<GithubRepoDto> {}
 
 void main() {
+  // ARRANGE
+  setUpAll(
+    () {
+      registerFallbackValue(FakeReposPage());
+    },
+  );
+
   group(
     '''
 
-GIVEN a starred repos repository implementation''',
+GIVEN a starred repos repository
+├─ THAT uses a starred repos remote data source
+├─ AND  uses a starred repos local data source
+AND a repos page number''',
     () {
-      // Remote data sources
+      // ARRANGE
       late MockStarredReposRDS mockStarredReposRDS;
       late MockStarredReposLDS mockStarredReposLDS;
-
-      // Facades
       late StarredReposRepo starredReposRepo;
+
+      const page = 9;
+      const pageLength = 7;
+      const lastPage = 12;
+
+      final reposDtosPage = Page(
+        lastPage: lastPage,
+        elements: List.generate(
+          pageLength,
+          (idx) => GithubRepoDto(
+            owner: UserDto(
+              username: 'username $idx',
+              avatarUrl: 'avatar url $idx',
+            ),
+            name: 'repo $idx',
+            description: 'description $idx',
+            starsCount: idx,
+          ),
+        ),
+      );
+      final reposPage = reposDtosPage.map((repoDto) => repoDto.asEntity);
 
       setUp(
         () {
@@ -40,49 +70,33 @@ GIVEN a starred repos repository implementation''',
           );
         },
       );
-      setUpAll(
+
+      tearDown(
         () {
-          registerFallbackValue(FakeReposPage());
+          verifyNoMoreInteractions(mockStarredReposRDS);
+          verifyNoMoreInteractions(mockStarredReposLDS);
         },
       );
 
       test(
         '''
 
-WHEN a starred repos page is requested
-THEN a starred repos page data holder is returned
+AND no connectivity issues
+AND a new version of the repos page in the server
+WHEN the starred repos page is requested
+THEN a starred repos page data holder should be received, persisted and returned
+├─ BY retrieving the repos page with the starred repos remote data source
+├─ AND storing the repos page with the starred repos local data source
+├─ AND returning its value
+│  ├─ THAT dows not include any warning
 ''',
         () async {
-          // ARRANGE
-          const page = 9;
-          const pageLength = 3;
-          const lastPage = 12;
-
-          final initialStarredReposDtosPage = Page(
-            lastPage: lastPage,
-            elements: List.generate(
-              pageLength,
-              (idx) => GithubRepoDto(
-                owner: UserDto(
-                  username: 'username $idx',
-                  avatarUrl: 'avatar url $idx',
-                ),
-                name: 'repo $idx',
-                description: 'description $idx',
-                starsCount: idx,
-              ),
-            ),
-          );
-          final expectedStarredReposPage = initialStarredReposDtosPage.map(
-            (starredRepoDto) => starredRepoDto.asEntity,
-          );
-
           when(
             () => mockStarredReposRDS.getStaredReposPage(
               page: any(named: 'page'),
             ),
           ).thenAnswer(
-            (_) async => initialStarredReposDtosPage,
+            (_) async => reposDtosPage,
           );
           when(
             () => mockStarredReposLDS.set(
@@ -99,12 +113,6 @@ THEN a starred repos page data holder is returned
           );
 
           // ASSERT
-          result.when(
-            (reposPage) => expect(reposPage, expectedStarredReposPage),
-            withWarning: (_, __) => fail(
-              'Expected: Payload\nActual: Payload.withWarning',
-            ),
-          );
           verify(
             () => mockStarredReposRDS.getStaredReposPage(
               page: page,
@@ -113,42 +121,36 @@ THEN a starred repos page data holder is returned
           verify(
             () => mockStarredReposLDS.set(
               page: page,
-              starredReposPage: initialStarredReposDtosPage,
+              starredReposPage: reposDtosPage,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockStarredReposRDS);
+          result.when(
+            (_reposPage) => expect(_reposPage, reposPage),
+            withWarning: (_, __) => fail(
+              'Expected: $PayloadWithoutWarning\n'
+              'Actual: ${result.runtimeType}',
+            ),
+          );
         },
       );
 
       test(
         '''
 
+AND no connectivity issues
 AND no modified data in the server
-AND previously stored data
+AND a previously stored version of the repos page
 WHEN a starred repos page is requested
-THEN the data with no warning is returned
+THEN the persisted repos page should be returned
+├─ BY trying to retrieve a new version of the repos page
+├─ AND recognizing its unmodified state
+├─ AND retrieving its previously stored representation
+├─ AND returning its value
+│  ├─ THAT does not include any warning
 ''',
         () async {
           // ARRANGE
-          const page = 9;
-          const pageLength = 3;
-          const lastPage = 12;
-
-          final initialStarredReposDtosPage = Page(
-            lastPage: lastPage,
-            elements: List.generate(
-              pageLength,
-              (idx) => GithubRepoDto(
-                owner: UserDto(
-                  username: 'username $idx',
-                  avatarUrl: 'avatar url $idx',
-                ),
-                name: 'repo $idx',
-                description: 'description $idx',
-                starsCount: idx,
-              ),
-            ),
-          );
+          final initialStarredReposDtosPage = reposDtosPage;
           final expectedStarredReposPage = initialStarredReposDtosPage.map(
             (starredRepoDto) => starredRepoDto.asEntity,
           );
@@ -174,12 +176,6 @@ THEN the data with no warning is returned
           );
 
           // ASSERT
-          result.when(
-            (reposPage) => expect(reposPage, expectedStarredReposPage),
-            withWarning: (_, __) => fail(
-              'Expected: Payload\nActual: Payload.withWarning',
-            ),
-          );
           verify(
             () => mockStarredReposRDS.getStaredReposPage(
               page: page,
@@ -190,7 +186,13 @@ THEN the data with no warning is returned
               page: page,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockStarredReposRDS);
+          result.when(
+            (reposPage) => expect(reposPage, expectedStarredReposPage),
+            withWarning: (_, __) => fail(
+              'Expected: $PayloadWithoutWarning\n'
+              'Actual: ${result.runtimeType}',
+            ),
+          );
         },
       );
 
@@ -198,31 +200,18 @@ THEN the data with no warning is returned
         '''
 
 AND no internet connection
-AND previously stored data
+AND a previously stored version of the repos page
 WHEN a starred repos page is requested
-THEN the data with warning is returned
+THEN the persisted repos page should be returned
+├─ BY trying to retrieve a new version of the repos page
+├─ AND recognizing network issues
+├─ AND retrieving its previously stored representation
+├─ AND returning its value
+│  ├─ THAT includes a warning indicating connectivity issues
 ''',
         () async {
           // ARRANGE
-          const page = 9;
-          const pageLength = 3;
-          const lastPage = 12;
-
-          final initialStarredReposDtosPage = Page(
-            lastPage: lastPage,
-            elements: List.generate(
-              pageLength,
-              (idx) => GithubRepoDto(
-                owner: UserDto(
-                  username: 'username $idx',
-                  avatarUrl: 'avatar url $idx',
-                ),
-                name: 'repo $idx',
-                description: 'description $idx',
-                starsCount: idx,
-              ),
-            ),
-          );
+          final initialStarredReposDtosPage = reposDtosPage;
           final expectedStarredReposPage = initialStarredReposDtosPage.map(
             (starredRepoDto) => starredRepoDto.asEntity,
           );
@@ -248,15 +237,6 @@ THEN the data with warning is returned
           );
 
           // ASSERT
-          result.when(
-            (reposPage) => fail(
-              'Expected: Payload\nActual: Payload.withWarning',
-            ),
-            withWarning: (reposPage, warning) {
-              expect(reposPage, expectedStarredReposPage);
-              expect(warning, const GetStaredReposWarning.offline());
-            },
-          );
           verify(
             () => mockStarredReposRDS.getStaredReposPage(
               page: page,
@@ -267,7 +247,16 @@ THEN the data with warning is returned
               page: page,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockStarredReposRDS);
+          result.when(
+            (reposPage) => fail(
+              'Expected: $PayloadWithWarning\n'
+              'Actual: ${result.runtimeType}',
+            ),
+            withWarning: (reposPage, warning) {
+              expect(reposPage, expectedStarredReposPage);
+              expect(warning, const GetStaredReposWarning.offline());
+            },
+          );
         },
       );
 
@@ -275,9 +264,15 @@ THEN the data with warning is returned
         '''
 
 AND no internet connection
-AND no previously stored data
+AND no previously stored version of the repos page
 WHEN a starred repos page is requested
-THEN the data with no warning is returned
+THEN an empty repos page should be returned
+├─ BY trying to retrieve a new  repos page
+├─ AND recognizing network issues
+├─ AND trying to retrieve a previously stored representation of the page
+├─ AND overwriting the absent page with an empty one
+├─ AND returning its value
+│  ├─ THAT includes a warning indicating connectivity issues
 ''',
         () async {
           // ARRANGE
@@ -308,15 +303,6 @@ THEN the data with no warning is returned
           );
 
           // ASSERT
-          result.when(
-            (reposPage) => fail(
-              'Expected: Payload\nActual: Payload.withWarning',
-            ),
-            withWarning: (reposPage, warning) {
-              expect(reposPage, expectedStarredReposPage);
-              expect(warning, const GetStaredReposWarning.offline());
-            },
-          );
           verify(
             () => mockStarredReposRDS.getStaredReposPage(
               page: page,
@@ -327,7 +313,16 @@ THEN the data with no warning is returned
               page: page,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockStarredReposRDS);
+          result.when(
+            (reposPage) => fail(
+              'Expected: $PayloadWithWarning\n'
+              'Actual: ${result.runtimeType}',
+            ),
+            withWarning: (reposPage, warning) {
+              expect(reposPage, expectedStarredReposPage);
+              expect(warning, const GetStaredReposWarning.offline());
+            },
+          );
         },
       );
     },

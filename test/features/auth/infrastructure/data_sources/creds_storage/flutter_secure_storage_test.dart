@@ -10,12 +10,11 @@ void main() {
   group(
     '''
 
-GIVEN a credentials storage''',
+GIVEN a credentials storage
+├─ THAT uses a Flutter secure storage''',
     () {
-      // External dependencies
+      // ARRANGE
       late MockFlutterSecureStorage mockFlutterSecureStorage;
-
-      // Remota data source
       late CredsStorageImp credsStorage;
 
       setUp(
@@ -27,12 +26,19 @@ GIVEN a credentials storage''',
         },
       );
 
+      tearDown(
+        () {
+          verifyNoMoreInteractions(mockFlutterSecureStorage);
+        },
+      );
+
       test(
         '''
 
 WHEN the credentials remotion is requested
-THEN the stored creds are discarded
-AND the cached creds are discarded
+THEN any persisted creds should be removed
+├─ BY dropping stored creds from the secure storage
+├─ AND discarding cached creds
       ''',
         () async {
           // ARRANGE
@@ -54,7 +60,6 @@ AND the cached creds are discarded
               key: CredsStorageImp.credsKey,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockFlutterSecureStorage);
         },
       );
 
@@ -62,8 +67,9 @@ AND the cached creds are discarded
         '''
 
 WHEN credentials are passed to be stored
-THEN the given credentials get persisted
-AND the given credentials are cached
+THEN the given credentials should be persisted
+├─ BY storing the creds in the secure storage
+├─ AND caching the creds in memory
       ''',
         () async {
           // ARRANGE
@@ -90,7 +96,6 @@ AND the given credentials are cached
               value: creds.toJson(),
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockFlutterSecureStorage);
         },
       );
 
@@ -99,7 +104,9 @@ AND the given credentials are cached
 
 AND cached credentials
 WHEN credentials are requested
-THEN the cached credentials are returned
+THEN the cached credentials should be returned
+├─ BY not using the secure storage
+├─ AND returning the in-memory cached creds
 ''',
         () async {
           // ARRANGE
@@ -111,6 +118,7 @@ THEN the cached credentials are returned
           final result = await credsStorage.get();
 
           // ASSERT
+          verifyZeroInteractions(mockFlutterSecureStorage);
           expect(result, creds);
         },
       );
@@ -121,8 +129,10 @@ THEN the cached credentials are returned
 AND persisted credentials
 AND no cached credentials
 WHEN credentials are requested
-THEN the persisted credentials are cached
-AND the peristed credentials are returned
+THEN the persisted credentials should be cached and returned
+├─ BY retrieving the persisted creds from the secure storage
+├─ AND caching the creds in memory
+├─ AND returning the creds
 ''',
         () async {
           // ARRANGE
@@ -143,22 +153,14 @@ AND the peristed credentials are returned
 
           // ASSERT
 
-          // Comparing creds JSON string as it is saver.
-          expect(
-            result!.toJson(),
-            resultingCredsJson,
-          );
-          expect(
-            credsStorage.creds!.toJson(),
-            resultingCredsJson,
-          );
-
+          // Comparing creds JSON string as it is saver and avoids reference comparisons.
+          expect(result!.toJson(), resultingCredsJson);
+          expect(credsStorage.creds!.toJson(), resultingCredsJson);
           verify(
             () => mockFlutterSecureStorage.read(
               key: CredsStorageImp.credsKey,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockFlutterSecureStorage);
         },
       );
     },

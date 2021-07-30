@@ -22,9 +22,10 @@ void main() {
 GIVEN a grant-based auth response handler
 AND a grant
 AND a redirect endpoint
-WHEN the reponse is handled
-THEN the grant handler is used
-AND the redirect endpoint query parameters is used
+WHEN the reponse handler is invoked using the given grant and redirect endpoint
+├─ BY calling the grant response handler
+│  ├─ THAT uses the redirect endpoint query parameters
+├─ AND an receiving an HTTP client wrapping the resulting credentials
 ''',
     () async {
       // ARRANGE
@@ -50,12 +51,12 @@ AND the redirect endpoint query parameters is used
       );
 
       // ASSERT
-      expect(result, client);
       verify(
         () => mockGrant.handleAuthorizationResponse(
           redirectEndpoint.queryParameters,
         ),
       ).called(1);
+      expect(result, client);
       verifyNoMoreInteractions(mockGrant);
     },
   );
@@ -66,13 +67,11 @@ AND the redirect endpoint query parameters is used
 GIVEN an authenticator
 AND a GitHub config data holder''',
     () {
-      // Config
+      // ARRANGE
       const githubAuthConfig = GithubAuthConfig(
         clientId: 'clientId',
         clientSecret: 'clientSecret',
       );
-
-      // Remota data source
       late AuthenticatorImp authenticator;
 
       test(
@@ -81,7 +80,7 @@ AND a GitHub config data holder''',
 WHEN the OAuth login process is triggered
 AND the user grants all permissions
 AND the user completes the process
-THEN new credentials are returned
+THEN the resulting creds should be returned
 ''',
         () async {
           // ARRANGE
@@ -123,7 +122,7 @@ THEN new credentials are returned
 WHEN the OAuth login process is triggered
 AND the user does not grant all permissions
 AND the user completes the process
-THEN an exception indicating permission issues is thrown
+THEN an exception indicating permission issues should be thrown
 ''',
         () async {
           // ARRANGE
@@ -169,7 +168,7 @@ THEN an exception indicating permission issues is thrown
 WHEN the OAuth login process is triggered
 AND the user grants all permissions
 AND the user does not complete the process
-THEN an exception indicating that the action was canceled is thrown
+THEN an exception indicating that the action was canceled should be thrown
 ''',
         () async {
           // ARRANGE
@@ -216,7 +215,7 @@ WHEN the OAuth login process is triggered
 AND the user grants all permissions
 AND the user complete the process
 AND the operation fails
-THEN an exception indicating permission issues is thrown
+THEN an exception indicating permission issues should be thrown
 ''',
         () async {
           // ARRANGE
@@ -258,21 +257,19 @@ THEN an exception indicating permission issues is thrown
     },
   );
 
-  setUpAll(
-    () {
-      registerFallbackValue<http.BaseRequest>(FakeRequest());
-    },
-  );
-
   test(
     '''
 
 GIVEN an OAuth HTTP client
+├─ THAT uses an actual HTTP client
 WHEN it sends a request
-THEN the `Accept` header is set to `application/json`
+THEN the request dispatching shoul be delegated
+├─ BY sending the request with the inner HTTP client
+│  ├─ THAT sets the request `Accept` header to `application/json`
 ''',
     () async {
       // ARRANGE
+      registerFallbackValue<http.BaseRequest>(FakeRequest());
       final mockHttpClient = MockHttpClient();
       final oauthHttpClient = OAuthHttpClient(
         mockHttpClient,

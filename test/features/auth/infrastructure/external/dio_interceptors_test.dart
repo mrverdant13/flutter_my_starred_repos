@@ -13,32 +13,61 @@ void main() {
   group(
     '''
 
-GIVEN an HTTP client with auth extra data
-AND an auth interceptor''',
+GIVEN an HTTP client
+├─ THAT uses an auth interceptor
+│  ├─ THAT uses a credentials storage
+AND a request
+├─ THAT uses auth extra data for interception''',
     () {
-      const accessToken = 'access_token';
+      // ARRANGE
+      late MockCredsStorage mockCredsStorage;
+      late AuthInterceptor authInterceptor;
+      late MockerInterceptor mockerInterceptor;
+      late Dio dio;
+
       final extraData = Map.fromEntries([
         AuthInterceptor.extraEntry,
       ]);
-      final mockCredsStorage = MockCredsStorage();
-      final authInterceptor = AuthInterceptor(
-        credsStorage: mockCredsStorage,
+      RequestOptions request() =>
+          // Using a function to avoid mutability-related issues.
+          RequestOptions(
+            path: 'some.url',
+            extra: extraData,
+          );
+
+      setUp(
+        () {
+          mockCredsStorage = MockCredsStorage();
+          authInterceptor = AuthInterceptor(
+            credsStorage: mockCredsStorage,
+          );
+          mockerInterceptor = MockerInterceptor();
+          dio = Dio()
+            ..interceptors.addAll([
+              authInterceptor,
+              mockerInterceptor,
+            ]);
+        },
       );
-      final mockerInterceptor = MockerInterceptor();
-      final dio = Dio()
-        ..interceptors.addAll([
-          authInterceptor,
-          mockerInterceptor,
-        ]);
+
+      tearDown(
+        () {
+          verifyNoMoreInteractions(mockCredsStorage);
+        },
+      );
 
       test(
         '''
 
 AND a stored access token
-WHEN a request is sent
-THEN the token is attached to the `Authorization` header as a bearer one''',
+WHEN the request is sent
+THEN the auth interceptor should alter the request
+├─ BY retriving an access token with the creds storage
+├─ AND attaching the token to the `Authorization` header as a bearer one
+''',
         () async {
           // ARRANGE
+          const accessToken = 'access_token';
           when(
             () => mockCredsStorage.get(),
           ).thenAnswer(
@@ -46,14 +75,12 @@ THEN the token is attached to the `Authorization` header as a bearer one''',
           );
 
           // ACT
-          final result = await dio.fetch(
-            RequestOptions(
-              path: 'some.url',
-              extra: extraData,
-            ),
-          );
+          final result = await dio.fetch(request());
 
           // ASSERT
+          verify(
+            () => mockCredsStorage.get(),
+          ).called(1);
           expect(
             result.requestOptions.headers['Authorization'],
             'Bearer $accessToken',
@@ -65,8 +92,11 @@ THEN the token is attached to the `Authorization` header as a bearer one''',
         '''
 
 AND no stored access token
-WHEN a request is sent
-THEN the `Authorization` header is not set''',
+WHEN the request is sent
+THEN the auth interceptor should not alter the request
+├─ BY trying to retrive an access token with the creds storage
+├─ AND not defining the `Authorization` header
+''',
         () async {
           // ARRANGE
           when(
@@ -76,18 +106,13 @@ THEN the `Authorization` header is not set''',
           );
 
           // ACT
-          final result = await dio.fetch(
-            RequestOptions(
-              path: 'some.url',
-              extra: extraData,
-            ),
-          );
+          final result = await dio.fetch(request());
 
           // ASSERT
-          expect(
-            result.requestOptions.headers['Authorization'],
-            isNull,
-          );
+          verify(
+            () => mockCredsStorage.get(),
+          ).called(1);
+          expect(result.requestOptions.headers['Authorization'], isNull);
         },
       );
     },

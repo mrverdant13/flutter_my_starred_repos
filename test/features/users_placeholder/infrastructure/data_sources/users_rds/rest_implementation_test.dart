@@ -14,12 +14,11 @@ void main() {
   group(
     '''
 
-GIVEN a users remote data source''',
+GIVEN a users remote data source
+THAT uses a Dio HTTP client''',
     () {
-      // External dependencies
+      // ARRANGE
       late MockDio mockDio;
-
-      // Remota data source
       late UsersRDSImp usersRDS;
 
       setUp(
@@ -35,32 +34,28 @@ GIVEN a users remote data source''',
         '''
 
 WHEN the users list is requested
-THEN a set of remote user models is returned
+THEN the Dio client should be used to retrieve the users
+AND a set of user DTOs should be returned
       ''',
         () async {
           // ARRANGE
-          final usersJson = [
-            {
-              'id': 1,
-              'name': 'User 1',
-              'username': 'user1',
+          const usersCount = 5;
+          final usersJson = List.generate(
+            usersCount,
+            (idx) => {
+              'id': idx,
+              'name': 'User $idx',
+              'username': 'user$idx',
             },
-            {
-              'id': 2,
-              'name': 'User 2',
-              'username': 'user2',
-            },
-            {
-              'id': 3,
-              'name': 'User 3',
-              'username': 'user3',
-            },
-          ];
-          final users = [
-            const UserDto(id: 1, name: 'User 1', username: 'user1'),
-            const UserDto(id: 2, name: 'User 2', username: 'user2'),
-            const UserDto(id: 3, name: 'User 3', username: 'user3'),
-          ];
+          );
+          final users = List.generate(
+            usersCount,
+            (idx) => UserDto(
+              id: idx,
+              name: 'User $idx',
+              username: 'user$idx',
+            ),
+          );
 
           when(
             () => mockDio.get(
@@ -77,12 +72,13 @@ THEN a set of remote user models is returned
           final result = await usersRDS.getUsers();
 
           // ASSERT
-          expect(listEquals(result, users), isTrue);
           verify(
             () => mockDio.get(
               '/users',
             ),
           ).called(1);
+          expect(listEquals(result, users), isTrue);
+          verifyNoMoreInteractions(mockDio);
         },
       );
 
@@ -91,8 +87,9 @@ THEN a set of remote user models is returned
 
 AND no internet connection
 WHEN the users list is requested
-THEN an exception is thrown
-      ''',
+THEN the Dio client should be used to retrieve the users
+AND an exception should be thrown
+''',
         () async {
           // ARRANGE
           when(

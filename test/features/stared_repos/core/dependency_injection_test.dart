@@ -3,6 +3,7 @@ import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/d
 import 'package:flutter_my_starred_repos/features/stared_repos/application/starred_repos_cubit/cubit.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
@@ -15,6 +16,7 @@ void main() {
     '''
 
 GIVEN an injector function
+AND a previously injected auth interceptor
 WHEN the injection process is triggered''',
     () {
       final getIt = GetIt.instance;
@@ -33,53 +35,36 @@ WHEN the injection process is triggered''',
       );
       test(
         '''
-  
-THEN a single Dio HTTP client should be injected
-AND a single starred repos remote data source should be injected
-AND a single starred repos repository should be injected
-AND a single starred repos cubit should be injected
-''',
-        () async {
-          // ASSERT
 
-          // External
-          expect(
-            getIt.isRegistered<Dio>(
-              instanceName: starredRepoDioName,
-            ),
-            true,
-          );
-
-          // Data sources
-          expect(
-            getIt.isRegistered<StaredReposRDS>(),
-            true,
-          );
-
-          // Facades
-          expect(
-            getIt.isRegistered<StarredReposRepo>(),
-            true,
-          );
-
-          // State managers
-          expect(
-            getIt.isRegistered<StarredReposCubit>(),
-            true,
-          );
-        },
-      );
-
-      test(
-        '''
-
-THEN a single starred repos cubit can be accessed
+THEN the necessary starred-repos-related dependencies should be injected
+├─ BY  injecting a single Dio HTTP client
+│  ├─ THAT is identified by its instance name
+├─ AND injecting a single starred repos local data source
+├─ AND injecting a single starred repos remote data source
+├─ AND injecting a single starred repos repository
+├─ AND injecting a starred repos cubit factory
 ''',
         () async {
           // ASSERT
           expect(
-            getIt.get<StarredReposCubit>(),
-            isNotNull,
+            getIt<Dio>(instanceName: starredRepoDioName),
+            getIt<Dio>(instanceName: starredRepoDioName),
+          );
+          expect(
+            getIt<StarredReposLDS>(),
+            getIt<StarredReposLDS>(),
+          );
+          expect(
+            getIt<StaredReposRDS>(),
+            getIt<StaredReposRDS>(),
+          );
+          expect(
+            getIt<StarredReposRepo>(),
+            getIt<StarredReposRepo>(),
+          );
+          expect(
+            getIt<StarredReposCubit>(),
+            isA<StarredReposCubit>(),
           );
         },
       );

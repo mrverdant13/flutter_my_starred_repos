@@ -14,17 +14,21 @@ void main() {
   group(
     '''
 
-GIVEN a users remote data source''',
+GIVEN a users remote data source
+THAT uses a GraphQL client''',
     () {
-      // External dependencies
+      // ARRANGE
       late MockGQLClient mockGQLClient;
-
-      // Remota data source
       late UsersRDSImp usersRDS;
+
+      setUpAll(
+        () {
+          registerFallbackValue(FakeQueryOptions());
+        },
+      );
 
       setUp(
         () {
-          registerFallbackValue(FakeQueryOptions());
           mockGQLClient = MockGQLClient();
           usersRDS = UsersRDSImp(
             gqlClient: mockGQLClient,
@@ -36,32 +40,28 @@ GIVEN a users remote data source''',
         '''
 
 WHEN the users list is requested
-THEN a set of remote user models is returned
+THEN the GraphQL client should be used to retrieve the users
+AND a set of user DTOs should be returned
       ''',
         () async {
           // ARRANGE
-          final usersJson = [
-            {
-              'id': '1',
-              'name': 'User 1',
-              'username': 'user1',
+          const usersCount = 5;
+          final usersJson = List.generate(
+            usersCount,
+            (idx) => {
+              'id': '$idx',
+              'name': 'User $idx',
+              'username': 'user$idx',
             },
-            {
-              'id': '2',
-              'name': 'User 2',
-              'username': 'user2',
-            },
-            {
-              'id': '3',
-              'name': 'User 3',
-              'username': 'user3',
-            },
-          ];
-          final users = [
-            const UserDto(id: 1, name: 'User 1', username: 'user1'),
-            const UserDto(id: 2, name: 'User 2', username: 'user2'),
-            const UserDto(id: 3, name: 'User 3', username: 'user3'),
-          ];
+          );
+          final users = List.generate(
+            usersCount,
+            (idx) => UserDto(
+              id: idx,
+              name: 'User $idx',
+              username: 'user$idx',
+            ),
+          );
 
           when(
             () => mockGQLClient.query(
@@ -97,7 +97,8 @@ THEN a set of remote user models is returned
 
 AND no internet connection
 WHEN the users list is requested
-THEN an exception is thrown
+THEN the GraphQL client should be used to retrieve the users
+AND an exception should be thrown
       ''',
         () async {
           // ARRANGE

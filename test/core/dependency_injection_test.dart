@@ -6,27 +6,31 @@ import 'package:test/test.dart';
 void main() {
   group(
     '''
-  
-GIVEN an injector function''',
+
+GIVEN an injector function
+AND the app config data''',
     () {
-      const githubAuthConfig = GithubAuthConfig(
-        clientId: 'clientId',
-        clientSecret: 'clientSecret',
-      );
+      // ARRANGE
       const appConfig = AppConfig(
-        githubAuthConfig: githubAuthConfig,
+        githubAuthConfig: GithubAuthConfig(
+          clientId: 'clientId',
+          clientSecret: 'clientSecret',
+        ),
       );
+
       for (final flavor in Flavor.values) {
         group(
           '''
   
-AND the app config data
 AND the ${flavor.tag} flavor
 WHEN the injection process is triggered''',
           () {
             setUp(
               () async {
+                // ARRANGE
                 getIt.reset();
+
+                // ACT
                 await injectDependencies(
                   config: appConfig,
                   flavor: flavor,
@@ -40,15 +44,8 @@ WHEN the injection process is triggered''',
 THEN the flavor should be injected
 ''',
               () async {
-                // ARRANGE
-
-                // ACT
-
                 // ASSERT
-                expect(
-                  getIt.isRegistered<Flavor>(),
-                  true,
-                );
+                expect(getIt.isRegistered<Flavor>(), isTrue);
                 expect(kAppFlavor, flavor);
               },
             );
@@ -56,19 +53,12 @@ THEN the flavor should be injected
             test(
               '''
 
-THEN the app congig should be injected
+THEN the app config should be injected
 ''',
               () async {
-                // ARRANGE
-
-                // ACT
-                final registeredAppConfig = getIt<AppConfig>();
-
                 // ASSERT
-                expect(
-                  registeredAppConfig,
-                  appConfig,
-                );
+                final registeredAppConfig = getIt<AppConfig>();
+                expect(registeredAppConfig, appConfig);
               },
             );
           },

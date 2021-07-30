@@ -16,12 +16,11 @@ void main() {
   group(
     '''
 
-GIVEN a starred repos cubit''',
+GIVEN a starred repos cubit
+THAT uses a starred repositories repo''',
     () {
-      // Facades
+      // ARRANGE
       late MockStarredReposRepo mockStarredReposRepo;
-
-      // Cubit
       late StarredReposCubit starredReposCubit;
 
       setUp(
@@ -33,22 +32,21 @@ GIVEN a starred repos cubit''',
         },
       );
 
+      tearDown(
+        () {
+          verifyNoMoreInteractions(mockStarredReposRepo);
+        },
+      );
+
       test(
         '''
 
 WHEN no interaction
-THEN its initial state is loaded
+THEN its initial state should be loaded
 ''',
         () async {
-          // ARRANGE
-
-          // ACT
-
           // ASSERT
-          expect(
-            starredReposCubit.state,
-            const StarredReposState.loaded(),
-          );
+          expect(starredReposCubit.state, const StarredReposState.loaded());
         },
       );
 
@@ -72,13 +70,6 @@ THEN its initial state is loaded
           lastPage: expectedLastPage,
           elements: starredRepos,
         );
-        // const possibleGetStarredReposFailures = [
-        //   GetStaredReposFailure.offline(),
-        // ];
-        // final expectedGetStarredReposFailure =
-        //     possibleGetStarredReposFailures[r.nextInt(
-        //   possibleGetStarredReposFailures.length,
-        // )];
 
         blocTest<StarredReposCubit, StarredReposState>(
           '''
@@ -86,10 +77,13 @@ THEN its initial state is loaded
 AND loading minimal conditions
 AND a non-last starred repos page
 WHEN a starred repos page is requested
-THEN the load process is started
-AND the laod process is finished
-AND the resulting starred repos are loaded
-      ''',
+THEN the load process should be started
+├─ BY emmiting the loading state
+├─ AND retrieving a new repos page with the starred repos repository
+THEN the loaded starred repos should be updated
+├─ BY adding the resulting starred repos to the loaded ones
+├─ AND emmiting the loaded state
+''',
           build: () {
             starredReposCubit.lastCheckedPage = page - 1;
             starredReposCubit.lastAvailblePage = page + 1;
@@ -122,7 +116,6 @@ AND the resulting starred repos are loaded
               bloc.starredRepos,
               starredRepos.toImmutableList(),
             );
-            verifyNoMoreInteractions(mockStarredReposRepo);
           },
         );
 
@@ -130,10 +123,16 @@ AND the resulting starred repos are loaded
           '''
 
 AND no loading minimal conditions
+AND a starred repos page
 WHEN a starred repos page is requested
-THEN the load process is started
-THEN a failure state is emited wrapping the actual failure
-      ''',
+THEN the load process should be started
+├─ BY emitting the loading state
+├─ AND trying to retrieve a new repos page with the starred repos repository
+THEN a failure should be reported
+├─ BY emitting the failure state
+THEN the loaded status should be restored
+├─ BY emmiting the loaded state
+''',
           build: () {
             starredReposCubit.lastCheckedPage = page - 1;
             starredReposCubit.lastAvailblePage = page + 1;
@@ -164,7 +163,6 @@ THEN a failure state is emited wrapping the actual failure
                 page: page,
               ),
             ).called(1);
-            verifyNoMoreInteractions(mockStarredReposRepo);
           },
         );
 
@@ -173,10 +171,13 @@ THEN a failure state is emited wrapping the actual failure
 
 AND loading minimal conditions
 WHEN the first page of starred repos is requested
-THEN the load process is started
-AND the laod process is finished
-AND the resulting starred repos are loaded
-      ''',
+THEN the load process should be started
+├─ BY emmiting the loading state
+├─ AND retrieving the first repos page with the starred repos repository
+THEN the loaded starred repos should be updated
+├─ BY setting the resulting starred repos as the loaded ones
+├─ AND emmiting the loaded state
+''',
           build: () {
             when(
               () => mockStarredReposRepo.getStarredReposPage(
@@ -207,7 +208,6 @@ AND the resulting starred repos are loaded
               bloc.starredRepos,
               starredRepos.toImmutableList(),
             );
-            verifyNoMoreInteractions(mockStarredReposRepo);
           },
         );
       }

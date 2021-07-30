@@ -6,9 +6,9 @@ import 'package:flutter_my_starred_repos/features/auth/domain/log_in_method.dart
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/authenticator/interface.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/creds_storage/interface.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/implementation.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
+import 'package:test/test.dart';
 
 class MockAuthenticator extends Mock implements Authenticator {}
 
@@ -33,6 +33,7 @@ Future<Uri> oauthCallback({
     redirectBaseEndpoint;
 
 void main() {
+  // ARRANGE
   setUpAll(
     () {
       registerFallbackValue<OAuthCallback>(
@@ -47,25 +48,19 @@ void main() {
   group(
     '''
 
-GIVEN an auth service implementation''',
+GIVEN an auth service
+├─ THAT uses an authenticator
+├─ AND  uses a credentials storage''',
     () {
-      // Values
-      late Credentials creds;
-
-      // Data sources
+      // ARRANGE
       late MockAuthenticator mockAuthenticator;
       late MockCredsStorage mockCredsStorage;
-
-      // Facades
       late AuthServiceImp authService;
 
       setUp(
         () {
-          creds = FakeCredentials();
-
           mockAuthenticator = MockAuthenticator();
           mockCredsStorage = MockCredsStorage();
-
           authService = AuthServiceImp(
             authenticator: mockAuthenticator,
             credsStorage: mockCredsStorage,
@@ -73,11 +68,20 @@ GIVEN an auth service implementation''',
         },
       );
 
+      tearDown(
+        () {
+          verifyNoMoreInteractions(mockAuthenticator);
+          verifyNoMoreInteractions(mockCredsStorage);
+        },
+      );
+
       test(
         '''
 
 WHEN the login status is checked
-THEN the status is returned
+THEN the auth status should be returned
+├─ BY retrieving it from the credentials storage
+├─ AND returning its value
 ''',
         () async {
           // ARRANGE
@@ -97,22 +101,24 @@ THEN the status is returned
           verify(
             () => mockCredsStorage.get(),
           ).called(1);
-          verifyNoMoreInteractions(mockCredsStorage);
         },
       );
 
       test(
         '''
 
-AND there is Internet connection
-WHEN a OAuth login is triggered
+AND a reliable Internet connection
+WHEN an OAuth login is triggered
 AND the user grants all permissions
 AND the user completes the process
-THEN new credentials are obtained
-AND the new credentials are stored
+THEN the user should be authenticated and his/her creds should be persisted
+├─ BY collecting creds with the authenticator
+├─ AND storing the creds with the credentials storage
+├─ AND not returning any data
 ''',
         () async {
           // ARRANGE
+          final creds = Credentials('');
           when(
             () => mockAuthenticator.logInWithOAuth(
               callback: any(named: 'callback'),
@@ -123,7 +129,7 @@ AND the new credentials are stored
           when(
             () => mockCredsStorage.set(any()),
           ).thenAnswer(
-            (_) async => 0,
+            (_) => Future.value(),
           );
 
           // ACT
@@ -134,10 +140,7 @@ AND the new credentials are stored
           );
 
           // ASSERT
-          expect(
-            result,
-            const Right(unit),
-          );
+          expect(result, const Right(unit));
           verify(
             () => mockAuthenticator.logInWithOAuth(
               callback: oauthCallback,
@@ -146,19 +149,19 @@ AND the new credentials are stored
           verify(
             () => mockCredsStorage.set(creds),
           ).called(1);
-          verifyNoMoreInteractions(mockAuthenticator);
-          verifyNoMoreInteractions(mockCredsStorage);
         },
       );
 
       test(
         '''
 
-AND there is no Internet connection
-WHEN a OAuth login is triggered
+AND no Internet connection
+WHEN an OAuth login is triggered
 AND the user grants all permissions
 AND the user completes the process
-THEN an failure indicating connectivity issues is returned
+THEN the auth intent should result in a failure
+├─ BY trying to collect creds with the authenticator
+├─ AND returning a failure indicating connectivity issues
 ''',
         () async {
           // ARRANGE
@@ -189,18 +192,19 @@ THEN an failure indicating connectivity issues is returned
               callback: oauthCallback,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockAuthenticator);
         },
       );
 
       test(
         '''
 
-AND there is Internet connection
+AND a reliable Internet connection
 WHEN a OAuth login is triggered
 AND the user does not grant all permissions
 AND the user completes the process
-THEN a failure indicating permission issues is returned
+THEN the auth intent should result in a failure
+├─ BY trying to collect creds with the authenticator
+├─ AND returning a failure indicating permission issues
 ''',
         () async {
           // ARRANGE
@@ -231,18 +235,19 @@ THEN a failure indicating permission issues is returned
               callback: oauthCallback,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockAuthenticator);
         },
       );
 
       test(
         '''
 
-AND there is Internet connection
+AND a reliable Internet connection
 WHEN a OAuth login is triggered
 AND the user grants all permissions
 AND the user does not complete the process
-THEN a failure indicating that the action was canceled is returned
+THEN the auth intent should result in a failure
+├─ BY trying to collect creds with the authenticator
+├─ AND returning a failure indicating hat the action was canceled
 ''',
         () async {
           // ARRANGE
@@ -273,7 +278,6 @@ THEN a failure indicating that the action was canceled is returned
               callback: oauthCallback,
             ),
           ).called(1);
-          verifyNoMoreInteractions(mockAuthenticator);
         },
       );
 
@@ -281,14 +285,16 @@ THEN a failure indicating that the action was canceled is returned
         '''
 
 WHEN the logout process is triggered
-THEN the stored credentials are removed
+THEN any stored creds should be removed
+├─ BY clearing the creds storage
+├─ AND not returning any data
 ''',
         () async {
           // ARRANGE
           when(
             () => mockCredsStorage.clear(),
           ).thenAnswer(
-            (_) async => 0,
+            (_) => Future.value(),
           );
 
           // ACT
@@ -298,7 +304,6 @@ THEN the stored credentials are removed
           verify(
             () => mockCredsStorage.clear(),
           ).called(1);
-          verifyNoMoreInteractions(mockCredsStorage);
         },
       );
     },

@@ -11,20 +11,38 @@ void main() {
   group(
     '''
 
-GIVEN an etags local data source''',
+GIVEN an etags local data source
+├─ THAT uses a Sembast database''',
     () {
-      // External dependencies
+      // ARRANGE
       late Database sembastDb;
-
-      // Remote data source
       late StarredReposLDSImp starredReposLDS;
+
+      const page = 3;
+      const lastPage = 5;
+      const pageData = Page<GithubRepoDto>(
+        lastPage: lastPage,
+        elements: <GithubRepoDto>[
+          GithubRepoDto(
+            owner: UserDto(
+              username: 'username 1',
+              avatarUrl: 'avatar_url_1',
+            ),
+            name: 'repo 1',
+            description: 'description 1',
+            starsCount: 1,
+          ),
+        ],
+      );
+      final pageDataJson = pageData.toJson(
+        (repoDto) => repoDto.toJson(),
+      );
 
       setUp(
         () async {
           sembastDb = await databaseFactoryMemory.openDatabase(
             sembastInMemoryDatabasePath,
           );
-
           starredReposLDS = StarredReposLDSImp(
             sembastDatabase: sembastDb,
           );
@@ -34,28 +52,17 @@ GIVEN an etags local data source''',
       test(
         '''
 
+AND no persisted starred repos page data
 AND a starred repos page data
-WHEN the page data is sent to be persisted
-THEN the page data is stored
-      ''',
+WHEN the page data is sent to be stored
+THEN the page data should be persisted
+├─ BY storing the page data in the Sembast database
+''',
         () async {
-          // ARRANGE
-          const page = 3;
-          const lastPage = 5;
-          const pageData = Page<GithubRepoDto>(
-            lastPage: lastPage,
-            elements: <GithubRepoDto>[
-              GithubRepoDto(
-                owner: UserDto(
-                  username: 'username 1',
-                  avatarUrl: 'avatar_url_1',
-                ),
-                name: 'repo 1',
-                description: 'description 1',
-                starsCount: 1,
-              ),
-            ],
-          );
+          // ARRANGE-ASSERT
+          Map<String, dynamic>? storedPageDataJson =
+              await starredReposLDS.store.record(page).get(sembastDb);
+          expect(storedPageDataJson, isNull);
 
           // ACT
           await starredReposLDS.set(
@@ -64,14 +71,9 @@ THEN the page data is stored
           );
 
           // ASSERT
-          final storedReposPage =
+          storedPageDataJson =
               await starredReposLDS.store.record(page).get(sembastDb);
-          expect(
-            storedReposPage,
-            pageData.toJson(
-              (repoDto) => repoDto.toJson(),
-            ),
-          );
+          expect(storedPageDataJson, pageDataJson);
         },
       );
 
@@ -80,33 +82,19 @@ THEN the page data is stored
 
 AND a previously persisted starred repos page data
 WHEN the starred repos page linked to the page number is requested
-THEN the starred repos page data is returned
+THEN the starred repos page data should be returned
+├─ BY retrieving the persisted repos page data from the Sembast database
+├─ AND returning the page data
       ''',
         () async {
-          // ARRANGE
-          const page = 7;
-          const lastPage = 9;
-          const pageData = Page<GithubRepoDto>(
-            lastPage: lastPage,
-            elements: <GithubRepoDto>[
-              GithubRepoDto(
-                owner: UserDto(
-                  username: 'username 1',
-                  avatarUrl: 'avatar_url_1',
-                ),
-                name: 'repo 1',
-                description: 'description 1',
-                starsCount: 1,
-              ),
-            ],
-          );
-
+          // ARRANGE-ASSERT
           await starredReposLDS.store.record(page).put(
                 sembastDb,
-                pageData.toJson(
-                  (repoPage) => repoPage.toJson(),
-                ),
+                pageDataJson,
               );
+          final storedPageDataJson =
+              await starredReposLDS.store.record(page).get(sembastDb);
+          expect(storedPageDataJson, pageDataJson);
 
           // ACT
           final storedPageData = await starredReposLDS.get(

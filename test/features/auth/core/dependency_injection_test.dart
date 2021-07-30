@@ -38,65 +38,39 @@ WHEN the injection process is triggered''',
       test(
         '''
   
-THEN a single GitHub auth config should be injected
-AND a single Flutter secure storage should be injected
-AND a single auth interceptor should be injected
-AND a single authenticator data source should be injected
-AND a single auth service should be injected
-AND a single auth cubit should be injected''',
-        () async {
-          // ASSERT
-          expect(
-            getIt.isRegistered<GithubAuthConfig>(),
-            true,
-          );
-          expect(
-            getIt.isRegistered<FlutterSecureStorage>(),
-            true,
-          );
-          expect(
-            getIt.isRegistered<AuthInterceptor>(),
-            true,
-          );
-          expect(
-            getIt.isRegistered<Authenticator>(),
-            true,
-          );
-          expect(
-            getIt.isRegistered<AuthService>(),
-            true,
-          );
-          expect(
-            getIt.isRegistered<AuthenticatorCubit>(),
-            true,
-          );
-        },
-      );
-
-      test(
-        '''
-
-THEN a single authenticator cubit can be accessed
+THEN the necessary auth dependencies should be injected
+├─ BY  injecting a single GitHub auth config
+├─ AND injecting a single Flutter secure storage
+├─ AND injecting a single auth interceptor
+├─ AND injecting a single authenticator data source
+├─ AND injecting a single auth service
+├─ AND injecting an auth cubit factory
 ''',
         () async {
           // ASSERT
           expect(
-            getIt.get<AuthenticatorCubit>(),
-            isNotNull,
+            getIt<GithubAuthConfig>(),
+            getIt<GithubAuthConfig>(),
           );
-        },
-      );
-
-      test(
-        '''
-
-THEN a single auth interceptor can be accessed
-''',
-        () async {
-          // ASSERT
           expect(
-            getIt.get<AuthInterceptor>(),
-            isNotNull,
+            getIt<FlutterSecureStorage>(),
+            getIt<FlutterSecureStorage>(),
+          );
+          expect(
+            getIt<AuthInterceptor>(),
+            getIt<AuthInterceptor>(),
+          );
+          expect(
+            getIt<Authenticator>(),
+            getIt<Authenticator>(),
+          );
+          expect(
+            getIt<AuthService>(),
+            getIt<AuthService>(),
+          );
+          expect(
+            getIt<AuthenticatorCubit>(),
+            isA<AuthenticatorCubit>(),
           );
         },
       );

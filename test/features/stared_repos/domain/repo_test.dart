@@ -8,7 +8,7 @@ void main() {
 
 GIVEN a GitHub repository data holder
 WHEN its ID is requested
-THEN a GitHub path is returned
+THEN its GitHub relative path should be returned
 ''',
     () async {
       // ARRANGE

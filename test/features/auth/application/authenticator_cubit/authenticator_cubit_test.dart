@@ -14,6 +14,7 @@ class MockAuthService extends Mock implements AuthService {}
 class FakeLogInMethod extends Fake implements LogInMethod {}
 
 void main() {
+  // ARRANGE
   setUpAll(
     () {
       registerFallbackValue<LogInMethod>(FakeLogInMethod());
@@ -23,12 +24,11 @@ void main() {
   group(
     '''
 
-GIVEN a authenticator cubit''',
+GIVEN a authenticator cubit
+├─ THAT uses an auth service''',
     () {
-      // Facades
+      // ARRANGE
       late MockAuthService mockAuthService;
-
-      // Cubit
       late AuthenticatorCubit authCubit;
 
       setUp(
@@ -40,17 +40,19 @@ GIVEN a authenticator cubit''',
         },
       );
 
+      tearDown(
+        () {
+          verifyNoMoreInteractions(mockAuthService);
+        },
+      );
+
       test(
         '''
 
 WHEN no interaction
-THEN its initial state is loading
+THEN its initial state should be loading
 ''',
         () async {
-          // ARRANGE
-
-          // ACT
-
           // ASSERT
           expect(authCubit.state, const AuthenticatorState.loading());
         },
@@ -67,8 +69,11 @@ THEN its initial state is loading
           '''
 
 WHEN the login status is requested
-THEN the load process is started
-THEN the auth status is emited
+THEN the load process should be started
+├─ BY emitting the loading status
+├─ AND retrieving the status with the auth service
+THEN the auth state should be updated
+├─ BY emitting the resulting status
       ''',
           build: () {
             when(
@@ -88,7 +93,6 @@ THEN the auth status is emited
           ],
           verify: (bloc) {
             verify(() => mockAuthService.isLoggedIn()).called(1);
-            verifyNoMoreInteractions(mockAuthService);
           },
         );
       }
@@ -122,8 +126,12 @@ THEN the auth status is emited
 AND login minimal conditions
 AND a login method
 WHEN the login action is triggered
-THEN the load process is started
-THEN the user gets authenticated
+THEN the login process should be started
+├─ BY emitting the loading status
+├─ AND logging in with the auth service
+│  ├─ THAT uses the given method
+THEN the user should be authenticated
+├─ BY emitting the authenticated status
       ''',
           build: () {
             when(
@@ -146,10 +154,11 @@ THEN the user gets authenticated
             const AuthenticatorState.authenticated(),
           ],
           verify: (bloc) {
-            verify(() => mockAuthService.logIn(
-                  method: loginMethod,
-                )).called(1);
-            verifyNoMoreInteractions(mockAuthService);
+            verify(
+              () => mockAuthService.logIn(
+                method: loginMethod,
+              ),
+            ).called(1);
           },
         );
 
@@ -159,8 +168,12 @@ THEN the user gets authenticated
 AND no login minimal conditions
 AND a login method
 WHEN the login action is triggered
-THEN the load process is started
-THEN a failure state is emited wrapping the actual login failure
+THEN the login process should be started
+├─ BY emitting the loading status
+├─ AND logging in with the auth service
+│  ├─ THAT uses the given method
+THEN a failure should be reported
+├─ BY emitting a wrapped login failure state
       ''',
           build: () {
             when(
@@ -187,10 +200,11 @@ THEN a failure state is emited wrapping the actual login failure
             ),
           ],
           verify: (bloc) {
-            verify(() => mockAuthService.logIn(
-                  method: loginMethod,
-                )).called(1);
-            verifyNoMoreInteractions(mockAuthService);
+            verify(
+              () => mockAuthService.logIn(
+                method: loginMethod,
+              ),
+            ).called(1);
           },
         );
 
@@ -199,8 +213,11 @@ THEN a failure state is emited wrapping the actual login failure
 
 AND logout minimal conditions
 WHEN the logout action is triggered
-THEN the load process is started
-THEN the user gets unauthenticated
+THEN the logout process should be started
+├─ BY emitting the loading state
+├─ AND logging out with the auth service
+THEN the user should be unauthenticated
+├─ BY emitting the unauthenticated state
       ''',
           build: () {
             when(
@@ -219,8 +236,9 @@ THEN the user gets unauthenticated
             const AuthenticatorState.unauthenticated(),
           ],
           verify: (bloc) {
-            verify(() => mockAuthService.logOut()).called(1);
-            verifyNoMoreInteractions(mockAuthService);
+            verify(
+              () => mockAuthService.logOut(),
+            ).called(1);
           },
         );
       }

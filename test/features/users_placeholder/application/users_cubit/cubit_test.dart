@@ -14,12 +14,11 @@ void main() {
   group(
     '''
 
-GIVEN a users cubit''',
+GIVEN a users cubit
+THAT uses a users repo''',
     () {
-      // Facades
+      // ARRANGE
       late MockUsersRepo mockUsersRepo;
-
-      // Cubit
       late UsersCubit usersCubit;
 
       setUp(
@@ -35,31 +34,31 @@ GIVEN a users cubit''',
         '''
 
 WHEN no interaction
-THEN its initial state is idle
+THEN its initial state should be idle
 ''',
         () async {
-          // ARRANGE
-
-          // ACT
-
           // ASSERT
           expect(usersCubit.state, const UsersState.idle());
         },
       );
 
       {
-        final users = [
-          const User(id: 1, name: 'User 1', username: 'user1'),
-          const User(id: 2, name: 'User 2', username: 'user2'),
-          const User(id: 3, name: 'User 3', username: 'user3'),
-        ];
+        final users = List.generate(
+          8,
+          (idx) => User(
+            id: idx,
+            name: 'User $idx',
+            username: 'user$idx',
+          ),
+        );
 
         blocTest<UsersCubit, UsersState>(
           '''
 
 WHEN the users list is requested
-THEN the load process is started
-THEN a set of users is emited
+THEN the load process should be started
+THEN the users repo should be used to retrieve the users
+AND a set of users should be emitted
       ''',
           build: () {
             when(
@@ -86,45 +85,40 @@ THEN a set of users is emited
         );
       }
 
-      group(
+      blocTest<UsersCubit, UsersState>(
         '''
 
-AND no internet connection''',
-        () {
-          blocTest<UsersCubit, UsersState>(
-            '''
-
+AND no internet connection
 WHEN the users list is requested
-THEN the load process is started
-THEN a failure is emited
+THEN the load process should be started
+THEN the users repo should be used to retrieve the users
+AND a failure should be emitted
       ''',
-            build: () {
-              when(
-                () => mockUsersRepo.getUsers(),
-              ).thenAnswer(
-                (_) async => const Left(
-                  GetUsersFailure.offline(),
-                ),
-              );
-
-              return usersCubit;
-            },
-            act: (cubit) {
-              cubit.load();
-            },
-            expect: () => [
-              const UsersState.loading(),
-              const UsersState.failed(
-                UsersFailure.onGet(
-                  GetUsersFailure.offline(),
-                ),
-              ),
-            ],
-            verify: (bloc) {
-              verify(() => mockUsersRepo.getUsers()).called(1);
-              verifyNoMoreInteractions(mockUsersRepo);
-            },
+        build: () {
+          when(
+            () => mockUsersRepo.getUsers(),
+          ).thenAnswer(
+            (_) async => const Left(
+              GetUsersFailure.offline(),
+            ),
           );
+
+          return usersCubit;
+        },
+        act: (cubit) {
+          cubit.load();
+        },
+        expect: () => [
+          const UsersState.loading(),
+          const UsersState.failed(
+            UsersFailure.onGet(
+              GetUsersFailure.offline(),
+            ),
+          ),
+        ],
+        verify: (bloc) {
+          verify(() => mockUsersRepo.getUsers()).called(1);
+          verifyNoMoreInteractions(mockUsersRepo);
         },
       );
     },

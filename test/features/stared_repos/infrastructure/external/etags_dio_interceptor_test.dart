@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/etags_lds/interface.dart';
@@ -12,40 +13,52 @@ class MockPagesEtagsLDS extends Mock implements PagesEtagsLDS {}
 
 const etag = 'etag';
 
-class FakerEtagedInterceptor extends Interceptor {
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    handler.resolve(
-      Response(
-        requestOptions: options,
-        statusCode: HttpStatus.ok,
-        headers: Headers.fromMap({
-          'ETag': [etag],
-        }),
-      ),
-      true,
-    );
-  }
-}
-
 void main() {
   group(
     '''
 
 GIVEN an HTTP client
-AND an page ETags interceptor''',
+├─ THAT uses an ETags interceptor
+│  ├─ THAT uses a pages ETags local data source''',
     () {
+      // ARRANGE
+      late MockPagesEtagsLDS mockPagesEtagsLDS;
+      late EtagsInterceptor etagsInterceptor;
+
       const page = 6;
       final extraData = Map.fromEntries([
         EtagsInterceptor.extraEntry,
       ]);
-
-      late MockPagesEtagsLDS mockPagesEtagsLDS;
-      late FakerEtagedInterceptor fakerEtagedInterceptor;
-
-      late EtagsInterceptor etagsInterceptor;
-
-      late Dio dio;
+      RequestOptions createRequest({
+        required bool includeEtagsExtraData,
+        required bool includePageQueryParam,
+      }) =>
+          // Using a function to avoid mutability-related issues.
+          RequestOptions(
+            extra: includeEtagsExtraData ? extraData : null,
+            queryParameters: {
+              if (includePageQueryParam) 'page': page,
+            },
+            path: 'some.url',
+          );
+      Dio createDio({
+        required bool includeEtagInResponse,
+      }) =>
+          Dio()
+            ..interceptors.addAll([
+              etagsInterceptor,
+              MockerInterceptor(
+                responseBuilder: includeEtagInResponse
+                    ? (options) => Response(
+                          requestOptions: options,
+                          statusCode: HttpStatus.ok,
+                          headers: Headers.fromMap({
+                            'ETag': [etag],
+                          }),
+                        )
+                    : null,
+              )
+            ]);
 
       setUp(
         () {
@@ -53,34 +66,30 @@ AND an page ETags interceptor''',
           etagsInterceptor = EtagsInterceptor(
             pagesEtagsLDS: mockPagesEtagsLDS,
           );
-          fakerEtagedInterceptor = FakerEtagedInterceptor();
+        },
+      );
+
+      tearDown(
+        () {
+          verifyNoMoreInteractions(mockPagesEtagsLDS);
         },
       );
 
       test(
         '''
 
-AND the pages ETags interceptor extra data attached to a request
-AND a page attached to the query parameters
+AND a request
+├─ THAT uses etags extra data for interception
+├─ THAT includes a page as a query parameter
 AND a stored ETag for the given page
 WHEN the request is sent
-THEN the ETag is attached to the `If-None-Match` header
+THEN the pages ETags interceptor should alter the request
+├─ BY retriving the stored ETag from the pages ETags local data source
+├─ AND attaching the ETag to the `If-None-Match` header
 ''',
         () async {
           // ARRANGE
-          dio = Dio()
-            ..interceptors.addAll([
-              etagsInterceptor,
-              MockerInterceptor(),
-            ]);
-          final requestOptions = RequestOptions(
-            extra: extraData,
-            queryParameters: {
-              'page': page,
-            },
-            path: 'some.url',
-          );
-
+          final dio = createDio(includeEtagInResponse: false);
           when(
             () => mockPagesEtagsLDS.get(
               page: any(named: 'page'),
@@ -91,10 +100,16 @@ THEN the ETag is attached to the `If-None-Match` header
 
           // ACT
           final result = await dio.fetch(
-            requestOptions,
+            createRequest(
+              includeEtagsExtraData: true,
+              includePageQueryParam: true,
+            ),
           );
 
           // ASSERT
+          verify(
+            () => mockPagesEtagsLDS.get(page: page),
+          ).called(1);
           expect(
             result.requestOptions.headers['If-None-Match'],
             etag,
@@ -105,104 +120,78 @@ THEN the ETag is attached to the `If-None-Match` header
       test(
         '''
 
-AND the pages ETags interceptor extra data not attached to a request
-AND a page attached to the query parameters
+AND a request
+├─ THAT does not use etags extra data for interception
+├─ THAT includes a page as a query parameter
 AND a stored ETag for the given page
 WHEN the request is sent
-THEN the `If-None-Match` header is not set
+THEN the pages ETags interceptor should not alter the request
+├─ BY not retrieving the stored ETag from the pages ETags local data source
+├─ AND not defining the `If-None-Match` header
 ''',
         () async {
           // ARRANGE
-          dio = Dio()
-            ..interceptors.addAll([
-              etagsInterceptor,
-              MockerInterceptor(),
-            ]);
-          final requestOptions = RequestOptions(
-            queryParameters: {
-              'page': page,
-            },
-            path: 'some.url',
-          );
+          final dio = createDio(includeEtagInResponse: false);
 
-          when(
-            () => mockPagesEtagsLDS.get(
-              page: any(named: 'page'),
+          // ACT
+          final result = await dio.fetch(
+            createRequest(
+              includeEtagsExtraData: false,
+              includePageQueryParam: true,
             ),
-          ).thenAnswer(
-            (_) async => etag,
-          );
-
-          // ACT
-          final result = await dio.fetch(
-            requestOptions,
           );
 
           // ASSERT
-          expect(
-            result.requestOptions.headers['If-None-Match'],
-            isNull,
-          );
+          verifyZeroInteractions(mockPagesEtagsLDS);
+          expect(result.requestOptions.headers['If-None-Match'], isNull);
         },
       );
 
       test(
         '''
 
-AND the pages ETags interceptor extra data attached to a request
-AND no page attached to the query parameters
+AND a request
+├─ THAT uses etags extra data for interception
+├─ THAT does not include a page as a query parameter
+AND a stored ETag for the given page
 WHEN the request is sent
-THEN the `If-None-Match` header is not set
+THEN the pages ETags interceptor should not alter the request
+├─ BY not retrieving the stored ETag from the pages ETags local data source
+├─ AND not defining the `If-None-Match` header
 ''',
         () async {
           // ARRANGE
-          dio = Dio()
-            ..interceptors.addAll([
-              etagsInterceptor,
-              MockerInterceptor(),
-            ]);
-          final requestOptions = RequestOptions(
-            extra: extraData,
-            path: 'some.url',
-          );
+          final dio = createDio(includeEtagInResponse: false);
 
           // ACT
           final result = await dio.fetch(
-            requestOptions,
+            createRequest(
+              includeEtagsExtraData: true,
+              includePageQueryParam: false,
+            ),
           );
 
           // ASSERT
-          expect(
-            result.requestOptions.headers['If-None-Match'],
-            isNull,
-          );
+          verifyZeroInteractions(mockPagesEtagsLDS);
+          expect(result.requestOptions.headers['If-None-Match'], isNull);
         },
       );
 
       test(
         '''
 
-AND the pages ETags interceptor extra data attached to a request
-AND a page attached to the query parameters
+AND a request
+├─ THAT uses etags extra data for interception
+├─ THAT includes a page as a query parameter
 AND no stored ETag for the given page
 WHEN the request is sent
-THEN the `If-None-Match` header is not set
+THEN the pages ETags interceptor should not alter the request
+├─ BY trying to retrieve the absent ETag from the pages ETags local data source
+├─ AND not defining the `If-None-Match` header
 ''',
         () async {
           // ARRANGE
-          dio = Dio()
-            ..interceptors.addAll([
-              etagsInterceptor,
-              MockerInterceptor(),
-            ]);
-          final requestOptions = RequestOptions(
-            extra: extraData,
-            queryParameters: {
-              'page': page,
-            },
-            path: 'some.url',
-          );
-
+          final dio = createDio(includeEtagInResponse: false);
           when(
             () => mockPagesEtagsLDS.get(
               page: any(named: 'page'),
@@ -213,10 +202,16 @@ THEN the `If-None-Match` header is not set
 
           // ACT
           final result = await dio.fetch(
-            requestOptions,
+            createRequest(
+              includeEtagsExtraData: true,
+              includePageQueryParam: true,
+            ),
           );
 
           // ASSERT
+          verify(
+            () => mockPagesEtagsLDS.get(page: page),
+          ).called(1);
           expect(
             result.requestOptions.headers['If-None-Match'],
             isNull,
@@ -227,34 +222,28 @@ THEN the `If-None-Match` header is not set
       test(
         '''
 
-AND the pages ETags interceptor extra data attached to a request
-AND a page attached to the query parameters
-AND a server that assigns ETags to pages
+AND a request
+├─ THAT uses etags extra data for interception
+├─ THAT includes a page as a query parameter
+AND a server that assigns ETags for pages requests
 WHEN the request is sent
-THEN an ETag for the given page is received
-AND the received ETag is stored
+THEN the existence of an ETag should be checked
+├─ BY using the pages ETags local data source
+AND an ETag for the given page should be received and persisted
+├─ BY extracting the ETag from the received response
+├─ AND storing it in the pages ETags local data source
 ''',
         () async {
           // ARRANGE
-          dio = Dio()
-            ..interceptors.addAll([
-              etagsInterceptor,
-              fakerEtagedInterceptor,
-            ]);
-          final requestOptions = RequestOptions(
-            extra: extraData,
-            queryParameters: {
-              'page': page,
-            },
-            path: 'some.url',
-          );
-
+          final dio = createDio(includeEtagInResponse: true);
+          final r = Random();
+          final storedEtag = r.nextBool() ? null : etag;
           when(
             () => mockPagesEtagsLDS.get(
               page: any(named: 'page'),
             ),
           ).thenAnswer(
-            (_) => Future.value(),
+            (_) => Future.value(storedEtag),
           );
           when(
             () => mockPagesEtagsLDS.set(
@@ -267,7 +256,10 @@ AND the received ETag is stored
 
           // ACT
           final result = await dio.fetch(
-            requestOptions,
+            createRequest(
+              includeEtagsExtraData: true,
+              includePageQueryParam: true,
+            ),
           );
 
           // ASSERT
@@ -275,6 +267,11 @@ AND the received ETag is stored
             result.headers['ETag'],
             [etag],
           );
+          verify(
+            () => mockPagesEtagsLDS.get(
+              page: page,
+            ),
+          ).called(1);
           verify(
             () => mockPagesEtagsLDS.set(
               page: page,

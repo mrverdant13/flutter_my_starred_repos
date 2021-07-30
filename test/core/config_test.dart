@@ -7,16 +7,16 @@ void main() {
   
 GIVEN a JSON representation of the app config
 WHEN it is deserialized
-THEN a coherent app config data holder is created
+THEN a coherent app config data holder should be created
 ''',
     () {
       // ARRANGE
-      const configYamlString = '''
+      const appConfigYamlString = '''
 githubAuthConfig:
   clientId: clientId
   clientSecret: clientSecret
 ''';
-      const config = AppConfig(
+      const expectedAppConfig = AppConfig(
         githubAuthConfig: GithubAuthConfig(
           clientId: 'clientId',
           clientSecret: 'clientSecret',
@@ -24,10 +24,10 @@ githubAuthConfig:
       );
 
       // ACT
-      final result = AppConfig.fromYamlString(configYamlString);
+      final result = AppConfig.fromYamlString(appConfigYamlString);
 
       // ASSERT
-      expect(result, config);
+      expect(result, expectedAppConfig);
     },
   );
 }

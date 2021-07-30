@@ -14,12 +14,11 @@ void main() {
   group(
     '''
 
-GIVEN a users repo implementation''',
+GIVEN a users repo implementation
+THAT uses a users remote data source''',
     () {
-      // Remote data sources
+      // ARRANGE
       late MockUsersRDS mockUsersRDS;
-
-      // Facades
       late UsersRepoImp usersRepo;
 
       setUp(
@@ -31,20 +30,34 @@ GIVEN a users repo implementation''',
         },
       );
 
+      tearDown(
+        () {
+          verifyNoMoreInteractions(mockUsersRDS);
+        },
+      );
+
       test(
         '''
 
 WHEN the users list is requested
-THEN a collection of users is returned
+THEN the users remote data source should be used to retrieve the users
+AND a collection of users should be returned
 ''',
         () async {
           // ARRANGE
-          final usersDtos = [
-            const UserDto(id: 1, name: 'User 1', username: 'user1'),
-            const UserDto(id: 2, name: 'User 2', username: 'user2'),
-            const UserDto(id: 3, name: 'User 3', username: 'user3'),
-          ];
-          final users = usersDtos.map((userDto) => userDto.asEntity).toList();
+          final usersDtos = List.generate(
+            4,
+            (idx) => UserDto(
+              id: idx,
+              name: 'User $idx',
+              username: 'user$idx',
+            ),
+          );
+          final expectedUsers = usersDtos
+              .map(
+                (userDto) => userDto.asEntity,
+              )
+              .toList();
 
           when(
             () => mockUsersRDS.getUsers(),
@@ -56,22 +69,25 @@ THEN a collection of users is returned
           final result = await usersRepo.getUsers();
 
           // ASSERT
+          verify(
+            () => mockUsersRDS.getUsers(),
+          ).called(1);
+
           result.fold(
-            (failure) => fail('Expected: Right\nActual:${failure.runtimeType}'),
+            (failure) => fail(
+              'Expected: Right\n'
+              'Actual:${failure.runtimeType}',
+            ),
             (resultingUsers) => expect(
               resultingUsers,
               predicate(
                 (List resultingUsers) => listEquals(
                   resultingUsers,
-                  users,
+                  expectedUsers,
                 ),
               ),
             ),
           );
-          verify(
-            () => mockUsersRDS.getUsers(),
-          ).called(1);
-          verifyNoMoreInteractions(mockUsersRDS);
         },
       );
 
@@ -80,7 +96,8 @@ THEN a collection of users is returned
 
 AND no internet connection
 WHEN the users list is requested
-THEN a failure is returned
+THEN the users remote data source should be used to retrieve the users
+AND a failure should returned
 ''',
         () async {
           // ARRANGE
@@ -94,15 +111,17 @@ THEN a failure is returned
           final result = await usersRepo.getUsers();
 
           // ASSERT
+          verify(
+            () => mockUsersRDS.getUsers(),
+          ).called(1);
+
           expect(
             result,
             const Left(
               GetUsersFailure.offline(),
             ),
           );
-          verify(
-            () => mockUsersRDS.getUsers(),
-          ).called(1);
+
           verifyNoMoreInteractions(mockUsersRDS);
         },
       );

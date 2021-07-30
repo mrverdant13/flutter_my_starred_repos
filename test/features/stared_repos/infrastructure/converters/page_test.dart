@@ -9,7 +9,7 @@ void main() {
 
 GIVEN a page of integers
 AND an integer to string mapper
-WHEN it is mapped
+WHEN the page is mapped from wrapping integers to wrap strings
 THEN its elements should be transformed to strings
 ''',
     () async {

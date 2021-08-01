@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -90,9 +91,13 @@ class StarredReposScreen extends StatelessWidget {
                               key: ValueKey(starredRepo.id),
                               leading: AspectRatio(
                                 aspectRatio: 1,
-                                child: Image.network(
-                                  starredRepo.owner.avatarUrl,
-                                  errorBuilder: (context, error, stackTrace) =>
+                                child: CachedNetworkImage(
+                                  imageUrl: starredRepo.owner.avatarUrl,
+                                  placeholder: (context, url) => const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  errorWidget: (context, url, error) =>
                                       const Center(
                                     child: Icon(
                                       Icons.image,

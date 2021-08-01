@@ -17,7 +17,7 @@ void main() {
     '''
 
 GIVEN a starred repos cubit
-THAT uses a starred repositories repo''',
+├─ THAT uses a starred repositories repo''',
     () {
       // ARRANGE
       late MockStarredReposRepo mockStarredReposRepo;
@@ -46,14 +46,20 @@ THEN its initial state should be loaded
 ''',
         () async {
           // ASSERT
-          expect(starredReposCubit.state, const StarredReposState.loaded());
+          expect(
+            starredReposCubit.state,
+            const StarredReposState.loaded(
+              repos: KtList.empty(),
+              canLoadMore: true,
+            ),
+          );
         },
       );
 
       {
         const page = 5;
         const pageLength = 8;
-        final starredRepos = List.generate(
+        final initiallyLoadedStarredRepos = List.generate(
           pageLength,
           (index) => GithubRepo(
             owner: User(
@@ -65,6 +71,18 @@ THEN its initial state should be loaded
             starsCount: index,
           ),
         );
+        final starredRepos = List.generate(
+          pageLength,
+          (index) => GithubRepo(
+            owner: User(
+              username: 'username ${index + pageLength}',
+              avatarUrl: 'avatarUrl ${index + pageLength}',
+            ),
+            name: 'repo ${index + pageLength}',
+            description: 'description ${index + pageLength}',
+            starsCount: index + pageLength,
+          ),
+        );
         const expectedLastPage = page + 1;
         final expectedResultingPage = Page(
           lastPage: expectedLastPage,
@@ -74,16 +92,24 @@ THEN its initial state should be loaded
         blocTest<StarredReposCubit, StarredReposState>(
           '''
 
+├─ THAT holds previously loaded repos
 AND loading minimal conditions
 AND a non-last starred repos page
 WHEN a starred repos page is requested
 THEN the load process should be started
 ├─ BY emmiting the loading state
+│  ├─ THAT includes the previously loaded repos
 ├─ AND retrieving a new repos page with the starred repos repository
 THEN the loaded starred repos should be updated
-├─ BY adding the resulting starred repos to the loaded ones
 ├─ AND emmiting the loaded state
+│  ├─ THAT includes the previously loaded repos
+│  ├─ THAT includes the newly loaded repos
+│  ├─ AND does not include any warning
 ''',
+          seed: () => StarredReposState.loaded(
+            repos: initiallyLoadedStarredRepos.toImmutableList(),
+            canLoadMore: true,
+          ),
           build: () {
             starredReposCubit.lastCheckedPage = page - 1;
             starredReposCubit.lastAvailblePage = page + 1;
@@ -96,15 +122,22 @@ THEN the loaded starred repos should be updated
                 expectedResultingPage,
               ),
             );
-
             return starredReposCubit;
           },
           act: (cubit) {
             cubit.load();
           },
           expect: () => [
-            const StarredReposState.loading(),
-            const StarredReposState.loaded(),
+            StarredReposState.loading(
+              repos: initiallyLoadedStarredRepos.toImmutableList(),
+            ),
+            StarredReposState.loaded(
+              repos: [
+                ...initiallyLoadedStarredRepos,
+                ...starredRepos,
+              ].toImmutableList(),
+              canLoadMore: true,
+            ),
           ],
           verify: (bloc) {
             verify(
@@ -113,7 +146,11 @@ THEN the loaded starred repos should be updated
               ),
             ).called(1);
             expect(
-              bloc.starredRepos,
+              bloc.state.repos.take(pageLength),
+              initiallyLoadedStarredRepos.toImmutableList(),
+            );
+            expect(
+              bloc.state.repos.takeLast(pageLength),
               starredRepos.toImmutableList(),
             );
           },
@@ -122,17 +159,24 @@ THEN the loaded starred repos should be updated
         blocTest<StarredReposCubit, StarredReposState>(
           '''
 
+├─ THAT holds previously loaded repos
 AND no loading minimal conditions
 AND a starred repos page
 WHEN a starred repos page is requested
 THEN the load process should be started
 ├─ BY emitting the loading state
+│  ├─ THAT includes the previously loaded repos
 ├─ AND trying to retrieve a new repos page with the starred repos repository
-THEN a failure should be reported
-├─ BY emitting the failure state
-THEN the loaded status should be restored
+THEN the loaded starred repos should be updated including a warning
 ├─ BY emmiting the loaded state
+│  ├─ THAT includes the previously loaded repos
+│  ├─ THAT includes the newly loaded repos
+│  ├─ AND  includes the loading issue as warning
 ''',
+          seed: () => StarredReposState.loaded(
+            repos: initiallyLoadedStarredRepos.toImmutableList(),
+            canLoadMore: true,
+          ),
           build: () {
             starredReposCubit.lastCheckedPage = page - 1;
             starredReposCubit.lastAvailblePage = page + 1;
@@ -153,9 +197,17 @@ THEN the loaded status should be restored
             cubit.load();
           },
           expect: () => [
-            const StarredReposState.loading(),
-            const StarredReposState.failure(StarredReposFailure.offline()),
-            const StarredReposState.loaded(),
+            StarredReposState.loading(
+              repos: initiallyLoadedStarredRepos.toImmutableList(),
+            ),
+            StarredReposState.loaded(
+              repos: [
+                ...initiallyLoadedStarredRepos,
+                ...starredRepos,
+              ].toImmutableList(),
+              canLoadMore: true,
+              warning: const GetStaredReposWarning.offline(),
+            ),
           ],
           verify: (bloc) {
             verify(
@@ -163,21 +215,39 @@ THEN the loaded status should be restored
                 page: page,
               ),
             ).called(1);
+            expect(
+              bloc.state.repos.take(pageLength),
+              initiallyLoadedStarredRepos.toImmutableList(),
+            );
+            expect(
+              bloc.state.repos.takeLast(pageLength),
+              starredRepos.toImmutableList(),
+            );
           },
         );
 
         blocTest<StarredReposCubit, StarredReposState>(
           '''
 
+├─ THAT holds previously loaded repos
 AND loading minimal conditions
 WHEN the first page of starred repos is requested
+THEN the previous state is restarted
+├─ BY emmiting the loaded state
+│  ├─ THAT does not include any repo
 THEN the load process should be started
 ├─ BY emmiting the loading state
+│  ├─ THAT does not include any repo
 ├─ AND retrieving the first repos page with the starred repos repository
 THEN the loaded starred repos should be updated
-├─ BY setting the resulting starred repos as the loaded ones
 ├─ AND emmiting the loaded state
+│  ├─ THAT includes the newly loaded repos
+│  ├─ AND does not include any warning
 ''',
+          seed: () => StarredReposState.loaded(
+            repos: initiallyLoadedStarredRepos.toImmutableList(),
+            canLoadMore: true,
+          ),
           build: () {
             when(
               () => mockStarredReposRepo.getStarredReposPage(
@@ -188,15 +258,23 @@ THEN the loaded starred repos should be updated
                 expectedResultingPage,
               ),
             );
-
             return starredReposCubit;
           },
           act: (cubit) {
             cubit.reload();
           },
           expect: () => [
-            const StarredReposState.loading(),
-            const StarredReposState.loaded(),
+            const StarredReposState.loaded(
+              repos: KtList.empty(),
+              canLoadMore: true,
+            ),
+            const StarredReposState.loading(
+              repos: KtList.empty(),
+            ),
+            StarredReposState.loaded(
+              repos: starredRepos.toImmutableList(),
+              canLoadMore: true,
+            ),
           ],
           verify: (bloc) {
             verify(
@@ -205,7 +283,7 @@ THEN the loaded starred repos should be updated
               ),
             ).called(1);
             expect(
-              bloc.starredRepos,
+              bloc.state.repos,
               starredRepos.toImmutableList(),
             );
           },

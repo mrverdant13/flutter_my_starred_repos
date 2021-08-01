@@ -1,5 +1,5 @@
 name: flutter_my_starred_repos
-description: A Flutter app to check personal GitHub starred repositories.
+description: A Flutter app to manage personal GitHub starred repositories.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
@@ -9,7 +9,7 @@ environment:
   sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.3
 
   flutter:
     sdk: flutter
@@ -18,7 +18,7 @@ dependencies:
   oauth2: ^2.0.0
 
   # Dependency injection
-  get_it: ^6.1.1
+  get_it: ^7.2.0
   provider: ^5.0.0
 
   # Functional programming
@@ -40,7 +40,7 @@ dependencies:
   intl: ^0.17.0
 
   # Local storage
-  flutter_secure_storage: ^4.2.0
+  flutter_secure_storage: ^4.2.1
   sembast: ^3.1.0+2
 
   # Logging
@@ -51,12 +51,12 @@ dependencies:
   auto_route: ^2.2.0
 
   # State management
-  flutter_bloc: ^7.0.1
+  flutter_bloc: ^7.1.0
 
   # UI
   cached_network_image: ^3.1.0
   material_design_icons_flutter: ^5.0.5955-rc.1
-  webview_flutter: ^2.0.9
+  webview_flutter: ^2.0.10
 
   # Utils
   checked_yaml: ^2.0.1
@@ -80,12 +80,12 @@ dev_dependencies:
   auto_route_generator: any
 
   # Serialization
-  json_serializable: ^4.1.1
+  json_serializable: any
 
   # Testing
-  bloc_test: ^8.0.2
+  bloc_test: any
   build_verify: any
-  mocktail: ^0.1.4
+  mocktail: any
   test: any
 
 flutter:

@@ -3,7 +3,7 @@ part of '../screen.dart';
 /// {@template AuthWebView}
 /// A widget that wraps a webview used for the auth process.
 /// {@endtemplate}
-class _AuthWebview extends StatefulWidget {
+class _AuthWebview extends ConsumerStatefulWidget {
   /// Creates an auth webview.
   ///
   /// {@macro AuthWebView}
@@ -27,7 +27,7 @@ class _AuthWebview extends StatefulWidget {
   __AuthWebviewState createState() => __AuthWebviewState();
 }
 
-class __AuthWebviewState extends State<_AuthWebview> {
+class __AuthWebviewState extends ConsumerState<_AuthWebview> {
   @override
   void initState() {
     super.initState();
@@ -53,7 +53,7 @@ class __AuthWebviewState extends State<_AuthWebview> {
           final redirectBaseUrl = widget.redirectBaseEndpoint.toString();
           if (navReq.url.startsWith(redirectBaseUrl)) {
             // Returns the obtained redirect endpoint that holds auth data.
-            context.read<AppRouter>().pop(
+            ref.watch(appRouterPod).pop(
                   Uri.parse(navReq.url),
                 );
             return NavigationDecision.prevent;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_my_starred_repos/features/users_placeholder/core/dependency_injection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../core/dependency_injection.dart';
 import '../../../../../l10n/l10n.dart';
 import '../../../../../presentation/widgets/drawer.dart';
 import '../../../application/users_cubit/cubit.dart';

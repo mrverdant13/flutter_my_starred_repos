@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../core/dependency_injection.dart';
 import '../../../application/starred_repos_cubit/cubit.dart';
 
 part 'wrapper.dart';

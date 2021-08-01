@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/flavors.dart';
 import '../../../../../l10n/l10n.dart';
 import '../../../../../presentation/widgets/drawer.dart';
 
-class CounterScreen extends StatefulWidget {
+class CounterScreen extends ConsumerStatefulWidget {
   const CounterScreen();
 
   @override
   _CounterScreenState createState() => _CounterScreenState();
 }
 
-class _CounterScreenState extends State<CounterScreen> {
+class _CounterScreenState extends ConsumerState<CounterScreen> {
   int _counter = 0;
 
   void _incrementCounter() => setState(
@@ -23,6 +25,7 @@ class _CounterScreenState extends State<CounterScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final flavor = ref.watch(flavorPod);
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.counterScreenTitle),
@@ -34,11 +37,11 @@ class _CounterScreenState extends State<CounterScreen> {
           children: <Widget>[
             Center(
               child: Image.asset(
-                'assets/app_icon/${kAppFlavor.tag.toLowerCase()}-icon.512.png',
+                'assets/app_icon/${flavor.tag.toLowerCase()}-icon.512.png',
               ),
             ),
             Text(
-              '${kAppFlavor.tag} flavor',
+              '${flavor.tag} flavor',
             ),
             Text(l10n.currentCountMessage(_counter)),
             Text(

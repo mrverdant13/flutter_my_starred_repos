@@ -1,17 +1,12 @@
-import 'package:get_it/get_it.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config.dart';
 import 'flavors.dart';
 
-final getIt = GetIt.instance;
+final flavorPod = Provider<Flavor>(
+  (_) => Flavor.prod,
+);
 
-Future<void> injectDependencies({
-  required Flavor flavor,
-  required AppConfig config,
-}) async {
-  getIt.registerSingleton(flavor);
-
-  getIt.registerLazySingleton<AppConfig>(
-    () => config,
-  );
-}
+final appConfigPod = Provider<AppConfig>(
+  (ref) => AppConfig.fromYamlString(''),
+);

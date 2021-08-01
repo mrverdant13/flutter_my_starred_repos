@@ -4,13 +4,13 @@ import 'package:emoji_lumberdash/emoji_lumberdash.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lumberdash/lumberdash.dart' as logger;
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+import 'package:sembast/sembast_io.dart';
 
-import '../features/auth/core/dependency_injection.dart' as auth;
-import '../features/stared_repos/core/dependency_injection.dart'
-    as starred_repos;
-import '../features/users_placeholder/core/dependency_injection.dart'
-    as users_placeholder;
 import '../presentation/app.dart';
 import 'config.dart';
 import 'dependency_injection.dart';
@@ -34,18 +34,20 @@ Future<void> startApp(Flavor flavor) async {
       final configYamlString = await rootBundle.loadString(
         'assets/config/app_config.${flavor.tag.toLowerCase()}.yaml',
       );
-
       final appConfig = AppConfig.fromYamlString(configYamlString);
 
-      await injectDependencies(
-        flavor: flavor,
-        config: appConfig,
+      final dbDir = await getApplicationDocumentsDirectory();
+      await dbDir.create(recursive: true);
+      final dbPath = path.join(dbDir.path, 'my_database.db');
+      final db = await databaseFactoryIo.openDatabase(dbPath);
+
+      final container = ProviderContainer(
+        overrides: [
+          flavorPod.overrideWithValue(flavor),
+          appConfigPod.overrideWithValue(appConfig),
+          sembastDbPod.overrideWithValue(db),
+        ],
       );
-      await users_placeholder.injectDependencies(
-        flavor: flavor,
-      );
-      await auth.injectDependencies();
-      await starred_repos.injectDependencies();
 
       FlutterError.onError = (details) {
         logger.logError(
@@ -55,16 +57,19 @@ Future<void> startApp(Flavor flavor) async {
       };
 
       runApp(
-        flavor == Flavor.prod
-            ? const MyApp()
-            : Directionality(
-                textDirection: TextDirection.ltr,
-                child: Banner(
-                  message: flavor.tag,
-                  location: BannerLocation.topStart,
-                  child: const MyApp(),
+        UncontrolledProviderScope(
+          container: container,
+          child: flavor == Flavor.prod
+              ? const MyApp()
+              : Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Banner(
+                    message: flavor.tag,
+                    location: BannerLocation.topStart,
+                    child: const MyApp(),
+                  ),
                 ),
-              ),
+        ),
       );
     },
     (error, stackTrace) => logger.logError(

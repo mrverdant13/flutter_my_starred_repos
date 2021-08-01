@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_my_starred_repos/presentation/routers/app_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../../presentation/routers/app_router.gr.dart';
 
 part 'widgets/auth_webview.dart';
 

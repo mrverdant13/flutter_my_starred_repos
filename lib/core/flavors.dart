@@ -1,7 +1,3 @@
-import 'dependency_injection.dart';
-
-Flavor get kAppFlavor => getIt<Flavor>();
-
 enum Flavor {
   dev,
   prod,

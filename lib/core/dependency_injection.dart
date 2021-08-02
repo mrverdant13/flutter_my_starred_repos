@@ -10,13 +10,13 @@ import 'config.dart';
 import 'flavors.dart';
 
 final flavorPod = Provider<Flavor>(
-  (_) => throw UnimplementedError(
+  (_) => throw StateError(
     'The app flavor has not been initialized',
   ),
 );
 
 final appConfigPod = Provider<AppConfig>(
-  (_) => throw UnimplementedError(
+  (_) => throw StateError(
     'The app config has not been initialized',
   ),
 );

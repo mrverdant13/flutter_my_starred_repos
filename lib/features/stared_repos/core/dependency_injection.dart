@@ -18,7 +18,7 @@ import '../infrastructure/facades/starred_repos_repo/implementation.dart';
 import '../infrastructure/facades/starred_repos_repo/interface.dart';
 
 final sembastDbPod = Provider<Database>(
-  (_) => throw UnimplementedError(
+  (_) => throw StateError(
     'The Sembast database has not been initialized',
   ),
 );

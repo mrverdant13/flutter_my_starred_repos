@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
 
+import '../../auth/core/dependency_injection.dart';
 import '../application/starred_repos_cubit/cubit.dart';
 import '../infrastructure/data_sources/etags_lds/interface.dart';
 import '../infrastructure/data_sources/etags_lds/sembast_implementation.dart';
@@ -14,11 +17,15 @@ import '../infrastructure/external/etags_dio_interceptor.dart';
 import '../infrastructure/facades/starred_repos_repo/implementation.dart';
 import '../infrastructure/facades/starred_repos_repo/interface.dart';
 
-final sembastDbPod = Provider<Database?>((_) => null);
+final sembastDbPod = Provider<Database>(
+  (_) => throw UnimplementedError(
+    'The Sembast database has not been initialized',
+  ),
+);
 
 final pagesEtagsLDSPod = Provider<PagesEtagsLDS>(
   (ref) {
-    final sembastDb = ref.watch(sembastDbPod)!;
+    final sembastDb = ref.watch(sembastDbPod);
     return PagesEtagsLDSImp(
       sembastDatabase: sembastDb,
     );
@@ -57,7 +64,7 @@ final starredReposRDSPod = Provider<StaredReposRDS>(
 
 final starredReposLDSPod = Provider<StarredReposLDS>(
   (ref) {
-    final sembastDb = ref.watch(sembastDbPod)!;
+    final sembastDb = ref.watch(sembastDbPod);
     return StarredReposLDSImp(
       sembastDatabase: sembastDb,
     );
@@ -83,3 +90,14 @@ final starredReposCubitPod = Provider<StarredReposCubit>(
     );
   },
 );
+
+Future<List<Override>> overrides() async {
+  final dbDir = await getApplicationDocumentsDirectory();
+  await dbDir.create(recursive: true);
+  final dbPath = path.join(dbDir.path, 'my_database.db');
+  final sembastDb = await databaseFactoryIo.openDatabase(dbPath);
+
+  return [
+    sembastDbPod.overrideWithValue(sembastDb),
+  ];
+}

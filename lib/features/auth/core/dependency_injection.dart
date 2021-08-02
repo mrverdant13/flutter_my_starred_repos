@@ -69,3 +69,5 @@ final authenticatorCubitPod = Provider<AuthenticatorCubit>(
     );
   },
 );
+
+Future<List<Override>> overrides() async => const [];

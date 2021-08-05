@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:emoji_lumberdash/emoji_lumberdash.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lumberdash/lumberdash.dart' as logger;
 
 import '../presentation/app.dart';
+import 'config.dart';
 import 'dependency_injection.dart';
 import 'flavors.dart';
 
@@ -32,8 +34,14 @@ Future<void> startApp(Flavor flavor) async {
         );
       };
 
+      final configYamlString = await rootBundle.loadString(
+        'assets/config/app_config.${flavor.tag.toLowerCase()}.yaml',
+      );
+      final appConfig = AppConfig.fromYamlString(configYamlString);
+
       final injectionOverrides = await getInjectionOverrides(
         flavor: flavor,
+        appConfig: appConfig,
       );
 
       runApp(

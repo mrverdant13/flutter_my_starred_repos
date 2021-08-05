@@ -23,16 +23,12 @@ final appConfigPod = Provider<AppConfig>(
 
 Future<List<Override>> getInjectionOverrides({
   required Flavor flavor,
-}) async {
-  final configYamlString = await rootBundle.loadString(
-    'assets/config/app_config.${flavor.tag.toLowerCase()}.yaml',
-  );
-  final appConfig = AppConfig.fromYamlString(configYamlString);
-  return [
-    flavorPod.overrideWithValue(flavor),
-    appConfigPod.overrideWithValue(appConfig),
-    ...await auth.overrides(),
-    ...await starred_repos.overrides(),
-    ...await users_placeholder.overrides(),
-  ];
-}
+  required AppConfig appConfig,
+}) async =>
+    [
+      flavorPod.overrideWithValue(flavor),
+      appConfigPod.overrideWithValue(appConfig),
+      ...await auth.overrides(),
+      ...await starred_repos.overrides(),
+      ...await users_placeholder.overrides(),
+    ];

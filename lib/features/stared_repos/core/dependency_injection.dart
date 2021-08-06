@@ -91,7 +91,7 @@ final starredReposCubitPod = Provider<StarredReposCubit>(
   },
 );
 
-Future<List<Override>> overrides() async {
+Future<List<Override>> getInjectionOverrides() async {
   final dbDir = await getApplicationDocumentsDirectory();
   await dbDir.create(recursive: true);
   final dbPath = path.join(dbDir.path, 'my_database.db');

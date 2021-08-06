@@ -7,9 +7,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lumberdash/lumberdash.dart' as logger;
 
+import '../features/stared_repos/core/dependency_injection.dart'
+    as starred_repos;
 import '../presentation/app.dart';
 import 'config.dart';
-import 'dependency_injection.dart';
+import 'dependency_injection.dart' as core;
 import 'flavors.dart';
 
 Future<void> startApp(Flavor flavor) async {
@@ -39,10 +41,13 @@ Future<void> startApp(Flavor flavor) async {
       );
       final appConfig = AppConfig.fromYamlString(configYamlString);
 
-      final injectionOverrides = await getInjectionOverrides(
-        flavor: flavor,
-        appConfig: appConfig,
-      );
+      final injectionOverrides = [
+        ...await core.getInjectionOverrides(
+          flavor: flavor,
+          appConfig: appConfig,
+        ),
+        ...await starred_repos.getInjectionOverrides(),
+      ];
 
       runApp(
         ProviderScope(

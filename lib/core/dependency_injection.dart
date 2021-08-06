@@ -1,11 +1,5 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../features/auth/core/dependency_injection.dart' as auth;
-import '../features/stared_repos/core/dependency_injection.dart'
-    as starred_repos;
-import '../features/users_placeholder/core/dependency_injection.dart'
-    as users_placeholder;
 import 'config.dart';
 import 'flavors.dart';
 
@@ -28,7 +22,4 @@ Future<List<Override>> getInjectionOverrides({
     [
       flavorPod.overrideWithValue(flavor),
       appConfigPod.overrideWithValue(appConfig),
-      ...await auth.overrides(),
-      ...await starred_repos.overrides(),
-      ...await users_placeholder.overrides(),
     ];

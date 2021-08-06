@@ -68,5 +68,3 @@ final usersCubitPod = Provider<UsersCubit>(
     );
   },
 );
-
-Future<List<Override>> overrides() async => const [];

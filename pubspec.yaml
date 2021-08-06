@@ -18,8 +18,7 @@ dependencies:
   oauth2: ^2.0.0
 
   # Dependency injection
-  get_it: ^7.2.0
-  provider: ^5.0.0
+  flutter_riverpod: ^1.0.0-dev.6
 
   # Functional programming
   dartz: ^0.10.0-nullsafety.2

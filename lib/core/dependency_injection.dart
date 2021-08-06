@@ -1,17 +1,25 @@
-import 'package:get_it/get_it.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config.dart';
 import 'flavors.dart';
 
-final getIt = GetIt.instance;
+final flavorPod = Provider<Flavor>(
+  (_) => throw StateError(
+    'The app flavor has not been initialized',
+  ),
+);
 
-Future<void> injectDependencies({
+final appConfigPod = Provider<AppConfig>(
+  (_) => throw StateError(
+    'The app config has not been initialized',
+  ),
+);
+
+Future<List<Override>> getInjectionOverrides({
   required Flavor flavor,
-  required AppConfig config,
-}) async {
-  getIt.registerSingleton(flavor);
-
-  getIt.registerLazySingleton<AppConfig>(
-    () => config,
-  );
-}
+  required AppConfig appConfig,
+}) async =>
+    [
+      flavorPod.overrideWithValue(flavor),
+      appConfigPod.overrideWithValue(appConfig),
+    ];

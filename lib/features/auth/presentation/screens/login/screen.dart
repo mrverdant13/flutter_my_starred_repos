@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_my_starred_repos/presentation/routers/app_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../l10n/l10n.dart';
 import '../../../../../presentation/routers/app_router.gr.dart';
@@ -79,12 +80,16 @@ class LoginScreen extends StatelessWidget {
                         constraints: const BoxConstraints(
                           minWidth: _buttonMinWidth,
                         ),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
+                        child: Consumer(
+                          builder: (context, ref, _) => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                            ),
+                            onPressed: () async => context.logInWithOAuth(
+                              appRouter: ref.watch(appRouterPod),
+                            ),
+                            child: Text(context.loginButtonLabel),
                           ),
-                          onPressed: () async => context.logInWithOAuth(),
-                          child: Text(context.loginButtonLabel),
                         ),
                       ),
                     ),
@@ -99,17 +104,25 @@ class LoginScreen extends StatelessWidget {
 
 /// A [BuildContext] that provides login utilities.
 extension _OAuthContext on BuildContext {
-  Future<void> logInWithOAuth() => read<AuthenticatorCubit>().logIn(
+  Future<void> logInWithOAuth({
+    required AppRouter appRouter,
+  }) =>
+      read<AuthenticatorCubit>().logIn(
         method: LogInMethod.oAuth(
-          callback: _oauthCallback,
+          callback: _oauthCallback(
+            appRouter: appRouter,
+          ),
         ),
       );
 
-  OAuthCallback get _oauthCallback => ({
+  OAuthCallback _oauthCallback({
+    required AppRouter appRouter,
+  }) =>
+      ({
         required Uri authorizationEndpoint,
         required Uri redirectBaseEndpoint,
       }) =>
-          read<AppRouter>().push<Uri>(
+          appRouter.push<Uri>(
             AuthScreenRoute(
               authorizationEndpoint: authorizationEndpoint,
               redirectBaseEndpoint: redirectBaseEndpoint,

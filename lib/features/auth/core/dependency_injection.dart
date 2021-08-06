@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/config.dart';
@@ -11,47 +12,60 @@ import '../infrastructure/external/dio_interceptors.dart';
 import '../infrastructure/facades/auth_service/implementation.dart';
 import '../infrastructure/facades/auth_service/interface.dart';
 
-/// Injects all instances required for auth funcionality.
-Future<void> injectDependencies() async {
-  // Config
-  getIt.registerLazySingleton(
-    () => getIt<AppConfig>().githubAuthConfig,
-  );
+final githubAuthConfigPod = Provider<GithubAuthConfig>(
+  (ref) {
+    final appConfig = ref.watch(appConfigPod);
+    return appConfig.githubAuthConfig;
+  },
+);
 
-  // External
-  getIt.registerLazySingleton(
-    () => const FlutterSecureStorage(),
-  );
-  getIt.registerLazySingleton(
-    () => AuthInterceptor(
-      credsStorage: getIt(),
-    ),
-  );
+final flutterSecureStoragePod = Provider<FlutterSecureStorage>(
+  (_) => const FlutterSecureStorage(),
+);
 
-  // Data sources
-  getIt.registerLazySingleton<Authenticator>(
-    () => AuthenticatorImp(
-      githubAuthConfig: getIt(),
-    ),
-  );
-  getIt.registerLazySingleton<CredsStorage>(
-    () => CredsStorageImp(
-      flutterSecureStorage: getIt(),
-    ),
-  );
+final credsStoragePod = Provider<CredsStorage>(
+  (ref) {
+    final flutterSecureStorage = ref.watch(flutterSecureStoragePod);
+    return CredsStorageImp(
+      flutterSecureStorage: flutterSecureStorage,
+    );
+  },
+);
 
-  // Facades
-  getIt.registerLazySingleton<AuthService>(
-    () => AuthServiceImp(
-      authenticator: getIt(),
-      credsStorage: getIt(),
-    ),
-  );
+final authInterceptorPod = Provider<AuthInterceptor>(
+  (ref) {
+    final credsStorage = ref.watch(credsStoragePod);
+    return AuthInterceptor(
+      credsStorage: credsStorage,
+    );
+  },
+);
 
-  // State managers
-  getIt.registerFactory(
-    () => AuthenticatorCubit(
-      authService: getIt(),
-    ),
-  );
-}
+final authenticatorPod = Provider<Authenticator>(
+  (ref) {
+    final githubAuthConfig = ref.watch(githubAuthConfigPod);
+    return AuthenticatorImp(
+      githubAuthConfig: githubAuthConfig,
+    );
+  },
+);
+
+final authServicePod = Provider<AuthService>(
+  (ref) {
+    final authenticator = ref.watch(authenticatorPod);
+    final credsStorage = ref.watch(credsStoragePod);
+    return AuthServiceImp(
+      authenticator: authenticator,
+      credsStorage: credsStorage,
+    );
+  },
+);
+
+final authenticatorCubitPod = Provider<AuthenticatorCubit>(
+  (ref) {
+    final authService = ref.watch(authServicePod);
+    return AuthenticatorCubit(
+      authService: authService,
+    );
+  },
+);

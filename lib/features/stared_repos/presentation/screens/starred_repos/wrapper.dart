@@ -2,7 +2,7 @@ part of 'screen.dart';
 
 /// A wrapper widget that injects the required elements for the
 /// [StarredReposScreen] to work.
-class _Wrapper extends StatelessWidget {
+class _Wrapper extends ConsumerWidget {
   /// Creates a [StarredReposScreen] wrapper widget.
   ///
   /// The actual screen content should be built within the [builder].
@@ -14,12 +14,15 @@ class _Wrapper extends StatelessWidget {
   final WidgetBuilder builder;
 
   @override
-  Widget build(BuildContext context) => MultiProvider(
-        providers: [
-          BlocProvider<StarredReposCubit>(
-            create: (context) => getIt()..load(),
-          ),
-        ],
-        builder: (context, child) => builder(context),
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final starredReposCubit = ref.watch(starredReposCubitPod);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<StarredReposCubit>.value(
+          value: starredReposCubit..load(),
+        ),
+      ],
+      child: Builder(builder: builder),
+    );
+  }
 }

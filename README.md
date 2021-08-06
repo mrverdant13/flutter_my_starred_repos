@@ -48,7 +48,7 @@ This app shows your favorites GitHub repositories. You can search for other repo
 - IDE launch setup:
   - Visual Studio Code
 - Secure app configuration based on a bundled config file (looking for a safer method 🔍).
-- Dependency injection independent of the widgets tree.
+- Directional dependency injection independent of the widgets tree with [riverpod][riverpod_link].
 - Raw OAuth flow implementation with GitHub specifications.
 - ETag-based data caching for basic offline mode support.
 - REST API server integration.
@@ -382,6 +382,7 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 [lumberdash_package_link]: https://pub.dev/packages/lumberdash
 [remove_from_coverage_package_link]: https://pub.dev/packages/remove_from_coverage
 [very_good_cli_package_link]: https://pub.dev/packages/very_good_cli
+[riverpod_link]: https://pub.dev/packages/riverpod
 
 <!-- GitHub documentation -->
 

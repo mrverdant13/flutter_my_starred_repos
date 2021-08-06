@@ -1,15 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/auth/application/authenticator_cubit/authenticator_cubit.dart';
 import '../routers/app_router.gr.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends ConsumerWidget {
   const AppDrawer({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Drawer(
+  Widget build(BuildContext context, WidgetRef ref) => Drawer(
         child: ListView(
           children: <Widget>[
             // TODO: Add translations.
@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.logout),
                   title: const Text('Log out'),
-                  onTap: () => context.read<AuthenticatorCubit>().logOut(),
+                  onTap: () => ref.watch(authenticatorCubitPod).logOut(),
                 ),
               ],
             ),

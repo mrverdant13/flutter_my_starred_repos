@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
@@ -24,28 +25,24 @@ class StarredReposScreen extends StatelessWidget {
               title: const Text('Starred Repositorires'),
             ),
             body: BlocConsumer<StarredReposCubit, StarredReposState>(
-              listener: (context, starredReposState) =>
-                  starredReposState.maybeWhen(
-                failure: (failure) => failure.when(
+              listener: (context, starredReposState) => starredReposState.when(
+                loaded: (_, __, warning) => warning?.when(
                   offline: () {
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
                     return ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text(
-                          failure.when(
-                            offline: () =>
-                                'No reliable Internet connection. Showing cached data.',
-                          ),
+                          'No reliable Internet connection. Showing cached data.',
                         ),
                       ),
                     );
                   },
                 ),
-                orElse: () {},
+                loading: (_) {},
               ),
-              builder: (context, _) {
+              builder: (context, starredReposState) {
+                final starredRepos = starredReposState.repos;
                 final starredReposCubit = context.read<StarredReposCubit>();
-                final starredRepos = starredReposCubit.starredRepos;
                 return RefreshIndicator(
                   onRefresh: () => starredReposCubit.reload(),
                   child: starredRepos.isEmpty()
@@ -56,25 +53,29 @@ class StarredReposScreen extends StatelessWidget {
                             child: SizedBox(
                               height: constraints.maxHeight,
                               child: Center(
-                                child: starredReposCubit.isLoading
-                                    ? Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: const [
-                                          CircularProgressIndicator(),
-                                          SizedBox(height: 10),
-                                          Text('Loading'),
-                                        ],
-                                      )
-                                    : const Text(
-                                        "You haven't starred any repository yet",
-                                      ),
+                                child: starredReposState.maybeWhen(
+                                  loading: (_) => Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const [
+                                      CircularProgressIndicator(),
+                                      SizedBox(height: 10),
+                                      Text('Loading'),
+                                    ],
+                                  ),
+                                  orElse: () => const Text(
+                                    "You haven't starred any repository yet",
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         )
                       : ListView.builder(
                           itemCount: starredRepos.size +
-                              (starredReposCubit.isLoading ? 1 : 0),
+                              starredReposState.maybeWhen(
+                                loading: (_) => 1,
+                                orElse: () => 0,
+                              ),
                           itemBuilder: (context, index) {
                             if (index == starredRepos.size) {
                               return const Padding(
@@ -82,7 +83,6 @@ class StarredReposScreen extends StatelessWidget {
                                 child: LinearProgressIndicator(minHeight: 10.0),
                               );
                             }
-
                             final starredRepo = starredRepos[index];
                             if (starredRepo == starredRepos.iter.last) {
                               starredReposCubit.load();
@@ -91,9 +91,13 @@ class StarredReposScreen extends StatelessWidget {
                               key: ValueKey(starredRepo.id),
                               leading: AspectRatio(
                                 aspectRatio: 1,
-                                child: Image.network(
-                                  starredRepo.owner.avatarUrl,
-                                  errorBuilder: (context, error, stackTrace) =>
+                                child: CachedNetworkImage(
+                                  imageUrl: starredRepo.owner.avatarUrl,
+                                  placeholder: (context, url) => const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  errorWidget: (context, url, error) =>
                                       const Center(
                                     child: Icon(
                                       Icons.image,

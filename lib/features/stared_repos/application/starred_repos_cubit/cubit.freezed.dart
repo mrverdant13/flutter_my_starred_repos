@@ -13,159 +13,23 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$StarredReposFailureTearOff {
-  const _$StarredReposFailureTearOff();
-
-  _StarredReposFailureOffline offline() {
-    return const _StarredReposFailureOffline();
-  }
-}
-
-/// @nodoc
-const $StarredReposFailure = _$StarredReposFailureTearOff();
-
-/// @nodoc
-mixin _$StarredReposFailure {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() offline,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? offline,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_StarredReposFailureOffline value) offline,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_StarredReposFailureOffline value)? offline,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $StarredReposFailureCopyWith<$Res> {
-  factory $StarredReposFailureCopyWith(
-          StarredReposFailure value, $Res Function(StarredReposFailure) then) =
-      _$StarredReposFailureCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$StarredReposFailureCopyWithImpl<$Res>
-    implements $StarredReposFailureCopyWith<$Res> {
-  _$StarredReposFailureCopyWithImpl(this._value, this._then);
-
-  final StarredReposFailure _value;
-  // ignore: unused_field
-  final $Res Function(StarredReposFailure) _then;
-}
-
-/// @nodoc
-abstract class _$StarredReposFailureOfflineCopyWith<$Res> {
-  factory _$StarredReposFailureOfflineCopyWith(
-          _StarredReposFailureOffline value,
-          $Res Function(_StarredReposFailureOffline) then) =
-      __$StarredReposFailureOfflineCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$StarredReposFailureOfflineCopyWithImpl<$Res>
-    extends _$StarredReposFailureCopyWithImpl<$Res>
-    implements _$StarredReposFailureOfflineCopyWith<$Res> {
-  __$StarredReposFailureOfflineCopyWithImpl(_StarredReposFailureOffline _value,
-      $Res Function(_StarredReposFailureOffline) _then)
-      : super(_value, (v) => _then(v as _StarredReposFailureOffline));
-
-  @override
-  _StarredReposFailureOffline get _value =>
-      super._value as _StarredReposFailureOffline;
-}
-
-/// @nodoc
-
-class _$_StarredReposFailureOffline implements _StarredReposFailureOffline {
-  const _$_StarredReposFailureOffline();
-
-  @override
-  String toString() {
-    return 'StarredReposFailure.offline()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _StarredReposFailureOffline);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() offline,
-  }) {
-    return offline();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? offline,
-    required TResult orElse(),
-  }) {
-    if (offline != null) {
-      return offline();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_StarredReposFailureOffline value) offline,
-  }) {
-    return offline(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_StarredReposFailureOffline value)? offline,
-    required TResult orElse(),
-  }) {
-    if (offline != null) {
-      return offline(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _StarredReposFailureOffline implements StarredReposFailure {
-  const factory _StarredReposFailureOffline() = _$_StarredReposFailureOffline;
-}
-
-/// @nodoc
 class _$StarredReposStateTearOff {
   const _$StarredReposStateTearOff();
 
-  _StarredReposStateLoading loading() {
-    return const _StarredReposStateLoading();
+  _StarredReposStateLoading loading({required KtList<GithubRepo> repos}) {
+    return _StarredReposStateLoading(
+      repos: repos,
+    );
   }
 
-  _StarredReposStateLoaded loaded() {
-    return const _StarredReposStateLoaded();
-  }
-
-  _StarredReposStateFailure failure(StarredReposFailure failure) {
-    return _StarredReposStateFailure(
-      failure,
+  _StarredReposStateLoaded loaded(
+      {required KtList<GithubRepo> repos,
+      required bool canLoadMore,
+      GetStaredReposWarning? warning}) {
+    return _StarredReposStateLoaded(
+      repos: repos,
+      canLoadMore: canLoadMore,
+      warning: warning,
     );
   }
 }
@@ -175,18 +39,22 @@ const $StarredReposState = _$StarredReposStateTearOff();
 
 /// @nodoc
 mixin _$StarredReposState {
+  KtList<GithubRepo> get repos => throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function(StarredReposFailure failure) failure,
+    required TResult Function(KtList<GithubRepo> repos) loading,
+    required TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)
+        loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function(StarredReposFailure failure)? failure,
+    TResult Function(KtList<GithubRepo> repos)? loading,
+    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)?
+        loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -194,16 +62,18 @@ mixin _$StarredReposState {
   TResult map<TResult extends Object?>({
     required TResult Function(_StarredReposStateLoading value) loading,
     required TResult Function(_StarredReposStateLoaded value) loaded,
-    required TResult Function(_StarredReposStateFailure value) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StarredReposStateLoading value)? loading,
     TResult Function(_StarredReposStateLoaded value)? loaded,
-    TResult Function(_StarredReposStateFailure value)? failure,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $StarredReposStateCopyWith<StarredReposState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -212,6 +82,7 @@ abstract class $StarredReposStateCopyWith<$Res> {
   factory $StarredReposStateCopyWith(
           StarredReposState value, $Res Function(StarredReposState) then) =
       _$StarredReposStateCopyWithImpl<$Res>;
+  $Res call({KtList<GithubRepo> repos});
 }
 
 /// @nodoc
@@ -222,13 +93,28 @@ class _$StarredReposStateCopyWithImpl<$Res>
   final StarredReposState _value;
   // ignore: unused_field
   final $Res Function(StarredReposState) _then;
+
+  @override
+  $Res call({
+    Object? repos = freezed,
+  }) {
+    return _then(_value.copyWith(
+      repos: repos == freezed
+          ? _value.repos
+          : repos // ignore: cast_nullable_to_non_nullable
+              as KtList<GithubRepo>,
+    ));
+  }
 }
 
 /// @nodoc
-abstract class _$StarredReposStateLoadingCopyWith<$Res> {
+abstract class _$StarredReposStateLoadingCopyWith<$Res>
+    implements $StarredReposStateCopyWith<$Res> {
   factory _$StarredReposStateLoadingCopyWith(_StarredReposStateLoading value,
           $Res Function(_StarredReposStateLoading) then) =
       __$StarredReposStateLoadingCopyWithImpl<$Res>;
+  @override
+  $Res call({KtList<GithubRepo> repos});
 }
 
 /// @nodoc
@@ -242,46 +128,73 @@ class __$StarredReposStateLoadingCopyWithImpl<$Res>
   @override
   _StarredReposStateLoading get _value =>
       super._value as _StarredReposStateLoading;
+
+  @override
+  $Res call({
+    Object? repos = freezed,
+  }) {
+    return _then(_StarredReposStateLoading(
+      repos: repos == freezed
+          ? _value.repos
+          : repos // ignore: cast_nullable_to_non_nullable
+              as KtList<GithubRepo>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_StarredReposStateLoading implements _StarredReposStateLoading {
-  const _$_StarredReposStateLoading();
+  const _$_StarredReposStateLoading({required this.repos});
+
+  @override
+  final KtList<GithubRepo> repos;
 
   @override
   String toString() {
-    return 'StarredReposState.loading()';
+    return 'StarredReposState.loading(repos: $repos)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _StarredReposStateLoading);
+    return identical(this, other) ||
+        (other is _StarredReposStateLoading &&
+            (identical(other.repos, repos) ||
+                const DeepCollectionEquality().equals(other.repos, repos)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(repos);
+
+  @JsonKey(ignore: true)
+  @override
+  _$StarredReposStateLoadingCopyWith<_StarredReposStateLoading> get copyWith =>
+      __$StarredReposStateLoadingCopyWithImpl<_StarredReposStateLoading>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function(StarredReposFailure failure) failure,
+    required TResult Function(KtList<GithubRepo> repos) loading,
+    required TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)
+        loaded,
   }) {
-    return loading();
+    return loading(repos);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function(StarredReposFailure failure)? failure,
+    TResult Function(KtList<GithubRepo> repos)? loading,
+    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)?
+        loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(repos);
     }
     return orElse();
   }
@@ -291,7 +204,6 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
   TResult map<TResult extends Object?>({
     required TResult Function(_StarredReposStateLoading value) loading,
     required TResult Function(_StarredReposStateLoaded value) loaded,
-    required TResult Function(_StarredReposStateFailure value) failure,
   }) {
     return loading(this);
   }
@@ -301,7 +213,6 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StarredReposStateLoading value)? loading,
     TResult Function(_StarredReposStateLoaded value)? loaded,
-    TResult Function(_StarredReposStateFailure value)? failure,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -312,14 +223,30 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
 }
 
 abstract class _StarredReposStateLoading implements StarredReposState {
-  const factory _StarredReposStateLoading() = _$_StarredReposStateLoading;
+  const factory _StarredReposStateLoading({required KtList<GithubRepo> repos}) =
+      _$_StarredReposStateLoading;
+
+  @override
+  KtList<GithubRepo> get repos => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$StarredReposStateLoadingCopyWith<_StarredReposStateLoading> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$StarredReposStateLoadedCopyWith<$Res> {
+abstract class _$StarredReposStateLoadedCopyWith<$Res>
+    implements $StarredReposStateCopyWith<$Res> {
   factory _$StarredReposStateLoadedCopyWith(_StarredReposStateLoaded value,
           $Res Function(_StarredReposStateLoaded) then) =
       __$StarredReposStateLoadedCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {KtList<GithubRepo> repos,
+      bool canLoadMore,
+      GetStaredReposWarning? warning});
+
+  $GetStaredReposWarningCopyWith<$Res>? get warning;
 }
 
 /// @nodoc
@@ -333,46 +260,107 @@ class __$StarredReposStateLoadedCopyWithImpl<$Res>
   @override
   _StarredReposStateLoaded get _value =>
       super._value as _StarredReposStateLoaded;
+
+  @override
+  $Res call({
+    Object? repos = freezed,
+    Object? canLoadMore = freezed,
+    Object? warning = freezed,
+  }) {
+    return _then(_StarredReposStateLoaded(
+      repos: repos == freezed
+          ? _value.repos
+          : repos // ignore: cast_nullable_to_non_nullable
+              as KtList<GithubRepo>,
+      canLoadMore: canLoadMore == freezed
+          ? _value.canLoadMore
+          : canLoadMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      warning: warning == freezed
+          ? _value.warning
+          : warning // ignore: cast_nullable_to_non_nullable
+              as GetStaredReposWarning?,
+    ));
+  }
+
+  @override
+  $GetStaredReposWarningCopyWith<$Res>? get warning {
+    if (_value.warning == null) {
+      return null;
+    }
+
+    return $GetStaredReposWarningCopyWith<$Res>(_value.warning!, (value) {
+      return _then(_value.copyWith(warning: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
-  const _$_StarredReposStateLoaded();
+  const _$_StarredReposStateLoaded(
+      {required this.repos, required this.canLoadMore, this.warning});
+
+  @override
+  final KtList<GithubRepo> repos;
+  @override
+  final bool canLoadMore;
+  @override
+  final GetStaredReposWarning? warning;
 
   @override
   String toString() {
-    return 'StarredReposState.loaded()';
+    return 'StarredReposState.loaded(repos: $repos, canLoadMore: $canLoadMore, warning: $warning)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _StarredReposStateLoaded);
+    return identical(this, other) ||
+        (other is _StarredReposStateLoaded &&
+            (identical(other.repos, repos) ||
+                const DeepCollectionEquality().equals(other.repos, repos)) &&
+            (identical(other.canLoadMore, canLoadMore) ||
+                const DeepCollectionEquality()
+                    .equals(other.canLoadMore, canLoadMore)) &&
+            (identical(other.warning, warning) ||
+                const DeepCollectionEquality().equals(other.warning, warning)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(repos) ^
+      const DeepCollectionEquality().hash(canLoadMore) ^
+      const DeepCollectionEquality().hash(warning);
+
+  @JsonKey(ignore: true)
+  @override
+  _$StarredReposStateLoadedCopyWith<_StarredReposStateLoaded> get copyWith =>
+      __$StarredReposStateLoadedCopyWithImpl<_StarredReposStateLoaded>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function(StarredReposFailure failure) failure,
+    required TResult Function(KtList<GithubRepo> repos) loading,
+    required TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)
+        loaded,
   }) {
-    return loaded();
+    return loaded(repos, canLoadMore, warning);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function(StarredReposFailure failure)? failure,
+    TResult Function(KtList<GithubRepo> repos)? loading,
+    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)?
+        loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(repos, canLoadMore, warning);
     }
     return orElse();
   }
@@ -382,7 +370,6 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   TResult map<TResult extends Object?>({
     required TResult Function(_StarredReposStateLoading value) loading,
     required TResult Function(_StarredReposStateLoaded value) loaded,
-    required TResult Function(_StarredReposStateFailure value) failure,
   }) {
     return loaded(this);
   }
@@ -392,7 +379,6 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StarredReposStateLoading value)? loading,
     TResult Function(_StarredReposStateLoaded value)? loaded,
-    TResult Function(_StarredReposStateFailure value)? failure,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -403,137 +389,17 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
 }
 
 abstract class _StarredReposStateLoaded implements StarredReposState {
-  const factory _StarredReposStateLoaded() = _$_StarredReposStateLoaded;
-}
-
-/// @nodoc
-abstract class _$StarredReposStateFailureCopyWith<$Res> {
-  factory _$StarredReposStateFailureCopyWith(_StarredReposStateFailure value,
-          $Res Function(_StarredReposStateFailure) then) =
-      __$StarredReposStateFailureCopyWithImpl<$Res>;
-  $Res call({StarredReposFailure failure});
-
-  $StarredReposFailureCopyWith<$Res> get failure;
-}
-
-/// @nodoc
-class __$StarredReposStateFailureCopyWithImpl<$Res>
-    extends _$StarredReposStateCopyWithImpl<$Res>
-    implements _$StarredReposStateFailureCopyWith<$Res> {
-  __$StarredReposStateFailureCopyWithImpl(_StarredReposStateFailure _value,
-      $Res Function(_StarredReposStateFailure) _then)
-      : super(_value, (v) => _then(v as _StarredReposStateFailure));
+  const factory _StarredReposStateLoaded(
+      {required KtList<GithubRepo> repos,
+      required bool canLoadMore,
+      GetStaredReposWarning? warning}) = _$_StarredReposStateLoaded;
 
   @override
-  _StarredReposStateFailure get _value =>
-      super._value as _StarredReposStateFailure;
-
+  KtList<GithubRepo> get repos => throw _privateConstructorUsedError;
+  bool get canLoadMore => throw _privateConstructorUsedError;
+  GetStaredReposWarning? get warning => throw _privateConstructorUsedError;
   @override
-  $Res call({
-    Object? failure = freezed,
-  }) {
-    return _then(_StarredReposStateFailure(
-      failure == freezed
-          ? _value.failure
-          : failure // ignore: cast_nullable_to_non_nullable
-              as StarredReposFailure,
-    ));
-  }
-
-  @override
-  $StarredReposFailureCopyWith<$Res> get failure {
-    return $StarredReposFailureCopyWith<$Res>(_value.failure, (value) {
-      return _then(_value.copyWith(failure: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_StarredReposStateFailure implements _StarredReposStateFailure {
-  const _$_StarredReposStateFailure(this.failure);
-
-  @override
-  final StarredReposFailure failure;
-
-  @override
-  String toString() {
-    return 'StarredReposState.failure(failure: $failure)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _StarredReposStateFailure &&
-            (identical(other.failure, failure) ||
-                const DeepCollectionEquality().equals(other.failure, failure)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failure);
-
   @JsonKey(ignore: true)
-  @override
-  _$StarredReposStateFailureCopyWith<_StarredReposStateFailure> get copyWith =>
-      __$StarredReposStateFailureCopyWithImpl<_StarredReposStateFailure>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function(StarredReposFailure failure) failure,
-  }) {
-    return failure(this.failure);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function(StarredReposFailure failure)? failure,
-    required TResult orElse(),
-  }) {
-    if (failure != null) {
-      return failure(this.failure);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_StarredReposStateLoading value) loading,
-    required TResult Function(_StarredReposStateLoaded value) loaded,
-    required TResult Function(_StarredReposStateFailure value) failure,
-  }) {
-    return failure(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_StarredReposStateLoading value)? loading,
-    TResult Function(_StarredReposStateLoaded value)? loaded,
-    TResult Function(_StarredReposStateFailure value)? failure,
-    required TResult orElse(),
-  }) {
-    if (failure != null) {
-      return failure(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _StarredReposStateFailure implements StarredReposState {
-  const factory _StarredReposStateFailure(StarredReposFailure failure) =
-      _$_StarredReposStateFailure;
-
-  StarredReposFailure get failure => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$StarredReposStateFailureCopyWith<_StarredReposStateFailure> get copyWith =>
+  _$StarredReposStateLoadedCopyWith<_StarredReposStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }

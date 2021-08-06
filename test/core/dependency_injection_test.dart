@@ -64,72 +64,68 @@ THEN an exception is thrown
         },
       );
 
-      group(
-        '''
-
-AND an injection overrides getter function''',
-        () {
-          // ARRANGE
-          for (final flavor in Flavor.values) {
-            group(
-              '''
-
+      // ARRANGE
+      for (final flavor in Flavor.values) {
+        group(
+          '''
+AND an injection overrides getter function
+├─ THAT overrides the flavor injection
+├─ AND  overrides the app config injection
 AND the ${flavor.tag} flavor
 AND the ${flavor.tag} app config
 WHEN the injection process is triggered''',
-              () {
-                // ARRANGE
-                final appConfig = AppConfig(
-                  githubAuthConfig: GithubAuthConfig(
-                    clientId: 'clientId-${flavor.tag}',
-                    clientSecret: 'clientSecret-${flavor.tag}',
-                  ),
+          () {
+            // ARRANGE
+            final appConfig = AppConfig(
+              githubAuthConfig: GithubAuthConfig(
+                clientId: 'clientId-${flavor.tag}',
+                clientSecret: 'clientSecret-${flavor.tag}',
+              ),
+            );
+            late ProviderContainer container;
+            setUp(
+              () async {
+                // ACT
+                final overrides = await getInjectionOverrides(
+                  flavor: flavor,
+                  appConfig: appConfig,
                 );
-                late ProviderContainer container;
-                setUp(
-                  () async {
-                    final overrides = await getInjectionOverrides(
-                      flavor: flavor,
-                      appConfig: appConfig,
-                    );
-                    container = ProviderContainer(
-                      overrides: overrides,
-                    );
-                  },
-                );
-
-                test(
-                  '''
-
-THEN the ${flavor.tag} flavor should be initialized
-''',
-                  () async {
-                    // ACT
-                    final result = container.read(flavorPod);
-
-                    // ASSERT
-                    expect(result, flavor);
-                  },
-                );
-
-                test(
-                  '''
-
-THEN the app config should be initialized
-''',
-                  () async {
-                    // ACT
-                    final result = container.read(appConfigPod);
-
-                    // ASSERT
-                    expect(result, appConfig);
-                  },
+                container = ProviderContainer(
+                  overrides: overrides,
                 );
               },
             );
-          }
-        },
-      );
+
+            test(
+              '''
+
+THEN the ${flavor.tag} flavor should be initialized
+''',
+              () async {
+                // ACT
+                final result = container.read(flavorPod);
+
+                // ASSERT
+                expect(result, flavor);
+              },
+            );
+
+            test(
+              '''
+
+THEN the app config should be initialized
+''',
+              () async {
+                // ACT
+                final result = container.read(appConfigPod);
+
+                // ASSERT
+                expect(result, appConfig);
+              },
+            );
+          },
+        );
+      }
     },
   );
 }

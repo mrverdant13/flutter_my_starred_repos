@@ -1,0 +1,17 @@
+include: package:lint/analysis_options.yaml
+
+analyzer:
+  errors:
+    missing_required_param: error
+    missing_return: error
+    must_be_immutable: error
+  exclude:
+    - lib/**.g.dart
+    - lib/**.gr.dart
+    - lib/**.freezed.dart
+
+linter:
+  rules:
+    sort_constructors_first: true
+    prefer_single_quotes: true
+    sort_pub_dependencies: false

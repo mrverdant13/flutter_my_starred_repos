@@ -1,9 +1,9 @@
+import 'package:auth_domain/auth_domain.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart';
 
 import '../../../../../core/config.dart';
-import '../../../domain/log_in_method.dart';
 import 'interface.dart';
 
 typedef AuthResponseHandlerCallback = Future<Client> Function({

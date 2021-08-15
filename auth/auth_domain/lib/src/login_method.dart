@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'log_in_method.freezed.dart';
+part 'login_method.freezed.dart';
 
 /// A signature for a callback used in the OAuth flow.
 ///
@@ -14,10 +14,10 @@ typedef OAuthCallback = Future<Uri?> Function({
 
 /// A union of login methods identifiers.
 @freezed
-class LogInMethod with _$LogInMethod {
+class LoginMethod with _$LoginMethod {
   /// An identifier for the OAuth login method.
-  const factory LogInMethod.oAuth({
+  const factory LoginMethod.oAuth({
     /// The callback used for the auth process.
     required OAuthCallback callback,
-  }) = _LogInMethodOAuth;
+  }) = _LoginMethodOAuth;
 }

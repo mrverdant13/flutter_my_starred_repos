@@ -1,7 +1,6 @@
+import 'package:auth_domain/auth_domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:oauth2/oauth2.dart';
-
-import '../../../domain/log_in_method.dart';
 
 part 'interface.freezed.dart';
 

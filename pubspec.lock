@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.1"
+  auth_domain:
+    dependency: "direct main"
+    description:
+      path: "auth/auth_domain"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   auto_route:
     dependency: "direct main"
     description:
@@ -506,13 +513,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.1"
-  lint:
+  lint_rules:
     dependency: "direct dev"
     description:
-      name: lint
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.5.3"
+      path: lint_rules
+      relative: true
+    source: path
+    version: "0.1.0+1"
   logging:
     dependency: transitive
     description:

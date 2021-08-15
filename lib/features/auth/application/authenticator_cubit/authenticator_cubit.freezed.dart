@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$AuthenticatorFailureTearOff {
   const _$AuthenticatorFailureTearOff();
 
-  _AuthenticatorFailureLogIn logIn(LogInFailure failure) {
+  _AuthenticatorFailureLogIn logIn(LoginFailure failure) {
     return _AuthenticatorFailureLogIn(
       failure,
     );
@@ -29,16 +29,16 @@ const $AuthenticatorFailure = _$AuthenticatorFailureTearOff();
 /// @nodoc
 mixin _$AuthenticatorFailure {
   /// A login failure.
-  LogInFailure get failure => throw _privateConstructorUsedError;
+  LoginFailure get failure => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LogInFailure failure) logIn,
+    required TResult Function(LoginFailure failure) logIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LogInFailure failure)? logIn,
+    TResult Function(LoginFailure failure)? logIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -64,9 +64,9 @@ abstract class $AuthenticatorFailureCopyWith<$Res> {
   factory $AuthenticatorFailureCopyWith(AuthenticatorFailure value,
           $Res Function(AuthenticatorFailure) then) =
       _$AuthenticatorFailureCopyWithImpl<$Res>;
-  $Res call({LogInFailure failure});
+  $Res call({LoginFailure failure});
 
-  $LogInFailureCopyWith<$Res> get failure;
+  $LoginFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -86,13 +86,13 @@ class _$AuthenticatorFailureCopyWithImpl<$Res>
       failure: failure == freezed
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
-              as LogInFailure,
+              as LoginFailure,
     ));
   }
 
   @override
-  $LogInFailureCopyWith<$Res> get failure {
-    return $LogInFailureCopyWith<$Res>(_value.failure, (value) {
+  $LoginFailureCopyWith<$Res> get failure {
+    return $LoginFailureCopyWith<$Res>(_value.failure, (value) {
       return _then(_value.copyWith(failure: value));
     });
   }
@@ -105,10 +105,10 @@ abstract class _$AuthenticatorFailureLogInCopyWith<$Res>
           $Res Function(_AuthenticatorFailureLogIn) then) =
       __$AuthenticatorFailureLogInCopyWithImpl<$Res>;
   @override
-  $Res call({LogInFailure failure});
+  $Res call({LoginFailure failure});
 
   @override
-  $LogInFailureCopyWith<$Res> get failure;
+  $LoginFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -131,7 +131,7 @@ class __$AuthenticatorFailureLogInCopyWithImpl<$Res>
       failure == freezed
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
-              as LogInFailure,
+              as LoginFailure,
     ));
   }
 }
@@ -144,7 +144,7 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
   @override
 
   /// A login failure.
-  final LogInFailure failure;
+  final LoginFailure failure;
 
   @override
   String toString() {
@@ -173,7 +173,7 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LogInFailure failure) logIn,
+    required TResult Function(LoginFailure failure) logIn,
   }) {
     return logIn(failure);
   }
@@ -181,7 +181,7 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LogInFailure failure)? logIn,
+    TResult Function(LoginFailure failure)? logIn,
     required TResult orElse(),
   }) {
     if (logIn != null) {
@@ -212,13 +212,13 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
 }
 
 abstract class _AuthenticatorFailureLogIn implements AuthenticatorFailure {
-  const factory _AuthenticatorFailureLogIn(LogInFailure failure) =
+  const factory _AuthenticatorFailureLogIn(LoginFailure failure) =
       _$_AuthenticatorFailureLogIn;
 
   @override
 
   /// A login failure.
-  LogInFailure get failure => throw _privateConstructorUsedError;
+  LoginFailure get failure => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AuthenticatorFailureLogInCopyWith<_AuthenticatorFailureLogIn>

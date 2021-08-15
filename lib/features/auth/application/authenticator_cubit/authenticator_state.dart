@@ -8,7 +8,7 @@ class AuthenticatorFailure with _$AuthenticatorFailure {
   /// [failure] is the actual login failure.
   const factory AuthenticatorFailure.logIn(
     /// A login failure.
-    LogInFailure failure,
+    LoginFailure failure,
   ) = _AuthenticatorFailureLogIn;
 }
 

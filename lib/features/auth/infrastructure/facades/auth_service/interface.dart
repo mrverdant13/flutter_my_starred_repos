@@ -1,7 +1,5 @@
+import 'package:auth_domain/auth_domain.dart';
 import 'package:dartz/dartz.dart';
-
-import '../../../domain/log_in_failure.dart';
-import '../../../domain/log_in_method.dart';
 
 /// An authentication service interface.
 abstract class AuthService {
@@ -16,8 +14,8 @@ abstract class AuthService {
   /// Logs in a user with the given [method].
   ///
   /// Obtains and stores credentials.
-  Future<Either<LogInFailure, Unit>> logIn({
-    required LogInMethod method,
+  Future<Either<LoginFailure, Unit>> logIn({
+    required LoginMethod method,
   });
 
   /// Logs out a user.

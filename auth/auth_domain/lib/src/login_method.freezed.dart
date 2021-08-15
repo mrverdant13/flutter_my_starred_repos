@@ -1,7 +1,8 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'log_in_method.dart';
+part of 'login_method.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,25 +14,25 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$LogInMethodTearOff {
-  const _$LogInMethodTearOff();
+class _$LoginMethodTearOff {
+  const _$LoginMethodTearOff();
 
-  _LogInMethodOAuth oAuth(
+  _LoginMethodOAuth oAuth(
       {required Future<Uri?> Function(
               {required Uri authorizationEndpoint,
               required Uri redirectBaseEndpoint})
           callback}) {
-    return _LogInMethodOAuth(
+    return _LoginMethodOAuth(
       callback: callback,
     );
   }
 }
 
 /// @nodoc
-const $LogInMethod = _$LogInMethodTearOff();
+const $LoginMethod = _$LoginMethodTearOff();
 
 /// @nodoc
-mixin _$LogInMethod {
+mixin _$LoginMethod {
   /// The callback used for the auth process.
   Future<Uri?> Function(
           {required Uri authorizationEndpoint,
@@ -49,6 +50,16 @@ mixin _$LogInMethod {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            Future<Uri?> Function(
+                    {required Uri authorizationEndpoint,
+                    required Uri redirectBaseEndpoint})
+                callback)?
+        oAuth,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             Future<Uri?> Function(
@@ -61,26 +72,31 @@ mixin _$LogInMethod {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_LogInMethodOAuth value) oAuth,
+    required TResult Function(_LoginMethodOAuth value) oAuth,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_LoginMethodOAuth value)? oAuth,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_LogInMethodOAuth value)? oAuth,
+    TResult Function(_LoginMethodOAuth value)? oAuth,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $LogInMethodCopyWith<LogInMethod> get copyWith =>
+  $LoginMethodCopyWith<LoginMethod> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LogInMethodCopyWith<$Res> {
-  factory $LogInMethodCopyWith(
-          LogInMethod value, $Res Function(LogInMethod) then) =
-      _$LogInMethodCopyWithImpl<$Res>;
+abstract class $LoginMethodCopyWith<$Res> {
+  factory $LoginMethodCopyWith(
+          LoginMethod value, $Res Function(LoginMethod) then) =
+      _$LoginMethodCopyWithImpl<$Res>;
   $Res call(
       {Future<Uri?> Function(
               {required Uri authorizationEndpoint,
@@ -89,12 +105,12 @@ abstract class $LogInMethodCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LogInMethodCopyWithImpl<$Res> implements $LogInMethodCopyWith<$Res> {
-  _$LogInMethodCopyWithImpl(this._value, this._then);
+class _$LoginMethodCopyWithImpl<$Res> implements $LoginMethodCopyWith<$Res> {
+  _$LoginMethodCopyWithImpl(this._value, this._then);
 
-  final LogInMethod _value;
+  final LoginMethod _value;
   // ignore: unused_field
-  final $Res Function(LogInMethod) _then;
+  final $Res Function(LoginMethod) _then;
 
   @override
   $Res call({
@@ -112,11 +128,11 @@ class _$LogInMethodCopyWithImpl<$Res> implements $LogInMethodCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$LogInMethodOAuthCopyWith<$Res>
-    implements $LogInMethodCopyWith<$Res> {
-  factory _$LogInMethodOAuthCopyWith(
-          _LogInMethodOAuth value, $Res Function(_LogInMethodOAuth) then) =
-      __$LogInMethodOAuthCopyWithImpl<$Res>;
+abstract class _$LoginMethodOAuthCopyWith<$Res>
+    implements $LoginMethodCopyWith<$Res> {
+  factory _$LoginMethodOAuthCopyWith(
+          _LoginMethodOAuth value, $Res Function(_LoginMethodOAuth) then) =
+      __$LoginMethodOAuthCopyWithImpl<$Res>;
   @override
   $Res call(
       {Future<Uri?> Function(
@@ -126,21 +142,21 @@ abstract class _$LogInMethodOAuthCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LogInMethodOAuthCopyWithImpl<$Res>
-    extends _$LogInMethodCopyWithImpl<$Res>
-    implements _$LogInMethodOAuthCopyWith<$Res> {
-  __$LogInMethodOAuthCopyWithImpl(
-      _LogInMethodOAuth _value, $Res Function(_LogInMethodOAuth) _then)
-      : super(_value, (v) => _then(v as _LogInMethodOAuth));
+class __$LoginMethodOAuthCopyWithImpl<$Res>
+    extends _$LoginMethodCopyWithImpl<$Res>
+    implements _$LoginMethodOAuthCopyWith<$Res> {
+  __$LoginMethodOAuthCopyWithImpl(
+      _LoginMethodOAuth _value, $Res Function(_LoginMethodOAuth) _then)
+      : super(_value, (v) => _then(v as _LoginMethodOAuth));
 
   @override
-  _LogInMethodOAuth get _value => super._value as _LogInMethodOAuth;
+  _LoginMethodOAuth get _value => super._value as _LoginMethodOAuth;
 
   @override
   $Res call({
     Object? callback = freezed,
   }) {
-    return _then(_LogInMethodOAuth(
+    return _then(_LoginMethodOAuth(
       callback: callback == freezed
           ? _value.callback
           : callback // ignore: cast_nullable_to_non_nullable
@@ -153,8 +169,8 @@ class __$LogInMethodOAuthCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LogInMethodOAuth implements _LogInMethodOAuth {
-  const _$_LogInMethodOAuth({required this.callback});
+class _$_LoginMethodOAuth implements _LoginMethodOAuth {
+  const _$_LoginMethodOAuth({required this.callback});
 
   @override
 
@@ -165,13 +181,13 @@ class _$_LogInMethodOAuth implements _LogInMethodOAuth {
 
   @override
   String toString() {
-    return 'LogInMethod.oAuth(callback: $callback)';
+    return 'LoginMethod.oAuth(callback: $callback)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _LogInMethodOAuth &&
+        (other is _LoginMethodOAuth &&
             (identical(other.callback, callback) ||
                 const DeepCollectionEquality()
                     .equals(other.callback, callback)));
@@ -183,8 +199,8 @@ class _$_LogInMethodOAuth implements _LogInMethodOAuth {
 
   @JsonKey(ignore: true)
   @override
-  _$LogInMethodOAuthCopyWith<_LogInMethodOAuth> get copyWith =>
-      __$LogInMethodOAuthCopyWithImpl<_LogInMethodOAuth>(this, _$identity);
+  _$LoginMethodOAuthCopyWith<_LoginMethodOAuth> get copyWith =>
+      __$LoginMethodOAuthCopyWithImpl<_LoginMethodOAuth>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -197,6 +213,19 @@ class _$_LogInMethodOAuth implements _LogInMethodOAuth {
         oAuth,
   }) {
     return oAuth(callback);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            Future<Uri?> Function(
+                    {required Uri authorizationEndpoint,
+                    required Uri redirectBaseEndpoint})
+                callback)?
+        oAuth,
+  }) {
+    return oAuth?.call(callback);
   }
 
   @override
@@ -219,15 +248,23 @@ class _$_LogInMethodOAuth implements _LogInMethodOAuth {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_LogInMethodOAuth value) oAuth,
+    required TResult Function(_LoginMethodOAuth value) oAuth,
   }) {
     return oAuth(this);
   }
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_LoginMethodOAuth value)? oAuth,
+  }) {
+    return oAuth?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_LogInMethodOAuth value)? oAuth,
+    TResult Function(_LoginMethodOAuth value)? oAuth,
     required TResult orElse(),
   }) {
     if (oAuth != null) {
@@ -237,12 +274,12 @@ class _$_LogInMethodOAuth implements _LogInMethodOAuth {
   }
 }
 
-abstract class _LogInMethodOAuth implements LogInMethod {
-  const factory _LogInMethodOAuth(
+abstract class _LoginMethodOAuth implements LoginMethod {
+  const factory _LoginMethodOAuth(
       {required Future<Uri?> Function(
               {required Uri authorizationEndpoint,
               required Uri redirectBaseEndpoint})
-          callback}) = _$_LogInMethodOAuth;
+          callback}) = _$_LoginMethodOAuth;
 
   @override
 
@@ -253,6 +290,6 @@ abstract class _LogInMethodOAuth implements LogInMethod {
       get callback => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$LogInMethodOAuthCopyWith<_LogInMethodOAuth> get copyWith =>
+  _$LoginMethodOAuthCopyWith<_LoginMethodOAuth> get copyWith =>
       throw _privateConstructorUsedError;
 }

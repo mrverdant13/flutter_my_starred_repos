@@ -1,9 +1,8 @@
+import 'package:auth_domain/auth_domain.dart';
 import 'package:creds_lds/creds_lds.dart';
 import 'package:dartz/dartz.dart';
 import 'package:oauth2/oauth2.dart';
 
-import '../../../domain/log_in_failure.dart';
-import '../../../domain/log_in_method.dart';
 import '../../data_sources/authenticator/interface.dart';
 import 'interface.dart';
 
@@ -29,8 +28,8 @@ class AuthServiceImp extends AuthService {
       );
 
   @override
-  Future<Either<LogInFailure, Unit>> logIn({
-    required LogInMethod method,
+  Future<Either<LoginFailure, Unit>> logIn({
+    required LoginMethod method,
   }) async {
     try {
       // Logs in according to the provided method.
@@ -45,9 +44,9 @@ class AuthServiceImp extends AuthService {
     } on LogInException catch (e) {
       return Left(
         e.when(
-          canceled: () => const LogInFailure.canceled(),
-          missingPermissions: () => const LogInFailure.missingPermissions(),
-          offline: () => const LogInFailure.offline(),
+          canceled: () => const LoginFailure.canceled(),
+          missingPermissions: () => const LoginFailure.missingPermissions(),
+          offline: () => const LoginFailure.offline(),
         ),
       );
     }

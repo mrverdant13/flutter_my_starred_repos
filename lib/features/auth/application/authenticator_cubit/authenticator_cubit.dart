@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:auth_domain/auth_domain.dart';
 
-import '../../domain/log_in_failure.dart';
-import '../../domain/log_in_method.dart';
 import '../../infrastructure/facades/auth_service/interface.dart';
 
 part 'authenticator_cubit.freezed.dart';
@@ -42,7 +41,7 @@ class AuthenticatorCubit extends Cubit<AuthenticatorState> {
 
   /// Starts the login process following the given [method].
   Future<void> logIn({
-    required LogInMethod method,
+    required LoginMethod method,
   }) async {
     emit(const AuthenticatorState.loading());
 

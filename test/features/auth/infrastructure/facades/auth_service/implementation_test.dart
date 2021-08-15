@@ -1,9 +1,8 @@
 import 'dart:math';
 
+import 'package:auth_domain/auth_domain.dart';
 import 'package:creds_lds/creds_lds.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_my_starred_repos/features/auth/domain/log_in_failure.dart';
-import 'package:flutter_my_starred_repos/features/auth/domain/log_in_method.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/authenticator/interface.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/implementation.dart';
 import 'package:mocktail/mocktail.dart';
@@ -134,7 +133,7 @@ THEN the user should be authenticated and his/her creds should be persisted
 
           // ACT
           final result = await authService.logIn(
-            method: const LogInMethod.oAuth(
+            method: const LoginMethod.oAuth(
               callback: oauthCallback,
             ),
           );
@@ -175,7 +174,7 @@ THEN the auth intent should result in a failure
 
           // ACT
           final result = await authService.logIn(
-            method: const LogInMethod.oAuth(
+            method: const LoginMethod.oAuth(
               callback: oauthCallback,
             ),
           );
@@ -184,7 +183,7 @@ THEN the auth intent should result in a failure
           expect(
             result,
             const Left(
-              LogInFailure.offline(),
+              LoginFailure.offline(),
             ),
           );
           verify(
@@ -218,7 +217,7 @@ THEN the auth intent should result in a failure
 
           // ACT
           final result = await authService.logIn(
-            method: const LogInMethod.oAuth(
+            method: const LoginMethod.oAuth(
               callback: oauthCallback,
             ),
           );
@@ -227,7 +226,7 @@ THEN the auth intent should result in a failure
           expect(
             result,
             const Left(
-              LogInFailure.missingPermissions(),
+              LoginFailure.missingPermissions(),
             ),
           );
           verify(
@@ -261,7 +260,7 @@ THEN the auth intent should result in a failure
 
           // ACT
           final result = await authService.logIn(
-            method: const LogInMethod.oAuth(
+            method: const LoginMethod.oAuth(
               callback: oauthCallback,
             ),
           );
@@ -270,7 +269,7 @@ THEN the auth intent should result in a failure
           expect(
             result,
             const Left(
-              LogInFailure.canceled(),
+              LoginFailure.canceled(),
             ),
           );
           verify(

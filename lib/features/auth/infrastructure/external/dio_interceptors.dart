@@ -1,13 +1,12 @@
+import 'package:creds_lds/creds_lds.dart';
 import 'package:dio/dio.dart';
-
-import '../data_sources/creds_storage/interface.dart';
 
 class AuthInterceptor extends Interceptor {
   AuthInterceptor({
-    required CredsStorage credsStorage,
-  }) : _credsStorage = credsStorage;
+    required CredsLDS credsLDS,
+  }) : _credsLDS = credsLDS;
 
-  final CredsStorage _credsStorage;
+  final CredsLDS _credsLDS;
 
   static const extraEntry = MapEntry('auth_interceptor', true);
 
@@ -17,7 +16,7 @@ class AuthInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     if (options.extra[extraEntry.key] == extraEntry.value) {
-      final creds = await _credsStorage.get();
+      final creds = await _credsLDS.get();
       final accessToken = creds?.accessToken;
 
       if (accessToken != null) {

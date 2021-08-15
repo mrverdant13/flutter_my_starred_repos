@@ -4,11 +4,16 @@ import 'package:oauth2/oauth2.dart';
 
 import 'interface.dart';
 
-/// A credentials storage implementation that uses [FlutterSecureStorage].
-class CredsStorageImp extends CredsStorage {
-  /// Creates a credentials storage implementation with the given
-  /// [flutterSecureStorage].
-  CredsStorageImp({
+/// A
+/// {@template creds_lds_flutter_secure_storage}
+/// credentials local data source implementation
+/// {@endtemplate}
+///  that uses [FlutterSecureStorage].
+class CredsLDSImp extends CredsLDS {
+  /// Creates a
+  /// {@macro creds_lds_flutter_secure_storage}
+  /// with the given [flutterSecureStorage].
+  CredsLDSImp({
     required FlutterSecureStorage flutterSecureStorage,
   }) : _flutterSecureStorage = flutterSecureStorage;
 

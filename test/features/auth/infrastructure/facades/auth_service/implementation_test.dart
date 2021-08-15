@@ -1,10 +1,10 @@
 import 'dart:math';
 
+import 'package:creds_lds/creds_lds.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_my_starred_repos/features/auth/domain/log_in_failure.dart';
 import 'package:flutter_my_starred_repos/features/auth/domain/log_in_method.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/authenticator/interface.dart';
-import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/creds_storage/interface.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/implementation.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
@@ -12,7 +12,7 @@ import 'package:test/test.dart';
 
 class MockAuthenticator extends Mock implements Authenticator {}
 
-class MockCredsStorage extends Mock implements CredsStorage {}
+class MockCredsLDS extends Mock implements CredsLDS {}
 
 class FakeOAuthCallback {
   Future<Uri> call({
@@ -50,20 +50,20 @@ void main() {
 
 GIVEN an auth service
 ├─ THAT uses an authenticator
-├─ AND  uses a credentials storage''',
+├─ AND  uses a credentials local data source''',
     () {
       // ARRANGE
       late MockAuthenticator mockAuthenticator;
-      late MockCredsStorage mockCredsStorage;
+      late MockCredsLDS mockCredsLDS;
       late AuthServiceImp authService;
 
       setUp(
         () {
           mockAuthenticator = MockAuthenticator();
-          mockCredsStorage = MockCredsStorage();
+          mockCredsLDS = MockCredsLDS();
           authService = AuthServiceImp(
             authenticator: mockAuthenticator,
-            credsStorage: mockCredsStorage,
+            credsLDS: mockCredsLDS,
           );
         },
       );
@@ -71,7 +71,7 @@ GIVEN an auth service
       tearDown(
         () {
           verifyNoMoreInteractions(mockAuthenticator);
-          verifyNoMoreInteractions(mockCredsStorage);
+          verifyNoMoreInteractions(mockCredsLDS);
         },
       );
 
@@ -80,7 +80,7 @@ GIVEN an auth service
 
 WHEN the login status is checked
 THEN the auth status should be returned
-├─ BY retrieving it from the credentials storage
+├─ BY retrieving it from the credentials local data source
 ├─ AND returning its value
 ''',
         () async {
@@ -88,7 +88,7 @@ THEN the auth status should be returned
           final expectedStatus = Random().nextBool();
 
           when(
-            () => mockCredsStorage.get(),
+            () => mockCredsLDS.get(),
           ).thenAnswer(
             (_) async => expectedStatus ? FakeCredentials() : null,
           );
@@ -99,7 +99,7 @@ THEN the auth status should be returned
           // ASSERT
           expect(result, expectedStatus);
           verify(
-            () => mockCredsStorage.get(),
+            () => mockCredsLDS.get(),
           ).called(1);
         },
       );
@@ -113,7 +113,7 @@ AND the user grants all permissions
 AND the user completes the process
 THEN the user should be authenticated and his/her creds should be persisted
 ├─ BY collecting creds with the authenticator
-├─ AND storing the creds with the credentials storage
+├─ AND storing the creds with the credentials local data source
 ├─ AND not returning any data
 ''',
         () async {
@@ -127,7 +127,7 @@ THEN the user should be authenticated and his/her creds should be persisted
             (_) async => creds,
           );
           when(
-            () => mockCredsStorage.set(any()),
+            () => mockCredsLDS.set(any()),
           ).thenAnswer(
             (_) => Future.value(),
           );
@@ -147,7 +147,7 @@ THEN the user should be authenticated and his/her creds should be persisted
             ),
           ).called(1);
           verify(
-            () => mockCredsStorage.set(creds),
+            () => mockCredsLDS.set(creds),
           ).called(1);
         },
       );
@@ -286,13 +286,13 @@ THEN the auth intent should result in a failure
 
 WHEN the logout process is triggered
 THEN any stored creds should be removed
-├─ BY clearing the creds storage
+├─ BY clearing the creds local data source
 ├─ AND not returning any data
 ''',
         () async {
           // ARRANGE
           when(
-            () => mockCredsStorage.clear(),
+            () => mockCredsLDS.clear(),
           ).thenAnswer(
             (_) => Future.value(),
           );
@@ -302,7 +302,7 @@ THEN any stored creds should be removed
 
           // ASSERT
           verify(
-            () => mockCredsStorage.clear(),
+            () => mockCredsLDS.clear(),
           ).called(1);
         },
       );

@@ -1,8 +1,9 @@
+import 'package:auth_config/auth_config.dart';
+import 'package:auth_rds/auth_rds.dart';
 import 'package:flutter_my_starred_repos/core/config.dart';
 import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
-import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/authenticator/interface.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

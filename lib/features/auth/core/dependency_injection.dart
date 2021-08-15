@@ -1,12 +1,11 @@
+import 'package:auth_config/auth_config.dart';
+import 'package:auth_rds/auth_rds.dart';
 import 'package:creds_lds/creds_lds.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../../core/config.dart';
 import '../../../core/dependency_injection.dart';
 import '../application/authenticator_cubit/authenticator_cubit.dart';
-import '../infrastructure/data_sources/authenticator/github.dart';
-import '../infrastructure/data_sources/authenticator/interface.dart';
 import '../infrastructure/external/dio_interceptors.dart';
 import '../infrastructure/facades/auth_service/implementation.dart';
 import '../infrastructure/facades/auth_service/interface.dart';

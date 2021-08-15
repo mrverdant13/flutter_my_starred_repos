@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:auth_domain/auth_domain.dart';
+import 'package:auth_rds/auth_rds.dart';
 import 'package:creds_lds/creds_lds.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_my_starred_repos/features/auth/infrastructure/data_sources/authenticator/interface.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/implementation.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';

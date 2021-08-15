@@ -1,9 +1,9 @@
 import 'package:auth_domain/auth_domain.dart';
+import 'package:auth_rds/auth_rds.dart';
 import 'package:creds_lds/creds_lds.dart';
 import 'package:dartz/dartz.dart';
 import 'package:oauth2/oauth2.dart';
 
-import '../../data_sources/authenticator/interface.dart';
 import 'interface.dart';
 
 /// An authentication service implementation.

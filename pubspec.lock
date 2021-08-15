@@ -36,10 +36,24 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.1"
+  auth_config:
+    dependency: "direct main"
+    description:
+      path: "auth/auth_config"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   auth_domain:
     dependency: "direct main"
     description:
       path: "auth/auth_domain"
+      relative: true
+    source: path
+    version: "0.1.0+1"
+  auth_rds:
+    dependency: "direct main"
+    description:
+      path: "auth/auth_rds"
       relative: true
     source: path
     version: "0.1.0+1"
@@ -513,6 +527,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.1"
+  lint:
+    dependency: transitive
+    description:
+      name: lint
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.3"
   lint_rules:
     dependency: "direct dev"
     description:

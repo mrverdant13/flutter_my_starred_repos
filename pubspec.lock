@@ -228,7 +228,7 @@ packages:
   creds_lds:
     dependency: "direct main"
     description:
-      path: creds_lds
+      path: "auth/creds_lds"
       relative: true
     source: path
     version: "0.1.0+1"

@@ -1,6 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'github_auth_config.dart';
 
@@ -146,7 +145,7 @@ class _$_GithubAuthConfig implements _GithubAuthConfig {
           required this.clientSecret});
 
   factory _$_GithubAuthConfig.fromJson(Map<String, dynamic> json) =>
-      _$$_GithubAuthConfigFromJson(json);
+      _$_$_GithubAuthConfigFromJson(json);
 
   @override
 
@@ -189,7 +188,7 @@ class _$_GithubAuthConfig implements _GithubAuthConfig {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GithubAuthConfigToJson(this);
+    return _$_$_GithubAuthConfigToJson(this);
   }
 }
 

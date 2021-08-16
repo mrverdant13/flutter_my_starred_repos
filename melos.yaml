@@ -1,0 +1,52 @@
+name: flutter_my_starred_repos
+
+# Check for packages within the current folder and all sub-folders.
+packages:
+  - "**"
+
+# Workaround to ignore l10n gen packages.
+ignore:
+  - synthetic_package
+
+scripts:
+  #
+  # Code generation.
+  #
+
+  g:
+    run: melos exec -c 1 --fail-fast -- flutter pub run build_runner build --delete-conflicting-outputs
+    description: Generate files with `build_runner` for a selected package.
+    select-package:
+      depends-on: build_runner
+
+  g:all:
+    run: melos run g --no-select
+    description: Generate files with `build_runner` for all packages.
+
+  #
+  # Testing without code coverage.
+  #
+
+  t:
+    run: melos exec -c 1 --fail-fast -- flutter test --no-pub -r expanded --test-randomize-ordering-seed random
+    description: Run tests for a selected package.
+    select-package:
+      dir-exists: test
+
+  t:all:
+    run: melos run t --no-select
+    description: Run all tests for all packages.
+
+  #
+  # Testing with code coverage.
+  #
+
+  c:
+    run: melos exec -c 1 --fail-fast -- flutter test --no-pub -r expanded --coverage --test-randomize-ordering-seed random
+    description: Run tests and generate coverage data for a selected package.
+    select-package:
+      dir-exists: test
+
+  c:all:
+    run: melos run c --no-select
+    description: Run all tests and generate coverage data for all packages.

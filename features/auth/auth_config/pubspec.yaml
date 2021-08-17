@@ -1,5 +1,5 @@
-name: auth_rds
-description: An auth remote data source.
+name: auth_config
+description: A dart package that includes auth config elements.
 version: 0.1.0+1
 publish_to: none
 
@@ -7,20 +7,8 @@ environment:
   sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-
-  # Auth
-  oauth2: ^2.0.0
-
   # Immutable elements
   freezed_annotation: ^0.14.2
-
-  # Packages
-  auth_config:
-    path: ../../auth_config
-  auth_domain:
-    path: ../../auth_domain
 
 dev_dependencies:
   # Code generation
@@ -33,6 +21,8 @@ dev_dependencies:
   lint_rules:
     path: ../../../lint_rules
 
+  # Serialization
+  json_serializable: any
+
   # Testing
-  mocktail: any
   test: any

@@ -26,7 +26,7 @@ dependencies:
 dev_dependencies:
   # Linting
   lint_rules:
-    path: ../../../lint_rules
+    path: ../../../../lint_rules
 
   # Testing
   mocktail: any

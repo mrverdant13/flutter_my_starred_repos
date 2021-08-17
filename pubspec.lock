@@ -39,28 +39,28 @@ packages:
   auth_config:
     dependency: transitive
     description:
-      path: "auth/auth_config"
+      path: "features/auth/auth_config"
       relative: true
     source: path
     version: "0.1.0+1"
   auth_domain:
     dependency: transitive
     description:
-      path: "auth/auth_domain"
+      path: "features/auth/auth_domain"
       relative: true
     source: path
     version: "0.1.0+1"
   auth_rds:
     dependency: transitive
     description:
-      path: "auth/data_sources/auth_rds"
+      path: "features/auth/data_sources/auth_rds"
       relative: true
     source: path
     version: "0.1.0+1"
   auth_service:
     dependency: "direct main"
     description:
-      path: "auth/facades/auth_service"
+      path: "features/auth/facades/auth_service"
       relative: true
     source: path
     version: "0.1.0+1"
@@ -84,7 +84,7 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.0.0"
+    version: "7.1.0"
   bloc_test:
     dependency: "direct dev"
     description:
@@ -249,7 +249,7 @@ packages:
   creds_lds:
     dependency: transitive
     description:
-      path: "auth/data_sources/creds_lds"
+      path: "features/auth/data_sources/creds_lds"
       relative: true
     source: path
     version: "0.1.0+1"

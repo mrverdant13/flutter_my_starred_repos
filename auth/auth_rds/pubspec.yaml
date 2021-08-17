@@ -16,14 +16,11 @@ dependencies:
   # Immutable elements
   freezed_annotation: ^0.14.2
 
-  # Local storage
-  flutter_secure_storage: ^4.2.1
-
   # Packages
   auth_config:
-    path: ../auth_config/
+    path: ../auth_config
   auth_domain:
-    path: ../auth_domain/
+    path: ../auth_domain
 
 dev_dependencies:
   # Code generation

@@ -63,14 +63,8 @@ dependencies:
   path_provider: ^2.0.2
 
   # Features
-  auth_config:
-    path: auth/auth_config
-  auth_domain:
-    path: auth/auth_domain
-  auth_rds:
-    path: auth/auth_rds
-  creds_lds:
-    path: auth/creds_lds
+  auth_service:
+    path: auth/auth_service
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:auth_domain/auth_domain.dart';
+import 'package:auth_service/auth_service.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
-import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/interface.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

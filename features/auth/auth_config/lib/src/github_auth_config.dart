@@ -9,6 +9,7 @@ part 'github_auth_config.g.dart';
 class GithubAuthConfig with _$GithubAuthConfig {
   /// Creates a GitHub auth data holder.
   @visibleForTesting
+  // ignore: invalid_annotation_target
   @JsonSerializable(
     anyMap: true,
     checked: true,
@@ -16,6 +17,7 @@ class GithubAuthConfig with _$GithubAuthConfig {
   )
   const factory GithubAuthConfig({
     /// GitHub client ID.
+    // ignore: invalid_annotation_target
     @JsonKey(
       required: true,
       disallowNullValue: true,
@@ -23,6 +25,7 @@ class GithubAuthConfig with _$GithubAuthConfig {
         required String clientId,
 
     /// GitHub client secret.
+    // ignore: invalid_annotation_target
     @JsonKey(
       required: true,
       disallowNullValue: true,

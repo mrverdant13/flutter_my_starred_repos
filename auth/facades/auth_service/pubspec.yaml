@@ -9,24 +9,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
   # Other packages
   dartz: ^0.10.0-nullsafety.2
-    
+
   # Domain
   auth_domain:
-    path: ../auth_domain
+    path: ../../auth_domain
 
   # Data sources
   auth_rds:
-    path: ../auth_rds
+    path: ../../data_sources/auth_rds
   creds_lds:
-    path: ../creds_lds
+    path: ../../data_sources/creds_lds
 
 dev_dependencies:
   # Linting
   lint_rules:
-    path: ../../lint_rules
+    path: ../../../lint_rules
 
   # Testing
   mocktail: any

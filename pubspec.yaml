@@ -64,7 +64,7 @@ dependencies:
 
   # Features
   auth_service:
-    path: auth/auth_service
+    path: auth/facades/auth_service
 
 dev_dependencies:
   flutter_test:

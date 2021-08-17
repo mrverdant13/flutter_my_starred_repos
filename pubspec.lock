@@ -53,14 +53,14 @@ packages:
   auth_rds:
     dependency: transitive
     description:
-      path: "auth/auth_rds"
+      path: "auth/data_sources/auth_rds"
       relative: true
     source: path
     version: "0.1.0+1"
   auth_service:
     dependency: "direct main"
     description:
-      path: "auth/auth_service"
+      path: "auth/facades/auth_service"
       relative: true
     source: path
     version: "0.1.0+1"
@@ -249,7 +249,7 @@ packages:
   creds_lds:
     dependency: transitive
     description:
-      path: "auth/creds_lds"
+      path: "auth/data_sources/creds_lds"
       relative: true
     source: path
     version: "0.1.0+1"

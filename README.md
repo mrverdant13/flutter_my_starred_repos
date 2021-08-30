@@ -15,7 +15,7 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
 |                                           | Android | iOS | Web | Linux | Windows | MacOS |
 | :---------------------------------------- | :-----: | :-: | :-: | :---: | :-----: | :---: |
-| Native flavors                            |   ✔️    | 📌  | ➖  |  ➖   |   ➖    |  ➖   |
+| Native flavors                            |   ✔️    | ✔️  | ➖  |  ➖   |   ➖    |  ➖   |
 | Different app icon per flavor             |   ✔️    | 📌  | 🔍  |  🔍   |   🔍    |  🔍   |
 | Different app splash per flavor           |   ✔️    | 📌  | 🔍  |  🔍   |   🔍    |  🔍   |
 | Different app splash per dark/light theme |   ✔️    | 🔍  | 🔍  |  🔍   |   🔍    |  🔍   |

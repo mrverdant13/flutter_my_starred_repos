@@ -54,7 +54,7 @@ jobs:
         run: melos run A:ci
 
       - name: Ensure up-to-date code generation
-        run: melos exec --depends-on=test -- flutter pub run test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
+        run: melos exec --depends-on=test --file-exists=test/up_to_date_code_gen_test.dart -- flutter pub run test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
 
   build:
     name: Test app implementation

@@ -53,8 +53,9 @@ jobs:
       - name: Analyze Dart files considering infos and warnings as failures
         run: melos run A:ci
 
-      - name: Ensure up-to-date code generation
-        run: melos exec --depends-on=test --file-exists=test/up_to_date_code_gen_test.dart -- flutter pub run test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
+      # TODO: Enable including code gen data caching.
+      # - name: Ensure up-to-date code generation
+      #   run: melos exec --depends-on=test --file-exists=test/up_to_date_code_gen_test.dart -- flutter pub run test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
 
   test:
     needs: min-conditions

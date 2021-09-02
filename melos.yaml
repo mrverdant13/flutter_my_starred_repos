@@ -11,7 +11,7 @@ ignore:
 scripts:
   g:
     description: Run code generation for a selected package.
-    run: melos exec -- flutter pub run build_runner build --delete-conflicting-outputs
+    run: melos exec -c 1 -- flutter pub run build_runner build --delete-conflicting-outputs
     select-package:
       depends-on: build_runner
   G:

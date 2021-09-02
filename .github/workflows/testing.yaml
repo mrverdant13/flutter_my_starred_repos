@@ -23,8 +23,8 @@ on:
       - "pubspec.yaml"
 
 jobs:
-  setup:
-    name: Format, analyze and ensure up-to-date code generation
+  min-conditions:
+    name: Format, analyze and ensure up-to-date code generation (minimal conditions)
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo code
@@ -56,7 +56,8 @@ jobs:
       - name: Ensure up-to-date code generation
         run: melos exec --depends-on=test --file-exists=test/up_to_date_code_gen_test.dart -- flutter pub run test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
 
-  build:
+  test:
+    needs: min-conditions
     name: Test app implementation
     runs-on: ubuntu-latest
     steps:

@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'github_auth_config.dart';
 
@@ -42,10 +43,12 @@ const $GithubAuthConfig = _$GithubAuthConfigTearOff();
 /// @nodoc
 mixin _$GithubAuthConfig {
   /// GitHub client ID.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   String get clientId => throw _privateConstructorUsedError;
 
   /// GitHub client secret.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   String get clientSecret => throw _privateConstructorUsedError;
 
@@ -145,16 +148,18 @@ class _$_GithubAuthConfig implements _GithubAuthConfig {
           required this.clientSecret});
 
   factory _$_GithubAuthConfig.fromJson(Map<String, dynamic> json) =>
-      _$_$_GithubAuthConfigFromJson(json);
+      _$$_GithubAuthConfigFromJson(json);
 
   @override
 
   /// GitHub client ID.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   final String clientId;
   @override
 
   /// GitHub client secret.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   final String clientSecret;
 
@@ -188,7 +193,7 @@ class _$_GithubAuthConfig implements _GithubAuthConfig {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_GithubAuthConfigToJson(this);
+    return _$$_GithubAuthConfigToJson(this);
   }
 }
 
@@ -205,11 +210,13 @@ abstract class _GithubAuthConfig implements GithubAuthConfig {
   @override
 
   /// GitHub client ID.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   String get clientId => throw _privateConstructorUsedError;
   @override
 
   /// GitHub client secret.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   String get clientSecret => throw _privateConstructorUsedError;
   @override

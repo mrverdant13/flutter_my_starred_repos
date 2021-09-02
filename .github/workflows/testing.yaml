@@ -79,6 +79,9 @@ jobs:
       - name: Initialize tools
         run: melos bs
 
+      - name: Install dependencies
+        run: melos exec -- flutter pub get
+
       - name: Run tests adn generate coverage
         run: melos run T:ci
 

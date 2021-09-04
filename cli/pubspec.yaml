@@ -8,6 +8,6 @@ environment:
 dev_dependencies:
   lint_rules:
     path: ../lint_rules
-  test: any
+  test: ^1.17.12
 dependencies:
   path: ^1.8.0

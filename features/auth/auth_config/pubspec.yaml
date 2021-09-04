@@ -8,21 +8,21 @@ environment:
 
 dependencies:
   # Immutable elements
-  freezed_annotation: ^0.14.2
+  freezed_annotation: ^0.14.3
 
 dev_dependencies:
   # Code generation
-  build_runner: any
+  build_runner: ^2.1.2
 
   # Immutable elements
-  freezed: any
+  freezed: ^0.14.5
 
   # Linting
   lint_rules:
     path: ../../../lint_rules
 
   # Serialization
-  json_serializable: any
+  json_serializable: ^5.0.0
 
   # Testing
-  test: any
+  test: ^1.17.12

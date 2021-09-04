@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
 
   # Other packages
-  dartz: ^0.10.0-nullsafety.2
+  dartz: ^0.10.0
 
   # Domain
   auth_domain:
@@ -29,5 +29,8 @@ dev_dependencies:
     path: ../../../../lint_rules
 
   # Testing
-  mocktail: any
-  test: any
+  mocktail: ^0.1.4
+  test: ^1.17.12
+
+dependency_overrides:
+  meta: ^1.7.0

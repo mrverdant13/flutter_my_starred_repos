@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'payload.dart';
 
@@ -45,6 +46,12 @@ mixin _$Payload<D, W> {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult Function(D data)? $default, {
+    TResult Function(D data, W warning)? withWarning,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(D data)? $default, {
     TResult Function(D data, W warning)? withWarning,
@@ -55,6 +62,12 @@ mixin _$Payload<D, W> {
   TResult map<TResult extends Object?>(
     TResult Function(_Payload<D, W> value) $default, {
     required TResult Function(_PayloadWithWarning<D, W> value) withWarning,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult Function(_Payload<D, W> value)? $default, {
+    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -175,6 +188,15 @@ class _$_Payload<D, W> implements _Payload<D, W> {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult Function(D data)? $default, {
+    TResult Function(D data, W warning)? withWarning,
+  }) {
+    return $default?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(D data)? $default, {
     TResult Function(D data, W warning)? withWarning,
@@ -193,6 +215,15 @@ class _$_Payload<D, W> implements _Payload<D, W> {
     required TResult Function(_PayloadWithWarning<D, W> value) withWarning,
   }) {
     return $default(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult Function(_Payload<D, W> value)? $default, {
+    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
+  }) {
+    return $default?.call(this);
   }
 
   @override
@@ -308,6 +339,15 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult Function(D data)? $default, {
+    TResult Function(D data, W warning)? withWarning,
+  }) {
+    return withWarning?.call(data, warning);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(D data)? $default, {
     TResult Function(D data, W warning)? withWarning,
@@ -326,6 +366,15 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
     required TResult Function(_PayloadWithWarning<D, W> value) withWarning,
   }) {
     return withWarning(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult Function(_Payload<D, W> value)? $default, {
+    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
+  }) {
+    return withWarning?.call(this);
   }
 
   @override

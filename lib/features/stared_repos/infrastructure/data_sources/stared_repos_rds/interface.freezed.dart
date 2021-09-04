@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'interface.dart';
 
@@ -37,6 +38,12 @@ mixin _$GetStaredReposPageException {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? offline,
+    TResult Function()? unmodified,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? offline,
     TResult Function()? unmodified,
@@ -49,6 +56,12 @@ mixin _$GetStaredReposPageException {
         offline,
     required TResult Function(_GetStaredReposPageExceptionUnmodified value)
         unmodified,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetStaredReposPageExceptionOffline value)? offline,
+    TResult Function(_GetStaredReposPageExceptionUnmodified value)? unmodified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -131,6 +144,15 @@ class _$_GetStaredReposPageExceptionOffline
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? offline,
+    TResult Function()? unmodified,
+  }) {
+    return offline?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? offline,
     TResult Function()? unmodified,
@@ -151,6 +173,15 @@ class _$_GetStaredReposPageExceptionOffline
         unmodified,
   }) {
     return offline(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetStaredReposPageExceptionOffline value)? offline,
+    TResult Function(_GetStaredReposPageExceptionUnmodified value)? unmodified,
+  }) {
+    return offline?.call(this);
   }
 
   @override
@@ -228,6 +259,15 @@ class _$_GetStaredReposPageExceptionUnmodified
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? offline,
+    TResult Function()? unmodified,
+  }) {
+    return unmodified?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? offline,
     TResult Function()? unmodified,
@@ -248,6 +288,15 @@ class _$_GetStaredReposPageExceptionUnmodified
         unmodified,
   }) {
     return unmodified(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetStaredReposPageExceptionOffline value)? offline,
+    TResult Function(_GetStaredReposPageExceptionUnmodified value)? unmodified,
+  }) {
+    return unmodified?.call(this);
   }
 
   @override

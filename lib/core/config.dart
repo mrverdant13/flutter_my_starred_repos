@@ -12,6 +12,7 @@ part 'config.g.dart';
 class AppConfig with _$AppConfig {
   /// Creates an app sesitive data holder.
   @visibleForTesting
+  // ignore: invalid_annotation_target
   @JsonSerializable(
     anyMap: true,
     checked: true,
@@ -19,6 +20,7 @@ class AppConfig with _$AppConfig {
   )
   const factory AppConfig({
     /// Holder of GitHub auth data.
+    // ignore: invalid_annotation_target
     @JsonKey(
       required: true,
       disallowNullValue: true,
@@ -31,7 +33,7 @@ class AppConfig with _$AppConfig {
   factory AppConfig.fromYamlString(String configYamlString) =>
       checkedYamlDecode<AppConfig>(
         configYamlString,
-        (configYamlMap) => _$_$_AppConfigFromJson(
+        (configYamlMap) => _$$_AppConfigFromJson(
           (configYamlMap! as YamlMap).value,
         ),
       );

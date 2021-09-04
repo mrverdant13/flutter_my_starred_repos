@@ -89,7 +89,7 @@ jobs:
         run: melos run M
 
       - name: Check 100% code coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1
+        uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
         with:
           exclude: "**/*.freezed.dart **/*.g.dart **/*.gr.dart"
 

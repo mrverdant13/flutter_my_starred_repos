@@ -45,7 +45,7 @@ jobs:
         run: melos bs
 
       - name: Install dependencies
-        run: melos exec -- flutter pub get
+        run: melos run D:ci
 
       - name: Format Dart files within `lib` and `test` folders and abort on formatting changes
         run: melos run F:ci
@@ -80,7 +80,7 @@ jobs:
         run: melos bs
 
       - name: Install dependencies
-        run: melos exec -- flutter pub get
+        run: melos run D:ci
 
       - name: Run tests adn generate coverage
         run: melos run T:ci
@@ -89,6 +89,6 @@ jobs:
         run: melos run M
 
       - name: Check 100% code coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+        uses: VeryGoodOpenSource/very_good_coverage@v1
         with:
           exclude: "**/*.freezed.dart **/*.g.dart **/*.gr.dart"

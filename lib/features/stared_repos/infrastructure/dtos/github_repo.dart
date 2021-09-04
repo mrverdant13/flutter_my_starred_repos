@@ -11,6 +11,7 @@ part 'github_repo.g.dart';
 @freezed
 class GithubRepoDto with _$GithubRepoDto {
   /// Creates a GitHub repository DTO.
+  // ignore: invalid_annotation_target
   @JsonSerializable(explicitToJson: true)
   const factory GithubRepoDto({
     /// The GitHub user that owns this repository.
@@ -22,9 +23,11 @@ class GithubRepoDto with _$GithubRepoDto {
     /// The description of this repository.
     ///
     /// The description could be empty.
+    // ignore: invalid_annotation_target
     @JsonKey(defaultValue: '') required String description,
 
     /// The amount of starts of this repository.
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'stargazers_count') required int starsCount,
   }) = _GithubRepoDto;
 

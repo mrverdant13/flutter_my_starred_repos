@@ -95,9 +95,13 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
 - `lcov` utils:
 
-  - Windows: Run `choco install lcov` (you need [Chocolatey][chocolatey_link]) and set the `LCOV_TOOLS_PATH` env variable to the absolute path of the `lcov\tools\bin` folder (often `C:\ProgramData\chocolatey\lib\lcov\tools\bin`)..
-  - Linux: Run `sudo apt install lcov`.
-  - Mac: Run `brew install lcov` (you need [Homebrew][homebrew_link]).
+  - Windows:
+    1. Run `choco install lcov` (you need [Chocolatey][chocolatey_link]).
+    2. Set the `LCOV_TOOLS_PATH` env variable to the absolute path of the `lcov\tools\bin` folder (often `C:\ProgramData\chocolatey\lib\lcov\tools\bin`).
+  - Linux:
+    1. Run `sudo apt install lcov`.
+  - Mac:
+    1. Run `brew install lcov` (you need [Homebrew][homebrew_link]).
 
 ---
 

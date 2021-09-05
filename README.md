@@ -2,6 +2,7 @@
 
 [![platform: flutter][flutter_badge_link]][flutter_link]
 [![style: lint][lint_badge_link]][lint_package_link]
+[![codecov][codecov_badge_link]][codecov_project_link]
 
 A demo app project made with [Flutter][flutter_link] by [mrverdant13][mrverdant13_link].
 
@@ -358,6 +359,7 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 
 [flutter_badge_link]: https://img.shields.io/badge/platform-flutter-blue.svg
 [lint_badge_link]: https://img.shields.io/badge/style-lint-4BC0F5.svg
+[codecov_badge_link]: https://codecov.io/gh/mrverdant13/flutter_my_starred_repos/branch/master/graph/badge.svg?token=380WYV6WUS
 
 <!-- Chocolatey documentation -->
 
@@ -395,6 +397,7 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 [mrverdant13_link]: https://github.com/mrverdant13/
 [mrverdant13_flutter_my_starred_repos]: https://github.com/mrverdant13/flutter_my_starred_repos
 [new_project_issues_link]: https://github.com/mrverdant13/git_history/issues/new/choose
+[codecov_project_link]: https://codecov.io/gh/mrverdant13/flutter_my_starred_repos
 
 <!-- Sentry links -->
 

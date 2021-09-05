@@ -35,6 +35,14 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
 ## Project-wide features
 
+- Mono-repo structure and management using the [melos tool][melos_link] with the available actions (with variants for CI workflows):
+  - Clean package.
+  - Install package dependencies.
+  - Format package source code.
+  - Analyze package source code.
+  - Test package and generate coverage data.
+  - Merge all packages coverage data.
+  - Run entire workflow.
 - Flutter-level flavors by using different entry points per flavor.
 - Conditional features implementation based on the selected build flavor and a given config file.
 - Modular and composable logger with the [lumberdash package][lumberdash_package_link], which can be easily integrated with [Firebase Analytics][firebase_analytics_link] or [Sentry][sentry_link].
@@ -44,6 +52,7 @@ This app shows your favorites GitHub repositories. You can search for other repo
     - Code analysis (considering info and warning level issues as fatal)
     - Unit testing (randomizing tests execution)
     - 100% coverage check (ignoring generated files)
+    - Automatic coverage info upload to [codecov.io][codecov_link]
 - GitHub issue templates.
 - GitHub pull request template.
 - Strong lint rules with the [lint package][lint_package_link].
@@ -71,14 +80,36 @@ This app shows your favorites GitHub repositories. You can search for other repo
   You could check the [official docs about GitHub OAuth apps creation][github_oauth_apps_creation_link] considering the following parameters:
 
   - Homepage URL: `http://localhost:8080`
+
   - Authorization callback URL: `http://localhost:3000/callback`
 
-  > **NOTE:** The client ID and a client secret are necessary.
+  **NOTE:** The client ID and a client secret are necessary.
+
+- The [melos tool][melos_link] to manage this mono-repo project.
+
+  You could install it with the `flutter pub global activate melos` command.
+
+  It is recommended to add the [Dart system cache directory][dart_system_cache_dir_link] to the your PATH environment variable so you can run any dart command globally.
 
 ## Optional
 
-- [Chocolatey][chocolatey_link] on Windows to install and use `lcov` utils.
-- [remove_from_coverage][remove_from_coverage_package_link] package to ignore generated files in coverage info.
+- `lcov` utils:
+
+  - Windows: Run `choco install lcov` (you need [Chocolatey][chocolatey_link]) and set the `LCOV_TOOLS_PATH` env variable to the absolute path of the `lcov\tools\bin` folder (often `C:\ProgramData\chocolatey\lib\lcov\tools\bin`)..
+  - Linux: Run `sudo apt install lcov`.
+  - Mac: Run `brew install lcov` (you need [Homebrew][homebrew_link]).
+
+---
+
+# Working with the project
+
+As described in the [Features section](#features), this projects is a monorepo and uses [melos][melos_link] to provide easy management of it. Thus, this tool should be previously activated.
+
+The available melos scrips are defined in the `melos.yaml` file.
+
+In short, the scripts with lowercase names are selective and the ones with uppercase names are global (they gets executed for all packages in the project). Besides, those scripts named with the `:ci` ending are the variations used for CI workflows.
+
+To review all available scrips, run `melos run` in the project root folder and they will be listed with a short description of their functionality.
 
 ---
 
@@ -105,28 +136,9 @@ For easy setup, you can take the `assets/config/app_config.sample.yaml` sample f
 
 # App flavors
 
-## Flutter-level flavors
+This project supports 3 flavors/environments that provide different properties for the resultant app as described in the [Features section](#features).
 
-This project supports 3 Flutter-level flavors that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
-
-```sh
-# Development
-$ flutter run --target lib/main_dev.dart
-
-# Staging
-$ flutter run --target lib/main_stg.dart
-
-# Production
-$ flutter run --target lib/main_prod.dart
-```
-
-> **Note 1:** The target path separator (`\` or `/`) might change according to the OS.
-
-> **Note 2:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
-
-## Native flavors
-
-This project supports 3 native flavors (**Android only**) that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
+These flavors can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands in the **project root folder**:
 
 ```sh
 # Development
@@ -139,9 +151,13 @@ $ flutter run --flavor stg --target lib/main_stg.dart
 $ flutter run --flavor prod --target lib/main_prod.dart
 ```
 
-> **Note 1:** The target path separator (`\` or `/`) might change according to the OS.
+> **Note 1:** The `--flavor` option only applies for Android and iOS. For other platforms, this options is ignored.
 
-> **Note 2:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
+> **Note 2:** The target path separator (`\` or `/`) might change according to the OS.
+
+> **Note 3:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
+
+---
 
 # IDE debugging
 
@@ -205,7 +221,9 @@ This project relies on [flutter_localizations][flutter_localizations_link] and f
    }
    ```
 
-3. Use the new string
+3. Generate the localization implementation by running the `flutter gen-l10n` command in the project root folder.
+
+4. Use the new string
 
    ```dart
    import 'package:<app_package_name>/l10n/l10n.dart';
@@ -279,46 +297,47 @@ For more complex needs, you could check the following resources:
 - [Flutter Internationalization User Guide][flutter_internationalization_user_guide_link]
 - [Application Resource Bundle Specification][application_resource_bundle_specification_link]
 
+---
+
 # Testing
 
-1.  To run all unit and widget tests, execute the following command:
+1.  To run all unit and widget tests, run the following melos script:
 
     ```sh
-    $ flutter test -x ci-only --coverage -r expanded --test-randomize-ordering-seed random
+    $ melos run T
     ```
 
-    > **Note:** The `-x ci-only` excludes tests tagged as `ci-only`, which indicated that they should be run on CI/CD envs only.
+    > **Note:** This scrip will exclude tests tagged as `ci-only`, which indicates that they should be run on CI/CD envs only.
 
-2.  To remove generated files from coverage info, install the [remove_from_coverage package][remove_from_coverage_package_link] and run one of the following commands:
+2.  To unify the generated coverage data, run the following melos script:
 
     ```sh
-    # If pub global scripts are on your path
-    $ remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
-
-    # Otherwise (might change depending on pub setup)
-    $ pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
+    $ melos run M
     ```
 
-3.  To generate coverage report within the `coverage` folder, run one of the following commands set according to your OS:
+    > **Note:** This script will discard coverage data related to Dart source code generated with `build_runner`-based packages (for this project: `~.freezed.dart`, `~.g.dart`, `~.gr.dart`).
+
+3.  To generate coverage report within the `coverage` folder, run one of the following command according to your OS:
 
     ```sh
     # Linux/MacOS
-    # Generate coverage report
-    $ genhtml coverage/lcov.info -o coverage/html/
+    $ genhtml coverage/merged.lcov.info -o coverage/html/
 
     # Windows
-    # Install `lcov` utils (Chocolatey is prerequisite)
-    $ choco install lcov
-    # Generate coverage report (might change depending on Chocolatey setup)
-    $ perl C:\ProgramData\chocolatey\lib\lcov\tools\bin\genhtml -o coverage\html coverage\lcov.info
+    $ perl %LCOV_TOOLS_PATH%\genhtml -o coverage\html coverage\merged.lcov.info
     ```
+
+    > **Note:** Check the [optional prerequisites section](#optional) for installation instructions.
 
 4.  To open the generated coverage report follow your preferred method:
 
     - **4.a.** Run one of the following commands according to your OS:
 
       ```sh
-      # Linux/MacOS
+      # Linux
+      $ xdg-open coverage/html/index.html
+
+      # MacOS
       $ open coverage/html/index.html
 
       # Windows
@@ -367,6 +386,14 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 
 [chocolatey_link]: https://chocolatey.org/
 
+<!-- Codecov documentation -->
+
+[codecov_link]: https://about.codecov.io/
+
+<!-- Dart documentation -->
+
+[dart_system_cache_dir_link]: https://dart.dev/tools/pub/glossary#system-cache
+
 <!-- Firebase Analytics -->
 
 [firebase_analytics_link]: https://firebase.google.com/docs/analytics
@@ -393,6 +420,10 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 [github_docs_link]: https://docs.github.com/
 [github_oauth_apps_creation_link]: https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app
 [github_oauth_apps_link]: https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#about-oauth-apps
+
+<!-- Homebrew documentation -->
+
+[homebrew_link]: https://brew.sh/
 
 <!-- Melos links -->
 

@@ -45,6 +45,7 @@ This app shows your favorites GitHub repositories. You can search for other repo
     - Code analysis (considering info and warning level issues as fatal)
     - Unit testing (randomizing tests execution)
     - 100% coverage check (ignoring generated files)
+    - Automatic coverage info upload to [codecov.io][codecov_link]
 - GitHub issue templates.
 - GitHub pull request template.
 - Strong lint rules with the [lint package][lint_package_link].
@@ -374,6 +375,10 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 <!-- Chocolatey documentation -->
 
 [chocolatey_link]: https://chocolatey.org/
+
+<!-- Codecov documentation -->
+
+[codecov_link]: https://about.codecov.io/
 
 <!-- Firebase Analytics -->
 

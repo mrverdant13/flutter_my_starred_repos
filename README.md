@@ -3,10 +3,11 @@
 [![platform: flutter][flutter_badge_link]][flutter_link]
 [![style: lint][lint_badge_link]][lint_package_link]
 [![codecov][codecov_badge_link]][codecov_project_link]
+[![melos][melos_badge_link]][melos_link]
 
 A demo app project made with [Flutter][flutter_link] by [mrverdant13][mrverdant13_link].
 
-This app shows your favorites GitHub repositories. You can search for other repos, preview them, and star or unstar them.
+This app shows your favorites GitHub repositories. You can search for other repos, preview them, and star or un-star them.
 
 ---
 
@@ -357,9 +358,10 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 
 <!-- Badges -->
 
+[codecov_badge_link]: https://codecov.io/gh/mrverdant13/flutter_my_starred_repos/branch/master/graph/badge.svg?token=380WYV6WUS
 [flutter_badge_link]: https://img.shields.io/badge/platform-flutter-blue.svg
 [lint_badge_link]: https://img.shields.io/badge/style-lint-4BC0F5.svg
-[codecov_badge_link]: https://codecov.io/gh/mrverdant13/flutter_my_starred_repos/branch/master/graph/badge.svg?token=380WYV6WUS
+[melos_badge_link]: https://img.shields.io/badge/maintained%20with-melos-f700ff.svg?style=flat-square
 
 <!-- Chocolatey documentation -->
 
@@ -391,6 +393,10 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 [github_docs_link]: https://docs.github.com/
 [github_oauth_apps_creation_link]: https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app
 [github_oauth_apps_link]: https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#about-oauth-apps
+
+<!-- Melos links -->
+
+[melos_link]: https://github.com/invertase/melos
 
 <!-- Personal links -->
 

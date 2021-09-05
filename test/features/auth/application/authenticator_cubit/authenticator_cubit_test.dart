@@ -1,23 +1,22 @@
 import 'dart:math';
 
+import 'package:auth_domain/auth_domain.dart';
+import 'package:auth_service/auth_service.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
-import 'package:flutter_my_starred_repos/features/auth/domain/log_in_failure.dart';
-import 'package:flutter_my_starred_repos/features/auth/domain/log_in_method.dart';
-import 'package:flutter_my_starred_repos/features/auth/infrastructure/facades/auth_service/interface.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 class MockAuthService extends Mock implements AuthService {}
 
-class FakeLogInMethod extends Fake implements LogInMethod {}
+class FakeLogInMethod extends Fake implements LoginMethod {}
 
 void main() {
   // ARRANGE
   setUpAll(
     () {
-      registerFallbackValue<LogInMethod>(FakeLogInMethod());
+      registerFallbackValue<LoginMethod>(FakeLogInMethod());
     },
   );
 
@@ -100,7 +99,7 @@ THEN the auth state should be updated
       {
         final r = Random();
         final possibleLoginMethods = [
-          LogInMethod.oAuth(
+          LoginMethod.oAuth(
             callback: ({
               required authorizationEndpoint,
               required redirectBaseEndpoint,
@@ -112,9 +111,9 @@ THEN the auth state should be updated
           possibleLoginMethods.length,
         )];
         const possibleLoginFailures = [
-          LogInFailure.canceled(),
-          LogInFailure.missingPermissions(),
-          LogInFailure.offline(),
+          LoginFailure.canceled(),
+          LoginFailure.missingPermissions(),
+          LoginFailure.offline(),
         ];
         final expectedLoginFailure = possibleLoginFailures[r.nextInt(
           possibleLoginFailures.length,

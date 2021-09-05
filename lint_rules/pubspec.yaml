@@ -1,0 +1,10 @@
+name: lint_rules
+description: A lint rules set.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.13.0 <3.0.0"
+
+dependencies:
+  lint: ^1.0.0

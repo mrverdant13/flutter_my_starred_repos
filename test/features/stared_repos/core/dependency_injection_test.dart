@@ -13,6 +13,18 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sembast/sembast.dart';
 import 'package:test/test.dart';
 
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+
+class FakePathProviderPlatform extends Fake
+    with MockPlatformInterfaceMixin
+    implements PathProviderPlatform {
+  @override
+  Future<String?> getApplicationDocumentsPath() async =>
+      // Directory not tracked.
+      'coverage/application_documents_path';
+}
+
 class MockSembastDb extends Mock implements Database {}
 
 class MockAuthInterceptor extends Fake implements AuthInterceptor {}
@@ -67,6 +79,8 @@ WHEN the injection process is triggered''',
               final preconditionalOverrides = [
                 authInterceptorPod.overrideWithValue(MockAuthInterceptor()),
               ];
+              PathProviderPlatform.instance = FakePathProviderPlatform();
+
               // ACT
               final overrides = await getInjectionOverrides();
               container = ProviderContainer(

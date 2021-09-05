@@ -1,3 +1,4 @@
+import 'package:auth_config/auth_config.dart';
 import 'package:flutter_my_starred_repos/core/config.dart';
 import 'package:test/test.dart';
 

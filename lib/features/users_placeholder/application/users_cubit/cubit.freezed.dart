@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'cubit.dart';
 
@@ -36,6 +37,11 @@ mixin _$UsersFailure {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(GetUsersFailure failure)? onGet,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(GetUsersFailure failure)? onGet,
     required TResult orElse(),
@@ -44,6 +50,11 @@ mixin _$UsersFailure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UsersFailureOnGet value) onGet,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_UsersFailureOnGet value)? onGet,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -173,6 +184,14 @@ class _$_UsersFailureOnGet implements _UsersFailureOnGet {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(GetUsersFailure failure)? onGet,
+  }) {
+    return onGet?.call(failure);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(GetUsersFailure failure)? onGet,
     required TResult orElse(),
@@ -189,6 +208,14 @@ class _$_UsersFailureOnGet implements _UsersFailureOnGet {
     required TResult Function(_UsersFailureOnGet value) onGet,
   }) {
     return onGet(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_UsersFailureOnGet value)? onGet,
+  }) {
+    return onGet?.call(this);
   }
 
   @override
@@ -255,6 +282,14 @@ mixin _$UsersState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(KtList<User> users)? loaded,
+    TResult Function(UsersFailure failure)? failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
@@ -269,6 +304,14 @@ mixin _$UsersState {
     required TResult Function(_UsersStateLoading value) loading,
     required TResult Function(_UsersStateLoaded value) loaded,
     required TResult Function(_UsersStateFailed value) failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_UsersStateIdle value)? idle,
+    TResult Function(_UsersStateLoading value)? loading,
+    TResult Function(_UsersStateLoaded value)? loaded,
+    TResult Function(_UsersStateFailed value)? failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -347,6 +390,17 @@ class _$_UsersStateIdle implements _UsersStateIdle {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(KtList<User> users)? loaded,
+    TResult Function(UsersFailure failure)? failed,
+  }) {
+    return idle?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
@@ -369,6 +423,17 @@ class _$_UsersStateIdle implements _UsersStateIdle {
     required TResult Function(_UsersStateFailed value) failed,
   }) {
     return idle(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_UsersStateIdle value)? idle,
+    TResult Function(_UsersStateLoading value)? loading,
+    TResult Function(_UsersStateLoaded value)? loaded,
+    TResult Function(_UsersStateFailed value)? failed,
+  }) {
+    return idle?.call(this);
   }
 
   @override
@@ -441,6 +506,17 @@ class _$_UsersStateLoading implements _UsersStateLoading {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(KtList<User> users)? loaded,
+    TResult Function(UsersFailure failure)? failed,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
@@ -463,6 +539,17 @@ class _$_UsersStateLoading implements _UsersStateLoading {
     required TResult Function(_UsersStateFailed value) failed,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_UsersStateIdle value)? idle,
+    TResult Function(_UsersStateLoading value)? loading,
+    TResult Function(_UsersStateLoaded value)? loaded,
+    TResult Function(_UsersStateFailed value)? failed,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -560,6 +647,17 @@ class _$_UsersStateLoaded implements _UsersStateLoaded {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(KtList<User> users)? loaded,
+    TResult Function(UsersFailure failure)? failed,
+  }) {
+    return loaded?.call(users);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
@@ -582,6 +680,17 @@ class _$_UsersStateLoaded implements _UsersStateLoaded {
     required TResult Function(_UsersStateFailed value) failed,
   }) {
     return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_UsersStateIdle value)? idle,
+    TResult Function(_UsersStateLoading value)? loading,
+    TResult Function(_UsersStateLoaded value)? loaded,
+    TResult Function(_UsersStateFailed value)? failed,
+  }) {
+    return loaded?.call(this);
   }
 
   @override
@@ -693,6 +802,17 @@ class _$_UsersStateFailed implements _UsersStateFailed {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(KtList<User> users)? loaded,
+    TResult Function(UsersFailure failure)? failed,
+  }) {
+    return failed?.call(failure);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
@@ -715,6 +835,17 @@ class _$_UsersStateFailed implements _UsersStateFailed {
     required TResult Function(_UsersStateFailed value) failed,
   }) {
     return failed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_UsersStateIdle value)? idle,
+    TResult Function(_UsersStateLoading value)? loading,
+    TResult Function(_UsersStateLoaded value)? loaded,
+    TResult Function(_UsersStateFailed value)? failed,
+  }) {
+    return failed?.call(this);
   }
 
   @override

@@ -9,12 +9,15 @@ part 'user.g.dart';
 @freezed
 class UserDto with _$UserDto {
   /// Creates a GitHub user DTO.
+  // ignore: invalid_annotation_target
   @JsonSerializable(explicitToJson: true)
   const factory UserDto({
     /// The nickname or username of this user.
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'login') required String username,
 
     /// The avatar URL of this user.
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'avatar_url') required String avatarUrl,
   }) = _UserDto;
 

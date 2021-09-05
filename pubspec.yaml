@@ -14,6 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # TODO: Remove package.
   # Authentication
   oauth2: ^2.0.0
 
@@ -21,7 +22,7 @@ dependencies:
   flutter_riverpod: ^1.0.0-dev.6
 
   # Functional programming
-  dartz: ^0.10.0-nullsafety.2
+  dartz: ^0.10.0
 
   # GraphQL client
   graphql: ^5.0.0
@@ -30,7 +31,7 @@ dependencies:
   dio: ^4.0.0
 
   # Immutable elements
-  freezed_annotation: ^0.14.2
+  freezed_annotation: ^0.14.3
   kt_dart: ^0.9.1
 
   # Internationalization
@@ -39,7 +40,6 @@ dependencies:
   intl: ^0.17.0
 
   # Local storage
-  flutter_secure_storage: ^4.2.1
   sembast: ^3.1.0+2
 
   # Logging
@@ -47,45 +47,54 @@ dependencies:
   lumberdash: ^3.0.0
 
   # Routing/Navigation
-  auto_route: ^2.2.0
+  auto_route: ^2.3.0
 
   # State management
-  flutter_bloc: ^7.1.0
+  flutter_bloc: ^7.2.0
 
   # UI
   cached_network_image: ^3.1.0
   material_design_icons_flutter: ^5.0.5955-rc.1
-  webview_flutter: ^2.0.10
+  webview_flutter: ^2.0.12
 
   # Utils
   checked_yaml: ^2.0.1
   path: ^1.8.0
-  path_provider: ^2.0.2
+  path_provider: ^2.0.3
+
+  # Features
+  auth_service:
+    path: features/auth/facades/auth_service
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # Code generation
-  build_runner: any
+  build_runner: ^2.1.2
 
   # Immutable elements
-  freezed: any
+  freezed: ^0.14.5
 
   # Linting
-  lint: any
+  lint_rules:
+    path: lint_rules
 
   # Routing/Navigation
-  auto_route_generator: any
+  auto_route_generator: ^2.3.0
 
   # Serialization
-  json_serializable: any
+  json_serializable: ^5.0.0
 
   # Testing
-  bloc_test: any
-  build_verify: any
-  mocktail: any
-  test: any
+  bloc_test: ^8.1.0
+  build_verify: ^2.0.0
+  mocktail: ^0.1.4
+  test: ^1.17.12
+
+dependency_overrides:
+  meta: ^1.7.0
+  test_api: ^0.4.2
 
 flutter:
   uses-material-design: true

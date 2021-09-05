@@ -1,0 +1,26 @@
+name: creds_lds
+description: An auth creds local data source.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.13.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Auth
+  oauth2: ^2.0.0
+
+  # Local storage
+  flutter_secure_storage: ^4.2.1
+
+dev_dependencies:
+  # Linting
+  lint_rules:
+    path: ../../../../lint_rules
+
+  # Testing
+  mocktail: ^0.1.4
+  test: ^1.17.12

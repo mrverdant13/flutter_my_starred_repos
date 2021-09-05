@@ -1,0 +1,25 @@
+name: auth_domain
+description: A dart package that includes auth domain elements.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.13.0 <3.0.0"
+
+dependencies:
+  # Immutable elements
+  freezed_annotation: ^0.14.3
+
+dev_dependencies:
+  # Code generation
+  build_runner: ^2.1.2
+
+  # Immutable elements
+  freezed: ^0.14.5
+
+  # Linting
+  lint_rules:
+    path: ../../../lint_rules
+
+  # Testing
+  test: ^1.17.12

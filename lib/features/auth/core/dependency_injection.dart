@@ -1,16 +1,13 @@
+import 'package:auth_config/auth_config.dart';
+import 'package:auth_rds/auth_rds.dart';
+import 'package:auth_service/auth_service.dart';
+import 'package:creds_lds/creds_lds.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../../core/config.dart';
 import '../../../core/dependency_injection.dart';
 import '../application/authenticator_cubit/authenticator_cubit.dart';
-import '../infrastructure/data_sources/authenticator/github.dart';
-import '../infrastructure/data_sources/authenticator/interface.dart';
-import '../infrastructure/data_sources/creds_storage/flutter_secure_storage.dart';
-import '../infrastructure/data_sources/creds_storage/interface.dart';
 import '../infrastructure/external/dio_interceptors.dart';
-import '../infrastructure/facades/auth_service/implementation.dart';
-import '../infrastructure/facades/auth_service/interface.dart';
 
 final githubAuthConfigPod = Provider<GithubAuthConfig>(
   (ref) {
@@ -23,10 +20,10 @@ final flutterSecureStoragePod = Provider<FlutterSecureStorage>(
   (_) => const FlutterSecureStorage(),
 );
 
-final credsStoragePod = Provider<CredsStorage>(
+final credsLDSPod = Provider<CredsLDS>(
   (ref) {
     final flutterSecureStorage = ref.watch(flutterSecureStoragePod);
-    return CredsStorageImp(
+    return CredsLDSImp(
       flutterSecureStorage: flutterSecureStorage,
     );
   },
@@ -34,9 +31,9 @@ final credsStoragePod = Provider<CredsStorage>(
 
 final authInterceptorPod = Provider<AuthInterceptor>(
   (ref) {
-    final credsStorage = ref.watch(credsStoragePod);
+    final credsLDS = ref.watch(credsLDSPod);
     return AuthInterceptor(
-      credsStorage: credsStorage,
+      credsLDS: credsLDS,
     );
   },
 );
@@ -53,10 +50,10 @@ final authenticatorPod = Provider<Authenticator>(
 final authServicePod = Provider<AuthService>(
   (ref) {
     final authenticator = ref.watch(authenticatorPod);
-    final credsStorage = ref.watch(credsStoragePod);
+    final credsLDS = ref.watch(credsLDSPod);
     return AuthServiceImp(
       authenticator: authenticator,
-      credsStorage: credsStorage,
+      credsLDS: credsLDS,
     );
   },
 );

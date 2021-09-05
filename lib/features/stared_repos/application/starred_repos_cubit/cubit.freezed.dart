@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'cubit.dart';
 
@@ -50,6 +51,14 @@ mixin _$StarredReposState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(KtList<GithubRepo> repos)? loading,
+    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)?
+        loaded,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(KtList<GithubRepo> repos)? loading,
     TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
@@ -62,6 +71,12 @@ mixin _$StarredReposState {
   TResult map<TResult extends Object?>({
     required TResult Function(_StarredReposStateLoading value) loading,
     required TResult Function(_StarredReposStateLoaded value) loaded,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_StarredReposStateLoading value)? loading,
+    TResult Function(_StarredReposStateLoaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -186,6 +201,17 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(KtList<GithubRepo> repos)? loading,
+    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)?
+        loaded,
+  }) {
+    return loading?.call(repos);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(KtList<GithubRepo> repos)? loading,
     TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
@@ -206,6 +232,15 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
     required TResult Function(_StarredReposStateLoaded value) loaded,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_StarredReposStateLoading value)? loading,
+    TResult Function(_StarredReposStateLoaded value)? loaded,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -352,6 +387,17 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(KtList<GithubRepo> repos)? loading,
+    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+            GetStaredReposWarning? warning)?
+        loaded,
+  }) {
+    return loaded?.call(repos, canLoadMore, warning);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(KtList<GithubRepo> repos)? loading,
     TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
@@ -372,6 +418,15 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
     required TResult Function(_StarredReposStateLoaded value) loaded,
   }) {
     return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_StarredReposStateLoading value)? loading,
+    TResult Function(_StarredReposStateLoaded value)? loaded,
+  }) {
+    return loaded?.call(this);
   }
 
   @override

@@ -23,8 +23,8 @@ on:
       - "pubspec.yaml"
 
 jobs:
-  setup:
-    name: Format, analyze and ensure up-to-date code generation
+  min-conditions:
+    name: Format, analyze and ensure up-to-date code generation (minimal conditions)
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo code
@@ -38,19 +38,27 @@ jobs:
       - name: Setup Flutter actions
         uses: subosito/flutter-action@v1
 
+      - name: Install tools
+        run: flutter pub global activate melos
+
+      - name: Initialize tools
+        run: melos bs
+
       - name: Install dependencies
-        run: flutter pub get
+        run: melos run D:ci
 
       - name: Format Dart files within `lib` and `test` folders and abort on formatting changes
-        run: flutter format --set-exit-if-changed lib test
+        run: melos run F:ci
 
       - name: Analyze Dart files considering infos and warnings as failures
-        run: flutter analyze --no-pub --fatal-infos --fatal-warnings
+        run: melos run A:ci
 
-      - name: Ensure up-to-date code generation
-        run: flutter pub run test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
+      # TODO: Enable including code gen data caching.
+      # - name: Ensure up-to-date code generation
+      #   run: melos exec --depends-on=test --file-exists=test/up_to_date_code_gen_test.dart -- flutter pub run test --run-skipped -t ci-only test/up_to_date_code_gen_test.dart
 
-  build:
+  test:
+    needs: min-conditions
     name: Test app implementation
     runs-on: ubuntu-latest
     steps:
@@ -65,13 +73,29 @@ jobs:
       - name: Setup Flutter actions
         uses: subosito/flutter-action@v1
 
+      - name: Install tools
+        run: flutter pub global activate melos
+
+      - name: Initialize tools
+        run: melos bs
+
       - name: Install dependencies
-        run: flutter pub get
+        run: melos run D:ci
 
       - name: Run tests adn generate coverage
-        run: flutter test --coverage --no-pub -x ci-only -r expanded --test-randomize-ordering-seed random
+        run: melos run T:ci
+
+      - name: Unify coverage data
+        run: melos run M
 
       - name: Check 100% code coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+        uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
         with:
           exclude: "**/*.freezed.dart **/*.g.dart **/*.gr.dart"
+
+      - name: Upload coverage data to codecov.io
+        uses: codecov/codecov-action@v2
+        with:
+          files: "./coverage/merged.lcov.info"
+          fail_ci_if_error: true
+          verbose: true

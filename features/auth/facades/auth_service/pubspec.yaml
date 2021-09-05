@@ -1,0 +1,36 @@
+name: auth_service
+description: An auth service.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.13.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Other packages
+  dartz: ^0.10.0
+
+  # Domain
+  auth_domain:
+    path: ../../auth_domain
+
+  # Data sources
+  auth_rds:
+    path: ../../data_sources/auth_rds
+  creds_lds:
+    path: ../../data_sources/creds_lds
+
+dev_dependencies:
+  # Linting
+  lint_rules:
+    path: ../../../../lint_rules
+
+  # Testing
+  mocktail: ^0.1.4
+  test: ^1.17.12
+
+dependency_overrides:
+  meta: ^1.7.0

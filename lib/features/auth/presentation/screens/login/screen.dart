@@ -1,3 +1,4 @@
+import 'package:auth_domain/auth_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_my_starred_repos/presentation/routers/app_router.dart';
@@ -7,7 +8,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../../../../../l10n/l10n.dart';
 import '../../../../../presentation/routers/app_router.gr.dart';
 import '../../../application/authenticator_cubit/authenticator_cubit.dart';
-import '../../../domain/log_in_method.dart';
 
 part 'dimensions.dart';
 part 'l10n.dart';
@@ -108,7 +108,7 @@ extension _OAuthContext on BuildContext {
     required AppRouter appRouter,
   }) =>
       read<AuthenticatorCubit>().logIn(
-        method: LogInMethod.oAuth(
+        method: LoginMethod.oAuth(
           callback: _oauthCallback(
             appRouter: appRouter,
           ),

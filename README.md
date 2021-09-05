@@ -126,28 +126,9 @@ For easy setup, you can take the `assets/config/app_config.sample.yaml` sample f
 
 # App flavors
 
-## Flutter-level flavors
+This project supports 3 flavors/environments that provide different properties for the resultant app as described in the [Features section](#features).
 
-This project supports 3 Flutter-level flavors that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
-
-```sh
-# Development
-$ flutter run --target lib/main_dev.dart
-
-# Staging
-$ flutter run --target lib/main_stg.dart
-
-# Production
-$ flutter run --target lib/main_prod.dart
-```
-
-> **Note 1:** The target path separator (`\` or `/`) might change according to the OS.
-
-> **Note 2:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
-
-## Native flavors
-
-This project supports 3 native flavors (**Android and iOS only**) that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
+These flavors can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands in the **project root folder**:
 
 ```sh
 # Development
@@ -160,9 +141,11 @@ $ flutter run --flavor stg --target lib/main_stg.dart
 $ flutter run --flavor prod --target lib/main_prod.dart
 ```
 
-> **Note 1:** The target path separator (`\` or `/`) might change according to the OS.
+> **Note 1:** The `--flavor` option only applies for Android and iOS. For other platforms, this options is ignored.
 
-> **Note 2:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
+> **Note 2:** The target path separator (`\` or `/`) might change according to the OS.
+
+> **Note 3:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
 
 # IDE debugging
 

@@ -35,7 +35,14 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
 ## Project-wide features
 
-- Mono-repo structure using [melos][melos_link].
+- Mono-repo structure and management using the [melos tool][melos_link] with the available actions (with variants for CI workflows):
+  - Clean package.
+  - Install package dependencies.
+  - Format package source code.
+  - Analyze package source code.
+  - Test package and generate coverage data.
+  - Merge all packages coverage data.
+  - Run entire workflow.
 - Flutter-level flavors by using different entry points per flavor.
 - Conditional features implementation based on the selected build flavor and a given config file.
 - Modular and composable logger with the [lumberdash package][lumberdash_package_link], which can be easily integrated with [Firebase Analytics][firebase_analytics_link] or [Sentry][sentry_link].
@@ -77,6 +84,12 @@ This app shows your favorites GitHub repositories. You can search for other repo
   - Authorization callback URL: `http://localhost:3000/callback`
 
   **NOTE:** The client ID and a client secret are necessary.
+
+- The [melos tool][melos_link] to manage this mono-repo project.
+
+  You could install it with the `flutter pub global activate melos` command.
+
+  It is recommended to add the [Dart system cache directory][dart_system_cache_dir_link] to the your PATH environment variable so you can run any dart command globally.
 
 ## Optional
 
@@ -379,6 +392,10 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 <!-- Codecov documentation -->
 
 [codecov_link]: https://about.codecov.io/
+
+<!-- Dart documentation -->
+
+[dart_system_cache_dir_link]: https://dart.dev/tools/pub/glossary#system-cache
 
 <!-- Firebase Analytics -->
 

@@ -209,7 +209,9 @@ This project relies on [flutter_localizations][flutter_localizations_link] and f
    }
    ```
 
-3. Use the new string
+3. Generate the localization implementation by running the `flutter gen-l10n` command in the project root folder.
+
+4. Use the new string
 
    ```dart
    import 'package:<app_package_name>/l10n/l10n.dart';

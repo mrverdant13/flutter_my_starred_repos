@@ -95,11 +95,9 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
 - `lcov` utils:
 
-  - Windows: Run `choco install lcov` (you need [Chocolatey][chocolatey_link]).
+  - Windows: Run `choco install lcov` (you need [Chocolatey][chocolatey_link]) and set the `LCOV_TOOLS_PATH` env variable to the absolute path of the `lcov\tools\bin` folder (often `C:\ProgramData\chocolatey\lib\lcov\tools\bin`)..
   - Linux: Run `sudo apt install lcov`.
   - Mac: Run `brew install lcov` (you need [Homebrew][homebrew_link]).
-
-- [remove_from_coverage][remove_from_coverage_package_link] package to ignore generated files in coverage info.
 
 ---
 
@@ -303,35 +301,33 @@ For more complex needs, you could check the following resources:
 
 # Testing
 
-1.  To run all unit and widget tests, execute the following command:
+1.  To run all unit and widget tests, run the following melos script:
 
     ```sh
-    $ flutter test -x ci-only --coverage -r expanded --test-randomize-ordering-seed random
+    $ melos run T
     ```
 
-    > **Note:** The `-x ci-only` excludes tests tagged as `ci-only`, which indicated that they should be run on CI/CD envs only.
+    > **Note:** This scrip will exclude tests tagged as `ci-only`, which indicates that they should be run on CI/CD envs only.
 
-2.  To remove generated files from coverage info, install the [remove_from_coverage package][remove_from_coverage_package_link] and run one of the following commands:
+2.  To unify the generated coverage data, run the following melos script:
 
     ```sh
-    # If pub global scripts are on your path
-    $ remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
-
-    # Otherwise (might change depending on pub setup)
-    $ pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
+    $ melos run M
     ```
+
+    > **Note:** This script will discard coverage data related to Dart source code generated with `build_runner`-based packages (for this project: `~.freezed.dart`, `~.g.dart`, `~.gr.dart`).
 
 3.  To generate coverage report within the `coverage` folder, run one of the following command according to your OS:
 
     ```sh
     # Linux/MacOS
-    $ genhtml coverage/lcov.info -o coverage/html/
+    $ genhtml coverage/merged.lcov.info -o coverage/html/
 
     # Windows
-    $ perl C:\ProgramData\chocolatey\lib\lcov\tools\bin\genhtml -o coverage\html coverage\lcov.info
+    $ perl %LCOV_TOOLS_PATH%\genhtml -o coverage\html coverage\merged.lcov.info
     ```
 
-    > **Note:** Check the [Prerequisites.Optional section](#optional) for installation instructions.
+    > **Note:** Check the [optional prerequisites section](#optional) for installation instructions.
 
 4.  To open the generated coverage report follow your preferred method:
 

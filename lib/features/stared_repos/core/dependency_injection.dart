@@ -96,8 +96,5 @@ Future<List<Override>> getInjectionOverrides() async {
   await dbDir.create(recursive: true);
   final dbPath = path.join(dbDir.path, 'my_database.db');
   final sembastDb = await databaseFactoryIo.openDatabase(dbPath);
-
-  return [
-    sembastDbPod.overrideWithValue(sembastDb),
-  ];
+  return [sembastDbPod.overrideWithValue(sembastDb)];
 }

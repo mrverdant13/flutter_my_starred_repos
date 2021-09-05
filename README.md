@@ -35,6 +35,7 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
 ## Project-wide features
 
+- Mono-repo structure using [melos][melos_link].
 - Flutter-level flavors by using different entry points per flavor.
 - Conditional features implementation based on the selected build flavor and a given config file.
 - Modular and composable logger with the [lumberdash package][lumberdash_package_link], which can be easily integrated with [Firebase Analytics][firebase_analytics_link] or [Sentry][sentry_link].

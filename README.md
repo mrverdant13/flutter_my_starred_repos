@@ -103,6 +103,18 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
 ---
 
+# Working with the project
+
+As described in the [Features section](#features), this projects is a monorepo and uses [melos][melos_link] to provide easy management of it. Thus, this tool should be previously activated.
+
+The available melos scrips are defined in the `melos.yaml` file.
+
+In short, the scripts with lowercase names are selective and the ones with uppercase names are global (they gets executed for all packages in the project). Besides, those scripts named with the `:ci` ending are the variations used for CI workflows.
+
+To review all available scrips, run `melos run` in the project root folder and they will be listed with a short description of their functionality.
+
+---
+
 # App configuration
 
 This project uses a YAML file as config data provider and it should be placed inside the `assets/config/` folder.
@@ -146,6 +158,8 @@ $ flutter run --flavor prod --target lib/main_prod.dart
 > **Note 2:** The target path separator (`\` or `/`) might change according to the OS.
 
 > **Note 3:** Each flavor use a config file to setup some elements. You should make sure that this file exists.
+
+---
 
 # IDE debugging
 
@@ -284,6 +298,8 @@ For more complex needs, you could check the following resources:
 
 - [Flutter Internationalization User Guide][flutter_internationalization_user_guide_link]
 - [Application Resource Bundle Specification][application_resource_bundle_specification_link]
+
+---
 
 # Testing
 

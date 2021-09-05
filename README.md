@@ -322,7 +322,10 @@ For more complex needs, you could check the following resources:
     - **4.a.** Run one of the following commands according to your OS:
 
       ```sh
-      # Linux/MacOS
+      # Linux
+      $ xdg-open coverage/html/index.html
+
+      # MacOS
       $ open coverage/html/index.html
 
       # Windows

@@ -71,13 +71,19 @@ This app shows your favorites GitHub repositories. You can search for other repo
   You could check the [official docs about GitHub OAuth apps creation][github_oauth_apps_creation_link] considering the following parameters:
 
   - Homepage URL: `http://localhost:8080`
+
   - Authorization callback URL: `http://localhost:3000/callback`
 
-  > **NOTE:** The client ID and a client secret are necessary.
+  **NOTE:** The client ID and a client secret are necessary.
 
 ## Optional
 
-- [Chocolatey][chocolatey_link] on Windows to install and use `lcov` utils.
+- `lcov` utils:
+
+  - Windows: Run `choco install lcov` (you need [Chocolatey][chocolatey_link]).
+  - Linux: Run `sudo apt install lcov`.
+  - Mac: Run `brew install lcov` (you need [Homebrew][homebrew_link]).
+
 - [remove_from_coverage][remove_from_coverage_package_link] package to ignore generated files in coverage info.
 
 ---
@@ -299,19 +305,17 @@ For more complex needs, you could check the following resources:
     $ pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r "\.freezed\.dart$","\.g\.dart$","\.gr\.dart$"
     ```
 
-3.  To generate coverage report within the `coverage` folder, run one of the following commands set according to your OS:
+3.  To generate coverage report within the `coverage` folder, run one of the following command according to your OS:
 
     ```sh
     # Linux/MacOS
-    # Generate coverage report
     $ genhtml coverage/lcov.info -o coverage/html/
 
     # Windows
-    # Install `lcov` utils (Chocolatey is prerequisite)
-    $ choco install lcov
-    # Generate coverage report (might change depending on Chocolatey setup)
     $ perl C:\ProgramData\chocolatey\lib\lcov\tools\bin\genhtml -o coverage\html coverage\lcov.info
     ```
+
+    > **Note:** Check the [Prerequisites.Optional section](#optional) for installation instructions.
 
 4.  To open the generated coverage report follow your preferred method:
 
@@ -393,6 +397,10 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 [github_docs_link]: https://docs.github.com/
 [github_oauth_apps_creation_link]: https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app
 [github_oauth_apps_link]: https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#about-oauth-apps
+
+<!-- Homebrew documentation -->
+
+[homebrew_link]: https://brew.sh/
 
 <!-- Melos links -->
 

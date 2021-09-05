@@ -53,8 +53,6 @@ Merge coverage data ignoring info related to files with paths that matches the g
   static const _kFileCovDataRecordStart = 'SF:';
   static const _kFileCovDataRecordEnd = 'end_of_record';
 
-  static const _kMelosRootPathKey = 'MELOS_ROOT_PATH';
-
   @override
   Future<void> run() async {
     // Retrieve arguments and validate their value and the state they represent.
@@ -70,11 +68,6 @@ Merge coverage data ignoring info related to files with paths that matches the g
       _argResults[_ignorePatternsOption],
     ) as List<String>;
 
-    final envVars = Platform.environment;
-    final melosRootPath = ArgumentError.checkNotNull(
-      envVars[_kMelosRootPathKey],
-    );
-
     final origin = File(originPath);
     final destination = File(destinationPath);
     final pwd = Directory.current;
@@ -82,12 +75,6 @@ Merge coverage data ignoring info related to files with paths that matches the g
     if (!origin.existsSync()) {
       throw StateError('The `$originPath` file does not exist.');
     }
-
-    // Construct the package folder path relative to the project root folder.
-    final packageRelativePath = path.relative(
-      pwd.path,
-      from: melosRootPath,
-    );
 
     // Get initial package coverage data.
     final initialContent = origin.readAsStringSync().trim();
@@ -122,7 +109,7 @@ Merge coverage data ignoring info related to files with paths that matches the g
         finalContentBuf.writeln(
           fileCovData.replaceAll(
             RegExp(_kFileCovDataRecordStart),
-            '$_kFileCovDataRecordStart$packageRelativePath${path.separator}',
+            '$_kFileCovDataRecordStart${pwd.path}${path.separator}',
           ),
         );
         finalContentBuf.writeln(_kFileCovDataRecordEnd);

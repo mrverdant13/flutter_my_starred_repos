@@ -107,7 +107,7 @@ As described in the [Features section](#features), this projects is a monorepo a
 
 The available melos scrips are defined in the `melos.yaml` file.
 
-In short, the scripts with lowercase names are selective and the ones with uppercase names are global (they gets executed for all packages in the project). Besides, those scripts named with the `:ci` ending are the variations used for CI workflows.
+In short, the scripts with lowercase names are selective (they get executed for a selected package) and the ones with uppercase names are global (they get executed for all packages in the project). Besides, those scripts named with the `:ci` ending are the variations used for CI workflows.
 
 To review all available scrips, run `melos run` in the project root folder and they will be listed with a short description of their functionality.
 

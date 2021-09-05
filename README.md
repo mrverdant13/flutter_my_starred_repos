@@ -132,7 +132,7 @@ $ flutter run --target lib/main_prod.dart
 
 ## Native flavors
 
-This project supports 3 native flavors (**Android only**) that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
+This project supports 3 native flavors (**Android and iOS only**) that can be used directly with the launch configuration in Visual Studio Code or by executing one of the following commands:
 
 ```sh
 # Development

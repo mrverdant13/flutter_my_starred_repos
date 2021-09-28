@@ -1,8 +1,8 @@
 import 'package:auth_config/auth_config.dart';
-import 'package:flutter/foundation.dart';
-import 'package:meta/meta.dart';
 import 'package:auth_domain/auth_domain.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 import 'package:oauth2/oauth2.dart';
 
 import 'interface.dart';

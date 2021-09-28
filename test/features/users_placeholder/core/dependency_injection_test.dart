@@ -9,8 +9,8 @@ import 'package:flutter_my_starred_repos/features/users_placeholder/infrastructu
     as rest;
 import 'package:flutter_my_starred_repos/features/users_placeholder/infrastructure/facades/interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test/test.dart';
 import 'package:graphql/client.dart';
+import 'package:test/test.dart';
 
 void main() {
   // ARRANGE

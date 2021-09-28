@@ -41,7 +41,7 @@ This app shows your favorites GitHub repositories. You can search for other repo
   - Format package source code.
   - Analyze package source code.
   - Test package and generate coverage data.
-  - Merge all packages coverage data.
+  - Merge all packages coverage data with [coverde][coverde_link].
   - Run entire workflow.
 - Flutter-level flavors by using different entry points per flavor.
 - Conditional features implementation based on the selected build flavor and a given config file.
@@ -89,19 +89,13 @@ This app shows your favorites GitHub repositories. You can search for other repo
 
   You could install it with the `flutter pub global activate melos` command.
 
-  It is recommended to add the [Dart system cache directory][dart_system_cache_dir_link] to the your PATH environment variable so you can run any dart command globally.
+  **NOTE:** It is recommended to add the [Dart system cache directory][dart_system_cache_dir_link] to the your PATH environment variable so you can run any dart command globally.
 
-## Optional
+- The [coverde tool][coverde_link] to merge coverage tracefiles from each sub-package and other coverage related functionality.
 
-- `lcov` utils:
+  You could install it with the `flutter pub global activate --source git https://github.com/mrverdant13/coverde.git` command.
 
-  - Windows:
-    1. Run `choco install lcov` (you need [Chocolatey][chocolatey_link]).
-    2. Set the `LCOV_TOOLS_PATH` env variable to the absolute path of the `lcov\tools\bin` folder (often `C:\ProgramData\chocolatey\lib\lcov\tools\bin`).
-  - Linux:
-    1. Run `sudo apt install lcov`.
-  - Mac:
-    1. Run `brew install lcov` (you need [Homebrew][homebrew_link]).
+  **NOTE:** It is recommended to add the [Dart system cache directory][dart_system_cache_dir_link] to the your PATH environment variable so you can run any dart command globally.
 
 ---
 
@@ -321,17 +315,11 @@ For more complex needs, you could check the following resources:
 
     > **Note:** This script will discard coverage data related to Dart source code generated with `build_runner`-based packages (for this project: `~.freezed.dart`, `~.g.dart`, `~.gr.dart`).
 
-3.  To generate coverage report within the `coverage` folder, run one of the following command according to your OS:
+3.  To generate simple coverage HTML report within the `coverage` folder, run the following coverde command:
 
     ```sh
-    # Linux/MacOS
-    $ genhtml coverage/merged.lcov.info -o coverage/html/
-
-    # Windows
-    $ perl %LCOV_TOOLS_PATH%\genhtml -o coverage\html coverage\merged.lcov.info
+    $ coverde --input-tracefile coverage/merged.lcov.info --output-report-dir coverage/html/
     ```
-
-    > **Note:** Check the [optional prerequisites section](#optional) for installation instructions.
 
 4.  To open the generated coverage report follow your preferred method:
 
@@ -372,6 +360,8 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 - [Very Good CLI][very_good_cli_package_link]
 - [Flutter official documentation][flutter_link]
 - [GitHub official documentation][github_docs_link]
+- [Melos official documentation][melos_link]
+- [Coverde official documentation][coverde_link]
 
 <!-- ? LINKS AND LOCAL PATHS -->
 
@@ -393,6 +383,10 @@ Submit a [new issue report][new_project_issues_link] if you find any bug or have
 <!-- Codecov documentation -->
 
 [codecov_link]: https://about.codecov.io/
+
+<!-- Coverde -->
+
+[coverde_link]: https://github.com/mrverdant13/coverde
 
 <!-- Dart documentation -->
 

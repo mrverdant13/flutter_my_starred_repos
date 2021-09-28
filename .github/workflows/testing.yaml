@@ -72,9 +72,13 @@ jobs:
 
       - name: Setup Flutter actions
         uses: subosito/flutter-action@v1
+        with:
+          flutter-version: "2.2.3"
 
       - name: Install tools
-        run: flutter pub global activate melos
+        run: |
+          flutter pub global activate melos
+          flutter pub global activate --source git https://github.com/mrverdant13/coverde.git
 
       - name: Initialize tools
         run: melos bs

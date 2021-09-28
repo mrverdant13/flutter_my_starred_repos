@@ -1,5 +1,5 @@
-import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'github_auth_config.freezed.dart';
 part 'github_auth_config.g.dart';

@@ -10,11 +10,10 @@ import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/ex
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:sembast/sembast.dart';
-import 'package:test/test.dart';
-
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:sembast/sembast.dart';
+import 'package:test/test.dart';
 
 class FakePathProviderPlatform extends Fake
     with MockPlatformInterfaceMixin

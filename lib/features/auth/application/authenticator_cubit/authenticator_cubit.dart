@@ -1,7 +1,7 @@
+import 'package:auth_domain/auth_domain.dart';
 import 'package:auth_service/auth_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:auth_domain/auth_domain.dart';
 
 part 'authenticator_cubit.freezed.dart';
 part 'authenticator_state.dart';

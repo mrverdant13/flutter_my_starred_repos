@@ -1,5 +1,0 @@
-include: package:lint_rules/analysis_options.yaml
-
-linter:
-  rules:
-    avoid_print: false

@@ -74,8 +74,8 @@ scripts:
   M:
     description: Merge all packages coverage data ignoring data related to generated files.
     run: >
-      dart run cli/bin/rm.dart MELOS_ROOT_PATH/coverage/merged.lcov.info &&
-      melos exec --file-exists=coverage/lcov.info -- dart run MELOS_ROOT_PATH/cli/bin/cov.dart merge --origin ./coverage/lcov.info --destination MELOS_ROOT_PATH/coverage/merged.lcov.info --ignore-patterns \.g\.dart,\.freezed\.dart
+      coverde rm MELOS_ROOT_PATH/coverage/merged.lcov.info &&
+      melos exec --file-exists=coverage/lcov.info -- coverde filter --origin ./coverage/lcov.info --destination MELOS_ROOT_PATH/coverage/merged.lcov.info --ignore-patterns \.g\.dart,\.freezed\.dart
 
   WF:
     description: Run full local workflow

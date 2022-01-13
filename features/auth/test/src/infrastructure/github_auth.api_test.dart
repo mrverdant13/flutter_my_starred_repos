@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:auth/auth.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
+import 'package:test/test.dart';
 
 class MockAuthorizationCodeGrant extends Mock
     implements AuthorizationCodeGrant {}

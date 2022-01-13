@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:auth/auth.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:oxidized/oxidized.dart';
+import 'package:test/test.dart';
 
 class MockGithubAuthApi extends Mock implements GithubAuthApi {}
 
@@ -132,7 +132,7 @@ THEN the user should be authenticated and his/her creds should be persisted
           );
 
           // ASSERT
-          expect(result, Ok(unit));
+          expect(result, Ok<Unit, LoginFailure>(unit));
           verify(
             () => mockGithubAuthApi.logInWithOAuth(
               callback: oauthCallback,
@@ -175,7 +175,7 @@ THEN the auth intent should result in a failure
           // ASSERT
           expect(
             result,
-            Err(
+            Err<Unit, LoginFailure>(
               const LoginFailure.offline(),
             ),
           );
@@ -218,7 +218,7 @@ THEN the auth intent should result in a failure
           // ASSERT
           expect(
             result,
-            Err(
+            Err<Unit, LoginFailure>(
               const LoginFailure.missingPermissions(),
             ),
           );
@@ -261,7 +261,7 @@ THEN the auth intent should result in a failure
           // ASSERT
           expect(
             result,
-            Err(
+            Err<Unit, LoginFailure>(
               const LoginFailure.canceled(),
             ),
           );

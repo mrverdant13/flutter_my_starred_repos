@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:auth_domain/auth_domain.dart';
+import 'package:auth/auth.dart';
 import 'package:auth_service/auth_service.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';

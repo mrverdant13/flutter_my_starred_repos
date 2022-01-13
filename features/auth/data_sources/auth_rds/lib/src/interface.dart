@@ -1,4 +1,4 @@
-import 'package:auth_domain/auth_domain.dart';
+import 'package:auth/auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:oauth2/oauth2.dart';
 

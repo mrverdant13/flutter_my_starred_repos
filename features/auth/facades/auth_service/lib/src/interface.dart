@@ -1,4 +1,4 @@
-import 'package:auth_domain/auth_domain.dart';
+import 'package:auth/auth.dart';
 import 'package:dartz/dartz.dart';
 
 /// An authentication service interface.

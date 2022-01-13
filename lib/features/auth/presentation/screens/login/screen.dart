@@ -1,4 +1,4 @@
-import 'package:auth_domain/auth_domain.dart';
+import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_my_starred_repos/presentation/routers/app_router.dart';

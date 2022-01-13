@@ -1,4 +1,4 @@
-import 'package:auth_domain/auth_domain.dart';
+import 'package:auth/auth.dart';
 import 'package:auth_rds/auth_rds.dart';
 import 'package:creds_lds/creds_lds.dart';
 import 'package:dartz/dartz.dart';

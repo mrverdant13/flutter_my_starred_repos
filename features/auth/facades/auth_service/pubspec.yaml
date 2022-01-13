@@ -15,8 +15,8 @@ dependencies:
   dartz: ^0.10.1
 
   # Domain
-  auth_domain:
-    path: ../../auth_domain
+  auth:
+    path: ../../../auth
 
   # Data sources
   auth_rds:

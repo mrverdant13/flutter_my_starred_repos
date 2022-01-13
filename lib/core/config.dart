@@ -1,4 +1,4 @@
-import 'package:auth_config/auth_config.dart';
+import 'package:auth/auth.dart';
 import 'package:checked_yaml/checked_yaml.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yaml/yaml.dart';

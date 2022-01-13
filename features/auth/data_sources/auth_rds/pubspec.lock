@@ -29,20 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
-  auth_config:
+  auth:
     dependency: "direct main"
     description:
-      path: "../../auth_config"
+      path: "../.."
       relative: true
     source: path
-    version: "0.1.0+1"
-  auth_domain:
-    dependency: "direct main"
-    description:
-      path: "../../auth_domain"
-      relative: true
-    source: path
-    version: "0.1.0+1"
+    version: "1.0.0+1"
   boolean_selector:
     dependency: transitive
     description:

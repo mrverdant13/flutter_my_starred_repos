@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:auth_config/auth_config.dart';
+import 'package:auth/auth.dart';
 import 'package:auth_rds/auth_rds.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';

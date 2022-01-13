@@ -1,5 +1,4 @@
-import 'package:auth_config/auth_config.dart';
-import 'package:auth_domain/auth_domain.dart';
+import 'package:auth/auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart';

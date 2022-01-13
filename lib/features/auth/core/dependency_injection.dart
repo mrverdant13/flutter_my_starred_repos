@@ -1,4 +1,4 @@
-import 'package:auth_config/auth_config.dart';
+import 'package:auth/auth.dart';
 import 'package:auth_rds/auth_rds.dart';
 import 'package:auth_service/auth_service.dart';
 import 'package:creds_lds/creds_lds.dart';

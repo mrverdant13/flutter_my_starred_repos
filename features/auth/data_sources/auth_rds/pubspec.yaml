@@ -18,10 +18,8 @@ dependencies:
   freezed_annotation: ^1.1.0
 
   # Packages
-  auth_config:
-    path: ../../auth_config
-  auth_domain:
-    path: ../../auth_domain
+  auth:
+    path: ../../../auth
 
 dev_dependencies:
   # Code generation

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'login_method.dart';
@@ -17,11 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$LoginMethodTearOff {
   const _$LoginMethodTearOff();
 
-  _LoginMethodOAuth oAuth(
-      {required Future<Uri?> Function(
-              {required Uri authorizationEndpoint,
-              required Uri redirectBaseEndpoint})
-          callback}) {
+  _LoginMethodOAuth oAuth({required OAuthCallback callback}) {
     return _LoginMethodOAuth(
       callback: callback,
     );
@@ -34,39 +31,21 @@ const $LoginMethod = _$LoginMethodTearOff();
 /// @nodoc
 mixin _$LoginMethod {
   /// The callback used for the auth process.
-  Future<Uri?> Function(
-          {required Uri authorizationEndpoint,
-          required Uri redirectBaseEndpoint})
-      get callback => throw _privateConstructorUsedError;
+  OAuthCallback get callback => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Future<Uri?> Function(
-                    {required Uri authorizationEndpoint,
-                    required Uri redirectBaseEndpoint})
-                callback)
-        oAuth,
+    required TResult Function(OAuthCallback callback) oAuth,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Future<Uri?> Function(
-                    {required Uri authorizationEndpoint,
-                    required Uri redirectBaseEndpoint})
-                callback)?
-        oAuth,
+    TResult Function(OAuthCallback callback)? oAuth,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Future<Uri?> Function(
-                    {required Uri authorizationEndpoint,
-                    required Uri redirectBaseEndpoint})
-                callback)?
-        oAuth,
+    TResult Function(OAuthCallback callback)? oAuth,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -97,11 +76,7 @@ abstract class $LoginMethodCopyWith<$Res> {
   factory $LoginMethodCopyWith(
           LoginMethod value, $Res Function(LoginMethod) then) =
       _$LoginMethodCopyWithImpl<$Res>;
-  $Res call(
-      {Future<Uri?> Function(
-              {required Uri authorizationEndpoint,
-              required Uri redirectBaseEndpoint})
-          callback});
+  $Res call({OAuthCallback callback});
 }
 
 /// @nodoc
@@ -120,9 +95,7 @@ class _$LoginMethodCopyWithImpl<$Res> implements $LoginMethodCopyWith<$Res> {
       callback: callback == freezed
           ? _value.callback
           : callback // ignore: cast_nullable_to_non_nullable
-              as Future<Uri?> Function(
-                  {required Uri authorizationEndpoint,
-                  required Uri redirectBaseEndpoint}),
+              as OAuthCallback,
     ));
   }
 }
@@ -134,11 +107,7 @@ abstract class _$LoginMethodOAuthCopyWith<$Res>
           _LoginMethodOAuth value, $Res Function(_LoginMethodOAuth) then) =
       __$LoginMethodOAuthCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {Future<Uri?> Function(
-              {required Uri authorizationEndpoint,
-              required Uri redirectBaseEndpoint})
-          callback});
+  $Res call({OAuthCallback callback});
 }
 
 /// @nodoc
@@ -160,9 +129,7 @@ class __$LoginMethodOAuthCopyWithImpl<$Res>
       callback: callback == freezed
           ? _value.callback
           : callback // ignore: cast_nullable_to_non_nullable
-              as Future<Uri?> Function(
-                  {required Uri authorizationEndpoint,
-                  required Uri redirectBaseEndpoint}),
+              as OAuthCallback,
     ));
   }
 }
@@ -175,9 +142,7 @@ class _$_LoginMethodOAuth implements _LoginMethodOAuth {
   @override
 
   /// The callback used for the auth process.
-  final Future<Uri?> Function(
-      {required Uri authorizationEndpoint,
-      required Uri redirectBaseEndpoint}) callback;
+  final OAuthCallback callback;
 
   @override
   String toString() {
@@ -187,15 +152,14 @@ class _$_LoginMethodOAuth implements _LoginMethodOAuth {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _LoginMethodOAuth &&
+        (other.runtimeType == runtimeType &&
+            other is _LoginMethodOAuth &&
             (identical(other.callback, callback) ||
-                const DeepCollectionEquality()
-                    .equals(other.callback, callback)));
+                other.callback == callback));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(callback);
+  int get hashCode => Object.hash(runtimeType, callback);
 
   @JsonKey(ignore: true)
   @override
@@ -205,12 +169,7 @@ class _$_LoginMethodOAuth implements _LoginMethodOAuth {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Future<Uri?> Function(
-                    {required Uri authorizationEndpoint,
-                    required Uri redirectBaseEndpoint})
-                callback)
-        oAuth,
+    required TResult Function(OAuthCallback callback) oAuth,
   }) {
     return oAuth(callback);
   }
@@ -218,12 +177,7 @@ class _$_LoginMethodOAuth implements _LoginMethodOAuth {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Future<Uri?> Function(
-                    {required Uri authorizationEndpoint,
-                    required Uri redirectBaseEndpoint})
-                callback)?
-        oAuth,
+    TResult Function(OAuthCallback callback)? oAuth,
   }) {
     return oAuth?.call(callback);
   }
@@ -231,12 +185,7 @@ class _$_LoginMethodOAuth implements _LoginMethodOAuth {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Future<Uri?> Function(
-                    {required Uri authorizationEndpoint,
-                    required Uri redirectBaseEndpoint})
-                callback)?
-        oAuth,
+    TResult Function(OAuthCallback callback)? oAuth,
     required TResult orElse(),
   }) {
     if (oAuth != null) {
@@ -275,19 +224,13 @@ class _$_LoginMethodOAuth implements _LoginMethodOAuth {
 }
 
 abstract class _LoginMethodOAuth implements LoginMethod {
-  const factory _LoginMethodOAuth(
-      {required Future<Uri?> Function(
-              {required Uri authorizationEndpoint,
-              required Uri redirectBaseEndpoint})
-          callback}) = _$_LoginMethodOAuth;
+  const factory _LoginMethodOAuth({required OAuthCallback callback}) =
+      _$_LoginMethodOAuth;
 
   @override
 
   /// The callback used for the auth process.
-  Future<Uri?> Function(
-          {required Uri authorizationEndpoint,
-          required Uri redirectBaseEndpoint})
-      get callback => throw _privateConstructorUsedError;
+  OAuthCallback get callback;
   @override
   @JsonKey(ignore: true)
   _$LoginMethodOAuthCopyWith<_LoginMethodOAuth> get copyWith =>

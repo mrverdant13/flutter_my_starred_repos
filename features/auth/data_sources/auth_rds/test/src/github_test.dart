@@ -268,7 +268,7 @@ THEN the request dispatching shoul be delegated
 ''',
     () async {
       // ARRANGE
-      registerFallbackValue<http.BaseRequest>(FakeRequest());
+      registerFallbackValue(FakeRequest());
       final mockHttpClient = MockHttpClient();
       final oauthHttpClient = OAuthHttpClient(
         mockHttpClient,

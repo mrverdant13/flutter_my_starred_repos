@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'github_repo.dart';
@@ -34,7 +35,7 @@ class _$GithubRepoDtoTearOff {
     );
   }
 
-  GithubRepoDto fromJson(Map<String, Object> json) {
+  GithubRepoDto fromJson(Map<String, Object?> json) {
     return GithubRepoDto.fromJson(json);
   }
 }
@@ -53,10 +54,12 @@ mixin _$GithubRepoDto {
   /// The description of this repository.
   ///
   /// The description could be empty.
+// ignore: invalid_annotation_target
   @JsonKey(defaultValue: '')
   String get description => throw _privateConstructorUsedError;
 
   /// The amount of starts of this repository.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'stargazers_count')
   int get starsCount => throw _privateConstructorUsedError;
 
@@ -206,11 +209,13 @@ class _$_GithubRepoDto implements _GithubRepoDto {
   /// The description of this repository.
   ///
   /// The description could be empty.
+// ignore: invalid_annotation_target
   @JsonKey(defaultValue: '')
   final String description;
   @override
 
   /// The amount of starts of this repository.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'stargazers_count')
   final int starsCount;
 
@@ -222,26 +227,23 @@ class _$_GithubRepoDto implements _GithubRepoDto {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _GithubRepoDto &&
-            (identical(other.owner, owner) ||
-                const DeepCollectionEquality().equals(other.owner, owner)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.starsCount, starsCount) ||
-                const DeepCollectionEquality()
-                    .equals(other.starsCount, starsCount)));
+        (other.runtimeType == runtimeType &&
+            other is _GithubRepoDto &&
+            const DeepCollectionEquality().equals(other.owner, owner) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.description, description) &&
+            const DeepCollectionEquality()
+                .equals(other.starsCount, starsCount));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(owner) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(starsCount);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(owner),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(starsCount));
 
   @JsonKey(ignore: true)
   @override
@@ -268,23 +270,25 @@ abstract class _GithubRepoDto implements GithubRepoDto {
   @override
 
   /// The GitHub user that owns this repository.
-  UserDto get owner => throw _privateConstructorUsedError;
+  UserDto get owner;
   @override
 
   /// The name of this repository.
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
 
   /// The description of this repository.
   ///
   /// The description could be empty.
+// ignore: invalid_annotation_target
   @JsonKey(defaultValue: '')
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
 
   /// The amount of starts of this repository.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'stargazers_count')
-  int get starsCount => throw _privateConstructorUsedError;
+  int get starsCount;
   @override
   @JsonKey(ignore: true)
   _$GithubRepoDtoCopyWith<_GithubRepoDto> get copyWith =>

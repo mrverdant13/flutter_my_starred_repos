@@ -15,7 +15,7 @@ dependencies:
   oauth2: ^2.0.0
 
   # Local storage
-  flutter_secure_storage: ^4.2.1
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   # Linting
@@ -23,5 +23,5 @@ dev_dependencies:
     path: ../../../../lint_rules
 
   # Testing
-  mocktail: ^0.1.4
-  test: ^1.17.12
+  mocktail: ^0.2.0
+  test: ^1.20.1

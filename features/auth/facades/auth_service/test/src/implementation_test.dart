@@ -35,12 +35,8 @@ void main() {
   // ARRANGE
   setUpAll(
     () {
-      registerFallbackValue<OAuthCallback>(
-        FakeOAuthCallback().call,
-      );
-      registerFallbackValue<Credentials>(
-        FakeCredentials(),
-      );
+      registerFallbackValue(FakeOAuthCallback().call);
+      registerFallbackValue(FakeCredentials());
     },
   );
 

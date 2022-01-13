@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'user.dart';
@@ -30,7 +31,7 @@ class _$UserDtoTearOff {
     );
   }
 
-  UserDto fromJson(Map<String, Object> json) {
+  UserDto fromJson(Map<String, Object?> json) {
     return UserDto.fromJson(json);
   }
 }
@@ -41,10 +42,12 @@ const $UserDto = _$UserDtoTearOff();
 /// @nodoc
 mixin _$UserDto {
   /// The nickname or username of this user.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'login')
   String get username => throw _privateConstructorUsedError;
 
   /// The avatar URL of this user.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'avatar_url')
   String get avatarUrl => throw _privateConstructorUsedError;
 
@@ -139,11 +142,13 @@ class _$_UserDto implements _UserDto {
   @override
 
   /// The nickname or username of this user.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'login')
   final String username;
   @override
 
   /// The avatar URL of this user.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'avatar_url')
   final String avatarUrl;
 
@@ -155,20 +160,17 @@ class _$_UserDto implements _UserDto {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UserDto &&
-            (identical(other.username, username) ||
-                const DeepCollectionEquality()
-                    .equals(other.username, username)) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.avatarUrl, avatarUrl)));
+        (other.runtimeType == runtimeType &&
+            other is _UserDto &&
+            const DeepCollectionEquality().equals(other.username, username) &&
+            const DeepCollectionEquality().equals(other.avatarUrl, avatarUrl));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(username) ^
-      const DeepCollectionEquality().hash(avatarUrl);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(username),
+      const DeepCollectionEquality().hash(avatarUrl));
 
   @JsonKey(ignore: true)
   @override
@@ -191,13 +193,15 @@ abstract class _UserDto implements UserDto {
   @override
 
   /// The nickname or username of this user.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'login')
-  String get username => throw _privateConstructorUsedError;
+  String get username;
   @override
 
   /// The avatar URL of this user.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'avatar_url')
-  String get avatarUrl => throw _privateConstructorUsedError;
+  String get avatarUrl;
   @override
   @JsonKey(ignore: true)
   _$UserDtoCopyWith<_UserDto> get copyWith =>

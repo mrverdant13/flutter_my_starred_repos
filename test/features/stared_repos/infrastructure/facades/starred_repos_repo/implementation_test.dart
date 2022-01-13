@@ -1,6 +1,7 @@
 import 'package:flutter_my_starred_repos/features/stared_repos/domain/get_starred_repos_warnings.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/domain/page.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/domain/payload.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/domain/repo.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/page.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/repo.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
@@ -277,7 +278,7 @@ THEN an empty repos page should be returned
         () async {
           // ARRANGE
           const page = 9;
-          const expectedStarredReposPage = Page(
+          const expectedStarredReposPage = Page<GithubRepo>(
             lastPage: page,
             elements: [],
           );

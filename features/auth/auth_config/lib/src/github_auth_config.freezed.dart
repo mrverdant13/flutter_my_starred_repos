@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'github_auth_config.dart';
@@ -32,7 +33,7 @@ class _$GithubAuthConfigTearOff {
     );
   }
 
-  GithubAuthConfig fromJson(Map<String, Object> json) {
+  GithubAuthConfig fromJson(Map<String, Object?> json) {
     return GithubAuthConfig.fromJson(json);
   }
 }
@@ -171,20 +172,18 @@ class _$_GithubAuthConfig implements _GithubAuthConfig {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _GithubAuthConfig &&
-            (identical(other.clientId, clientId) ||
-                const DeepCollectionEquality()
-                    .equals(other.clientId, clientId)) &&
-            (identical(other.clientSecret, clientSecret) ||
-                const DeepCollectionEquality()
-                    .equals(other.clientSecret, clientSecret)));
+        (other.runtimeType == runtimeType &&
+            other is _GithubAuthConfig &&
+            const DeepCollectionEquality().equals(other.clientId, clientId) &&
+            const DeepCollectionEquality()
+                .equals(other.clientSecret, clientSecret));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(clientId) ^
-      const DeepCollectionEquality().hash(clientSecret);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(clientId),
+      const DeepCollectionEquality().hash(clientSecret));
 
   @JsonKey(ignore: true)
   @override
@@ -212,13 +211,13 @@ abstract class _GithubAuthConfig implements GithubAuthConfig {
   /// GitHub client ID.
 // ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
-  String get clientId => throw _privateConstructorUsedError;
+  String get clientId;
   @override
 
   /// GitHub client secret.
 // ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
-  String get clientSecret => throw _privateConstructorUsedError;
+  String get clientSecret;
   @override
   @JsonKey(ignore: true)
   _$GithubAuthConfigCopyWith<_GithubAuthConfig> get copyWith =>

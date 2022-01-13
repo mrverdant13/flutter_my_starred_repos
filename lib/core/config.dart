@@ -1,7 +1,6 @@
 import 'package:auth_config/auth_config.dart';
 import 'package:checked_yaml/checked_yaml.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 import 'package:yaml/yaml.dart';
 
 part 'config.freezed.dart';

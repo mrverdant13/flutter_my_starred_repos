@@ -1,19 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:meta/meta.dart';
 import 'package:oauth2/oauth2.dart';
 
-import 'interface.dart';
-
-/// A
 /// {@template creds_lds_flutter_secure_storage}
-/// credentials local data source implementation
+/// A credentials storage that uses a [FlutterSecureStorage].
 /// {@endtemplate}
-///  that uses [FlutterSecureStorage].
-class CredsLDSImp extends CredsLDS {
-  /// Creates a
+class CredsStorage {
   /// {@macro creds_lds_flutter_secure_storage}
-  /// with the given [flutterSecureStorage].
-  CredsLDSImp({
+  CredsStorage({
     required FlutterSecureStorage flutterSecureStorage,
   }) : _flutterSecureStorage = flutterSecureStorage;
 
@@ -28,7 +22,7 @@ class CredsLDSImp extends CredsLDS {
   @visibleForTesting
   Credentials? creds;
 
-  @override
+  /// Removes the credentials from the in-memory cache and the storage.
   Future<void> clear() async {
     // Removes the credentials from the secure storage.
     await _flutterSecureStorage.delete(
@@ -38,7 +32,7 @@ class CredsLDSImp extends CredsLDS {
     creds = null;
   }
 
-  @override
+  /// Stores the credentials in the in-memory cache and the storage.
   Future<void> set(
     Credentials credentials,
   ) async {
@@ -51,7 +45,10 @@ class CredsLDSImp extends CredsLDS {
     creds = credentials;
   }
 
-  @override
+  /// Retrieves the credentials.
+  ///
+  /// Returns the cached credentials, if any. Obtains the credentials from the
+  /// storage.
   Future<Credentials?> get() async {
     // Returns the cached credentials if they exist.
     if (creds != null) return creds;

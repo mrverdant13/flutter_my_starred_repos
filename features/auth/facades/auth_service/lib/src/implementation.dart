@@ -1,6 +1,5 @@
 import 'package:auth/auth.dart';
 import 'package:auth_rds/auth_rds.dart';
-import 'package:creds_lds/creds_lds.dart';
 import 'package:dartz/dartz.dart';
 import 'package:oauth2/oauth2.dart';
 
@@ -9,21 +8,21 @@ import 'interface.dart';
 /// An authentication service implementation.
 class AuthServiceImp extends AuthService {
   /// Creates an authentication service with the given [authenticator] and
-  /// [credsLDS].
+  /// [credsStorage].
   const AuthServiceImp({
     required Authenticator authenticator,
-    required CredsLDS credsLDS,
+    required CredsStorage credsStorage,
   })  : _authenticator = authenticator,
-        _credsLDS = credsLDS;
+        _credsStorage = credsStorage;
 
   /// The [Authenticator] to be used for the authentication process.
   final Authenticator _authenticator;
 
-  /// The [CredsLDS] to be used to store an access credentials.
-  final CredsLDS _credsLDS;
+  /// The [CredsStorage] to be used to store an access credentials.
+  final CredsStorage _credsStorage;
 
   @override
-  Future<bool> isLoggedIn() => _credsLDS.get().then(
+  Future<bool> isLoggedIn() => _credsStorage.get().then(
         (creds) => creds != null,
       );
 
@@ -39,7 +38,7 @@ class AuthServiceImp extends AuthService {
         ),
       );
       // Stores the obtained credentials.
-      await _credsLDS.set(creds);
+      await _credsStorage.set(creds);
       return const Right(unit);
     } on LogInException catch (e) {
       return Left(
@@ -55,6 +54,6 @@ class AuthServiceImp extends AuthService {
   @override
   Future<void> logOut() async {
     // TODO: Revoke credentials.
-    await _credsLDS.clear();
+    await _credsStorage.clear();
   }
 }

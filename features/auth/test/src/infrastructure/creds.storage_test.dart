@@ -1,8 +1,8 @@
-import 'package:creds_lds/creds_lds.dart';
+import 'package:auth/src/infrastructure/creds.storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
-import 'package:test/test.dart';
 
 class MockFlutterSecureStorage extends Mock implements FlutterSecureStorage {}
 
@@ -10,17 +10,17 @@ void main() {
   group(
     '''
 
-GIVEN a credentials local data source
+GIVEN a credentials storage
 ├─ THAT uses a Flutter secure storage''',
     () {
       // ARRANGE
       late MockFlutterSecureStorage mockFlutterSecureStorage;
-      late CredsLDSImp credsLDS;
+      late CredsStorage credsStorage;
 
       setUp(
         () {
           mockFlutterSecureStorage = MockFlutterSecureStorage();
-          credsLDS = CredsLDSImp(
+          credsStorage = CredsStorage(
             flutterSecureStorage: mockFlutterSecureStorage,
           );
         },
@@ -51,13 +51,13 @@ THEN any persisted creds should be removed
           );
 
           // ACT
-          await credsLDS.clear();
+          await credsStorage.clear();
 
           // ASSERT
-          expect(credsLDS.creds, isNull);
+          expect(credsStorage.creds, isNull);
           verify(
             () => mockFlutterSecureStorage.delete(
-              key: CredsLDSImp.credsKey,
+              key: CredsStorage.credsKey,
             ),
           ).called(1);
         },
@@ -86,13 +86,13 @@ THEN the given credentials should be persisted
           );
 
           // ACT
-          await credsLDS.set(creds);
+          await credsStorage.set(creds);
 
           // ASSERT
-          expect(credsLDS.creds, creds);
+          expect(credsStorage.creds, creds);
           verify(
             () => mockFlutterSecureStorage.write(
-              key: CredsLDSImp.credsKey,
+              key: CredsStorage.credsKey,
               value: creds.toJson(),
             ),
           ).called(1);
@@ -112,10 +112,10 @@ THEN the cached credentials should be returned
           // ARRANGE
           const credsJson = '{"accessToken":"qwerty","scopes":[]}';
           final creds = Credentials.fromJson(credsJson);
-          credsLDS.creds = creds;
+          credsStorage.creds = creds;
 
           // ACT
-          final result = await credsLDS.get();
+          final result = await credsStorage.get();
 
           // ASSERT
           verifyZeroInteractions(mockFlutterSecureStorage);
@@ -149,17 +149,17 @@ THEN the persisted credentials should be cached and returned
           );
 
           // ACT
-          final result = await credsLDS.get();
+          final result = await credsStorage.get();
 
           // ASSERT
 
           // Comparing creds JSON string as it is saver and avoids reference
           // comparisons.
           expect(result!.toJson(), resultingCredsJson);
-          expect(credsLDS.creds!.toJson(), resultingCredsJson);
+          expect(credsStorage.creds!.toJson(), resultingCredsJson);
           verify(
             () => mockFlutterSecureStorage.read(
-              key: CredsLDSImp.credsKey,
+              key: CredsStorage.credsKey,
             ),
           ).called(1);
         },

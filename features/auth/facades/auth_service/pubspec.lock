@@ -92,13 +92,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  creds_lds:
-    dependency: "direct main"
-    description:
-      path: "../../data_sources/creds_lds"
-      relative: true
-    source: path
-    version: "0.1.0+1"
   crypto:
     dependency: transitive
     description:

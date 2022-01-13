@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:auth/auth.dart';
 import 'package:auth_rds/auth_rds.dart';
 import 'package:auth_service/auth_service.dart';
-import 'package:creds_lds/creds_lds.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
@@ -11,7 +10,7 @@ import 'package:test/test.dart';
 
 class MockAuthenticator extends Mock implements Authenticator {}
 
-class MockCredsLDS extends Mock implements CredsLDS {}
+class MockCredsStorage extends Mock implements CredsStorage {}
 
 class FakeOAuthCallback {
   Future<Uri> call({
@@ -45,20 +44,20 @@ void main() {
 
 GIVEN an auth service
 ├─ THAT uses an authenticator
-├─ AND  uses a credentials local data source''',
+├─ AND  uses a credentials storage''',
     () {
       // ARRANGE
       late MockAuthenticator mockAuthenticator;
-      late MockCredsLDS mockCredsLDS;
+      late MockCredsStorage mockCredsStorage;
       late AuthServiceImp authService;
 
       setUp(
         () {
           mockAuthenticator = MockAuthenticator();
-          mockCredsLDS = MockCredsLDS();
+          mockCredsStorage = MockCredsStorage();
           authService = AuthServiceImp(
             authenticator: mockAuthenticator,
-            credsLDS: mockCredsLDS,
+            credsStorage: mockCredsStorage,
           );
         },
       );
@@ -66,7 +65,7 @@ GIVEN an auth service
       tearDown(
         () {
           verifyNoMoreInteractions(mockAuthenticator);
-          verifyNoMoreInteractions(mockCredsLDS);
+          verifyNoMoreInteractions(mockCredsStorage);
         },
       );
 
@@ -75,7 +74,7 @@ GIVEN an auth service
 
 WHEN the login status is checked
 THEN the auth status should be returned
-├─ BY retrieving it from the credentials local data source
+├─ BY retrieving it from the credentials storage
 ├─ AND returning its value
 ''',
         () async {
@@ -83,7 +82,7 @@ THEN the auth status should be returned
           final expectedStatus = Random().nextBool();
 
           when(
-            () => mockCredsLDS.get(),
+            () => mockCredsStorage.get(),
           ).thenAnswer(
             (_) async => expectedStatus ? FakeCredentials() : null,
           );
@@ -94,7 +93,7 @@ THEN the auth status should be returned
           // ASSERT
           expect(result, expectedStatus);
           verify(
-            () => mockCredsLDS.get(),
+            () => mockCredsStorage.get(),
           ).called(1);
         },
       );
@@ -108,7 +107,7 @@ AND the user grants all permissions
 AND the user completes the process
 THEN the user should be authenticated and his/her creds should be persisted
 ├─ BY collecting creds with the authenticator
-├─ AND storing the creds with the credentials local data source
+├─ AND storing the creds with the credentials storage
 ├─ AND not returning any data
 ''',
         () async {
@@ -122,7 +121,7 @@ THEN the user should be authenticated and his/her creds should be persisted
             (_) async => creds,
           );
           when(
-            () => mockCredsLDS.set(any()),
+            () => mockCredsStorage.set(any()),
           ).thenAnswer(
             (_) => Future.value(),
           );
@@ -142,7 +141,7 @@ THEN the user should be authenticated and his/her creds should be persisted
             ),
           ).called(1);
           verify(
-            () => mockCredsLDS.set(creds),
+            () => mockCredsStorage.set(creds),
           ).called(1);
         },
       );
@@ -281,13 +280,13 @@ THEN the auth intent should result in a failure
 
 WHEN the logout process is triggered
 THEN any stored creds should be removed
-├─ BY clearing the creds local data source
+├─ BY clearing the creds storage
 ├─ AND not returning any data
 ''',
         () async {
           // ARRANGE
           when(
-            () => mockCredsLDS.clear(),
+            () => mockCredsStorage.clear(),
           ).thenAnswer(
             (_) => Future.value(),
           );
@@ -297,7 +296,7 @@ THEN any stored creds should be removed
 
           // ASSERT
           verify(
-            () => mockCredsLDS.clear(),
+            () => mockCredsStorage.clear(),
           ).called(1);
         },
       );

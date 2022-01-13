@@ -14,15 +14,13 @@ dependencies:
   # Other packages
   dartz: ^0.10.1
 
-  # Domain
+  # Auth feature
   auth:
     path: ../../../auth
 
   # Data sources
   auth_rds:
     path: ../../data_sources/auth_rds
-  creds_lds:
-    path: ../../data_sources/creds_lds
 
 dev_dependencies:
   # Linting

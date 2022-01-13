@@ -1,11 +1,10 @@
 import 'dart:io';
 
 import 'package:auth/auth.dart';
-import 'package:auth_rds/auth_rds.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
-import 'package:test/test.dart';
 
 class MockAuthorizationCodeGrant extends Mock
     implements AuthorizationCodeGrant {}
@@ -63,7 +62,7 @@ WHEN the reponse handler is invoked using the given grant and redirect endpoint
   group(
     '''
 
-GIVEN an authenticator
+GIVEN an github auth api
 AND a GitHub config data holder''',
     () {
       // ARRANGE
@@ -71,7 +70,7 @@ AND a GitHub config data holder''',
         clientId: 'clientId',
         clientSecret: 'clientSecret',
       );
-      late AuthenticatorImp authenticator;
+      late GithubAuthApi githubAuthApi;
 
       test(
         '''
@@ -85,10 +84,10 @@ THEN the resulting creds should be returned
           // ARRANGE
           final creds = Credentials(
             'access_token',
-            scopes: AuthenticatorImp.expectedReturnedScopes,
+            scopes: GithubAuthApi.expectedReturnedScopes,
           );
 
-          authenticator = AuthenticatorImp(
+          githubAuthApi = GithubAuthApi(
             githubAuthConfig: githubAuthConfig,
             authResponseHandlerCallback: ({
               required AuthorizationCodeGrant grant,
@@ -106,7 +105,7 @@ THEN the resulting creds should be returned
           }
 
           // ACT
-          final result = await authenticator.logInWithOAuth(
+          final result = await githubAuthApi.logInWithOAuth(
             callback: oauthCallback,
           );
 
@@ -129,7 +128,7 @@ THEN an exception indicating permission issues should be thrown
             'access_token',
           );
 
-          authenticator = AuthenticatorImp(
+          githubAuthApi = GithubAuthApi(
             githubAuthConfig: githubAuthConfig,
             authResponseHandlerCallback: ({
               required AuthorizationCodeGrant grant,
@@ -147,7 +146,7 @@ THEN an exception indicating permission issues should be thrown
           }
 
           // ACT
-          Future<Credentials> action() => authenticator.logInWithOAuth(
+          Future<Credentials> action() => githubAuthApi.logInWithOAuth(
                 callback: oauthCallback,
               );
 
@@ -175,7 +174,7 @@ THEN an exception indicating that the action was canceled should be thrown
             'access_token',
           );
 
-          authenticator = AuthenticatorImp(
+          githubAuthApi = GithubAuthApi(
             githubAuthConfig: githubAuthConfig,
             authResponseHandlerCallback: ({
               required AuthorizationCodeGrant grant,
@@ -193,7 +192,7 @@ THEN an exception indicating that the action was canceled should be thrown
           }
 
           // ACT
-          Future<Credentials> action() => authenticator.logInWithOAuth(
+          Future<Credentials> action() => githubAuthApi.logInWithOAuth(
                 callback: oauthCallback,
               );
 
@@ -218,7 +217,7 @@ THEN an exception indicating permission issues should be thrown
 ''',
         () async {
           // ARRANGE
-          authenticator = AuthenticatorImp(
+          githubAuthApi = GithubAuthApi(
             githubAuthConfig: githubAuthConfig,
             authResponseHandlerCallback: ({
               required AuthorizationCodeGrant grant,
@@ -240,7 +239,7 @@ THEN an exception indicating permission issues should be thrown
           }
 
           // ACT
-          Future<Credentials> action() => authenticator.logInWithOAuth(
+          Future<Credentials> action() => githubAuthApi.logInWithOAuth(
                 callback: oauthCallback,
               );
 

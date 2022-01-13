@@ -36,13 +36,6 @@ packages:
       relative: true
     source: path
     version: "1.0.0+1"
-  auth_rds:
-    dependency: "direct main"
-    description:
-      path: "../../data_sources/auth_rds"
-      relative: true
-    source: path
-    version: "0.1.0+1"
   boolean_selector:
     dependency: transitive
     description:
@@ -192,7 +185,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.3"
+    version: "0.13.4"
   http_multi_server:
     dependency: transitive
     description:

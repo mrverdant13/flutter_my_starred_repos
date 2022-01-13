@@ -1,5 +1,4 @@
 import 'package:auth/auth.dart';
-import 'package:auth_rds/auth_rds.dart';
 import 'package:auth_service/auth_service.dart';
 import 'package:flutter_my_starred_repos/core/config.dart';
 import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
@@ -66,8 +65,8 @@ THEN the necessary auth dependencies should be injected
             isA<AuthInterceptor>(),
           );
           expect(
-            container.read(authenticatorPod),
-            isA<Authenticator>(),
+            container.read(githubAuthApiPod),
+            isA<GithubAuthApi>(),
           );
           expect(
             container.read(authServicePod),

@@ -1,4 +1,4 @@
-import 'package:creds_lds/creds_lds.dart';
+import 'package:auth/auth.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
 import 'package:mocktail/mocktail.dart';
@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 import '../../../../helpers/mock_interceptor.dart';
 
-class MockCredsLDS extends Mock implements CredsLDS {}
+class MockCredsStorage extends Mock implements CredsStorage {}
 
 void main() {
   group(
@@ -15,12 +15,12 @@ void main() {
 
 GIVEN an HTTP client
 ├─ THAT uses an auth interceptor
-│  ├─ THAT uses a credentials local data source
+│  ├─ THAT uses a credentials storage
 AND a request
 ├─ THAT uses auth extra data for interception''',
     () {
       // ARRANGE
-      late MockCredsLDS mockCredsLDS;
+      late MockCredsStorage mockCredsStorage;
       late AuthInterceptor authInterceptor;
       late MockerInterceptor mockerInterceptor;
       late Dio dio;
@@ -37,9 +37,9 @@ AND a request
 
       setUp(
         () {
-          mockCredsLDS = MockCredsLDS();
+          mockCredsStorage = MockCredsStorage();
           authInterceptor = AuthInterceptor(
-            credsLDS: mockCredsLDS,
+            credsStorage: mockCredsStorage,
           );
           mockerInterceptor = MockerInterceptor();
           dio = Dio()
@@ -52,7 +52,7 @@ AND a request
 
       tearDown(
         () {
-          verifyNoMoreInteractions(mockCredsLDS);
+          verifyNoMoreInteractions(mockCredsStorage);
         },
       );
 
@@ -62,14 +62,14 @@ AND a request
 AND a stored access token
 WHEN the request is sent
 THEN the auth interceptor should alter the request
-├─ BY retriving an access token with the creds local data source
+├─ BY retriving an access token with the creds storage
 ├─ AND attaching the token to the `Authorization` header as a bearer one
 ''',
         () async {
           // ARRANGE
           const accessToken = 'access_token';
           when(
-            () => mockCredsLDS.get(),
+            () => mockCredsStorage.get(),
           ).thenAnswer(
             (_) async => Credentials(accessToken),
           );
@@ -79,7 +79,7 @@ THEN the auth interceptor should alter the request
 
           // ASSERT
           verify(
-            () => mockCredsLDS.get(),
+            () => mockCredsStorage.get(),
           ).called(1);
           expect(
             result.requestOptions.headers['Authorization'],
@@ -94,13 +94,13 @@ THEN the auth interceptor should alter the request
 AND no stored access token
 WHEN the request is sent
 THEN the auth interceptor should not alter the request
-├─ BY trying to retrive an access token with the creds local data source
+├─ BY trying to retrive an access token with the creds storage
 ├─ AND not defining the `Authorization` header
 ''',
         () async {
           // ARRANGE
           when(
-            () => mockCredsLDS.get(),
+            () => mockCredsStorage.get(),
           ).thenAnswer(
             (_) async => null,
           );
@@ -110,7 +110,7 @@ THEN the auth interceptor should not alter the request
 
           // ASSERT
           verify(
-            () => mockCredsLDS.get(),
+            () => mockCredsStorage.get(),
           ).called(1);
           expect(result.requestOptions.headers['Authorization'], isNull);
         },

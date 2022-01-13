@@ -18,10 +18,6 @@ dependencies:
   auth:
     path: ../../../auth
 
-  # Data sources
-  auth_rds:
-    path: ../../data_sources/auth_rds
-
 dev_dependencies:
   # Linting
   lint_rules:

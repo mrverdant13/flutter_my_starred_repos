@@ -1,12 +1,10 @@
 import 'package:auth/auth.dart';
-import 'package:auth_rds/auth_rds.dart';
 import 'package:auth_service/auth_service.dart';
-import 'package:creds_lds/creds_lds.dart';
+import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/dependency_injection.dart';
-import '../application/authenticator_cubit/authenticator_cubit.dart';
 import '../infrastructure/external/dio_interceptors.dart';
 
 final githubAuthConfigPod = Provider<GithubAuthConfig>(
@@ -20,10 +18,10 @@ final flutterSecureStoragePod = Provider<FlutterSecureStorage>(
   (_) => const FlutterSecureStorage(),
 );
 
-final credsLDSPod = Provider<CredsLDS>(
+final credsStoragePod = Provider<CredsStorage>(
   (ref) {
     final flutterSecureStorage = ref.watch(flutterSecureStoragePod);
-    return CredsLDSImp(
+    return CredsStorage(
       flutterSecureStorage: flutterSecureStorage,
     );
   },
@@ -31,17 +29,17 @@ final credsLDSPod = Provider<CredsLDS>(
 
 final authInterceptorPod = Provider<AuthInterceptor>(
   (ref) {
-    final credsLDS = ref.watch(credsLDSPod);
+    final credsStorage = ref.watch(credsStoragePod);
     return AuthInterceptor(
-      credsLDS: credsLDS,
+      credsStorage: credsStorage,
     );
   },
 );
 
-final authenticatorPod = Provider<Authenticator>(
+final githubAuthApiPod = Provider<GithubAuthApi>(
   (ref) {
     final githubAuthConfig = ref.watch(githubAuthConfigPod);
-    return AuthenticatorImp(
+    return GithubAuthApi(
       githubAuthConfig: githubAuthConfig,
     );
   },
@@ -49,11 +47,11 @@ final authenticatorPod = Provider<Authenticator>(
 
 final authServicePod = Provider<AuthService>(
   (ref) {
-    final authenticator = ref.watch(authenticatorPod);
-    final credsLDS = ref.watch(credsLDSPod);
+    final githubAuthApi = ref.watch(githubAuthApiPod);
+    final credsStorage = ref.watch(credsStoragePod);
     return AuthServiceImp(
-      authenticator: authenticator,
-      credsLDS: credsLDS,
+      githubAuthApi: githubAuthApi,
+      credsStorage: credsStorage,
     );
   },
 );

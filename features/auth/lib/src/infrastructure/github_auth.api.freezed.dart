@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'interface.dart';
+part of 'github_auth.api.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -123,12 +123,20 @@ class __$LogInExceptionCanceledCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LogInExceptionCanceled implements _LogInExceptionCanceled {
+class _$_LogInExceptionCanceled
+    with DiagnosticableTreeMixin
+    implements _LogInExceptionCanceled {
   const _$_LogInExceptionCanceled();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LogInException.canceled()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'LogInException.canceled'));
   }
 
   @override
@@ -241,12 +249,20 @@ class __$LogInExceptionMissingPermissionsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LogInExceptionMissingPermissions
+    with DiagnosticableTreeMixin
     implements _LogInExceptionMissingPermissions {
   const _$_LogInExceptionMissingPermissions();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LogInException.missingPermissions()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'LogInException.missingPermissions'));
   }
 
   @override
@@ -357,12 +373,20 @@ class __$LogInExceptionOfflineCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LogInExceptionOffline implements _LogInExceptionOffline {
+class _$_LogInExceptionOffline
+    with DiagnosticableTreeMixin
+    implements _LogInExceptionOffline {
   const _$_LogInExceptionOffline();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LogInException.offline()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'LogInException.offline'));
   }
 
   @override

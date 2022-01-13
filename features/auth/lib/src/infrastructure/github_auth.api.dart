@@ -1,9 +1,10 @@
 import 'package:auth/auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart';
 
-import 'interface.dart';
+part 'github_auth.api.freezed.dart';
 
 typedef AuthResponseHandlerCallback = Future<Client> Function({
   required AuthorizationCodeGrant grant,
@@ -21,9 +22,9 @@ Future<Client> handleAuthorizationResponse({
 }
 
 /// An authenticator implementation that uses the GitHub API.
-class AuthenticatorImp extends Authenticator {
+class GithubAuthApi {
   /// Creates an authenticator implementation.
-  AuthenticatorImp({
+  GithubAuthApi({
     required GithubAuthConfig githubAuthConfig,
     AuthResponseHandlerCallback? authResponseHandlerCallback,
   })  : _authResponseHandlerCallback =
@@ -115,7 +116,6 @@ class AuthenticatorImp extends Authenticator {
         scopes: _scopes,
       );
 
-  @override
   Future<Credentials> logInWithOAuth({
     required OAuthCallback callback,
   }) async {
@@ -173,4 +173,19 @@ class OAuthHttpClient extends http.BaseClient {
     request.headers['Accept'] = 'application/json';
     return _client.send(request);
   }
+}
+
+/// A union of exceptions thrown when logging in.
+@freezed
+class LogInException with _$LogInException {
+  /// An exception thrown when the process is canceled.
+  const factory LogInException.canceled() = _LogInExceptionCanceled;
+
+  /// An exception thrown when the process finishes without all required
+  /// permissions.
+  const factory LogInException.missingPermissions() =
+      _LogInExceptionMissingPermissions;
+
+  /// An exception thrown when there is no Internet connection.
+  const factory LogInException.offline() = _LogInExceptionOffline;
 }

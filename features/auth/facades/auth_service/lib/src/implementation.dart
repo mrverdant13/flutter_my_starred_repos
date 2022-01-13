@@ -1,5 +1,4 @@
 import 'package:auth/auth.dart';
-import 'package:auth_rds/auth_rds.dart';
 import 'package:dartz/dartz.dart';
 import 'package:oauth2/oauth2.dart';
 
@@ -7,16 +6,16 @@ import 'interface.dart';
 
 /// An authentication service implementation.
 class AuthServiceImp extends AuthService {
-  /// Creates an authentication service with the given [authenticator] and
+  /// Creates an authentication service with the given [githubAuthApi] and
   /// [credsStorage].
   const AuthServiceImp({
-    required Authenticator authenticator,
+    required GithubAuthApi githubAuthApi,
     required CredsStorage credsStorage,
-  })  : _authenticator = authenticator,
+  })  : _githubAuthApi = githubAuthApi,
         _credsStorage = credsStorage;
 
-  /// The [Authenticator] to be used for the authentication process.
-  final Authenticator _authenticator;
+  /// The [GithubAuthApi] to be used for the authentication process.
+  final GithubAuthApi _githubAuthApi;
 
   /// The [CredsStorage] to be used to store an access credentials.
   final CredsStorage _credsStorage;
@@ -33,7 +32,7 @@ class AuthServiceImp extends AuthService {
     try {
       // Logs in according to the provided method.
       final creds = await method.when<Future<Credentials>>(
-        oAuth: (callback) => _authenticator.logInWithOAuth(
+        oAuth: (callback) => _githubAuthApi.logInWithOAuth(
           callback: callback,
         ),
       );

@@ -1,14 +1,13 @@
 import 'dart:math';
 
 import 'package:auth/auth.dart';
-import 'package:auth_rds/auth_rds.dart';
 import 'package:auth_service/auth_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:test/test.dart';
 
-class MockAuthenticator extends Mock implements Authenticator {}
+class MockGithubAuthApi extends Mock implements GithubAuthApi {}
 
 class MockCredsStorage extends Mock implements CredsStorage {}
 
@@ -43,20 +42,20 @@ void main() {
     '''
 
 GIVEN an auth service
-├─ THAT uses an authenticator
+├─ THAT uses a GitHub auth api
 ├─ AND  uses a credentials storage''',
     () {
       // ARRANGE
-      late MockAuthenticator mockAuthenticator;
+      late MockGithubAuthApi mockGithubAuthApi;
       late MockCredsStorage mockCredsStorage;
       late AuthServiceImp authService;
 
       setUp(
         () {
-          mockAuthenticator = MockAuthenticator();
+          mockGithubAuthApi = MockGithubAuthApi();
           mockCredsStorage = MockCredsStorage();
           authService = AuthServiceImp(
-            authenticator: mockAuthenticator,
+            githubAuthApi: mockGithubAuthApi,
             credsStorage: mockCredsStorage,
           );
         },
@@ -64,7 +63,7 @@ GIVEN an auth service
 
       tearDown(
         () {
-          verifyNoMoreInteractions(mockAuthenticator);
+          verifyNoMoreInteractions(mockGithubAuthApi);
           verifyNoMoreInteractions(mockCredsStorage);
         },
       );
@@ -106,7 +105,7 @@ WHEN an OAuth login is triggered
 AND the user grants all permissions
 AND the user completes the process
 THEN the user should be authenticated and his/her creds should be persisted
-├─ BY collecting creds with the authenticator
+├─ BY collecting creds with the GitHub auth api
 ├─ AND storing the creds with the credentials storage
 ├─ AND not returning any data
 ''',
@@ -114,7 +113,7 @@ THEN the user should be authenticated and his/her creds should be persisted
           // ARRANGE
           final creds = Credentials('');
           when(
-            () => mockAuthenticator.logInWithOAuth(
+            () => mockGithubAuthApi.logInWithOAuth(
               callback: any(named: 'callback'),
             ),
           ).thenAnswer(
@@ -136,7 +135,7 @@ THEN the user should be authenticated and his/her creds should be persisted
           // ASSERT
           expect(result, const Right(unit));
           verify(
-            () => mockAuthenticator.logInWithOAuth(
+            () => mockGithubAuthApi.logInWithOAuth(
               callback: oauthCallback,
             ),
           ).called(1);
@@ -154,13 +153,13 @@ WHEN an OAuth login is triggered
 AND the user grants all permissions
 AND the user completes the process
 THEN the auth intent should result in a failure
-├─ BY trying to collect creds with the authenticator
+├─ BY trying to collect creds with the GitHub auth api
 ├─ AND returning a failure indicating connectivity issues
 ''',
         () async {
           // ARRANGE
           when(
-            () => mockAuthenticator.logInWithOAuth(
+            () => mockGithubAuthApi.logInWithOAuth(
               callback: any(named: 'callback'),
             ),
           ).thenThrow(
@@ -182,7 +181,7 @@ THEN the auth intent should result in a failure
             ),
           );
           verify(
-            () => mockAuthenticator.logInWithOAuth(
+            () => mockGithubAuthApi.logInWithOAuth(
               callback: oauthCallback,
             ),
           ).called(1);
@@ -197,13 +196,13 @@ WHEN a OAuth login is triggered
 AND the user does not grant all permissions
 AND the user completes the process
 THEN the auth intent should result in a failure
-├─ BY trying to collect creds with the authenticator
+├─ BY trying to collect creds with the GitHub auth api
 ├─ AND returning a failure indicating permission issues
 ''',
         () async {
           // ARRANGE
           when(
-            () => mockAuthenticator.logInWithOAuth(
+            () => mockGithubAuthApi.logInWithOAuth(
               callback: any(named: 'callback'),
             ),
           ).thenThrow(
@@ -225,7 +224,7 @@ THEN the auth intent should result in a failure
             ),
           );
           verify(
-            () => mockAuthenticator.logInWithOAuth(
+            () => mockGithubAuthApi.logInWithOAuth(
               callback: oauthCallback,
             ),
           ).called(1);
@@ -240,13 +239,13 @@ WHEN a OAuth login is triggered
 AND the user grants all permissions
 AND the user does not complete the process
 THEN the auth intent should result in a failure
-├─ BY trying to collect creds with the authenticator
+├─ BY trying to collect creds with the GitHub auth api
 ├─ AND returning a failure indicating hat the action was canceled
 ''',
         () async {
           // ARRANGE
           when(
-            () => mockAuthenticator.logInWithOAuth(
+            () => mockGithubAuthApi.logInWithOAuth(
               callback: any(named: 'callback'),
             ),
           ).thenThrow(
@@ -268,7 +267,7 @@ THEN the auth intent should result in a failure
             ),
           );
           verify(
-            () => mockAuthenticator.logInWithOAuth(
+            () => mockGithubAuthApi.logInWithOAuth(
               callback: oauthCallback,
             ),
           ).called(1);

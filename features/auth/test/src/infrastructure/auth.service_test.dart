@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:auth/auth.dart';
-import 'package:auth/src/infrastructure/auth.service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';

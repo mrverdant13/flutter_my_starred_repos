@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'cubit.dart';
@@ -160,14 +161,14 @@ class _$_UsersFailureOnGet implements _UsersFailureOnGet {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UsersFailureOnGet &&
-            (identical(other.failure, failure) ||
-                const DeepCollectionEquality().equals(other.failure, failure)));
+        (other.runtimeType == runtimeType &&
+            other is _UsersFailureOnGet &&
+            const DeepCollectionEquality().equals(other.failure, failure));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failure);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(failure));
 
   @JsonKey(ignore: true)
   @override
@@ -236,7 +237,7 @@ abstract class _UsersFailureOnGet implements UsersFailure {
       _$_UsersFailureOnGet;
 
   @override
-  GetUsersFailure get failure => throw _privateConstructorUsedError;
+  GetUsersFailure get failure;
   @override
   @JsonKey(ignore: true)
   _$UsersFailureOnGetCopyWith<_UsersFailureOnGet> get copyWith =>
@@ -371,7 +372,8 @@ class _$_UsersStateIdle implements _UsersStateIdle {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _UsersStateIdle);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _UsersStateIdle);
   }
 
   @override
@@ -487,7 +489,8 @@ class _$_UsersStateLoading implements _UsersStateLoading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _UsersStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _UsersStateLoading);
   }
 
   @override
@@ -620,14 +623,14 @@ class _$_UsersStateLoaded implements _UsersStateLoaded {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UsersStateLoaded &&
-            (identical(other.users, users) ||
-                const DeepCollectionEquality().equals(other.users, users)));
+        (other.runtimeType == runtimeType &&
+            other is _UsersStateLoaded &&
+            const DeepCollectionEquality().equals(other.users, users));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(users);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(users));
 
   @JsonKey(ignore: true)
   @override
@@ -712,7 +715,7 @@ class _$_UsersStateLoaded implements _UsersStateLoaded {
 abstract class _UsersStateLoaded implements UsersState {
   const factory _UsersStateLoaded(KtList<User> users) = _$_UsersStateLoaded;
 
-  KtList<User> get users => throw _privateConstructorUsedError;
+  KtList<User> get users;
   @JsonKey(ignore: true)
   _$UsersStateLoadedCopyWith<_UsersStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -775,14 +778,14 @@ class _$_UsersStateFailed implements _UsersStateFailed {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UsersStateFailed &&
-            (identical(other.failure, failure) ||
-                const DeepCollectionEquality().equals(other.failure, failure)));
+        (other.runtimeType == runtimeType &&
+            other is _UsersStateFailed &&
+            const DeepCollectionEquality().equals(other.failure, failure));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failure);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(failure));
 
   @JsonKey(ignore: true)
   @override
@@ -867,7 +870,7 @@ class _$_UsersStateFailed implements _UsersStateFailed {
 abstract class _UsersStateFailed implements UsersState {
   const factory _UsersStateFailed(UsersFailure failure) = _$_UsersStateFailed;
 
-  UsersFailure get failure => throw _privateConstructorUsedError;
+  UsersFailure get failure;
   @JsonKey(ignore: true)
   _$UsersStateFailedCopyWith<_UsersStateFailed> get copyWith =>
       throw _privateConstructorUsedError;

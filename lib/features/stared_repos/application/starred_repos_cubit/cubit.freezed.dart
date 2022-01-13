@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'cubit.dart';
@@ -173,14 +174,14 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _StarredReposStateLoading &&
-            (identical(other.repos, repos) ||
-                const DeepCollectionEquality().equals(other.repos, repos)));
+        (other.runtimeType == runtimeType &&
+            other is _StarredReposStateLoading &&
+            const DeepCollectionEquality().equals(other.repos, repos));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(repos);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(repos));
 
   @JsonKey(ignore: true)
   @override
@@ -262,7 +263,7 @@ abstract class _StarredReposStateLoading implements StarredReposState {
       _$_StarredReposStateLoading;
 
   @override
-  KtList<GithubRepo> get repos => throw _privateConstructorUsedError;
+  KtList<GithubRepo> get repos;
   @override
   @JsonKey(ignore: true)
   _$StarredReposStateLoadingCopyWith<_StarredReposStateLoading> get copyWith =>
@@ -351,22 +352,20 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _StarredReposStateLoaded &&
-            (identical(other.repos, repos) ||
-                const DeepCollectionEquality().equals(other.repos, repos)) &&
-            (identical(other.canLoadMore, canLoadMore) ||
-                const DeepCollectionEquality()
-                    .equals(other.canLoadMore, canLoadMore)) &&
-            (identical(other.warning, warning) ||
-                const DeepCollectionEquality().equals(other.warning, warning)));
+        (other.runtimeType == runtimeType &&
+            other is _StarredReposStateLoaded &&
+            const DeepCollectionEquality().equals(other.repos, repos) &&
+            const DeepCollectionEquality()
+                .equals(other.canLoadMore, canLoadMore) &&
+            const DeepCollectionEquality().equals(other.warning, warning));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(repos) ^
-      const DeepCollectionEquality().hash(canLoadMore) ^
-      const DeepCollectionEquality().hash(warning);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(repos),
+      const DeepCollectionEquality().hash(canLoadMore),
+      const DeepCollectionEquality().hash(warning));
 
   @JsonKey(ignore: true)
   @override
@@ -450,9 +449,9 @@ abstract class _StarredReposStateLoaded implements StarredReposState {
       GetStaredReposWarning? warning}) = _$_StarredReposStateLoaded;
 
   @override
-  KtList<GithubRepo> get repos => throw _privateConstructorUsedError;
-  bool get canLoadMore => throw _privateConstructorUsedError;
-  GetStaredReposWarning? get warning => throw _privateConstructorUsedError;
+  KtList<GithubRepo> get repos;
+  bool get canLoadMore;
+  GetStaredReposWarning? get warning;
   @override
   @JsonKey(ignore: true)
   _$StarredReposStateLoadedCopyWith<_StarredReposStateLoaded> get copyWith =>

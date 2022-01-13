@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'config.dart';
@@ -32,6 +33,7 @@ const $AppConfig = _$AppConfigTearOff();
 /// @nodoc
 mixin _$AppConfig {
   /// Holder of GitHub auth data.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   GithubAuthConfig get githubAuthConfig => throw _privateConstructorUsedError;
 
@@ -127,6 +129,7 @@ class _$_AppConfig implements _AppConfig {
   @override
 
   /// Holder of GitHub auth data.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   final GithubAuthConfig githubAuthConfig;
 
@@ -138,16 +141,15 @@ class _$_AppConfig implements _AppConfig {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _AppConfig &&
-            (identical(other.githubAuthConfig, githubAuthConfig) ||
-                const DeepCollectionEquality()
-                    .equals(other.githubAuthConfig, githubAuthConfig)));
+        (other.runtimeType == runtimeType &&
+            other is _AppConfig &&
+            const DeepCollectionEquality()
+                .equals(other.githubAuthConfig, githubAuthConfig));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(githubAuthConfig);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(githubAuthConfig));
 
   @JsonKey(ignore: true)
   @override
@@ -163,8 +165,9 @@ abstract class _AppConfig implements AppConfig {
   @override
 
   /// Holder of GitHub auth data.
+// ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
-  GithubAuthConfig get githubAuthConfig => throw _privateConstructorUsedError;
+  GithubAuthConfig get githubAuthConfig;
   @override
   @JsonKey(ignore: true)
   _$AppConfigCopyWith<_AppConfig> get copyWith =>

@@ -4,9 +4,12 @@ name: flutter_my_starred_repos
 packages:
   - "**"
 
-# Workaround to ignore l10n gen packages.
+# Workaround to ignore l10n gen packages and Windows-specific packages.
 ignore:
   - synthetic_package
+  - flutter_secure_storage_windows
+  - path_provider_example
+  - path_provider_windows
 
 scripts:
   c:
@@ -75,7 +78,7 @@ scripts:
     description: Merge all packages coverage data ignoring data related to generated files.
     run: >
       coverde rm MELOS_ROOT_PATH/coverage/merged.lcov.info &&
-      melos exec --file-exists=coverage/lcov.info -- coverde filter --origin ./coverage/lcov.info --destination MELOS_ROOT_PATH/coverage/merged.lcov.info --ignore-patterns \.g\.dart,\.freezed\.dart
+      melos exec --file-exists=coverage/lcov.info -- coverde filter --input ./coverage/lcov.info --output MELOS_ROOT_PATH/coverage/merged.lcov.info --filters \.g\.dart,\.freezed\.dart
 
   WF:
     description: Run full local workflow

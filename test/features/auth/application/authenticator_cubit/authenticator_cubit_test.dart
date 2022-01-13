@@ -16,7 +16,7 @@ void main() {
   // ARRANGE
   setUpAll(
     () {
-      registerFallbackValue<LoginMethod>(FakeLogInMethod());
+      registerFallbackValue(FakeLogInMethod());
     },
   );
 

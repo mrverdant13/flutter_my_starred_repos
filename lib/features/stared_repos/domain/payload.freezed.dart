@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'payload.dart';
@@ -163,14 +164,14 @@ class _$_Payload<D, W> implements _Payload<D, W> {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Payload<D, W> &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)));
+        (other.runtimeType == runtimeType &&
+            other is _Payload<D, W> &&
+            const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
   @JsonKey(ignore: true)
   @override
@@ -244,7 +245,7 @@ abstract class _Payload<D, W> implements Payload<D, W> {
   const factory _Payload(D data) = _$_Payload<D, W>;
 
   @override
-  D get data => throw _privateConstructorUsedError;
+  D get data;
   @override
   @JsonKey(ignore: true)
   _$PayloadCopyWith<D, W, _Payload<D, W>> get copyWith =>
@@ -309,18 +310,17 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PayloadWithWarning<D, W> &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)) &&
-            (identical(other.warning, warning) ||
-                const DeepCollectionEquality().equals(other.warning, warning)));
+        (other.runtimeType == runtimeType &&
+            other is _PayloadWithWarning<D, W> &&
+            const DeepCollectionEquality().equals(other.data, data) &&
+            const DeepCollectionEquality().equals(other.warning, warning));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(data) ^
-      const DeepCollectionEquality().hash(warning);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(data),
+      const DeepCollectionEquality().hash(warning));
 
   @JsonKey(ignore: true)
   @override
@@ -396,8 +396,8 @@ abstract class _PayloadWithWarning<D, W> implements Payload<D, W> {
       _$_PayloadWithWarning<D, W>;
 
   @override
-  D get data => throw _privateConstructorUsedError;
-  W get warning => throw _privateConstructorUsedError;
+  D get data;
+  W get warning;
   @override
   @JsonKey(ignore: true)
   _$PayloadWithWarningCopyWith<D, W, _PayloadWithWarning<D, W>> get copyWith =>

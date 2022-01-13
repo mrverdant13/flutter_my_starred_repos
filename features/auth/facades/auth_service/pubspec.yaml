@@ -4,14 +4,15 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=2.13.0 <3.0.0"
+  sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=2.8.1 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # Other packages
-  dartz: ^0.10.0
+  dartz: ^0.10.1
 
   # Domain
   auth_domain:
@@ -29,8 +30,8 @@ dev_dependencies:
     path: ../../../../lint_rules
 
   # Testing
-  mocktail: ^0.1.4
-  test: ^1.17.12
+  mocktail: ^0.2.0
+  test: ^1.20.1
 
 dependency_overrides:
   meta: ^1.7.0

@@ -99,7 +99,7 @@ jobs:
       - name: Check 100% code coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
         with:
-          min_coverage: 95
+          min_coverage: 90
           exclude: "**/*.freezed.dart **/*.g.dart **/*.gr.dart"
 
       - name: Upload coverage data to codecov.io

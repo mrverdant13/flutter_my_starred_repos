@@ -2,6 +2,8 @@ name: Testing
 
 on:
   pull_request:
+    branches:
+      - master
     paths:
       - ".github/workflows/**"
       - "android/**"
@@ -12,6 +14,8 @@ on:
       - "analysis_options.yaml"
       - "pubspec.yaml"
   push:
+    branches:
+      - master
     paths:
       - ".github/workflows/**"
       - "android/**"

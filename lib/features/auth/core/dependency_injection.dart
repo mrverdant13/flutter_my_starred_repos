@@ -1,5 +1,4 @@
 import 'package:auth/auth.dart';
-import 'package:auth_service/auth_service.dart';
 import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -49,7 +48,7 @@ final authServicePod = Provider<AuthService>(
   (ref) {
     final githubAuthApi = ref.watch(githubAuthApiPod);
     final credsStorage = ref.watch(credsStoragePod);
-    return AuthServiceImp(
+    return AuthService(
       githubAuthApi: githubAuthApi,
       credsStorage: credsStorage,
     );

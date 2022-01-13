@@ -24,6 +24,7 @@ dependencies:
 
   # Functional programming
   dartz: ^0.10.1
+  oxidized: ^5.1.0
 
   # GraphQL client
   graphql: ^5.0.0
@@ -63,9 +64,9 @@ dependencies:
   path: ^1.8.0
   path_provider: ^2.0.8
 
-  # Features
-  auth_service:
-    path: features/auth/facades/auth_service
+  # Auth features
+  auth:
+    path: features/auth
 
 dev_dependencies:
   flutter_test:

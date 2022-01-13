@@ -1,14 +1,12 @@
 import 'package:auth/auth.dart';
-import 'package:dartz/dartz.dart';
 import 'package:oauth2/oauth2.dart';
-
-import 'interface.dart';
+import 'package:oxidized/oxidized.dart';
 
 /// An authentication service implementation.
-class AuthServiceImp extends AuthService {
+class AuthService {
   /// Creates an authentication service with the given [githubAuthApi] and
   /// [credsStorage].
-  const AuthServiceImp({
+  const AuthService({
     required GithubAuthApi githubAuthApi,
     required CredsStorage credsStorage,
   })  : _githubAuthApi = githubAuthApi,
@@ -20,13 +18,11 @@ class AuthServiceImp extends AuthService {
   /// The [CredsStorage] to be used to store an access credentials.
   final CredsStorage _credsStorage;
 
-  @override
   Future<bool> isLoggedIn() => _credsStorage.get().then(
         (creds) => creds != null,
       );
 
-  @override
-  Future<Either<LoginFailure, Unit>> logIn({
+  Future<Result<Unit, LoginFailure>> logIn({
     required LoginMethod method,
   }) async {
     try {
@@ -38,9 +34,9 @@ class AuthServiceImp extends AuthService {
       );
       // Stores the obtained credentials.
       await _credsStorage.set(creds);
-      return const Right(unit);
+      return Ok(unit);
     } on LogInException catch (e) {
-      return Left(
+      return Err(
         e.when(
           canceled: () => const LoginFailure.canceled(),
           missingPermissions: () => const LoginFailure.missingPermissions(),
@@ -50,7 +46,6 @@ class AuthServiceImp extends AuthService {
     }
   }
 
-  @override
   Future<void> logOut() async {
     // TODO: Revoke credentials.
     await _credsStorage.clear();

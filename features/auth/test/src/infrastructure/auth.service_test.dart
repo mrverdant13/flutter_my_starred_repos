@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:auth/auth.dart';
-import 'package:auth_service/auth_service.dart';
-import 'package:dartz/dartz.dart';
+import 'package:auth/src/infrastructure/auth.service.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
-import 'package:test/test.dart';
+import 'package:oxidized/oxidized.dart';
 
 class MockGithubAuthApi extends Mock implements GithubAuthApi {}
 
@@ -48,13 +48,13 @@ GIVEN an auth service
       // ARRANGE
       late MockGithubAuthApi mockGithubAuthApi;
       late MockCredsStorage mockCredsStorage;
-      late AuthServiceImp authService;
+      late AuthService authService;
 
       setUp(
         () {
           mockGithubAuthApi = MockGithubAuthApi();
           mockCredsStorage = MockCredsStorage();
-          authService = AuthServiceImp(
+          authService = AuthService(
             githubAuthApi: mockGithubAuthApi,
             credsStorage: mockCredsStorage,
           );
@@ -133,7 +133,7 @@ THEN the user should be authenticated and his/her creds should be persisted
           );
 
           // ASSERT
-          expect(result, const Right(unit));
+          expect(result, Ok(unit));
           verify(
             () => mockGithubAuthApi.logInWithOAuth(
               callback: oauthCallback,
@@ -176,8 +176,8 @@ THEN the auth intent should result in a failure
           // ASSERT
           expect(
             result,
-            const Left(
-              LoginFailure.offline(),
+            Err(
+              const LoginFailure.offline(),
             ),
           );
           verify(
@@ -219,8 +219,8 @@ THEN the auth intent should result in a failure
           // ASSERT
           expect(
             result,
-            const Left(
-              LoginFailure.missingPermissions(),
+            Err(
+              const LoginFailure.missingPermissions(),
             ),
           );
           verify(
@@ -262,8 +262,8 @@ THEN the auth intent should result in a failure
           // ASSERT
           expect(
             result,
-            const Left(
-              LoginFailure.canceled(),
+            Err(
+              const LoginFailure.canceled(),
             ),
           );
           verify(

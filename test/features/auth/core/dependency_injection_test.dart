@@ -1,5 +1,4 @@
 import 'package:auth/auth.dart';
-import 'package:auth_service/auth_service.dart';
 import 'package:flutter_my_starred_repos/core/config.dart';
 import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';

@@ -37,19 +37,12 @@ packages:
     source: hosted
     version: "2.8.2"
   auth:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "features/auth"
       relative: true
     source: path
     version: "1.0.0+1"
-  auth_service:
-    dependency: "direct main"
-    description:
-      path: "features/auth/facades/auth_service"
-      relative: true
-    source: path
-    version: "0.1.0+1"
   auto_route:
     dependency: "direct main"
     description:
@@ -288,6 +281,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -672,6 +672,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0+1"
+  oxidized:
+    dependency: "direct main"
+    description:
+      name: oxidized
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
   package_config:
     dependency: transitive
     description:

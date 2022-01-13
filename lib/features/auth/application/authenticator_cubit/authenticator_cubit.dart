@@ -1,5 +1,4 @@
 import 'package:auth/auth.dart';
-import 'package:auth_service/auth_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -49,11 +48,11 @@ class AuthenticatorCubit extends Cubit<AuthenticatorState> {
     );
 
     emit(
-      failureOrNothing.fold(
-        (f) => AuthenticatorState.failure(
+      failureOrNothing.when(
+        err: (f) => AuthenticatorState.failure(
           AuthenticatorFailure.logIn(f),
         ),
-        (_) => const AuthenticatorState.authenticated(),
+        ok: (_) => const AuthenticatorState.authenticated(),
       ),
     );
   }

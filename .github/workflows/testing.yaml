@@ -73,7 +73,7 @@ jobs:
       - name: Setup Flutter actions
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: "2.2.3"
+          channel: stable
 
       - name: Install tools
         run: |

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:auth/auth.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_my_starred_repos/features/auth/application/authenticator_cubit/authenticator_cubit.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oxidized/oxidized.dart';
 import 'package:test/test.dart';
@@ -27,12 +26,12 @@ GIVEN a authenticator cubit
     () {
       // ARRANGE
       late MockAuthService mockAuthService;
-      late AuthenticatorCubit authCubit;
+      late AuthCubit authCubit;
 
       setUp(
         () {
           mockAuthService = MockAuthService();
-          authCubit = AuthenticatorCubit(
+          authCubit = AuthCubit(
             authService: mockAuthService,
           );
         },
@@ -52,18 +51,19 @@ THEN its initial state should be loading
 ''',
         () async {
           // ASSERT
-          expect(authCubit.state, const AuthenticatorState.loading());
+          expect(
+            authCubit.state,
+            const AuthState.loading(isLoggedIn: false),
+          );
         },
       );
 
       {
         final r = Random();
         final isAuthenticated = r.nextBool();
-        final expectedAuthState = isAuthenticated
-            ? const AuthenticatorState.authenticated()
-            : const AuthenticatorState.unauthenticated();
+        final expectedAuthState = AuthState.loaded(isLoggedIn: isAuthenticated);
 
-        blocTest<AuthenticatorCubit, AuthenticatorState>(
+        blocTest<AuthCubit, AuthState>(
           '''
 
 WHEN the login status is requested
@@ -86,7 +86,7 @@ THEN the auth state should be updated
             cubit.checkAuthStatus();
           },
           expect: () => [
-            const AuthenticatorState.loading(),
+            const AuthState.loading(isLoggedIn: false),
             expectedAuthState,
           ],
           verify: (bloc) {
@@ -118,7 +118,7 @@ THEN the auth state should be updated
           possibleLoginFailures.length,
         )];
 
-        blocTest<AuthenticatorCubit, AuthenticatorState>(
+        blocTest<AuthCubit, AuthState>(
           '''
 
 AND login minimal conditions
@@ -148,8 +148,8 @@ THEN the user should be authenticated
             );
           },
           expect: () => [
-            const AuthenticatorState.loading(),
-            const AuthenticatorState.authenticated(),
+            const AuthState.loading(isLoggedIn: false),
+            const AuthState.loaded(isLoggedIn: true),
           ],
           verify: (bloc) {
             verify(
@@ -160,7 +160,7 @@ THEN the user should be authenticated
           },
         );
 
-        blocTest<AuthenticatorCubit, AuthenticatorState>(
+        blocTest<AuthCubit, AuthState>(
           '''
 
 AND no login minimal conditions
@@ -190,9 +190,10 @@ THEN a failure should be reported
             );
           },
           expect: () => [
-            const AuthenticatorState.loading(),
-            AuthenticatorState.failure(
-              AuthenticatorFailure.logIn(
+            const AuthState.loading(isLoggedIn: false),
+            AuthState.failure(
+              isLoggedIn: false,
+              failure: AuthenticatorFailure.logIn(
                 expectedLoginFailure,
               ),
             ),
@@ -206,7 +207,7 @@ THEN a failure should be reported
           },
         );
 
-        blocTest<AuthenticatorCubit, AuthenticatorState>(
+        blocTest<AuthCubit, AuthState>(
           '''
 
 AND logout minimal conditions
@@ -230,8 +231,8 @@ THEN the user should be unauthenticated
             cubit.logOut();
           },
           expect: () => [
-            const AuthenticatorState.loading(),
-            const AuthenticatorState.unauthenticated(),
+            const AuthState.loading(isLoggedIn: false),
+            const AuthState.loaded(isLoggedIn: false),
           ],
           verify: (bloc) {
             verify(

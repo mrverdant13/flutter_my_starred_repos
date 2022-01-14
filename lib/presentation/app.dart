@@ -1,3 +1,4 @@
+import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/dependency_injection.dart';
 import '../core/flavors.dart';
-import '../features/auth/application/authenticator_cubit/authenticator_cubit.dart';
 import 'routers/app_router.gr.dart';
 
 class MyApp extends ConsumerWidget {
@@ -15,26 +15,23 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authenticatorCubit = ref.watch(authenticatorCubitPod);
+    final authenticatorCubit = ref.watch(authCubitPod);
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthenticatorCubit>.value(
+        BlocProvider<AuthCubit>.value(
           value: authenticatorCubit..checkAuthStatus(),
         ),
       ],
       child: Builder(
         builder: (context) => Consumer(
-          builder: (context, ref, _) =>
-              BlocListener<AuthenticatorCubit, AuthenticatorState>(
+          builder: (context, ref, _) => BlocListener<AuthCubit, AuthState>(
             listener: (context, authenticatorState) {
               final appRouter = ref.watch(appRouterPod);
               authenticatorState.maybeWhen(
-                authenticated: () => appRouter.pushAndPopUntil(
-                  const CounterScreenRoute(),
-                  predicate: (route) => false,
-                ),
-                unauthenticated: () => appRouter.pushAndPopUntil(
-                  const LoginScreenRoute(),
+                loaded: (isLoggedIn) => appRouter.pushAndPopUntil(
+                  isLoggedIn
+                      ? const CounterScreenRoute()
+                      : const LoginScreenRoute(),
                   predicate: (route) => false,
                 ),
                 orElse: () {},

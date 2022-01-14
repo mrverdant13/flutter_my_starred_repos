@@ -21,9 +21,7 @@ Future<Client> handleAuthorizationResponse({
   );
 }
 
-/// An authenticator implementation that uses the GitHub API.
 class GithubAuthApi {
-  /// Creates an authenticator implementation.
   GithubAuthApi({
     required GithubAuthConfig githubAuthConfig,
     AuthResponseHandlerCallback? authResponseHandlerCallback,
@@ -158,16 +156,12 @@ class GithubAuthApi {
   }
 }
 
-/// An HTTP client that sets the `Accept` header to `application/json` for every
-/// request it performs.
 @visibleForTesting
 class OAuthHttpClient extends http.BaseClient {
   OAuthHttpClient([http.Client? client]) : _client = client ?? http.Client();
 
-  /// The default HTTP client to be used for the authentication flow.
   final http.Client _client;
 
-  /// Sends a request after adding the `Accept` header to use JSON format.
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
     request.headers['Accept'] = 'application/json';
@@ -175,17 +169,10 @@ class OAuthHttpClient extends http.BaseClient {
   }
 }
 
-/// A union of exceptions thrown when logging in.
 @freezed
 class LogInException with _$LogInException {
-  /// An exception thrown when the process is canceled.
   const factory LogInException.canceled() = _LogInExceptionCanceled;
-
-  /// An exception thrown when the process finishes without all required
-  /// permissions.
   const factory LogInException.missingPermissions() =
       _LogInExceptionMissingPermissions;
-
-  /// An exception thrown when there is no Internet connection.
   const factory LogInException.offline() = _LogInExceptionOffline;
 }

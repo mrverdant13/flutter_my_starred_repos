@@ -2,27 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:oauth2/oauth2.dart';
 
-/// {@template creds_lds_flutter_secure_storage}
-/// A credentials storage that uses a [FlutterSecureStorage].
-/// {@endtemplate}
 class CredsStorage {
-  /// {@macro creds_lds_flutter_secure_storage}
   CredsStorage({
     required FlutterSecureStorage flutterSecureStorage,
   }) : _flutterSecureStorage = flutterSecureStorage;
 
-  /// The [FlutterSecureStorage] to store credentials.
   final FlutterSecureStorage _flutterSecureStorage;
 
-  /// The key to store credentials with.
   @visibleForTesting
   static const credsKey = 'creds';
 
-  /// The cached stored credentials.
   @visibleForTesting
   Credentials? creds;
 
-  /// Removes the credentials from the in-memory cache and the storage.
   Future<void> clear() async {
     // Removes the credentials from the secure storage.
     await _flutterSecureStorage.delete(
@@ -32,7 +24,6 @@ class CredsStorage {
     creds = null;
   }
 
-  /// Stores the credentials in the in-memory cache and the storage.
   Future<void> set(
     Credentials credentials,
   ) async {
@@ -45,10 +36,6 @@ class CredsStorage {
     creds = credentials;
   }
 
-  /// Retrieves the credentials.
-  ///
-  /// Returns the cached credentials, if any. Obtains the credentials from the
-  /// storage.
   Future<Credentials?> get() async {
     // Returns the cached credentials if they exist.
     if (creds != null) return creds;

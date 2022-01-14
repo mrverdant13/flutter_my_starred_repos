@@ -30,7 +30,6 @@ const $LoginMethod = _$LoginMethodTearOff();
 
 /// @nodoc
 mixin _$LoginMethod {
-  /// The callback used for the auth process.
   OAuthCallback get callback => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
@@ -140,8 +139,6 @@ class _$_LoginMethodOAuth implements _LoginMethodOAuth {
   const _$_LoginMethodOAuth({required this.callback});
 
   @override
-
-  /// The callback used for the auth process.
   final OAuthCallback callback;
 
   @override
@@ -228,8 +225,6 @@ abstract class _LoginMethodOAuth implements LoginMethod {
       _$_LoginMethodOAuth;
 
   @override
-
-  /// The callback used for the auth process.
   OAuthCallback get callback;
   @override
   @JsonKey(ignore: true)

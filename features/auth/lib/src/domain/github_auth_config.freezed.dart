@@ -43,13 +43,10 @@ const $GithubAuthConfig = _$GithubAuthConfigTearOff();
 
 /// @nodoc
 mixin _$GithubAuthConfig {
-  /// GitHub client ID.
 // ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
-  String get clientId => throw _privateConstructorUsedError;
-
-  /// GitHub client secret.
-// ignore: invalid_annotation_target
+  String get clientId =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   String get clientSecret => throw _privateConstructorUsedError;
 
@@ -151,16 +148,10 @@ class _$_GithubAuthConfig implements _GithubAuthConfig {
   factory _$_GithubAuthConfig.fromJson(Map<String, dynamic> json) =>
       _$$_GithubAuthConfigFromJson(json);
 
-  @override
-
-  /// GitHub client ID.
-// ignore: invalid_annotation_target
+  @override // ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   final String clientId;
-  @override
-
-  /// GitHub client secret.
-// ignore: invalid_annotation_target
+  @override // ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   final String clientSecret;
 
@@ -206,16 +197,10 @@ abstract class _GithubAuthConfig implements GithubAuthConfig {
   factory _GithubAuthConfig.fromJson(Map<String, dynamic> json) =
       _$_GithubAuthConfig.fromJson;
 
-  @override
-
-  /// GitHub client ID.
-// ignore: invalid_annotation_target
+  @override // ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   String get clientId;
-  @override
-
-  /// GitHub client secret.
-// ignore: invalid_annotation_target
+  @override // ignore: invalid_annotation_target
   @JsonKey(required: true, disallowNullValue: true)
   String get clientSecret;
   @override

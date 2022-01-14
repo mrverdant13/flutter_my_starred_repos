@@ -1,4 +1,7 @@
-import 'package:auth/auth.dart';
+import 'package:auth/src/domain/login_failure.dart';
+import 'package:auth/src/domain/login_method.dart';
+import 'package:auth/src/infrastructure/creds.storage.dart';
+import 'package:auth/src/infrastructure/github_auth.api.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:oxidized/oxidized.dart';
 

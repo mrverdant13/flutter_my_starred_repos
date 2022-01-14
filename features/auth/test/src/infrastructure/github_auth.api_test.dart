@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:auth/auth.dart';
+import 'package:auth/src/domain/github_auth_config.dart';
+import 'package:auth/src/infrastructure/github_auth.api.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';

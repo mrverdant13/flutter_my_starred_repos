@@ -1,6 +1,9 @@
 import 'dart:math';
 
-import 'package:auth/auth.dart';
+import 'package:auth/src/domain/login_failure.dart';
+import 'package:auth/src/domain/login_method.dart';
+import 'package:auth/src/infrastructure/auth.service.dart';
+import 'package:auth/src/state/auth.cubit.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oxidized/oxidized.dart';

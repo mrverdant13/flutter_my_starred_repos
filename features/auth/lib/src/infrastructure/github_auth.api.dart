@@ -1,4 +1,5 @@
-import 'package:auth/auth.dart';
+import 'package:auth/src/domain/github_auth_config.dart';
+import 'package:auth/src/domain/login_method.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart' as http;

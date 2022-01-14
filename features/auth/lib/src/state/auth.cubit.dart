@@ -1,4 +1,6 @@
-import 'package:auth/auth.dart';
+import 'package:auth/src/domain/login_failure.dart';
+import 'package:auth/src/domain/login_method.dart';
+import 'package:auth/src/infrastructure/auth.service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

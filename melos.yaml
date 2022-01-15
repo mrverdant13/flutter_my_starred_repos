@@ -6,10 +6,8 @@ packages:
 
 # Workaround to ignore l10n gen packages and Windows-specific packages.
 ignore:
-  - synthetic_package
-  - flutter_secure_storage_windows
-  - path_provider_example
-  - path_provider_windows
+  - ".dart_tool/**"
+  - "windows/flutter/ephemeral/**"
 
 scripts:
   c:

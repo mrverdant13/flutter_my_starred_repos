@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
-
-import '../data_sources/etags_lds/interface.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 class EtagsInterceptor extends Interceptor {
   EtagsInterceptor({
-    required PagesEtagsLDS pagesEtagsLDS,
-  }) : _pagesEtagsLDS = pagesEtagsLDS;
+    required PageEtagsStorage pageEtagsStorage,
+  }) : _pageEtagsStorage = pageEtagsStorage;
 
-  final PagesEtagsLDS _pagesEtagsLDS;
+  final PageEtagsStorage _pageEtagsStorage;
 
   static const extraEntry = MapEntry('etags_interceptor', true);
 
@@ -19,7 +18,7 @@ class EtagsInterceptor extends Interceptor {
     if (options.extra[extraEntry.key] == extraEntry.value) {
       final page = options.queryParameters['page'];
       if (page is int) {
-        final etag = await _pagesEtagsLDS.get(
+        final etag = await _pageEtagsStorage.get(
           page: page,
         );
         if (etag != null) {
@@ -43,7 +42,7 @@ class EtagsInterceptor extends Interceptor {
     if (etag != null) {
       final page = response.requestOptions.queryParameters['page'];
       if (page is int) {
-        await _pagesEtagsLDS.set(
+        await _pageEtagsStorage.set(
           page: page,
           etag: etag,
         );

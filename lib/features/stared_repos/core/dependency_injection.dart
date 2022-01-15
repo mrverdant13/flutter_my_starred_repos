@@ -4,11 +4,10 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 import '../../auth/core/dependency_injection.dart';
 import '../application/starred_repos_cubit/cubit.dart';
-import '../infrastructure/data_sources/etags_lds/interface.dart';
-import '../infrastructure/data_sources/etags_lds/sembast_implementation.dart';
 import '../infrastructure/data_sources/stared_repos_rds/interface.dart';
 import '../infrastructure/data_sources/stared_repos_rds/rest_implementation.dart';
 import '../infrastructure/data_sources/starred_repos_lds/interface.dart';
@@ -23,10 +22,10 @@ final sembastDbPod = Provider<Database>(
   ),
 );
 
-final pagesEtagsLDSPod = Provider<PagesEtagsLDS>(
+final pageEtagsStoragePod = Provider<PageEtagsStorage>(
   (ref) {
     final sembastDb = ref.watch(sembastDbPod);
-    return PagesEtagsLDSImp(
+    return PageEtagsStorage(
       sembastDatabase: sembastDb,
     );
   },
@@ -34,9 +33,9 @@ final pagesEtagsLDSPod = Provider<PagesEtagsLDS>(
 
 final etagsInterceptorPod = Provider<EtagsInterceptor>(
   (ref) {
-    final pagesEtagsLDS = ref.watch(pagesEtagsLDSPod);
+    final pageEtagsStorage = ref.watch(pageEtagsStoragePod);
     return EtagsInterceptor(
-      pagesEtagsLDS: pagesEtagsLDS,
+      pageEtagsStorage: pageEtagsStorage,
     );
   },
 );

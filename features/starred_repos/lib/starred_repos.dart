@@ -5,3 +5,4 @@ export 'package:starred_repos/src/domain/github_repo.dart';
 export 'package:starred_repos/src/domain/page.dart';
 export 'package:starred_repos/src/domain/payload.dart';
 export 'package:starred_repos/src/domain/user.dart';
+export 'package:starred_repos/src/infrastructure/page_etags.storage.dart';

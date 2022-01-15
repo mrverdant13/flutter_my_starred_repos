@@ -2,14 +2,14 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/etags_lds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:starred_repos/starred_repos.dart';
 import 'package:test/test.dart';
 
 import '../../../../helpers/mock_interceptor.dart';
 
-class MockPagesEtagsLDS extends Mock implements PagesEtagsLDS {}
+class MockPageEtagsStorage extends Mock implements PageEtagsStorage {}
 
 const etag = 'etag';
 
@@ -22,7 +22,7 @@ GIVEN an HTTP client
 │  ├─ THAT uses a pages ETags local data source''',
     () {
       // ARRANGE
-      late MockPagesEtagsLDS mockPagesEtagsLDS;
+      late MockPageEtagsStorage mockPageEtagsStorage;
       late EtagsInterceptor etagsInterceptor;
 
       const page = 6;
@@ -62,16 +62,16 @@ GIVEN an HTTP client
 
       setUp(
         () {
-          mockPagesEtagsLDS = MockPagesEtagsLDS();
+          mockPageEtagsStorage = MockPageEtagsStorage();
           etagsInterceptor = EtagsInterceptor(
-            pagesEtagsLDS: mockPagesEtagsLDS,
+            pageEtagsStorage: mockPageEtagsStorage,
           );
         },
       );
 
       tearDown(
         () {
-          verifyNoMoreInteractions(mockPagesEtagsLDS);
+          verifyNoMoreInteractions(mockPageEtagsStorage);
         },
       );
 
@@ -91,7 +91,7 @@ THEN the pages ETags interceptor should alter the request
           // ARRANGE
           final dio = createDio(includeEtagInResponse: false);
           when(
-            () => mockPagesEtagsLDS.get(
+            () => mockPageEtagsStorage.get(
               page: any(named: 'page'),
             ),
           ).thenAnswer(
@@ -108,7 +108,7 @@ THEN the pages ETags interceptor should alter the request
 
           // ASSERT
           verify(
-            () => mockPagesEtagsLDS.get(page: page),
+            () => mockPageEtagsStorage.get(page: page),
           ).called(1);
           expect(
             result.requestOptions.headers['If-None-Match'],
@@ -142,7 +142,7 @@ THEN the pages ETags interceptor should not alter the request
           );
 
           // ASSERT
-          verifyZeroInteractions(mockPagesEtagsLDS);
+          verifyZeroInteractions(mockPageEtagsStorage);
           expect(result.requestOptions.headers['If-None-Match'], isNull);
         },
       );
@@ -172,7 +172,7 @@ THEN the pages ETags interceptor should not alter the request
           );
 
           // ASSERT
-          verifyZeroInteractions(mockPagesEtagsLDS);
+          verifyZeroInteractions(mockPageEtagsStorage);
           expect(result.requestOptions.headers['If-None-Match'], isNull);
         },
       );
@@ -193,7 +193,7 @@ THEN the pages ETags interceptor should not alter the request
           // ARRANGE
           final dio = createDio(includeEtagInResponse: false);
           when(
-            () => mockPagesEtagsLDS.get(
+            () => mockPageEtagsStorage.get(
               page: any(named: 'page'),
             ),
           ).thenAnswer(
@@ -210,7 +210,7 @@ THEN the pages ETags interceptor should not alter the request
 
           // ASSERT
           verify(
-            () => mockPagesEtagsLDS.get(page: page),
+            () => mockPageEtagsStorage.get(page: page),
           ).called(1);
           expect(
             result.requestOptions.headers['If-None-Match'],
@@ -239,14 +239,14 @@ AND an ETag for the given page should be received and persisted
           final r = Random();
           final storedEtag = r.nextBool() ? null : etag;
           when(
-            () => mockPagesEtagsLDS.get(
+            () => mockPageEtagsStorage.get(
               page: any(named: 'page'),
             ),
           ).thenAnswer(
             (_) => Future.value(storedEtag),
           );
           when(
-            () => mockPagesEtagsLDS.set(
+            () => mockPageEtagsStorage.set(
               page: any(named: 'page'),
               etag: any(named: 'etag'),
             ),
@@ -268,12 +268,12 @@ AND an ETag for the given page should be received and persisted
             [etag],
           );
           verify(
-            () => mockPagesEtagsLDS.get(
+            () => mockPageEtagsStorage.get(
               page: page,
             ),
           ).called(1);
           verify(
-            () => mockPagesEtagsLDS.set(
+            () => mockPageEtagsStorage.set(
               page: page,
               etag: etag,
             ),

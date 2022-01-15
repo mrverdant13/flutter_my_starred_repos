@@ -3,7 +3,6 @@ import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/application/starred_repos_cubit/cubit.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/etags_lds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
@@ -13,6 +12,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:sembast/sembast.dart';
+import 'package:starred_repos/starred_repos.dart';
 import 'package:test/test.dart';
 
 class FakePathProviderPlatform extends Fake
@@ -111,8 +111,8 @@ THEN the necessary starred-repos-related dependencies should be injected
                 isA<Database>(),
               );
               expect(
-                container.read(pagesEtagsLDSPod),
-                isA<PagesEtagsLDS>(),
+                container.read(pageEtagsStoragePod),
+                isA<PageEtagsStorage>(),
               );
               expect(
                 container.read(etagsInterceptorPod),

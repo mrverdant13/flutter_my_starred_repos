@@ -1,6 +1,6 @@
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/etags_lds/sembast_implementation.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
+import 'package:starred_repos/starred_repos.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -12,7 +12,7 @@ GIVEN an etags local data source
     () {
       // ARRANGE
       late Database sembastDb;
-      late PagesEtagsLDSImp pagesEtagsLDS;
+      late PageEtagsStorage pageEtagsStorage;
 
       const page = 3;
       const etag = 'etag';
@@ -23,7 +23,7 @@ GIVEN an etags local data source
             sembastInMemoryDatabasePath,
           );
 
-          pagesEtagsLDS = PagesEtagsLDSImp(
+          pageEtagsStorage = PageEtagsStorage(
             sembastDatabase: sembastDb,
           );
         },
@@ -42,17 +42,17 @@ THEN the ETag should be persisted
         () async {
           // ARRANGE-ASSERT
           String? storedEtag =
-              await pagesEtagsLDS.store.record(page).get(sembastDb);
+              await pageEtagsStorage.store.record(page).get(sembastDb);
           expect(storedEtag, isNull);
 
           // ACT
-          await pagesEtagsLDS.set(
+          await pageEtagsStorage.set(
             page: page,
             etag: etag,
           );
 
           // ASSERT
-          storedEtag = await pagesEtagsLDS.store.record(page).get(sembastDb);
+          storedEtag = await pageEtagsStorage.store.record(page).get(sembastDb);
           expect(storedEtag, etag);
         },
       );
@@ -69,13 +69,13 @@ THEN the ETag should be returned
       ''',
         () async {
           // ARRANGE-ASSERT
-          await pagesEtagsLDS.store.record(page).put(sembastDb, etag);
+          await pageEtagsStorage.store.record(page).put(sembastDb, etag);
           String? storedEtag =
-              await pagesEtagsLDS.store.record(page).get(sembastDb);
+              await pageEtagsStorage.store.record(page).get(sembastDb);
           expect(storedEtag, etag);
 
           // ACT
-          storedEtag = await pagesEtagsLDS.get(
+          storedEtag = await pageEtagsStorage.get(
             page: page,
           );
 

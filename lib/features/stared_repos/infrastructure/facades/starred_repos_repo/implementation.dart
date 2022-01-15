@@ -1,12 +1,7 @@
-import '../../../domain/get_starred_repos_warnings.dart';
-import '../../../domain/page.dart';
-import '../../../domain/payload.dart';
-import '../../../domain/repo.dart';
-import '../../converters/page.dart';
-import '../../converters/repo.dart';
-import '../../data_sources/stared_repos_rds/interface.dart';
-import '../../data_sources/starred_repos_lds/interface.dart';
-import '../../dtos/github_repo.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
+import 'package:starred_repos/starred_repos.dart';
+
 import 'interface.dart';
 
 /// A starred GitHub repositories repository implementation.
@@ -28,19 +23,17 @@ class StarredReposRepoImp extends StarredReposRepo {
   Future<Payload<Page<GithubRepo>, GetStaredReposWarning>> getStarredReposPage({
     required int page,
   }) async {
-    late final Page<GithubRepoDto>? reposDtosPage;
+    late final Page<GithubRepo>? reposPage;
 
     try {
-      reposDtosPage = await _starredReposRDS.getStaredReposPage(
+      reposPage = await _starredReposRDS.getStaredReposPage(
         page: page,
       );
     } on GetStaredReposPageException catch (e) {
-      final starredReposDtosPage = await _starredReposLDS.get(
+      final starredReposPage = await _starredReposLDS.get(
         page: page,
       );
-      final cachedReposPage = starredReposDtosPage?.map<GithubRepo>(
-            (reposDtos) => reposDtos.asEntity,
-          ) ??
+      final cachedReposPage = starredReposPage ??
           Page<GithubRepo>(
             lastPage: page,
             elements: [],
@@ -55,12 +48,7 @@ class StarredReposRepoImp extends StarredReposRepo {
         ),
       );
     }
-
-    await _starredReposLDS.set(page: page, starredReposPage: reposDtosPage);
-    return Payload(
-      reposDtosPage.map<GithubRepo>(
-        (starredRepoDto) => starredRepoDto.asEntity,
-      ),
-    );
+    await _starredReposLDS.set(page: page, starredReposPage: reposPage);
+    return Payload(reposPage);
   }
 }

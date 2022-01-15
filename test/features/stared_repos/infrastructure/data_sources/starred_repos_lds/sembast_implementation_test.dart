@@ -1,10 +1,7 @@
-import 'package:flutter_my_starred_repos/features/stared_repos/domain/page.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/page.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/sembast_implementation.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/github_repo.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/user.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
+import 'package:starred_repos/starred_repos.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -20,11 +17,11 @@ GIVEN an etags local data source
 
       const page = 3;
       const lastPage = 5;
-      const pageData = Page<GithubRepoDto>(
+      const pageData = Page<GithubRepo>(
         lastPage: lastPage,
-        elements: <GithubRepoDto>[
-          GithubRepoDto(
-            owner: UserDto(
+        elements: <GithubRepo>[
+          GithubRepo(
+            owner: User(
               username: 'username 1',
               avatarUrl: 'avatar_url_1',
             ),

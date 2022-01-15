@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 import '../../../../auth/infrastructure/external/dio_interceptors.dart';
-import '../../../domain/page.dart';
-import '../../dtos/github_repo.dart';
 import '../../external/etags_dio_interceptor.dart';
 import 'interface.dart';
 
@@ -41,7 +40,7 @@ class StaredReposRDSImp implements StaredReposRDS {
   static const pageLength = 5;
 
   @override
-  Future<Page<GithubRepoDto>> getStaredReposPage({
+  Future<Page<GithubRepo>> getStaredReposPage({
     required int page,
   }) async {
     late final Response response;
@@ -84,7 +83,7 @@ class StaredReposRDSImp implements StaredReposRDS {
 
     final repos = jsonRepos
         .map(
-          (jsonRepo) => GithubRepoDto.fromJson(
+          (jsonRepo) => GithubRepo.fromJson(
             jsonRepo as Map<String, dynamic>,
           ),
         )

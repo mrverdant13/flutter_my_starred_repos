@@ -1,9 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:sembast/sembast.dart';
+import 'package:starred_repos/starred_repos.dart';
 
-import '../../../domain/page.dart';
-import '../../converters/page.dart';
-import '../../dtos/github_repo.dart';
 import 'interface.dart';
 
 class StarredReposLDSImp extends StarredReposLDS {
@@ -23,25 +21,21 @@ class StarredReposLDSImp extends StarredReposLDS {
   @override
   Future<void> set({
     required int page,
-    required Page<GithubRepoDto> starredReposPage,
+    required Page<GithubRepo> starredReposPage,
   }) async {
-    await store.record(page).put(
-          _db,
-          starredReposPage.toJson(
-            (repoDto) => repoDto.toJson(),
-          ),
-        );
+    final starredReposPageJson = starredReposPage.toJson((r) => r.toJson());
+    await store.record(page).put(_db, starredReposPageJson);
   }
 
   @override
-  Future<Page<GithubRepoDto>?> get({
+  Future<Page<GithubRepo>?> get({
     required int page,
   }) async {
     final starredReposPageJson = await store.record(page).get(_db);
     if (starredReposPageJson == null) return null;
     return ConvertiblePage.fromJson(
       starredReposPageJson,
-      (repoJson) => GithubRepoDto.fromJson(repoJson),
+      (repoJson) => GithubRepo.fromJson(repoJson),
     );
   }
 }

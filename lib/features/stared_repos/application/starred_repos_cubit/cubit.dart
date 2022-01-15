@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/kt.dart';
-
-import '../../domain/get_starred_repos_warnings.dart';
-import '../../domain/repo.dart';
-import '../../infrastructure/facades/starred_repos_repo/interface.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 part 'cubit.freezed.dart';
 part 'state.dart';
@@ -71,7 +69,7 @@ class StarredReposCubit extends Cubit<StarredReposState> {
 
     final resultingRepos = state.repos
         .plus(cacheableStarredReposPage.data.elements.kt)
-        .distinctBy((repo) => repo.id);
+        .distinctBy((repo) => repo.urlPath);
 
     emit(
       StarredReposState.loaded(

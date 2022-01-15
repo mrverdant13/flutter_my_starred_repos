@@ -1,23 +1,16 @@
-import 'package:flutter_my_starred_repos/features/stared_repos/domain/get_starred_repos_warnings.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/domain/page.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/domain/payload.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/domain/repo.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/page.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/converters/repo.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/github_repo.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/dtos/user.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/implementation.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:starred_repos/starred_repos.dart';
 import 'package:test/test.dart';
 
 class MockStarredReposRDS extends Mock implements StaredReposRDS {}
 
 class MockStarredReposLDS extends Mock implements StarredReposLDS {}
 
-class FakeReposPage extends Fake implements Page<GithubRepoDto> {}
+class FakeReposPage extends Fake implements Page<GithubRepo> {}
 
 void main() {
   // ARRANGE
@@ -44,12 +37,12 @@ AND a repos page number''',
       const pageLength = 7;
       const lastPage = 12;
 
-      final reposDtosPage = Page(
+      final reposPage = Page(
         lastPage: lastPage,
         elements: List.generate(
           pageLength,
-          (idx) => GithubRepoDto(
-            owner: UserDto(
+          (idx) => GithubRepo(
+            owner: User(
               username: 'username $idx',
               avatarUrl: 'avatar url $idx',
             ),
@@ -59,7 +52,6 @@ AND a repos page number''',
           ),
         ),
       );
-      final reposPage = reposDtosPage.map((repoDto) => repoDto.asEntity);
 
       setUp(
         () {
@@ -97,7 +89,7 @@ THEN a starred repos page data holder should be received, persisted and returned
               page: any(named: 'page'),
             ),
           ).thenAnswer(
-            (_) async => reposDtosPage,
+            (_) async => reposPage,
           );
           when(
             () => mockStarredReposLDS.set(
@@ -122,7 +114,7 @@ THEN a starred repos page data holder should be received, persisted and returned
           verify(
             () => mockStarredReposLDS.set(
               page: page,
-              starredReposPage: reposDtosPage,
+              starredReposPage: reposPage,
             ),
           ).called(1);
           result.when(
@@ -151,10 +143,8 @@ THEN the persisted repos page should be returned
 ''',
         () async {
           // ARRANGE
-          final initialStarredReposDtosPage = reposDtosPage;
-          final expectedStarredReposPage = initialStarredReposDtosPage.map(
-            (starredRepoDto) => starredRepoDto.asEntity,
-          );
+          final initialStarredReposPage = reposPage;
+          final expectedStarredReposPage = initialStarredReposPage;
 
           when(
             () => mockStarredReposRDS.getStaredReposPage(
@@ -168,7 +158,7 @@ THEN the persisted repos page should be returned
               page: any(named: 'page'),
             ),
           ).thenAnswer(
-            (_) async => initialStarredReposDtosPage,
+            (_) async => initialStarredReposPage,
           );
 
           // ACT
@@ -212,10 +202,8 @@ THEN the persisted repos page should be returned
 ''',
         () async {
           // ARRANGE
-          final initialStarredReposDtosPage = reposDtosPage;
-          final expectedStarredReposPage = initialStarredReposDtosPage.map(
-            (starredRepoDto) => starredRepoDto.asEntity,
-          );
+          final initialStarredReposPage = reposPage;
+          final expectedStarredReposPage = initialStarredReposPage;
 
           when(
             () => mockStarredReposRDS.getStaredReposPage(
@@ -229,7 +217,7 @@ THEN the persisted repos page should be returned
               page: any(named: 'page'),
             ),
           ).thenAnswer(
-            (_) async => initialStarredReposDtosPage,
+            (_) async => initialStarredReposPage,
           );
 
           // ACT

@@ -1,7 +1,4 @@
-import '../../../domain/get_starred_repos_warnings.dart';
-import '../../../domain/page.dart';
-import '../../../domain/payload.dart';
-import '../../../domain/repo.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 /// A starred GitHub repositories repository.
 abstract class StarredReposRepo {

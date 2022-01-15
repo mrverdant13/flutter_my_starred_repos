@@ -67,6 +67,8 @@ dependencies:
   # Auth features
   auth:
     path: features/auth
+  starred_repos:
+    path: features/starred_repos
 
 dev_dependencies:
   flutter_test:

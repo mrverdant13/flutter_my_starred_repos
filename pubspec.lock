@@ -908,6 +908,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
+  starred_repos:
+    dependency: "direct main"
+    description:
+      path: "features/starred_repos"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   state_notifier:
     dependency: transitive
     description:

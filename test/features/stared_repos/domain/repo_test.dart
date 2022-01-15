@@ -1,5 +1,4 @@
-import 'package:flutter_my_starred_repos/features/stared_repos/domain/repo.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/domain/user.dart';
+import 'package:starred_repos/starred_repos.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -25,7 +24,7 @@ THEN its GitHub relative path should be returned
       final expectedId = '${repoOwner.username}/${repo.name}';
 
       // ACT
-      final result = repo.id;
+      final result = repo.urlPath;
 
       // ASSERT
       expect(result, expectedId);

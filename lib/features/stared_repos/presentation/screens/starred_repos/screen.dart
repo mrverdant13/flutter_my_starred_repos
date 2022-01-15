@@ -88,7 +88,7 @@ class StarredReposScreen extends StatelessWidget {
                               starredReposCubit.load();
                             }
                             return ListTile(
-                              key: ValueKey(starredRepo.id),
+                              key: ValueKey(starredRepo.urlPath),
                               leading: AspectRatio(
                                 aspectRatio: 1,
                                 child: CachedNetworkImage(

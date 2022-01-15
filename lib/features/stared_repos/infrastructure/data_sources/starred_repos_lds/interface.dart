@@ -1,15 +1,14 @@
-import '../../../domain/page.dart';
-import '../../dtos/github_repo.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 abstract class StarredReposLDS {
   const StarredReposLDS();
 
-  Future<Page<GithubRepoDto>?> get({
+  Future<Page<GithubRepo>?> get({
     required int page,
   });
 
   Future<void> set({
     required int page,
-    required Page<GithubRepoDto> starredReposPage,
+    required Page<GithubRepo> starredReposPage,
   });
 }

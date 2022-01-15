@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../domain/page.dart';
-import '../../dtos/github_repo.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 part 'interface.freezed.dart';
 
@@ -19,7 +17,7 @@ abstract class StaredReposRDS {
   ///
   /// Throws a [GetStaredReposPageException.unmodified] exception when there is no
   /// changes in data compared to the previously fetched version.
-  Future<Page<GithubRepoDto>> getStaredReposPage({
+  Future<Page<GithubRepo>> getStaredReposPage({
     required int page,
   });
 }

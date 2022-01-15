@@ -39,7 +39,9 @@ final authServicePod = Provider<AuthService>(
 );
 
 final authCubitPod = Provider<AuthCubit>(
-  (ref) => AuthCubit(
-    authService: ref.watch(authServicePod),
-  ),
+  (ref) {
+    return AuthCubit(
+      authService: ref.watch(authServicePod),
+    );
+  },
 );

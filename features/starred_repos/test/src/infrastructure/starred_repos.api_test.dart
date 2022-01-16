@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/rest_implementation.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:starred_repos/starred_repos.dart';
-import 'package:test/test.dart';
+import 'package:starred_repos/src/domain/github_repo.dart';
+import 'package:starred_repos/src/domain/page.dart';
+import 'package:starred_repos/src/domain/user.dart';
+import 'package:starred_repos/src/infrastructure/starred_repos.api.dart';
 
 class MockDio extends Mock implements Dio {}
 
@@ -27,11 +26,11 @@ AND an HTTP request
     () {
       // ARRANGE
       late MockDio mockDio;
-      late StaredReposRDSImp starredReposRDS;
+      late StarredReposApi starredReposApi;
 
       const page = 7;
       final starredReposJsonList = List.generate(
-        StaredReposRDSImp.pageLength,
+        StarredReposApi.pageLength,
         (index) => <String, dynamic>{
           'name': 'repo $index',
           'description': 'description $index',
@@ -42,13 +41,9 @@ AND an HTTP request
           },
         },
       );
-      final requestExtraData = Map.fromEntries([
-        AuthInterceptor.extraEntry,
-        EtagsInterceptor.extraEntry,
-      ]);
       final requestQueryParams = {
         'page': page,
-        'per_page': StaredReposRDSImp.pageLength,
+        'per_page': StarredReposApi.pageLength,
       };
       final requestHeaders = {
         'Accept': 'application/vnd.github.v3+json',
@@ -74,7 +69,7 @@ AND an HTTP request
           Page(
             lastPage: isLastPage ? page : page + 1,
             elements: List.generate(
-              StaredReposRDSImp.pageLength,
+              StarredReposApi.pageLength,
               (index) => GithubRepo(
                 owner: User(
                   username: 'username $index',
@@ -90,19 +85,13 @@ AND an HTTP request
       bool optionsPredicate(Options options) {
         final headersMatch = mapEquals(options.headers, requestHeaders);
         if (!headersMatch) return false;
-
-        final extraMatch = mapEquals(options.extra, requestExtraData);
-        if (!extraMatch) return false;
-
         return true;
       }
 
       setUp(
         () {
           mockDio = MockDio();
-          starredReposRDS = StaredReposRDSImp(
-            dio: mockDio,
-          );
+          starredReposApi = StarredReposApi(dio: mockDio);
         },
       );
 
@@ -141,7 +130,7 @@ THEN a starred repos page data holder should be returned
           );
 
           // ACT
-          final result = await starredReposRDS.getStaredReposPage(
+          final result = await starredReposApi.getStarredReposPage(
             page: page,
           );
 
@@ -153,7 +142,7 @@ THEN a starred repos page data holder should be returned
           );
           verify(
             () => mockDio.get(
-              StaredReposRDSImp.endpoint,
+              StarredReposApi.retrieveEndpoint,
               queryParameters: requestQueryParams,
               options: any(
                 named: 'options',
@@ -193,7 +182,7 @@ THEN a starred repos page data holder should be returned
           );
 
           // ACT
-          final result = await starredReposRDS.getStaredReposPage(
+          final result = await starredReposApi.getStarredReposPage(
             page: page,
           );
 
@@ -202,7 +191,7 @@ THEN a starred repos page data holder should be returned
           expect(lastStarredReposPage.lastPage, page);
           verify(
             () => mockDio.get(
-              StaredReposRDSImp.endpoint,
+              StarredReposApi.retrieveEndpoint,
               queryParameters: requestQueryParams,
               options: any(
                 named: 'options',
@@ -239,18 +228,18 @@ THEN an exception should be thrown
           );
 
           // ACT
-          Future<void> action() async => starredReposRDS.getStaredReposPage(
+          Future<void> action() async => starredReposApi.getStarredReposPage(
                 page: page,
               );
 
           // ASSERT
           expect(
             action,
-            throwsA(const GetStaredReposPageException.offline()),
+            throwsA(const GetStarredReposPageException.offline()),
           );
           verify(
             () => mockDio.get(
-              StaredReposRDSImp.endpoint,
+              StarredReposApi.retrieveEndpoint,
               queryParameters: requestQueryParams,
               options: any(
                 named: 'options',
@@ -291,18 +280,18 @@ THEN an exception should be thrown
           );
 
           // ACT
-          Future<void> action() async => starredReposRDS.getStaredReposPage(
+          Future<void> action() async => starredReposApi.getStarredReposPage(
                 page: page,
               );
 
           // ASSERT
           expect(
             action,
-            throwsA(const GetStaredReposPageException.unmodified()),
+            throwsA(const GetStarredReposPageException.unmodified()),
           );
           verify(
             () => mockDio.get(
-              StaredReposRDSImp.endpoint,
+              StarredReposApi.retrieveEndpoint,
               queryParameters: requestQueryParams,
               options: any(
                 named: 'options',

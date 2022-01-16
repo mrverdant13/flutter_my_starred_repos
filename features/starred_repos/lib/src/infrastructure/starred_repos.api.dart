@@ -1,29 +1,16 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:starred_repos/starred_repos.dart';
 
-import '../../../../auth/infrastructure/external/dio_interceptors.dart';
-import '../../external/etags_dio_interceptor.dart';
-import 'interface.dart';
+part 'starred_repos.api.freezed.dart';
 
-/// {@macro StaredReposRDS}
-/// {@template rest_implementation.StaredReposRDSImp}
-///
-/// This remote data source uses REST APIs.
-/// {@endtemplate}
-class StaredReposRDSImp implements StaredReposRDS {
-  /// {@macro StaredReposRDS()}
-  ///
-  /// {@macro rest_implementation.StaredReposRDSImp}
-  ///
-  /// This data source consumes the REST APIs with the [dio] client.
-  const StaredReposRDSImp({
+class StarredReposApi {
+  const StarredReposApi({
     required Dio dio,
   }) : _dio = dio;
 
-  /// The HTTP client used to consume REST APIs.
   final Dio _dio;
 
   /// The endpoint used to retrieve the repositories starred by the user.
@@ -32,22 +19,20 @@ class StaredReposRDSImp implements StaredReposRDS {
   ///
   /// [User's starred repos endpoint]:
   /// https://docs.github.com/en/rest/reference/activity#list-repositories-starred-by-the-authenticated-user
-  @visibleForTesting
-  static const endpoint = 'https://api.github.com/user/starred';
+  static const retrieveEndpoint = 'https://api.github.com/user/starred';
 
   /// The quantity of starred repositories to retrieve per page.
   @visibleForTesting
   static const pageLength = 5;
 
-  @override
-  Future<Page<GithubRepo>> getStaredReposPage({
+  Future<Page<GithubRepo>> getStarredReposPage({
     required int page,
   }) async {
     late final Response response;
 
     try {
       response = await _dio.get(
-        endpoint,
+        retrieveEndpoint,
         queryParameters: {
           'page': page,
           'per_page': pageLength,
@@ -56,22 +41,18 @@ class StaredReposRDSImp implements StaredReposRDS {
           headers: {
             'Accept': 'application/vnd.github.v3+json',
           },
-          extra: {}..addEntries([
-              AuthInterceptor.extraEntry,
-              EtagsInterceptor.extraEntry,
-            ]),
         ),
       );
     } on DioError catch (e) {
       switch (e.type) {
         case DioErrorType.other:
           if (e.error != null && e.error is SocketException) {
-            throw const GetStaredReposPageException.offline();
+            throw const GetStarredReposPageException.offline();
           }
           break;
         case DioErrorType.response:
           if (e.response?.statusCode == 304) {
-            throw const GetStaredReposPageException.unmodified();
+            throw const GetStarredReposPageException.unmodified();
           }
           break;
         default:
@@ -125,4 +106,13 @@ extension _ExtendedResponse on Response {
 
     return int.tryParse(pageStr);
   }
+}
+
+@freezed
+class GetStarredReposPageException with _$GetStarredReposPageException {
+  const GetStarredReposPageException._();
+  const factory GetStarredReposPageException.offline() =
+      _GetStarredReposPageExceptionOffline;
+  const factory GetStarredReposPageException.unmodified() =
+      _GetStarredReposPageExceptionUnmodified;
 }

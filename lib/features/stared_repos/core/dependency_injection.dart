@@ -8,8 +8,6 @@ import 'package:starred_repos/starred_repos.dart';
 
 import '../../auth/core/dependency_injection.dart';
 import '../application/starred_repos_cubit/cubit.dart';
-import '../infrastructure/data_sources/stared_repos_rds/interface.dart';
-import '../infrastructure/data_sources/stared_repos_rds/rest_implementation.dart';
 import '../infrastructure/data_sources/starred_repos_lds/interface.dart';
 import '../infrastructure/data_sources/starred_repos_lds/sembast_implementation.dart';
 import '../infrastructure/external/etags_dio_interceptor.dart';
@@ -52,10 +50,10 @@ final starredReposDioPod = Provider<Dio>(
   },
 );
 
-final starredReposRDSPod = Provider<StaredReposRDS>(
+final starredReposApiPod = Provider<StarredReposApi>(
   (ref) {
     final dio = ref.watch(starredReposDioPod);
-    return StaredReposRDSImp(
+    return StarredReposApi(
       dio: dio,
     );
   },
@@ -73,9 +71,9 @@ final starredReposLDSPod = Provider<StarredReposLDS>(
 final starredReposRepoPod = Provider<StarredReposRepo>(
   (ref) {
     final starredReposLDS = ref.watch(starredReposLDSPod);
-    final starredReposRDS = ref.watch(starredReposRDSPod);
+    final starredReposApi = ref.watch(starredReposApiPod);
     return StarredReposRepoImp(
-      starredReposRDS: starredReposRDS,
+      starredReposApi: starredReposApi,
       starredReposLDS: starredReposLDS,
     );
   },

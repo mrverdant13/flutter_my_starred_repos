@@ -8,25 +8,22 @@ class EtagsInterceptor extends Interceptor {
 
   final PageEtagsStorage _pageEtagsStorage;
 
-  static const extraEntry = MapEntry('etags_interceptor', true);
-
   @override
   Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    if (options.extra[extraEntry.key] == extraEntry.value) {
+    final requestUrl = options.uri.toString();
+    final isRequestingStarredRepos =
+        requestUrl.contains(StarredReposApi.retrieveEndpoint);
+    if (isRequestingStarredRepos) {
       final page = options.queryParameters['page'];
       if (page is int) {
         final etag = await _pageEtagsStorage.get(
           page: page,
         );
         if (etag != null) {
-          options.headers.addAll(
-            {
-              'If-None-Match': etag,
-            },
-          );
+          options.headers.addAll({'If-None-Match': etag});
         }
       }
     }
@@ -38,14 +35,19 @@ class EtagsInterceptor extends Interceptor {
     Response response,
     ResponseInterceptorHandler handler,
   ) async {
-    final etag = response.headers['ETag']?.first;
-    if (etag != null) {
-      final page = response.requestOptions.queryParameters['page'];
-      if (page is int) {
-        await _pageEtagsStorage.set(
-          page: page,
-          etag: etag,
-        );
+    final requestUrl = response.requestOptions.uri.toString();
+    final isRequestingStarredRepos =
+        requestUrl.contains(StarredReposApi.retrieveEndpoint);
+    if (isRequestingStarredRepos) {
+      final etag = response.headers['ETag']?.first;
+      if (etag != null) {
+        final page = response.requestOptions.queryParameters['page'];
+        if (page is int) {
+          await _pageEtagsStorage.set(
+            page: page,
+            etag: etag,
+          );
+        }
       }
     }
     super.onResponse(response, handler);

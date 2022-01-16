@@ -1,4 +1,3 @@
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/stared_repos_rds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
 import 'package:starred_repos/starred_repos.dart';
 
@@ -7,16 +6,16 @@ import 'interface.dart';
 /// A starred GitHub repositories repository implementation.
 class StarredReposRepoImp extends StarredReposRepo {
   /// Creates a starred GitHub repositories repository with the given
-  /// [starredReposRDS].
+  /// [starredReposApi].
   const StarredReposRepoImp({
-    required StaredReposRDS starredReposRDS,
+    required StarredReposApi starredReposApi,
     required StarredReposLDS starredReposLDS,
-  })  : _starredReposRDS = starredReposRDS,
+  })  : _starredReposApi = starredReposApi,
         _starredReposLDS = starredReposLDS;
 
   /// The remota data source to be used to retrieve the starred GitHub
   /// repositories.
-  final StaredReposRDS _starredReposRDS;
+  final StarredReposApi _starredReposApi;
   final StarredReposLDS _starredReposLDS;
 
   @override
@@ -26,10 +25,10 @@ class StarredReposRepoImp extends StarredReposRepo {
     late final Page<GithubRepo>? reposPage;
 
     try {
-      reposPage = await _starredReposRDS.getStaredReposPage(
+      reposPage = await _starredReposApi.getStarredReposPage(
         page: page,
       );
-    } on GetStaredReposPageException catch (e) {
+    } on GetStarredReposPageException catch (e) {
       final starredReposPage = await _starredReposLDS.get(
         page: page,
       );

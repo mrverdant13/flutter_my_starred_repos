@@ -25,15 +25,8 @@ AND a request
       late MockerInterceptor mockerInterceptor;
       late Dio dio;
 
-      final extraData = Map.fromEntries([
-        AuthInterceptor.extraEntry,
-      ]);
-      RequestOptions request() =>
-          // Using a function to avoid mutability-related issues.
-          RequestOptions(
-            path: 'some.url',
-            extra: extraData,
-          );
+      // Using a function to avoid mutability-related issues.
+      RequestOptions request() => RequestOptions(path: 'some.url');
 
       setUp(
         () {

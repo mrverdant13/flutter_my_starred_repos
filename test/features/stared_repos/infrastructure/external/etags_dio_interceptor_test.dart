@@ -26,16 +26,12 @@ GIVEN an HTTP client
       late EtagsInterceptor etagsInterceptor;
 
       const page = 6;
-      final extraData = Map.fromEntries([
-        EtagsInterceptor.extraEntry,
-      ]);
       RequestOptions createRequest({
         required bool includeEtagsExtraData,
         required bool includePageQueryParam,
       }) =>
           // Using a function to avoid mutability-related issues.
           RequestOptions(
-            extra: includeEtagsExtraData ? extraData : null,
             queryParameters: {
               if (includePageQueryParam) 'page': page,
             },

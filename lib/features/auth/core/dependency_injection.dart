@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/dependency_injection.dart';
-import '../infrastructure/external/dio_interceptors.dart';
 
 final githubAuthConfigPod = Provider<GithubAuthConfig>(
   (ref) => ref.watch(appConfigPod).githubAuthConfig,

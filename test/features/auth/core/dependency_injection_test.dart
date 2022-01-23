@@ -2,7 +2,6 @@ import 'package:auth/auth.dart';
 import 'package:flutter_my_starred_repos/core/config.dart';
 import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
-import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:test/test.dart';

@@ -1,11 +1,8 @@
 import 'package:auth/auth.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:test/test.dart';
-
-import '../../../../helpers/mock_interceptor.dart';
 
 class MockCredsStorage extends Mock implements CredsStorage {}
 
@@ -22,7 +19,6 @@ AND a request
       // ARRANGE
       late MockCredsStorage mockCredsStorage;
       late AuthInterceptor authInterceptor;
-      late MockerInterceptor mockerInterceptor;
       late Dio dio;
 
       // Using a function to avoid mutability-related issues.
@@ -34,11 +30,15 @@ AND a request
           authInterceptor = AuthInterceptor(
             credsStorage: mockCredsStorage,
           );
-          mockerInterceptor = MockerInterceptor();
           dio = Dio()
             ..interceptors.addAll([
               authInterceptor,
-              mockerInterceptor,
+              InterceptorsWrapper(
+                onRequest: (options, handler) => handler.resolve(
+                  Response(requestOptions: options),
+                  true,
+                ),
+              ),
             ]);
         },
       );

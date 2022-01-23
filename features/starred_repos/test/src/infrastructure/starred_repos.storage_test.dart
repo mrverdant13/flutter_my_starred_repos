@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
-import 'package:starred_repos/src/infrastructure/starred_repos.storage.dart';
 import 'package:starred_repos/starred_repos.dart';
 
 void main() {

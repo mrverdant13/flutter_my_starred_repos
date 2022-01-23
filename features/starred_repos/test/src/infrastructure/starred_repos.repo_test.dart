@@ -1,8 +1,7 @@
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/implementation.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:starred_repos/src/infrastructure/starred_repos.repo.dart';
 import 'package:starred_repos/starred_repos.dart';
-import 'package:test/test.dart';
 
 class MockStarredReposApi extends Mock implements StarredReposApi {}
 
@@ -55,7 +54,7 @@ AND a repos page number''',
         () {
           mockStarredReposApi = MockStarredReposApi();
           mockStarredReposStorage = MockStarredReposStorage();
-          starredReposRepo = StarredReposRepoImp(
+          starredReposRepo = StarredReposRepo(
             starredReposApi: mockStarredReposApi,
             starredReposStorage: mockStarredReposStorage,
           );

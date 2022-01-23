@@ -9,8 +9,6 @@ import 'package:starred_repos/starred_repos.dart';
 import '../../auth/core/dependency_injection.dart';
 import '../application/starred_repos_cubit/cubit.dart';
 import '../infrastructure/external/etags_dio_interceptor.dart';
-import '../infrastructure/facades/starred_repos_repo/implementation.dart';
-import '../infrastructure/facades/starred_repos_repo/interface.dart';
 
 final sembastDbPod = Provider<Database>(
   (_) => throw StateError(
@@ -19,71 +17,48 @@ final sembastDbPod = Provider<Database>(
 );
 
 final pageEtagsStoragePod = Provider<PageEtagsStorage>(
-  (ref) {
-    final sembastDb = ref.watch(sembastDbPod);
-    return PageEtagsStorage(
-      sembastDatabase: sembastDb,
-    );
-  },
+  (ref) => PageEtagsStorage(
+    sembastDatabase: ref.watch(sembastDbPod),
+  ),
 );
 
 final etagsInterceptorPod = Provider<EtagsInterceptor>(
-  (ref) {
-    final pageEtagsStorage = ref.watch(pageEtagsStoragePod);
-    return EtagsInterceptor(
-      pageEtagsStorage: pageEtagsStorage,
-    );
-  },
+  (ref) => EtagsInterceptor(
+    pageEtagsStorage: ref.watch(pageEtagsStoragePod),
+  ),
 );
 
 final starredReposDioPod = Provider<Dio>(
-  (ref) {
-    final authInterceptor = ref.watch(authInterceptorPod);
-    final etagsInterceptor = ref.watch(etagsInterceptorPod);
-    return Dio()
-      ..interceptors.addAll([
-        authInterceptor,
-        etagsInterceptor,
-      ]);
-  },
+  (ref) => Dio()
+    ..interceptors.addAll([
+      ref.watch(authInterceptorPod),
+      ref.watch(etagsInterceptorPod),
+    ]),
 );
 
 final starredReposApiPod = Provider<StarredReposApi>(
-  (ref) {
-    final dio = ref.watch(starredReposDioPod);
-    return StarredReposApi(
-      dio: dio,
-    );
-  },
+  (ref) => StarredReposApi(
+    dio: ref.watch(starredReposDioPod),
+  ),
 );
 
 final starredReposStoragePod = Provider<StarredReposStorage>(
-  (ref) {
-    final sembastDb = ref.watch(sembastDbPod);
-    return StarredReposStorage(
-      sembastDatabase: sembastDb,
-    );
-  },
+  (ref) => StarredReposStorage(
+    sembastDatabase: ref.watch(sembastDbPod),
+  ),
 );
 
 final starredReposRepoPod = Provider<StarredReposRepo>(
-  (ref) {
-    final starredReposStorage = ref.watch(starredReposStoragePod);
-    final starredReposApi = ref.watch(starredReposApiPod);
-    return StarredReposRepoImp(
-      starredReposApi: starredReposApi,
-      starredReposStorage: starredReposStorage,
-    );
-  },
+  (ref) => StarredReposRepo(
+    starredReposApi: ref.watch(starredReposApiPod),
+    starredReposStorage: ref.watch(starredReposStoragePod),
+  ),
 );
 
 final starredReposCubitPod = Provider<StarredReposCubit>(
-  (ref) {
-    final starredReposRepo = ref.watch(starredReposRepoPod);
-    return StarredReposCubit(
-      starredReposRepo: starredReposRepo,
-    );
-  },
+  (ref) => StarredReposCubit(
+    starredReposRepo: ref.watch(starredReposRepoPod),
+  ),
 );
 
 Future<List<Override>> getInjectionOverrides() async {

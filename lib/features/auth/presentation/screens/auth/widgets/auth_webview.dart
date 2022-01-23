@@ -53,9 +53,7 @@ class __AuthWebviewState extends ConsumerState<_AuthWebview> {
           final redirectBaseUrl = widget.redirectBaseEndpoint.toString();
           if (navReq.url.startsWith(redirectBaseUrl)) {
             // Returns the obtained redirect endpoint that holds auth data.
-            ref.watch(appRouterPod).pop(
-                  Uri.parse(navReq.url),
-                );
+            ref.read(appRouterPod).pop(Uri.parse(navReq.url));
             return NavigationDecision.prevent;
           }
           return NavigationDecision.navigate;

@@ -12,13 +12,14 @@ import '../../../../../presentation/routers/app_router.gr.dart';
 part 'dimensions.dart';
 part 'l10n.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen();
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
         body: Builder(
           builder: (context) => BlocListener<AuthCubit, AuthState>(
+            bloc: ref.watch(authCubitPod),
             listener: (context, authState) => authState.whenOrNull(
               failure: (isLoggedIn, failure) => failure.when(
                 logIn: (failure) => ScaffoldMessenger.of(context).showSnackBar(
@@ -76,9 +77,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             onPressed: ref.watch(authCubitPod).isLoading
                                 ? null
-                                : () async => context.logInWithOAuth(
-                                      appRouter: ref.watch(appRouterPod),
-                                    ),
+                                : () async => ref.logInWithOAuth(),
                             child: Text(
                               ref.watch(authCubitPod).isLoading
                                   ? 'Loading...'
@@ -97,27 +96,19 @@ class LoginScreen extends StatelessWidget {
       );
 }
 
-/// A [BuildContext] that provides login utilities.
-extension _OAuthContext on BuildContext {
-  Future<void> logInWithOAuth({
-    required AppRouter appRouter,
-  }) =>
-      read<AuthCubit>().logIn(
+/// A [WidgetRef] that provides login utilities.
+extension _OAuthRef on WidgetRef {
+  Future<void> logInWithOAuth() => read(authCubitPod).logIn(
         method: LoginMethod.oAuth(
-          callback: _oauthCallback(
-            appRouter: appRouter,
-          ),
+          callback: _oauthCallback(),
         ),
       );
 
-  OAuthCallback _oauthCallback({
-    required AppRouter appRouter,
-  }) =>
-      ({
+  OAuthCallback _oauthCallback() => ({
         required Uri authorizationEndpoint,
         required Uri redirectBaseEndpoint,
       }) =>
-          appRouter.push<Uri>(
+          read(appRouterPod).push<Uri>(
             AuthScreenRoute(
               authorizationEndpoint: authorizationEndpoint,
               redirectBaseEndpoint: redirectBaseEndpoint,

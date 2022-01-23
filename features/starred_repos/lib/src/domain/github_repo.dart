@@ -21,6 +21,7 @@ class GithubRepo with _$GithubRepo {
       _$GithubRepoFromJson(json);
 
   Uri get urlPath => Uri(
+        scheme: 'https',
         host: 'github.com',
         pathSegments: [owner.username, name],
       );

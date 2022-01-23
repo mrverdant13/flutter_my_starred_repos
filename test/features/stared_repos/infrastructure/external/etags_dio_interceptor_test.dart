@@ -27,7 +27,7 @@ GIVEN an HTTP client
 
       const page = 6;
       RequestOptions createRequest({
-        required bool includeEtagsExtraData,
+        required bool useRetrieveEndpoint,
         required bool includePageQueryParam,
       }) =>
           // Using a function to avoid mutability-related issues.
@@ -35,7 +35,9 @@ GIVEN an HTTP client
             queryParameters: {
               if (includePageQueryParam) 'page': page,
             },
-            path: 'some.url',
+            path: useRetrieveEndpoint
+                ? 'https://api.github.com/user/starred'
+                : 'other.url',
           );
       Dio createDio({
         required bool includeEtagInResponse,
@@ -97,14 +99,16 @@ THEN the pages ETags interceptor should alter the request
           // ACT
           final result = await dio.fetch(
             createRequest(
-              includeEtagsExtraData: true,
+              useRetrieveEndpoint: true,
               includePageQueryParam: true,
             ),
           );
 
           // ASSERT
           verify(
-            () => mockPageEtagsStorage.get(page: page),
+            () => mockPageEtagsStorage.get(
+              page: page,
+            ),
           ).called(1);
           expect(
             result.requestOptions.headers['If-None-Match'],
@@ -132,7 +136,7 @@ THEN the pages ETags interceptor should not alter the request
           // ACT
           final result = await dio.fetch(
             createRequest(
-              includeEtagsExtraData: false,
+              useRetrieveEndpoint: false,
               includePageQueryParam: true,
             ),
           );
@@ -162,7 +166,7 @@ THEN the pages ETags interceptor should not alter the request
           // ACT
           final result = await dio.fetch(
             createRequest(
-              includeEtagsExtraData: true,
+              useRetrieveEndpoint: true,
               includePageQueryParam: false,
             ),
           );
@@ -199,7 +203,7 @@ THEN the pages ETags interceptor should not alter the request
           // ACT
           final result = await dio.fetch(
             createRequest(
-              includeEtagsExtraData: true,
+              useRetrieveEndpoint: true,
               includePageQueryParam: true,
             ),
           );
@@ -253,7 +257,7 @@ AND an ETag for the given page should be received and persisted
           // ACT
           final result = await dio.fetch(
             createRequest(
-              includeEtagsExtraData: true,
+              useRetrieveEndpoint: true,
               includePageQueryParam: true,
             ),
           );

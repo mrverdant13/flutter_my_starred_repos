@@ -21,7 +21,9 @@ THEN its GitHub relative path should be returned
         description: 'description',
         starsCount: 5,
       );
-      final expectedId = '${repoOwner.username}/${repo.name}';
+      final expectedId = Uri.parse(
+        'https://github.com/${repoOwner.username}/${repo.name}',
+      );
 
       // ACT
       final result = repo.urlPath;

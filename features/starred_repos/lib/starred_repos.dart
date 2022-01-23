@@ -10,3 +10,4 @@ export 'package:starred_repos/src/infrastructure/page_etags.storage.dart';
 export 'package:starred_repos/src/infrastructure/starred_repos.api.dart';
 export 'package:starred_repos/src/infrastructure/starred_repos.repo.dart';
 export 'package:starred_repos/src/infrastructure/starred_repos.storage.dart';
+export 'package:starred_repos/src/state/starred_repos.cubit.dart';

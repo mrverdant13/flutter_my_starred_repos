@@ -7,7 +7,6 @@ import 'package:sembast/sembast_io.dart';
 import 'package:starred_repos/starred_repos.dart';
 
 import '../../auth/core/dependency_injection.dart';
-import '../application/starred_repos_cubit/cubit.dart';
 
 final sembastDbPod = Provider<Database>(
   (_) => throw StateError(

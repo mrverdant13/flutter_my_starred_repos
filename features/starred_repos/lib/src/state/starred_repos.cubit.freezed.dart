@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'cubit.dart';
+part of 'starred_repos.cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -18,14 +18,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$StarredReposStateTearOff {
   const _$StarredReposStateTearOff();
 
-  _StarredReposStateLoading loading({required KtList<GithubRepo> repos}) {
+  _StarredReposStateLoading loading({required List<GithubRepo> repos}) {
     return _StarredReposStateLoading(
       repos: repos,
     );
   }
 
   _StarredReposStateLoaded loaded(
-      {required KtList<GithubRepo> repos,
+      {required List<GithubRepo> repos,
       required bool canLoadMore,
       GetStaredReposWarning? warning}) {
     return _StarredReposStateLoaded(
@@ -41,28 +41,28 @@ const $StarredReposState = _$StarredReposStateTearOff();
 
 /// @nodoc
 mixin _$StarredReposState {
-  KtList<GithubRepo> get repos => throw _privateConstructorUsedError;
+  List<GithubRepo> get repos => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(KtList<GithubRepo> repos) loading,
-    required TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    required TResult Function(List<GithubRepo> repos) loading,
+    required TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KtList<GithubRepo> repos)? loading,
-    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    TResult Function(List<GithubRepo> repos)? loading,
+    TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(KtList<GithubRepo> repos)? loading,
-    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    TResult Function(List<GithubRepo> repos)? loading,
+    TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
     required TResult orElse(),
@@ -98,7 +98,7 @@ abstract class $StarredReposStateCopyWith<$Res> {
   factory $StarredReposStateCopyWith(
           StarredReposState value, $Res Function(StarredReposState) then) =
       _$StarredReposStateCopyWithImpl<$Res>;
-  $Res call({KtList<GithubRepo> repos});
+  $Res call({List<GithubRepo> repos});
 }
 
 /// @nodoc
@@ -118,7 +118,7 @@ class _$StarredReposStateCopyWithImpl<$Res>
       repos: repos == freezed
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
-              as KtList<GithubRepo>,
+              as List<GithubRepo>,
     ));
   }
 }
@@ -130,7 +130,7 @@ abstract class _$StarredReposStateLoadingCopyWith<$Res>
           $Res Function(_StarredReposStateLoading) then) =
       __$StarredReposStateLoadingCopyWithImpl<$Res>;
   @override
-  $Res call({KtList<GithubRepo> repos});
+  $Res call({List<GithubRepo> repos});
 }
 
 /// @nodoc
@@ -153,7 +153,7 @@ class __$StarredReposStateLoadingCopyWithImpl<$Res>
       repos: repos == freezed
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
-              as KtList<GithubRepo>,
+              as List<GithubRepo>,
     ));
   }
 }
@@ -164,7 +164,7 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
   const _$_StarredReposStateLoading({required this.repos});
 
   @override
-  final KtList<GithubRepo> repos;
+  final List<GithubRepo> repos;
 
   @override
   String toString() {
@@ -192,8 +192,8 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(KtList<GithubRepo> repos) loading,
-    required TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    required TResult Function(List<GithubRepo> repos) loading,
+    required TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)
         loaded,
   }) {
@@ -203,8 +203,8 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KtList<GithubRepo> repos)? loading,
-    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    TResult Function(List<GithubRepo> repos)? loading,
+    TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
   }) {
@@ -214,8 +214,8 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(KtList<GithubRepo> repos)? loading,
-    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    TResult Function(List<GithubRepo> repos)? loading,
+    TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
     required TResult orElse(),
@@ -259,11 +259,11 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
 }
 
 abstract class _StarredReposStateLoading implements StarredReposState {
-  const factory _StarredReposStateLoading({required KtList<GithubRepo> repos}) =
+  const factory _StarredReposStateLoading({required List<GithubRepo> repos}) =
       _$_StarredReposStateLoading;
 
   @override
-  KtList<GithubRepo> get repos;
+  List<GithubRepo> get repos;
   @override
   @JsonKey(ignore: true)
   _$StarredReposStateLoadingCopyWith<_StarredReposStateLoading> get copyWith =>
@@ -278,7 +278,7 @@ abstract class _$StarredReposStateLoadedCopyWith<$Res>
       __$StarredReposStateLoadedCopyWithImpl<$Res>;
   @override
   $Res call(
-      {KtList<GithubRepo> repos,
+      {List<GithubRepo> repos,
       bool canLoadMore,
       GetStaredReposWarning? warning});
 
@@ -307,7 +307,7 @@ class __$StarredReposStateLoadedCopyWithImpl<$Res>
       repos: repos == freezed
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
-              as KtList<GithubRepo>,
+              as List<GithubRepo>,
       canLoadMore: canLoadMore == freezed
           ? _value.canLoadMore
           : canLoadMore // ignore: cast_nullable_to_non_nullable
@@ -338,7 +338,7 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
       {required this.repos, required this.canLoadMore, this.warning});
 
   @override
-  final KtList<GithubRepo> repos;
+  final List<GithubRepo> repos;
   @override
   final bool canLoadMore;
   @override
@@ -376,8 +376,8 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(KtList<GithubRepo> repos) loading,
-    required TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    required TResult Function(List<GithubRepo> repos) loading,
+    required TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)
         loaded,
   }) {
@@ -387,8 +387,8 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KtList<GithubRepo> repos)? loading,
-    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    TResult Function(List<GithubRepo> repos)? loading,
+    TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
   }) {
@@ -398,8 +398,8 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(KtList<GithubRepo> repos)? loading,
-    TResult Function(KtList<GithubRepo> repos, bool canLoadMore,
+    TResult Function(List<GithubRepo> repos)? loading,
+    TResult Function(List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
     required TResult orElse(),
@@ -444,12 +444,12 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
 
 abstract class _StarredReposStateLoaded implements StarredReposState {
   const factory _StarredReposStateLoaded(
-      {required KtList<GithubRepo> repos,
+      {required List<GithubRepo> repos,
       required bool canLoadMore,
       GetStaredReposWarning? warning}) = _$_StarredReposStateLoaded;
 
   @override
-  KtList<GithubRepo> get repos;
+  List<GithubRepo> get repos;
   bool get canLoadMore;
   GetStaredReposWarning? get warning;
   @override

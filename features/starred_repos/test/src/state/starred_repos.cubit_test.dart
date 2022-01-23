@@ -1,9 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/application/starred_repos_cubit/cubit.dart';
-import 'package:kt_dart/collection.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:starred_repos/starred_repos.dart';
-import 'package:test/test.dart';
 
 class MockStarredReposRepo extends Mock implements StarredReposRepo {}
 
@@ -44,7 +42,7 @@ THEN its initial state should be loaded
           expect(
             starredReposCubit.state,
             const StarredReposState.loaded(
-              repos: KtList.empty(),
+              repos: [],
               canLoadMore: true,
             ),
           );
@@ -102,7 +100,7 @@ THEN the loaded starred repos should be updated
 │  ├─ AND does not include any warning
 ''',
           seed: () => StarredReposState.loaded(
-            repos: initiallyLoadedStarredRepos.toImmutableList(),
+            repos: initiallyLoadedStarredRepos,
             canLoadMore: true,
           ),
           build: () {
@@ -124,13 +122,13 @@ THEN the loaded starred repos should be updated
           },
           expect: () => [
             StarredReposState.loading(
-              repos: initiallyLoadedStarredRepos.toImmutableList(),
+              repos: initiallyLoadedStarredRepos,
             ),
             StarredReposState.loaded(
               repos: [
                 ...initiallyLoadedStarredRepos,
                 ...starredRepos,
-              ].toImmutableList(),
+              ],
               canLoadMore: true,
             ),
           ],
@@ -142,11 +140,11 @@ THEN the loaded starred repos should be updated
             ).called(1);
             expect(
               bloc.state.repos.take(pageLength),
-              initiallyLoadedStarredRepos.toImmutableList(),
+              initiallyLoadedStarredRepos,
             );
             expect(
-              bloc.state.repos.takeLast(pageLength),
-              starredRepos.toImmutableList(),
+              bloc.state.repos.skip(initiallyLoadedStarredRepos.length),
+              starredRepos,
             );
           },
         );
@@ -169,7 +167,7 @@ THEN the loaded starred repos should be updated including a warning
 │  ├─ AND  includes the loading issue as warning
 ''',
           seed: () => StarredReposState.loaded(
-            repos: initiallyLoadedStarredRepos.toImmutableList(),
+            repos: initiallyLoadedStarredRepos,
             canLoadMore: true,
           ),
           build: () {
@@ -192,14 +190,12 @@ THEN the loaded starred repos should be updated including a warning
             cubit.load();
           },
           expect: () => [
-            StarredReposState.loading(
-              repos: initiallyLoadedStarredRepos.toImmutableList(),
-            ),
+            StarredReposState.loading(repos: initiallyLoadedStarredRepos),
             StarredReposState.loaded(
               repos: [
                 ...initiallyLoadedStarredRepos,
                 ...starredRepos,
-              ].toImmutableList(),
+              ],
               canLoadMore: true,
               warning: const GetStaredReposWarning.offline(),
             ),
@@ -212,11 +208,11 @@ THEN the loaded starred repos should be updated including a warning
             ).called(1);
             expect(
               bloc.state.repos.take(pageLength),
-              initiallyLoadedStarredRepos.toImmutableList(),
+              initiallyLoadedStarredRepos,
             );
             expect(
-              bloc.state.repos.takeLast(pageLength),
-              starredRepos.toImmutableList(),
+              bloc.state.repos.skip(initiallyLoadedStarredRepos.length),
+              starredRepos,
             );
           },
         );
@@ -240,7 +236,7 @@ THEN the loaded starred repos should be updated
 │  ├─ AND does not include any warning
 ''',
           seed: () => StarredReposState.loaded(
-            repos: initiallyLoadedStarredRepos.toImmutableList(),
+            repos: initiallyLoadedStarredRepos,
             canLoadMore: true,
           ),
           build: () {
@@ -260,14 +256,14 @@ THEN the loaded starred repos should be updated
           },
           expect: () => [
             const StarredReposState.loaded(
-              repos: KtList.empty(),
+              repos: [],
               canLoadMore: true,
             ),
             const StarredReposState.loading(
-              repos: KtList.empty(),
+              repos: [],
             ),
             StarredReposState.loaded(
-              repos: starredRepos.toImmutableList(),
+              repos: starredRepos,
               canLoadMore: true,
             ),
           ],
@@ -279,7 +275,7 @@ THEN the loaded starred repos should be updated
             ).called(1);
             expect(
               bloc.state.repos,
-              starredRepos.toImmutableList(),
+              starredRepos,
             );
           },
         );

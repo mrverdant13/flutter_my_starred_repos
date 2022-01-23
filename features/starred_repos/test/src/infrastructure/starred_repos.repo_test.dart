@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:starred_repos/src/infrastructure/starred_repos.repo.dart';
 import 'package:starred_repos/starred_repos.dart';
 
 class MockStarredReposApi extends Mock implements StarredReposApi {}

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../application/starred_repos_cubit/cubit.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 part 'wrapper.dart';
 
@@ -45,7 +44,7 @@ class StarredReposScreen extends StatelessWidget {
                 final starredReposCubit = context.read<StarredReposCubit>();
                 return RefreshIndicator(
                   onRefresh: () => starredReposCubit.reload(),
-                  child: starredRepos.isEmpty()
+                  child: starredRepos.isEmpty
                       ? LayoutBuilder(
                           builder: (context, constraints) =>
                               SingleChildScrollView(
@@ -71,20 +70,20 @@ class StarredReposScreen extends StatelessWidget {
                           ),
                         )
                       : ListView.builder(
-                          itemCount: starredRepos.size +
+                          itemCount: starredRepos.length +
                               starredReposState.maybeWhen(
                                 loading: (_) => 1,
                                 orElse: () => 0,
                               ),
                           itemBuilder: (context, index) {
-                            if (index == starredRepos.size) {
+                            if (index == starredRepos.length) {
                               return const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5.0),
                                 child: LinearProgressIndicator(minHeight: 10.0),
                               );
                             }
                             final starredRepo = starredRepos[index];
-                            if (starredRepo == starredRepos.iter.last) {
+                            if (starredRepo == starredRepos.last) {
                               starredReposCubit.load();
                             }
                             return ListTile(

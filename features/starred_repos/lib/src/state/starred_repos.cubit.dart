@@ -1,22 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kt_dart/kt.dart';
-import 'package:starred_repos/starred_repos.dart';
+import 'package:starred_repos/src/domain/get_starred_repos_warnings.dart';
+import 'package:starred_repos/src/domain/github_repo.dart';
+import 'package:starred_repos/src/infrastructure/starred_repos.repo.dart';
 
-part 'cubit.freezed.dart';
-part 'state.dart';
+part 'starred_repos.cubit.freezed.dart';
+part 'starred_repos.state.dart';
 
-/// {@template StarredReposCubit}
-/// A cubit that manages starred repos.
-/// {@endtemplate}
 class StarredReposCubit extends Cubit<StarredReposState> {
-  /// Creates an [StarredReposCubit].
-  ///
-  /// {@macro StarredReposCubit}
-  ///
-  /// It uses a [starredReposRepo] to perform actions on GitHub starred
-  /// repositories and it automatically start loading the first group of starred
-  /// repositories if [autoLoad] indicates so.
   StarredReposCubit({
     required StarredReposRepo starredReposRepo,
   })  : _starredReposRepo = starredReposRepo,
@@ -24,39 +15,27 @@ class StarredReposCubit extends Cubit<StarredReposState> {
         lastAvailblePage = 1,
         super(
           const StarredReposState.loaded(
-            repos: KtList.empty(),
+            repos: [],
             canLoadMore: true,
           ),
         );
 
-  /// The facade that actually performs actions on starred repos.
   final StarredReposRepo _starredReposRepo;
 
-  /// The last retrieved page of starred repositories.
   @visibleForTesting
   int lastCheckedPage;
 
-  /// The number of the last available page of starred repositories.
   @visibleForTesting
   int lastAvailblePage;
 
-  /// The flag that indicates whether there are more starred repositories to
-  /// retrieve or not.
   bool get _canLoadMore => lastAvailblePage > lastCheckedPage;
 
-  /// The flag that indicates whether more starred repositories are being
-  /// loaded.
   bool get _isLoading => state is _StarredReposStateLoading;
 
-  /// Loads starred GitHub repositories.
   Future<void> load() async {
     if (_isLoading || !_canLoadMore) return;
 
-    emit(
-      StarredReposState.loading(
-        repos: state.repos,
-      ),
-    );
+    emit(StarredReposState.loading(repos: state.repos));
 
     final cacheableStarredReposPage =
         await _starredReposRepo.getStarredReposPage(
@@ -66,9 +45,10 @@ class StarredReposCubit extends Cubit<StarredReposState> {
     lastCheckedPage++;
     lastAvailblePage = cacheableStarredReposPage.data.lastPage;
 
-    final resultingRepos = state.repos
-        .plus(cacheableStarredReposPage.data.elements.kt)
-        .distinctBy((repo) => repo.urlPath);
+    final resultingRepos = [
+      ...state.repos,
+      ...cacheableStarredReposPage.data.elements,
+    ];
 
     emit(
       StarredReposState.loaded(
@@ -82,13 +62,12 @@ class StarredReposCubit extends Cubit<StarredReposState> {
     );
   }
 
-  /// Reloads all starred GitHub repositories.
   Future<void> reload() async {
     lastCheckedPage = 0;
     lastAvailblePage = 1;
     emit(
       const StarredReposState.loaded(
-        repos: KtList.empty(),
+        repos: [],
         canLoadMore: true,
       ),
     );

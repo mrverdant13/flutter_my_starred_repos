@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:starred_repos/starred_repos.dart';
+import 'package:starred_repos/src/domain/github_repo.dart';
+import 'package:starred_repos/src/domain/page.dart';
 
 part 'starred_repos.api.freezed.dart';
 

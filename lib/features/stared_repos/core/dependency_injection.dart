@@ -59,7 +59,6 @@ final starredReposCubitPod = Provider.autoDispose<StarredReposCubit>(
       starredReposRepo: ref.watch(starredReposRepoPod),
     );
     ref.onDispose(() => cubit.close());
-    cubit.load();
     return cubit;
   },
 );

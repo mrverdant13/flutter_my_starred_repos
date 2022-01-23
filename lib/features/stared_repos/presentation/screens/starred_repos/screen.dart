@@ -5,11 +5,21 @@ import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_i
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:starred_repos/starred_repos.dart';
 
-class StarredReposScreen extends ConsumerWidget {
-  const StarredReposScreen();
+class StarredReposScreen extends ConsumerStatefulWidget {
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _StarredReposScreenState();
+}
+
+class _StarredReposScreenState extends ConsumerState<StarredReposScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(starredReposCubitPod).load();
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('Starred Repositorires'),
         ),

@@ -1,5 +1,5 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:starred_repos/starred_repos.dart';
-import 'package:test/test.dart';
 
 void main() {
   test(

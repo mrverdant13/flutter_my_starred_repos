@@ -1,0 +1,30 @@
+name: starred_repos
+description: The implementation of the starred repos feature
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=2.8.1 <3.0.0"
+
+dependencies:
+  bloc: ^7.2.1
+  dio: ^4.0.4
+  flutter:
+    sdk: flutter
+  freezed_annotation: ^1.1.0
+  sembast: ^3.1.1+1
+
+dev_dependencies:
+  bloc_test: ^8.5.0
+  build_runner: ^2.1.7
+  flutter_test:
+    sdk: flutter
+  freezed: ^1.1.1
+  json_serializable: ^6.1.4
+  lint_rules:
+    path: ../../lint_rules
+  mocktail: ^0.2.0
+
+dependency_overrides:
+  test_api: ^0.4.9

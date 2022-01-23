@@ -28,5 +28,5 @@ _$_AppConfig _$$_AppConfigFromJson(Map json) => $checkedCreate(
 
 Map<String, dynamic> _$$_AppConfigToJson(_$_AppConfig instance) =>
     <String, dynamic>{
-      'githubAuthConfig': instance.githubAuthConfig,
+      'githubAuthConfig': instance.githubAuthConfig.toJson(),
     };

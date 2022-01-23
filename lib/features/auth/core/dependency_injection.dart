@@ -1,68 +1,48 @@
-import 'package:auth_config/auth_config.dart';
-import 'package:auth_rds/auth_rds.dart';
-import 'package:auth_service/auth_service.dart';
-import 'package:creds_lds/creds_lds.dart';
+import 'package:auth/auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/dependency_injection.dart';
-import '../application/authenticator_cubit/authenticator_cubit.dart';
-import '../infrastructure/external/dio_interceptors.dart';
 
 final githubAuthConfigPod = Provider<GithubAuthConfig>(
-  (ref) {
-    final appConfig = ref.watch(appConfigPod);
-    return appConfig.githubAuthConfig;
-  },
+  (ref) => ref.watch(appConfigPod).githubAuthConfig,
 );
 
 final flutterSecureStoragePod = Provider<FlutterSecureStorage>(
   (_) => const FlutterSecureStorage(),
 );
 
-final credsLDSPod = Provider<CredsLDS>(
-  (ref) {
-    final flutterSecureStorage = ref.watch(flutterSecureStoragePod);
-    return CredsLDSImp(
-      flutterSecureStorage: flutterSecureStorage,
-    );
-  },
+final credsStoragePod = Provider<CredsStorage>(
+  (ref) => CredsStorage(
+    flutterSecureStorage: ref.watch(flutterSecureStoragePod),
+  ),
 );
 
 final authInterceptorPod = Provider<AuthInterceptor>(
-  (ref) {
-    final credsLDS = ref.watch(credsLDSPod);
-    return AuthInterceptor(
-      credsLDS: credsLDS,
-    );
-  },
+  (ref) => AuthInterceptor(
+    credsStorage: ref.watch(credsStoragePod),
+  ),
 );
 
-final authenticatorPod = Provider<Authenticator>(
-  (ref) {
-    final githubAuthConfig = ref.watch(githubAuthConfigPod);
-    return AuthenticatorImp(
-      githubAuthConfig: githubAuthConfig,
-    );
-  },
+final githubAuthApiPod = Provider<GithubAuthApi>(
+  (ref) => GithubAuthApi(
+    githubAuthConfig: ref.watch(githubAuthConfigPod),
+  ),
 );
 
 final authServicePod = Provider<AuthService>(
-  (ref) {
-    final authenticator = ref.watch(authenticatorPod);
-    final credsLDS = ref.watch(credsLDSPod);
-    return AuthServiceImp(
-      authenticator: authenticator,
-      credsLDS: credsLDS,
-    );
-  },
+  (ref) => AuthService(
+    githubAuthApi: ref.watch(githubAuthApiPod),
+    credsStorage: ref.watch(credsStoragePod),
+  ),
 );
 
-final authenticatorCubitPod = Provider<AuthenticatorCubit>(
+final authCubitPod = Provider.autoDispose<AuthCubit>(
   (ref) {
-    final authService = ref.watch(authServicePod);
-    return AuthenticatorCubit(
-      authService: authService,
+    final cubit = AuthCubit(
+      authService: ref.watch(authServicePod),
     );
+    ref.onDispose(() => cubit.close());
+    return cubit;
   },
 );

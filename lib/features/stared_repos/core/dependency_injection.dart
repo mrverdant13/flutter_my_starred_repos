@@ -4,18 +4,9 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
+import 'package:starred_repos/starred_repos.dart';
 
 import '../../auth/core/dependency_injection.dart';
-import '../application/starred_repos_cubit/cubit.dart';
-import '../infrastructure/data_sources/etags_lds/interface.dart';
-import '../infrastructure/data_sources/etags_lds/sembast_implementation.dart';
-import '../infrastructure/data_sources/stared_repos_rds/interface.dart';
-import '../infrastructure/data_sources/stared_repos_rds/rest_implementation.dart';
-import '../infrastructure/data_sources/starred_repos_lds/interface.dart';
-import '../infrastructure/data_sources/starred_repos_lds/sembast_implementation.dart';
-import '../infrastructure/external/etags_dio_interceptor.dart';
-import '../infrastructure/facades/starred_repos_repo/implementation.dart';
-import '../infrastructure/facades/starred_repos_repo/interface.dart';
 
 final sembastDbPod = Provider<Database>(
   (_) => throw StateError(
@@ -23,71 +14,52 @@ final sembastDbPod = Provider<Database>(
   ),
 );
 
-final pagesEtagsLDSPod = Provider<PagesEtagsLDS>(
-  (ref) {
-    final sembastDb = ref.watch(sembastDbPod);
-    return PagesEtagsLDSImp(
-      sembastDatabase: sembastDb,
-    );
-  },
+final pageEtagsStoragePod = Provider<PageEtagsStorage>(
+  (ref) => PageEtagsStorage(
+    sembastDatabase: ref.watch(sembastDbPod),
+  ),
 );
 
 final etagsInterceptorPod = Provider<EtagsInterceptor>(
-  (ref) {
-    final pagesEtagsLDS = ref.watch(pagesEtagsLDSPod);
-    return EtagsInterceptor(
-      pagesEtagsLDS: pagesEtagsLDS,
-    );
-  },
+  (ref) => EtagsInterceptor(
+    pageEtagsStorage: ref.watch(pageEtagsStoragePod),
+  ),
 );
 
 final starredReposDioPod = Provider<Dio>(
-  (ref) {
-    final authInterceptor = ref.watch(authInterceptorPod);
-    final etagsInterceptor = ref.watch(etagsInterceptorPod);
-    return Dio()
-      ..interceptors.addAll([
-        authInterceptor,
-        etagsInterceptor,
-      ]);
-  },
+  (ref) => Dio()
+    ..interceptors.addAll([
+      ref.watch(authInterceptorPod),
+      ref.watch(etagsInterceptorPod),
+    ]),
 );
 
-final starredReposRDSPod = Provider<StaredReposRDS>(
-  (ref) {
-    final dio = ref.watch(starredReposDioPod);
-    return StaredReposRDSImp(
-      dio: dio,
-    );
-  },
+final starredReposApiPod = Provider<StarredReposApi>(
+  (ref) => StarredReposApi(
+    dio: ref.watch(starredReposDioPod),
+  ),
 );
 
-final starredReposLDSPod = Provider<StarredReposLDS>(
-  (ref) {
-    final sembastDb = ref.watch(sembastDbPod);
-    return StarredReposLDSImp(
-      sembastDatabase: sembastDb,
-    );
-  },
+final starredReposStoragePod = Provider<StarredReposStorage>(
+  (ref) => StarredReposStorage(
+    sembastDatabase: ref.watch(sembastDbPod),
+  ),
 );
 
 final starredReposRepoPod = Provider<StarredReposRepo>(
-  (ref) {
-    final starredReposLDS = ref.watch(starredReposLDSPod);
-    final starredReposRDS = ref.watch(starredReposRDSPod);
-    return StarredReposRepoImp(
-      starredReposRDS: starredReposRDS,
-      starredReposLDS: starredReposLDS,
-    );
-  },
+  (ref) => StarredReposRepo(
+    starredReposApi: ref.watch(starredReposApiPod),
+    starredReposStorage: ref.watch(starredReposStoragePod),
+  ),
 );
 
-final starredReposCubitPod = Provider<StarredReposCubit>(
+final starredReposCubitPod = Provider.autoDispose<StarredReposCubit>(
   (ref) {
-    final starredReposRepo = ref.watch(starredReposRepoPod);
-    return StarredReposCubit(
-      starredReposRepo: starredReposRepo,
+    final cubit = StarredReposCubit(
+      starredReposRepo: ref.watch(starredReposRepoPod),
     );
+    ref.onDispose(() => cubit.close());
+    return cubit;
   },
 );
 

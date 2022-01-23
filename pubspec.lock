@@ -36,34 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
-  auth_config:
-    dependency: transitive
-    description:
-      path: "features/auth/auth_config"
-      relative: true
-    source: path
-    version: "0.1.0+1"
-  auth_domain:
-    dependency: transitive
-    description:
-      path: "features/auth/auth_domain"
-      relative: true
-    source: path
-    version: "0.1.0+1"
-  auth_rds:
-    dependency: transitive
-    description:
-      path: "features/auth/data_sources/auth_rds"
-      relative: true
-    source: path
-    version: "0.1.0+1"
-  auth_service:
+  auth:
     dependency: "direct main"
     description:
-      path: "features/auth/facades/auth_service"
+      path: "features/auth"
       relative: true
     source: path
-    version: "0.1.0+1"
+    version: "1.0.0+1"
   auto_route:
     dependency: "direct main"
     description:
@@ -246,13 +225,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  creds_lds:
-    dependency: transitive
-    description:
-      path: "features/auth/data_sources/creds_lds"
-      relative: true
-    source: path
-    version: "0.1.0+1"
   crypto:
     dependency: transitive
     description:
@@ -309,6 +281,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -538,7 +517,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.3"
+    version: "0.13.4"
   http_multi_server:
     dependency: transitive
     description:
@@ -693,6 +672,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0+1"
+  oxidized:
+    dependency: "direct main"
+    description:
+      name: oxidized
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
   package_config:
     dependency: transitive
     description:
@@ -922,6 +908,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
+  starred_repos:
+    dependency: "direct main"
+    description:
+      path: "features/starred_repos"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   state_notifier:
     dependency: transitive
     description:

@@ -42,7 +42,7 @@ class AppDrawer extends ConsumerWidget {
                 ListTile(
                   leading: const Icon(Icons.logout),
                   title: const Text('Log out'),
-                  onTap: () => ref.watch(authenticatorCubitPod).logOut(),
+                  onTap: () => ref.watch(authCubitPod).logOut(),
                 ),
               ],
             ),

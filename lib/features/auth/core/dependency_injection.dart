@@ -38,10 +38,12 @@ final authServicePod = Provider<AuthService>(
   ),
 );
 
-final authCubitPod = Provider<AuthCubit>(
+final authCubitPod = Provider.autoDispose<AuthCubit>(
   (ref) {
-    return AuthCubit(
+    final cubit = AuthCubit(
       authService: ref.watch(authServicePod),
     );
+    ref.onDispose(() => cubit.close());
+    return cubit;
   },
 );

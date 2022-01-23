@@ -60,11 +60,12 @@ final usersRepoPod = Provider<UsersRepo>(
   },
 );
 
-final usersCubitPod = Provider<UsersCubit>(
+final usersCubitPod = Provider.autoDispose<UsersCubit>(
   (ref) {
-    final usersRepo = ref.watch(usersRepoPod);
-    return UsersCubit(
-      usersRepo: usersRepo,
+    final cubit = UsersCubit(
+      usersRepo: ref.watch(usersRepoPod),
     );
+    ref.onDispose(() => cubit.close());
+    return cubit;
   },
 );

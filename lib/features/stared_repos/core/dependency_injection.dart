@@ -53,10 +53,15 @@ final starredReposRepoPod = Provider<StarredReposRepo>(
   ),
 );
 
-final starredReposCubitPod = Provider<StarredReposCubit>(
-  (ref) => StarredReposCubit(
-    starredReposRepo: ref.watch(starredReposRepoPod),
-  ),
+final starredReposCubitPod = Provider.autoDispose<StarredReposCubit>(
+  (ref) {
+    final cubit = StarredReposCubit(
+      starredReposRepo: ref.watch(starredReposRepoPod),
+    );
+    ref.onDispose(() => cubit.close());
+    cubit.load();
+    return cubit;
+  },
 );
 
 Future<List<Override>> getInjectionOverrides() async {

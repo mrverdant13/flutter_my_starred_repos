@@ -8,7 +8,6 @@ import 'package:starred_repos/starred_repos.dart';
 
 import '../../auth/core/dependency_injection.dart';
 import '../application/starred_repos_cubit/cubit.dart';
-import '../infrastructure/external/etags_dio_interceptor.dart';
 
 final sembastDbPod = Provider<Database>(
   (_) => throw StateError(

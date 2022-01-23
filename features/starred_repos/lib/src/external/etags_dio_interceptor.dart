@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:starred_repos/starred_repos.dart';
+import 'package:starred_repos/src/infrastructure/page_etags.storage.dart';
+import 'package:starred_repos/src/infrastructure/starred_repos.api.dart';
 
 class EtagsInterceptor extends Interceptor {
   EtagsInterceptor({

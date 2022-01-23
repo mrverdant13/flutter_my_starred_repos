@@ -2,12 +2,10 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:starred_repos/starred_repos.dart';
-import 'package:test/test.dart';
-
-import '../../../../helpers/mock_interceptor.dart';
+import 'package:starred_repos/src/external/etags_dio_interceptor.dart';
+import 'package:starred_repos/src/infrastructure/page_etags.storage.dart';
 
 class MockPageEtagsStorage extends Mock implements PageEtagsStorage {}
 
@@ -45,17 +43,18 @@ GIVEN an HTTP client
           Dio()
             ..interceptors.addAll([
               etagsInterceptor,
-              MockerInterceptor(
-                responseBuilder: includeEtagInResponse
-                    ? (options) => Response(
-                          requestOptions: options,
-                          statusCode: HttpStatus.ok,
-                          headers: Headers.fromMap({
-                            'ETag': [etag],
-                          }),
-                        )
-                    : null,
-              )
+              InterceptorsWrapper(
+                onRequest: (options, handler) => handler.resolve(
+                  Response(
+                    requestOptions: options,
+                    statusCode: HttpStatus.ok,
+                    headers: Headers.fromMap({
+                      if (includeEtagInResponse) 'ETag': [etag],
+                    }),
+                  ),
+                  true,
+                ),
+              ),
             ]);
 
       setUp(

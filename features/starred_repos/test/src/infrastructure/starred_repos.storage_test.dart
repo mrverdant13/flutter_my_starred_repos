@@ -1,8 +1,8 @@
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/sembast_implementation.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
+import 'package:starred_repos/src/infrastructure/starred_repos.storage.dart';
 import 'package:starred_repos/starred_repos.dart';
-import 'package:test/test.dart';
 
 void main() {
   group(
@@ -13,7 +13,7 @@ GIVEN an etags local data source
     () {
       // ARRANGE
       late Database sembastDb;
-      late StarredReposLDSImp starredReposLDS;
+      late StarredReposStorage starredReposStorage;
 
       const page = 3;
       const lastPage = 5;
@@ -40,7 +40,7 @@ GIVEN an etags local data source
           sembastDb = await databaseFactoryMemory.openDatabase(
             sembastInMemoryDatabasePath,
           );
-          starredReposLDS = StarredReposLDSImp(
+          starredReposStorage = StarredReposStorage(
             sembastDatabase: sembastDb,
           );
         },
@@ -58,18 +58,18 @@ THEN the page data should be persisted
         () async {
           // ARRANGE-ASSERT
           Map<String, dynamic>? storedPageDataJson =
-              await starredReposLDS.store.record(page).get(sembastDb);
+              await starredReposStorage.store.record(page).get(sembastDb);
           expect(storedPageDataJson, isNull);
 
           // ACT
-          await starredReposLDS.set(
+          await starredReposStorage.set(
             page: page,
             starredReposPage: pageData,
           );
 
           // ASSERT
           storedPageDataJson =
-              await starredReposLDS.store.record(page).get(sembastDb);
+              await starredReposStorage.store.record(page).get(sembastDb);
           expect(storedPageDataJson, pageDataJson);
         },
       );
@@ -85,16 +85,16 @@ THEN the starred repos page data should be returned
       ''',
         () async {
           // ARRANGE-ASSERT
-          await starredReposLDS.store.record(page).put(
+          await starredReposStorage.store.record(page).put(
                 sembastDb,
                 pageDataJson,
               );
           final storedPageDataJson =
-              await starredReposLDS.store.record(page).get(sembastDb);
+              await starredReposStorage.store.record(page).get(sembastDb);
           expect(storedPageDataJson, pageDataJson);
 
           // ACT
-          final storedPageData = await starredReposLDS.get(
+          final storedPageData = await starredReposStorage.get(
             page: page,
           );
 

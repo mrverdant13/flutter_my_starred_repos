@@ -3,7 +3,6 @@ import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection
 import 'package:flutter_my_starred_repos/features/auth/infrastructure/external/dio_interceptors.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/application/starred_repos_cubit/cubit.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/external/etags_dio_interceptor.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -126,8 +125,8 @@ THEN the necessary starred-repos-related dependencies should be injected
                 isA<StarredReposApi>(),
               );
               expect(
-                container.read(starredReposLDSPod),
-                isA<StarredReposLDS>(),
+                container.read(starredReposStoragePod),
+                isA<StarredReposStorage>(),
               );
               expect(
                 container.read(starredReposRepoPod),

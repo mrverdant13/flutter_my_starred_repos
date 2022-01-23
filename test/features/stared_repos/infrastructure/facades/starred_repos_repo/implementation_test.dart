@@ -1,4 +1,3 @@
-import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/data_sources/starred_repos_lds/interface.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/implementation.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/infrastructure/facades/starred_repos_repo/interface.dart';
 import 'package:mocktail/mocktail.dart';
@@ -7,7 +6,7 @@ import 'package:test/test.dart';
 
 class MockStarredReposApi extends Mock implements StarredReposApi {}
 
-class MockStarredReposLDS extends Mock implements StarredReposLDS {}
+class MockStarredReposStorage extends Mock implements StarredReposStorage {}
 
 class FakeReposPage extends Fake implements Page<GithubRepo> {}
 
@@ -29,7 +28,7 @@ AND a repos page number''',
     () {
       // ARRANGE
       late MockStarredReposApi mockStarredReposApi;
-      late MockStarredReposLDS mockStarredReposLDS;
+      late MockStarredReposStorage mockStarredReposStorage;
       late StarredReposRepo starredReposRepo;
 
       const page = 9;
@@ -55,10 +54,10 @@ AND a repos page number''',
       setUp(
         () {
           mockStarredReposApi = MockStarredReposApi();
-          mockStarredReposLDS = MockStarredReposLDS();
+          mockStarredReposStorage = MockStarredReposStorage();
           starredReposRepo = StarredReposRepoImp(
             starredReposApi: mockStarredReposApi,
-            starredReposLDS: mockStarredReposLDS,
+            starredReposStorage: mockStarredReposStorage,
           );
         },
       );
@@ -66,7 +65,7 @@ AND a repos page number''',
       tearDown(
         () {
           verifyNoMoreInteractions(mockStarredReposApi);
-          verifyNoMoreInteractions(mockStarredReposLDS);
+          verifyNoMoreInteractions(mockStarredReposStorage);
         },
       );
 
@@ -91,7 +90,7 @@ THEN a starred repos page data holder should be received, persisted and returned
             (_) async => reposPage,
           );
           when(
-            () => mockStarredReposLDS.set(
+            () => mockStarredReposStorage.set(
               page: any(named: 'page'),
               starredReposPage: any(named: 'starredReposPage'),
             ),
@@ -111,7 +110,7 @@ THEN a starred repos page data holder should be received, persisted and returned
             ),
           ).called(1);
           verify(
-            () => mockStarredReposLDS.set(
+            () => mockStarredReposStorage.set(
               page: page,
               starredReposPage: reposPage,
             ),
@@ -153,7 +152,7 @@ THEN the persisted repos page should be returned
             const GetStarredReposPageException.unmodified(),
           );
           when(
-            () => mockStarredReposLDS.get(
+            () => mockStarredReposStorage.get(
               page: any(named: 'page'),
             ),
           ).thenAnswer(
@@ -172,7 +171,7 @@ THEN the persisted repos page should be returned
             ),
           ).called(1);
           verify(
-            () => mockStarredReposLDS.get(
+            () => mockStarredReposStorage.get(
               page: page,
             ),
           ).called(1);
@@ -212,7 +211,7 @@ THEN the persisted repos page should be returned
             const GetStarredReposPageException.offline(),
           );
           when(
-            () => mockStarredReposLDS.get(
+            () => mockStarredReposStorage.get(
               page: any(named: 'page'),
             ),
           ).thenAnswer(
@@ -231,7 +230,7 @@ THEN the persisted repos page should be returned
             ),
           ).called(1);
           verify(
-            () => mockStarredReposLDS.get(
+            () => mockStarredReposStorage.get(
               page: page,
             ),
           ).called(1);
@@ -278,7 +277,7 @@ THEN an empty repos page should be returned
             const GetStarredReposPageException.offline(),
           );
           when(
-            () => mockStarredReposLDS.get(
+            () => mockStarredReposStorage.get(
               page: any(named: 'page'),
             ),
           ).thenAnswer(
@@ -297,7 +296,7 @@ THEN an empty repos page should be returned
             ),
           ).called(1);
           verify(
-            () => mockStarredReposLDS.get(
+            () => mockStarredReposStorage.get(
               page: page,
             ),
           ).called(1);

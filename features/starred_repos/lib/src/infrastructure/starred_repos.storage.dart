@@ -1,11 +1,9 @@
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sembast/sembast.dart';
 import 'package:starred_repos/starred_repos.dart';
 
-import 'interface.dart';
-
-class StarredReposLDSImp extends StarredReposLDS {
-  StarredReposLDSImp({
+class StarredReposStorage {
+  StarredReposStorage({
     required Database sembastDatabase,
   })  : _db = sembastDatabase,
         store = StoreRef(storeName);
@@ -18,7 +16,6 @@ class StarredReposLDSImp extends StarredReposLDS {
   @visibleForTesting
   static const storeName = 'starred_repos';
 
-  @override
   Future<void> set({
     required int page,
     required Page<GithubRepo> starredReposPage,
@@ -27,7 +24,6 @@ class StarredReposLDSImp extends StarredReposLDS {
     await store.record(page).put(_db, starredReposPageJson);
   }
 
-  @override
   Future<Page<GithubRepo>?> get({
     required int page,
   }) async {

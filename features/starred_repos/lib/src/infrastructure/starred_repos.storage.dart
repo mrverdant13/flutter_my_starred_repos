@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:sembast/sembast.dart';
-import 'package:starred_repos/starred_repos.dart';
+import 'package:starred_repos/src/domain/github_repo.dart';
+import 'package:starred_repos/src/domain/page.dart';
 
 class StarredReposStorage {
   StarredReposStorage({

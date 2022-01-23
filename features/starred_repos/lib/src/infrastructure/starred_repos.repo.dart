@@ -1,4 +1,9 @@
-import 'package:starred_repos/starred_repos.dart';
+import 'package:starred_repos/src/domain/get_starred_repos_warnings.dart';
+import 'package:starred_repos/src/domain/github_repo.dart';
+import 'package:starred_repos/src/domain/page.dart';
+import 'package:starred_repos/src/domain/payload.dart';
+import 'package:starred_repos/src/infrastructure/starred_repos.api.dart';
+import 'package:starred_repos/src/infrastructure/starred_repos.storage.dart';
 
 class StarredReposRepo {
   const StarredReposRepo({

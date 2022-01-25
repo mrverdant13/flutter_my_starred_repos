@@ -24,7 +24,7 @@ class _$ProfileTearOff {
 
   _Profile call(
       {@JsonKey(name: 'login') required String username,
-      required String name,
+      required String? name,
       required String avatarUrl}) {
     return _Profile(
       username: username,
@@ -47,7 +47,7 @@ mixin _$Profile {
 // ignore: invalid_annotation_target
   @JsonKey(name: 'login')
   String get username => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   String get avatarUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -60,7 +60,9 @@ abstract class $ProfileCopyWith<$Res> {
   factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
       _$ProfileCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'login') String username, String name, String avatarUrl});
+      {@JsonKey(name: 'login') String username,
+      String? name,
+      String avatarUrl});
 }
 
 /// @nodoc
@@ -85,7 +87,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avatarUrl: avatarUrl == freezed
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -100,7 +102,9 @@ abstract class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       __$ProfileCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'login') String username, String name, String avatarUrl});
+      {@JsonKey(name: 'login') String username,
+      String? name,
+      String avatarUrl});
 }
 
 /// @nodoc
@@ -126,7 +130,7 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avatarUrl: avatarUrl == freezed
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -151,7 +155,7 @@ class _$_Profile implements _Profile {
   @JsonKey(name: 'login')
   final String username;
   @override
-  final String name;
+  final String? name;
   @override
   final String avatarUrl;
 
@@ -191,7 +195,7 @@ class _$_Profile implements _Profile {
 abstract class _Profile implements Profile {
   const factory _Profile(
       {@JsonKey(name: 'login') required String username,
-      required String name,
+      required String? name,
       required String avatarUrl}) = _$_Profile;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$_Profile.fromJson;
@@ -201,7 +205,7 @@ abstract class _Profile implements Profile {
   @JsonKey(name: 'login')
   String get username;
   @override
-  String get name;
+  String? get name;
   @override
   String get avatarUrl;
   @override

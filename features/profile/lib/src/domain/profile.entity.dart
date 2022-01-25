@@ -10,7 +10,7 @@ class Profile with _$Profile {
 // coverage:ignore-end
     // ignore: invalid_annotation_target
     @JsonKey(name: 'login') required String username,
-    required String name,
+    required String? name,
     required String avatarUrl,
   }) = _Profile;
 

@@ -24,7 +24,7 @@ class _$ProfileTearOff {
 
   _Profile call(
       {@JsonKey(name: 'login') required String username,
-      required String? name,
+      String? name,
       required String avatarUrl}) {
     return _Profile(
       username: username,
@@ -144,7 +144,7 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
 class _$_Profile implements _Profile {
   const _$_Profile(
       {@JsonKey(name: 'login') required this.username,
-      required this.name,
+      this.name,
       required this.avatarUrl});
 
   factory _$_Profile.fromJson(Map<String, dynamic> json) =>
@@ -195,7 +195,7 @@ class _$_Profile implements _Profile {
 abstract class _Profile implements Profile {
   const factory _Profile(
       {@JsonKey(name: 'login') required String username,
-      required String? name,
+      String? name,
       required String avatarUrl}) = _$_Profile;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$_Profile.fromJson;

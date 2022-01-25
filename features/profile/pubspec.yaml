@@ -10,10 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  freezed_annotation: ^1.1.0
 
 dev_dependencies:
+  build_runner: ^2.1.7
   flutter_test:
     sdk: flutter
+  freezed: ^1.1.1
+  json_serializable: ^6.1.4
   lint_rules:
     path: ../../lint_rules
 

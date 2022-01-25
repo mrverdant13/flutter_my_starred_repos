@@ -1,0 +1,21 @@
+name: profile
+description: The implementation of the profile feature
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=2.8.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  lint_rules:
+    path: ../../lint_rules
+
+dependency_overrides:
+  test_api: ^0.4.9

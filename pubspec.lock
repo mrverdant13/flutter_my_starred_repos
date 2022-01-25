@@ -791,6 +791,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.3"
+  profile:
+    dependency: "direct main"
+    description:
+      path: "features/profile"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   provider:
     dependency: transitive
     description:

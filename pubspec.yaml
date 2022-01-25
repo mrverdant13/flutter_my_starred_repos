@@ -64,6 +64,8 @@ dependencies:
   # Auth features
   auth:
     path: features/auth
+  profile:
+    path: features/profile
   starred_repos:
     path: features/starred_repos
 

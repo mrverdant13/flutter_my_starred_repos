@@ -14,8 +14,8 @@ class ProfileApi {
   Future<Profile> getProfile() async {
     // Ref: https://docs.github.com/en/graphql/reference/queries#user
     const getProfileQuery = '''
-query viewer {
-  profile {
+query {
+  viewer {
     login
     name
     avatarUrl

@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -389,6 +396,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.5"
+  oxidized:
+    dependency: "direct main"
+    description:
+      name: oxidized
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
   package_config:
     dependency: transitive
     description:

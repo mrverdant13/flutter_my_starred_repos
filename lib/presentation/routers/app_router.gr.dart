@@ -61,7 +61,7 @@ class AppRouter extends _i6.RootStackRouter {
     StarredReposScreenRoute.name: (routeData) {
       return _i6.CustomPage<dynamic>(
           routeData: routeData,
-          child: _i5.StarredReposScreen(),
+          child: const _i5.StarredReposScreen(),
           opaque: true,
           barrierDismissible: false);
     }

@@ -19,23 +19,33 @@ class ProfileScreen extends HookConsumerWidget {
       drawer: const AppDrawer(),
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: () async => ref.read(profileCubitPod).getProfile(),
-          child: BlocBuilder<ProfileCubit, ProfileState>(
-            bloc: ref.watch(profileCubitPod),
-            builder: (context, profileState) => profileState.when(
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              loaded: (profile) => ProfilePreview(profile: profile),
-              failure: (failure) => Center(
-                child: Text(
-                  failure.when(
-                    offline: () => 'Unreliable connection',
-                    unexpected: () => 'Unexpected error',
+          onRefresh: () => ref.read(profileCubitPod).getProfile(),
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: BlocBuilder<ProfileCubit, ProfileState>(
+                    bloc: ref.watch(profileCubitPod),
+                    builder: (context, profileState) => profileState.when(
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      loaded: (profile) => ProfilePreview(profile: profile),
+                      failure: (failure) => Center(
+                        child: Text(
+                          failure.when(
+                            offline: () => 'Unreliable connection',
+                            unexpected: () => 'Unexpected error',
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),

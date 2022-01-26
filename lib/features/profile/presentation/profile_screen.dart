@@ -13,13 +13,15 @@ class ProfileScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      ref.read(profileCubitPod).getProfile();
+      ref.read(profileCubitPod)
+        ..watchProfile()
+        ..refreshProfile();
     }, []);
     return Scaffold(
       drawer: const AppDrawer(),
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: () => ref.read(profileCubitPod).getProfile(),
+          onRefresh: () => ref.read(profileCubitPod).refreshProfile(),
           child: CustomScrollView(
             slivers: [
               SliverFillRemaining(

@@ -16,18 +16,22 @@ class ProfileRepo {
   final ProfileApi _profileApi;
   final ProfileStorage _profileStorage;
 
-  Future<Result<Profile, GetProfileFailure>> getProfile() async {
+  Future<Result<Unit, GetProfileFailure>> refreshProfile() async {
     try {
       final profile = await _profileApi.getProfile();
       await _profileStorage.setProfile(profile);
-      return Ok(profile);
+      return Ok(unit);
     } on GetProfileException catch (e) {
-      return await e.when(
-        offline: () async => Ok(await _profileStorage.profile),
-        unexpected: () => Err(const GetProfileFailure.unexpected()),
+      return Err(
+        e.when(
+          offline: () => const GetProfileFailure.offline(),
+          unexpected: () => const GetProfileFailure.unexpected(),
+        ),
       );
     }
   }
+
+  Stream<Profile> watchProfile() => _profileStorage.watchProfile();
 }
 
 @freezed

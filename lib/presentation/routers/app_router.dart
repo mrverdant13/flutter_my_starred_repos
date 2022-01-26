@@ -12,11 +12,11 @@ import 'app_router.gr.dart';
 @CustomAutoRouter(
   routes: [
     CustomRoute(
-      page: ProfileScreen,
+      page: LoginScreen,
       initial: true,
     ),
     CustomRoute(
-      page: LoginScreen,
+      page: ProfileScreen,
     ),
     CustomRoute<Uri>(
       page: AuthScreen,

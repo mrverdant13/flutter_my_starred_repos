@@ -14,8 +14,8 @@ import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i7;
 
 import '../../features/auth/presentation/screens/auth/screen.dart' as _i3;
-import '../../features/auth/presentation/screens/login/screen.dart' as _i2;
-import '../../features/profile/presentation/profile_screen.dart' as _i1;
+import '../../features/auth/presentation/screens/login/screen.dart' as _i1;
+import '../../features/profile/presentation/profile_screen.dart' as _i2;
 import '../../features/stared_repos/presentation/screens/starred_repos/screen.dart'
     as _i5;
 import '../../features/users_placeholder/presentation/screens/users/screen.dart'
@@ -27,17 +27,17 @@ class AppRouter extends _i6.RootStackRouter {
 
   @override
   final Map<String, _i6.PageFactory> pagesMap = {
-    ProfileScreenRoute.name: (routeData) {
-      return _i6.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i1.ProfileScreen(),
-          opaque: true,
-          barrierDismissible: false);
-    },
     LoginScreenRoute.name: (routeData) {
       return _i6.CustomPage<dynamic>(
           routeData: routeData,
-          child: _i2.LoginScreen(),
+          child: _i1.LoginScreen(),
+          opaque: true,
+          barrierDismissible: false);
+    },
+    ProfileScreenRoute.name: (routeData) {
+      return _i6.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i2.ProfileScreen(),
           opaque: true,
           barrierDismissible: false);
     },
@@ -69,8 +69,8 @@ class AppRouter extends _i6.RootStackRouter {
 
   @override
   List<_i6.RouteConfig> get routes => [
-        _i6.RouteConfig(ProfileScreenRoute.name, path: '/'),
-        _i6.RouteConfig(LoginScreenRoute.name, path: '/login-screen'),
+        _i6.RouteConfig(LoginScreenRoute.name, path: '/'),
+        _i6.RouteConfig(ProfileScreenRoute.name, path: '/profile-screen'),
         _i6.RouteConfig(AuthScreenRoute.name, path: '/auth-screen'),
         _i6.RouteConfig(UsersScreenRoute.name, path: '/users-screen'),
         _i6.RouteConfig(StarredReposScreenRoute.name,
@@ -79,20 +79,20 @@ class AppRouter extends _i6.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.ProfileScreen]
-class ProfileScreenRoute extends _i6.PageRouteInfo<void> {
-  const ProfileScreenRoute() : super(ProfileScreenRoute.name, path: '/');
+/// [_i1.LoginScreen]
+class LoginScreenRoute extends _i6.PageRouteInfo<void> {
+  const LoginScreenRoute() : super(LoginScreenRoute.name, path: '/');
 
-  static const String name = 'ProfileScreenRoute';
+  static const String name = 'LoginScreenRoute';
 }
 
 /// generated route for
-/// [_i2.LoginScreen]
-class LoginScreenRoute extends _i6.PageRouteInfo<void> {
-  const LoginScreenRoute()
-      : super(LoginScreenRoute.name, path: '/login-screen');
+/// [_i2.ProfileScreen]
+class ProfileScreenRoute extends _i6.PageRouteInfo<void> {
+  const ProfileScreenRoute()
+      : super(ProfileScreenRoute.name, path: '/profile-screen');
 
-  static const String name = 'LoginScreenRoute';
+  static const String name = 'ProfileScreenRoute';
 }
 
 /// generated route for

@@ -27,8 +27,9 @@ class ProfileScreen extends HookConsumerWidget {
               SliverFillRemaining(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: BlocBuilder<ProfileCubit, ProfileState>(
+                  child: BlocConsumer<ProfileCubit, ProfileState>(
                     bloc: ref.watch(profileCubitPod),
+                    listener: _profileStateListener,
                     builder: (context, profileState) => ProfilePreview(
                       profile: profileState.profile,
                     ),
@@ -41,4 +42,21 @@ class ProfileScreen extends HookConsumerWidget {
       ),
     );
   }
+
+  void _profileStateListener(
+    BuildContext context,
+    ProfileState profileState,
+  ) =>
+      profileState.whenOrNull(
+        failure: (_, failure) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              failure.when(
+                offline: () => 'Unreliable network',
+                unexpected: () => 'Unexpected error',
+              ),
+            ),
+          ),
+        ),
+      );
 }

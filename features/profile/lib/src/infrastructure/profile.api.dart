@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -42,7 +43,9 @@ query {
     final exception = queryResult.exception;
     if (exception != null) {
       final linkException = exception.linkException;
-      if (linkException is NetworkException) {
+      if (linkException is NetworkException ||
+          (linkException is ServerException &&
+              linkException.originalException is SocketException)) {
         throw const GetProfileException.offline();
       }
       throw const GetProfileException.unexpected();

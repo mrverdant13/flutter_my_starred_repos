@@ -20,6 +20,7 @@ class ProfileRepo {
       return Err(
         e.when(
           offline: () => const GetProfileFailure.offline(),
+          unexpected: () => const GetProfileFailure.unexpected(),
         ),
       );
     }
@@ -29,4 +30,5 @@ class ProfileRepo {
 @freezed
 class GetProfileFailure with _$GetProfileFailure {
   const factory GetProfileFailure.offline() = _GetProfileFailureOffline;
+  const factory GetProfileFailure.unexpected() = _GetProfileFailureUnexpected;
 }

@@ -21,6 +21,10 @@ class _$GetProfileExceptionTearOff {
   _GetProfileExceptionOffline offline() {
     return const _GetProfileExceptionOffline();
   }
+
+  _GetProfileExceptionUnexpected unexpected() {
+    return const _GetProfileExceptionUnexpected();
+  }
 }
 
 /// @nodoc
@@ -31,32 +35,38 @@ mixin _$GetProfileException {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() offline,
+    required TResult Function() unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? offline,
+    TResult Function()? unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? offline,
+    TResult Function()? unexpected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetProfileExceptionOffline value) offline,
+    required TResult Function(_GetProfileExceptionUnexpected value) unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetProfileExceptionOffline value)? offline,
+    TResult Function(_GetProfileExceptionUnexpected value)? unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetProfileExceptionOffline value)? offline,
+    TResult Function(_GetProfileExceptionUnexpected value)? unexpected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -124,6 +134,7 @@ class _$_GetProfileExceptionOffline implements _GetProfileExceptionOffline {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() offline,
+    required TResult Function() unexpected,
   }) {
     return offline();
   }
@@ -132,6 +143,7 @@ class _$_GetProfileExceptionOffline implements _GetProfileExceptionOffline {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? offline,
+    TResult Function()? unexpected,
   }) {
     return offline?.call();
   }
@@ -140,6 +152,7 @@ class _$_GetProfileExceptionOffline implements _GetProfileExceptionOffline {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? offline,
+    TResult Function()? unexpected,
     required TResult orElse(),
   }) {
     if (offline != null) {
@@ -152,6 +165,7 @@ class _$_GetProfileExceptionOffline implements _GetProfileExceptionOffline {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetProfileExceptionOffline value) offline,
+    required TResult Function(_GetProfileExceptionUnexpected value) unexpected,
   }) {
     return offline(this);
   }
@@ -160,6 +174,7 @@ class _$_GetProfileExceptionOffline implements _GetProfileExceptionOffline {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetProfileExceptionOffline value)? offline,
+    TResult Function(_GetProfileExceptionUnexpected value)? unexpected,
   }) {
     return offline?.call(this);
   }
@@ -168,6 +183,7 @@ class _$_GetProfileExceptionOffline implements _GetProfileExceptionOffline {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetProfileExceptionOffline value)? offline,
+    TResult Function(_GetProfileExceptionUnexpected value)? unexpected,
     required TResult orElse(),
   }) {
     if (offline != null) {
@@ -179,4 +195,115 @@ class _$_GetProfileExceptionOffline implements _GetProfileExceptionOffline {
 
 abstract class _GetProfileExceptionOffline implements GetProfileException {
   const factory _GetProfileExceptionOffline() = _$_GetProfileExceptionOffline;
+}
+
+/// @nodoc
+abstract class _$GetProfileExceptionUnexpectedCopyWith<$Res> {
+  factory _$GetProfileExceptionUnexpectedCopyWith(
+          _GetProfileExceptionUnexpected value,
+          $Res Function(_GetProfileExceptionUnexpected) then) =
+      __$GetProfileExceptionUnexpectedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$GetProfileExceptionUnexpectedCopyWithImpl<$Res>
+    extends _$GetProfileExceptionCopyWithImpl<$Res>
+    implements _$GetProfileExceptionUnexpectedCopyWith<$Res> {
+  __$GetProfileExceptionUnexpectedCopyWithImpl(
+      _GetProfileExceptionUnexpected _value,
+      $Res Function(_GetProfileExceptionUnexpected) _then)
+      : super(_value, (v) => _then(v as _GetProfileExceptionUnexpected));
+
+  @override
+  _GetProfileExceptionUnexpected get _value =>
+      super._value as _GetProfileExceptionUnexpected;
+}
+
+/// @nodoc
+
+class _$_GetProfileExceptionUnexpected
+    implements _GetProfileExceptionUnexpected {
+  const _$_GetProfileExceptionUnexpected();
+
+  @override
+  String toString() {
+    return 'GetProfileException.unexpected()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _GetProfileExceptionUnexpected);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() offline,
+    required TResult Function() unexpected,
+  }) {
+    return unexpected();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? offline,
+    TResult Function()? unexpected,
+  }) {
+    return unexpected?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? offline,
+    TResult Function()? unexpected,
+    required TResult orElse(),
+  }) {
+    if (unexpected != null) {
+      return unexpected();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetProfileExceptionOffline value) offline,
+    required TResult Function(_GetProfileExceptionUnexpected value) unexpected,
+  }) {
+    return unexpected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetProfileExceptionOffline value)? offline,
+    TResult Function(_GetProfileExceptionUnexpected value)? unexpected,
+  }) {
+    return unexpected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetProfileExceptionOffline value)? offline,
+    TResult Function(_GetProfileExceptionUnexpected value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (unexpected != null) {
+      return unexpected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetProfileExceptionUnexpected implements GetProfileException {
+  const factory _GetProfileExceptionUnexpected() =
+      _$_GetProfileExceptionUnexpected;
 }

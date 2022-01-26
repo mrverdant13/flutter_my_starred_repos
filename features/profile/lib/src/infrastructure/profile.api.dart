@@ -39,6 +39,15 @@ query {
       QueryOptions(document: getProfileDoc),
     );
 
+    final exception = queryResult.exception;
+    if (exception != null) {
+      final linkException = exception.linkException;
+      if (linkException is NetworkException) {
+        throw const GetProfileException.offline();
+      }
+      throw const GetProfileException.unexpected();
+    }
+
     if (queryResult.exception?.linkException is NetworkException) {
       throw const GetProfileException.offline();
     }
@@ -73,4 +82,6 @@ query {
 @freezed
 class GetProfileException with _$GetProfileException {
   const factory GetProfileException.offline() = _GetProfileExceptionOffline;
+  const factory GetProfileException.unexpected() =
+      _GetProfileExceptionUnexpected;
 }

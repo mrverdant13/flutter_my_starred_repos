@@ -38,6 +38,13 @@ class ProfilePreview extends HookConsumerWidget {
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline5,
                     ),
+                  if (profile.hasValidStatus)
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(profile.status!.readable),
+                      ),
+                    ),
                 ],
               ),
             ),

@@ -31,6 +31,7 @@ class ProfileScreen extends HookConsumerWidget {
                 child: Text(
                   failure.when(
                     offline: () => 'Unreliable connection',
+                    unexpected: () => 'Unexpected error',
                   ),
                 ),
               ),

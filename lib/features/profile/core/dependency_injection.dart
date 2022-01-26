@@ -5,6 +5,7 @@ import 'package:profile/profile.dart';
 final profileApiPod = Provider(
   (ref) => ProfileApi(
     gqlClient: ref.watch(gqlClientPod),
+    dio: ref.watch(dioPod),
   ),
 );
 

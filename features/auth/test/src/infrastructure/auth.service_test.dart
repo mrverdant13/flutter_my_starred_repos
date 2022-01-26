@@ -8,11 +8,16 @@ import 'package:auth/src/infrastructure/github_auth.api.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:oxidized/oxidized.dart';
+import 'package:profile/profile.dart';
 import 'package:test/test.dart';
 
 class MockGithubAuthApi extends Mock implements GithubAuthApi {}
 
 class MockCredsStorage extends Mock implements CredsStorage {}
+
+class MockProfileApi extends Mock implements ProfileApi {}
+
+class MockProfileStorage extends Mock implements ProfileStorage {}
 
 class FakeOAuthCallback {
   Future<Uri> call({
@@ -26,6 +31,8 @@ class FakeOAuthCallback {
 
 class FakeCredentials extends Fake implements Credentials {}
 
+class FakeProfile extends Fake implements Profile {}
+
 Future<Uri> oauthCallback({
   required Uri authorizationEndpoint,
   required Uri redirectBaseEndpoint,
@@ -38,6 +45,7 @@ void main() {
     () {
       registerFallbackValue(FakeOAuthCallback().call);
       registerFallbackValue(FakeCredentials());
+      registerFallbackValue(FakeProfile());
     },
   );
 
@@ -51,15 +59,21 @@ GIVEN an auth service
       // ARRANGE
       late MockGithubAuthApi mockGithubAuthApi;
       late MockCredsStorage mockCredsStorage;
+      late MockProfileApi mockProfileApi;
+      late MockProfileStorage mockProfileStorage;
       late AuthService authService;
 
       setUp(
         () {
           mockGithubAuthApi = MockGithubAuthApi();
           mockCredsStorage = MockCredsStorage();
+          mockProfileApi = MockProfileApi();
+          mockProfileStorage = MockProfileStorage();
           authService = AuthService(
             githubAuthApi: mockGithubAuthApi,
             credsStorage: mockCredsStorage,
+            profileApi: mockProfileApi,
+            profileStorage: mockProfileStorage,
           );
         },
       );
@@ -107,14 +121,17 @@ AND a reliable Internet connection
 WHEN an OAuth login is triggered
 AND the user grants all permissions
 AND the user completes the process
-THEN the user should be authenticated and his/her creds should be persisted
+THEN the user should be authenticated and his/her creds and profile should be persisted
 ├─ BY collecting creds with the GitHub auth api
 ├─ AND storing the creds with the credentials storage
+├─ AND retrieving the profile with the profile api
+├─ AND storing the profile with the profile storage
 ├─ AND not returning any data
 ''',
         () async {
           // ARRANGE
           final creds = Credentials('');
+          const profile = Profile(username: 'username', avatarUrl: 'avatarUrl');
           when(
             () => mockGithubAuthApi.logInWithOAuth(
               callback: any(named: 'callback'),
@@ -124,6 +141,16 @@ THEN the user should be authenticated and his/her creds should be persisted
           );
           when(
             () => mockCredsStorage.set(any()),
+          ).thenAnswer(
+            (_) => Future.value(),
+          );
+          when(
+            () => mockProfileApi.getProfile(),
+          ).thenAnswer(
+            (_) => Future.value(profile),
+          );
+          when(
+            () => mockProfileStorage.setProfile(any()),
           ).thenAnswer(
             (_) => Future.value(),
           );
@@ -142,9 +169,9 @@ THEN the user should be authenticated and his/her creds should be persisted
               callback: oauthCallback,
             ),
           ).called(1);
-          verify(
-            () => mockCredsStorage.set(creds),
-          ).called(1);
+          verify(() => mockCredsStorage.set(creds)).called(1);
+          verify(() => mockProfileApi.getProfile()).called(1);
+          verify(() => mockProfileStorage.setProfile(profile)).called(1);
         },
       );
 

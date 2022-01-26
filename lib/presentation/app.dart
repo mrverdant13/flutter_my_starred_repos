@@ -22,23 +22,19 @@ class MyApp extends HookConsumerWidget {
     return Consumer(
       builder: (context, ref, _) => BlocListener<AuthCubit, AuthState>(
         bloc: ref.watch(authCubitPod),
-        listener: (context, authenticatorState) {
-          final appRouter = ref.read(appRouterPod);
-          authenticatorState.maybeWhen(
-            loaded: (isLoggedIn) => appRouter.pushAndPopUntil(
-              isLoggedIn
-                  ? const ProfileScreenRoute()
-                  : const LoginScreenRoute(),
-              predicate: (route) => false,
-            ),
-            orElse: () {},
-          );
-        },
+        listener: (context, authenticatorState) =>
+            authenticatorState.whenOrNull(
+          loaded: (isLoggedIn) => ref.read(appRouterPod).pushAndPopUntil(
+                isLoggedIn
+                    ? const ProfileScreenRoute()
+                    : const LoginScreenRoute(),
+                predicate: (route) => false,
+              ),
+        ),
         child: MaterialApp.router(
           title: 'App (${ref.watch(flavorPod).tag})',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           routerDelegate: ref.watch(appRouterPod).delegate(),

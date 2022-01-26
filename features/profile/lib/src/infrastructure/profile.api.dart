@@ -37,7 +37,10 @@ query {
         'https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json';
 
     final queryResult = await _gqlClient.query(
-      QueryOptions(document: getProfileDoc),
+      QueryOptions(
+        document: getProfileDoc,
+        fetchPolicy: FetchPolicy.networkOnly,
+      ),
     );
 
     final exception = queryResult.exception;

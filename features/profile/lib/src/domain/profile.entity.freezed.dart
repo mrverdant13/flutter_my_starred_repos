@@ -24,12 +24,14 @@ class _$ProfileTearOff {
 
   _Profile call(
       {@JsonKey(name: 'login') required String username,
+      required String avatarUrl,
       String? name,
-      required String avatarUrl}) {
+      UserStatus? status}) {
     return _Profile(
       username: username,
-      name: name,
       avatarUrl: avatarUrl,
+      name: name,
+      status: status,
     );
   }
 
@@ -47,8 +49,9 @@ mixin _$Profile {
 // ignore: invalid_annotation_target
   @JsonKey(name: 'login')
   String get username => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
   String get avatarUrl => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  UserStatus? get status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -61,8 +64,11 @@ abstract class $ProfileCopyWith<$Res> {
       _$ProfileCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: 'login') String username,
+      String avatarUrl,
       String? name,
-      String avatarUrl});
+      UserStatus? status});
+
+  $UserStatusCopyWith<$Res>? get status;
 }
 
 /// @nodoc
@@ -76,23 +82,39 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
   @override
   $Res call({
     Object? username = freezed,
-    Object? name = freezed,
     Object? avatarUrl = freezed,
+    Object? name = freezed,
+    Object? status = freezed,
   }) {
     return _then(_value.copyWith(
       username: username == freezed
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
       avatarUrl: avatarUrl == freezed
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as UserStatus?,
     ));
+  }
+
+  @override
+  $UserStatusCopyWith<$Res>? get status {
+    if (_value.status == null) {
+      return null;
+    }
+
+    return $UserStatusCopyWith<$Res>(_value.status!, (value) {
+      return _then(_value.copyWith(status: value));
+    });
   }
 }
 
@@ -103,8 +125,12 @@ abstract class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @override
   $Res call(
       {@JsonKey(name: 'login') String username,
+      String avatarUrl,
       String? name,
-      String avatarUrl});
+      UserStatus? status});
+
+  @override
+  $UserStatusCopyWith<$Res>? get status;
 }
 
 /// @nodoc
@@ -119,33 +145,40 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
   @override
   $Res call({
     Object? username = freezed,
-    Object? name = freezed,
     Object? avatarUrl = freezed,
+    Object? name = freezed,
+    Object? status = freezed,
   }) {
     return _then(_Profile(
       username: username == freezed
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
       avatarUrl: avatarUrl == freezed
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as UserStatus?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Profile implements _Profile {
+class _$_Profile extends _Profile {
   const _$_Profile(
       {@JsonKey(name: 'login') required this.username,
+      required this.avatarUrl,
       this.name,
-      required this.avatarUrl});
+      this.status})
+      : super._();
 
   factory _$_Profile.fromJson(Map<String, dynamic> json) =>
       _$$_ProfileFromJson(json);
@@ -155,13 +188,15 @@ class _$_Profile implements _Profile {
   @JsonKey(name: 'login')
   final String username;
   @override
+  final String avatarUrl;
+  @override
   final String? name;
   @override
-  final String avatarUrl;
+  final UserStatus? status;
 
   @override
   String toString() {
-    return 'Profile(username: $username, name: $name, avatarUrl: $avatarUrl)';
+    return 'Profile(username: $username, avatarUrl: $avatarUrl, name: $name, status: $status)';
   }
 
   @override
@@ -170,16 +205,18 @@ class _$_Profile implements _Profile {
         (other.runtimeType == runtimeType &&
             other is _Profile &&
             const DeepCollectionEquality().equals(other.username, username) &&
+            const DeepCollectionEquality().equals(other.avatarUrl, avatarUrl) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.avatarUrl, avatarUrl));
+            const DeepCollectionEquality().equals(other.status, status));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(username),
+      const DeepCollectionEquality().hash(avatarUrl),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(avatarUrl));
+      const DeepCollectionEquality().hash(status));
 
   @JsonKey(ignore: true)
   @override
@@ -192,11 +229,13 @@ class _$_Profile implements _Profile {
   }
 }
 
-abstract class _Profile implements Profile {
+abstract class _Profile extends Profile {
   const factory _Profile(
       {@JsonKey(name: 'login') required String username,
+      required String avatarUrl,
       String? name,
-      required String avatarUrl}) = _$_Profile;
+      UserStatus? status}) = _$_Profile;
+  const _Profile._() : super._();
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$_Profile.fromJson;
 
@@ -205,9 +244,11 @@ abstract class _Profile implements Profile {
   @JsonKey(name: 'login')
   String get username;
   @override
+  String get avatarUrl;
+  @override
   String? get name;
   @override
-  String get avatarUrl;
+  UserStatus? get status;
   @override
   @JsonKey(ignore: true)
   _$ProfileCopyWith<_Profile> get copyWith =>

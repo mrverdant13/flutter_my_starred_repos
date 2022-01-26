@@ -39,6 +39,7 @@ class LoginScreen extends ConsumerWidget {
                               missingPermissions: () =>
                                   context.missingLoginPermissionsMessage,
                               offline: () => context.loginOfflineMessage,
+                              unexpected: () => context.loginUnexpectedMessage,
                             ),
                           ),
                         ),

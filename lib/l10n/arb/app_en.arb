@@ -46,5 +46,9 @@
     "loginOfflineMessage": "No Internet connection",
     "@loginOfflineMessage": {
         "description": "Message shown when the there is no Internet connection while trying to login."
+    },
+    "loginUnexpectedMessage": "Unexpected error",
+    "@loginUnexpectedMessage": {
+        "description": "Message shown when an unexpected error occurs while trying to login."
     }
 }

@@ -46,5 +46,9 @@
     "loginOfflineMessage": "Sin conexión a Internet",
     "@loginOfflineMessage": {
         "description": "Mensaje mostrado cuando la conexión a Internet es nula al intentar iniciar sesión."
+     },
+    "loginUnexpectedMessage": "Error inesperado",
+    "@loginUnexpectedMessage": {
+        "description": "Mensaje mostrado cuando ocurre un error inesperado al intentar iniciar sesión."
     }
 }

@@ -17,6 +17,8 @@ dependencies:
   http: ^0.13.4
   oauth2: ^2.0.0
   oxidized: ^5.1.0
+  profile:
+    path: ../profile
 
 dev_dependencies:
   bloc_test: ^8.5.0

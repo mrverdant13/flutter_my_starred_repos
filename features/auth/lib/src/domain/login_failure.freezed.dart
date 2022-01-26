@@ -29,6 +29,10 @@ class _$LoginFailureTearOff {
   _LoginFailureOffline offline() {
     return const _LoginFailureOffline();
   }
+
+  _LoginFailureUnexpected unexpected() {
+    return const _LoginFailureUnexpected();
+  }
 }
 
 /// @nodoc
@@ -41,6 +45,7 @@ mixin _$LoginFailure {
     required TResult Function() canceled,
     required TResult Function() missingPermissions,
     required TResult Function() offline,
+    required TResult Function() unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,6 +53,7 @@ mixin _$LoginFailure {
     TResult Function()? canceled,
     TResult Function()? missingPermissions,
     TResult Function()? offline,
+    TResult Function()? unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +61,7 @@ mixin _$LoginFailure {
     TResult Function()? canceled,
     TResult Function()? missingPermissions,
     TResult Function()? offline,
+    TResult Function()? unexpected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -64,6 +71,7 @@ mixin _$LoginFailure {
     required TResult Function(_LoginFailureMissingPermissions value)
         missingPermissions,
     required TResult Function(_LoginFailureOffline value) offline,
+    required TResult Function(_LoginFailureUnexpected value) unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -71,6 +79,7 @@ mixin _$LoginFailure {
     TResult Function(_LoginFailureCanceled value)? canceled,
     TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
     TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,6 +87,7 @@ mixin _$LoginFailure {
     TResult Function(_LoginFailureCanceled value)? canceled,
     TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
     TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -143,6 +153,7 @@ class _$_LoginFailureCanceled implements _LoginFailureCanceled {
     required TResult Function() canceled,
     required TResult Function() missingPermissions,
     required TResult Function() offline,
+    required TResult Function() unexpected,
   }) {
     return canceled();
   }
@@ -153,6 +164,7 @@ class _$_LoginFailureCanceled implements _LoginFailureCanceled {
     TResult Function()? canceled,
     TResult Function()? missingPermissions,
     TResult Function()? offline,
+    TResult Function()? unexpected,
   }) {
     return canceled?.call();
   }
@@ -163,6 +175,7 @@ class _$_LoginFailureCanceled implements _LoginFailureCanceled {
     TResult Function()? canceled,
     TResult Function()? missingPermissions,
     TResult Function()? offline,
+    TResult Function()? unexpected,
     required TResult orElse(),
   }) {
     if (canceled != null) {
@@ -178,6 +191,7 @@ class _$_LoginFailureCanceled implements _LoginFailureCanceled {
     required TResult Function(_LoginFailureMissingPermissions value)
         missingPermissions,
     required TResult Function(_LoginFailureOffline value) offline,
+    required TResult Function(_LoginFailureUnexpected value) unexpected,
   }) {
     return canceled(this);
   }
@@ -188,6 +202,7 @@ class _$_LoginFailureCanceled implements _LoginFailureCanceled {
     TResult Function(_LoginFailureCanceled value)? canceled,
     TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
     TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
   }) {
     return canceled?.call(this);
   }
@@ -198,6 +213,7 @@ class _$_LoginFailureCanceled implements _LoginFailureCanceled {
     TResult Function(_LoginFailureCanceled value)? canceled,
     TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
     TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
     required TResult orElse(),
   }) {
     if (canceled != null) {
@@ -260,6 +276,7 @@ class _$_LoginFailureMissingPermissions
     required TResult Function() canceled,
     required TResult Function() missingPermissions,
     required TResult Function() offline,
+    required TResult Function() unexpected,
   }) {
     return missingPermissions();
   }
@@ -270,6 +287,7 @@ class _$_LoginFailureMissingPermissions
     TResult Function()? canceled,
     TResult Function()? missingPermissions,
     TResult Function()? offline,
+    TResult Function()? unexpected,
   }) {
     return missingPermissions?.call();
   }
@@ -280,6 +298,7 @@ class _$_LoginFailureMissingPermissions
     TResult Function()? canceled,
     TResult Function()? missingPermissions,
     TResult Function()? offline,
+    TResult Function()? unexpected,
     required TResult orElse(),
   }) {
     if (missingPermissions != null) {
@@ -295,6 +314,7 @@ class _$_LoginFailureMissingPermissions
     required TResult Function(_LoginFailureMissingPermissions value)
         missingPermissions,
     required TResult Function(_LoginFailureOffline value) offline,
+    required TResult Function(_LoginFailureUnexpected value) unexpected,
   }) {
     return missingPermissions(this);
   }
@@ -305,6 +325,7 @@ class _$_LoginFailureMissingPermissions
     TResult Function(_LoginFailureCanceled value)? canceled,
     TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
     TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
   }) {
     return missingPermissions?.call(this);
   }
@@ -315,6 +336,7 @@ class _$_LoginFailureMissingPermissions
     TResult Function(_LoginFailureCanceled value)? canceled,
     TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
     TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
     required TResult orElse(),
   }) {
     if (missingPermissions != null) {
@@ -373,6 +395,7 @@ class _$_LoginFailureOffline implements _LoginFailureOffline {
     required TResult Function() canceled,
     required TResult Function() missingPermissions,
     required TResult Function() offline,
+    required TResult Function() unexpected,
   }) {
     return offline();
   }
@@ -383,6 +406,7 @@ class _$_LoginFailureOffline implements _LoginFailureOffline {
     TResult Function()? canceled,
     TResult Function()? missingPermissions,
     TResult Function()? offline,
+    TResult Function()? unexpected,
   }) {
     return offline?.call();
   }
@@ -393,6 +417,7 @@ class _$_LoginFailureOffline implements _LoginFailureOffline {
     TResult Function()? canceled,
     TResult Function()? missingPermissions,
     TResult Function()? offline,
+    TResult Function()? unexpected,
     required TResult orElse(),
   }) {
     if (offline != null) {
@@ -408,6 +433,7 @@ class _$_LoginFailureOffline implements _LoginFailureOffline {
     required TResult Function(_LoginFailureMissingPermissions value)
         missingPermissions,
     required TResult Function(_LoginFailureOffline value) offline,
+    required TResult Function(_LoginFailureUnexpected value) unexpected,
   }) {
     return offline(this);
   }
@@ -418,6 +444,7 @@ class _$_LoginFailureOffline implements _LoginFailureOffline {
     TResult Function(_LoginFailureCanceled value)? canceled,
     TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
     TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
   }) {
     return offline?.call(this);
   }
@@ -428,6 +455,7 @@ class _$_LoginFailureOffline implements _LoginFailureOffline {
     TResult Function(_LoginFailureCanceled value)? canceled,
     TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
     TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
     required TResult orElse(),
   }) {
     if (offline != null) {
@@ -439,4 +467,122 @@ class _$_LoginFailureOffline implements _LoginFailureOffline {
 
 abstract class _LoginFailureOffline implements LoginFailure {
   const factory _LoginFailureOffline() = _$_LoginFailureOffline;
+}
+
+/// @nodoc
+abstract class _$LoginFailureUnexpectedCopyWith<$Res> {
+  factory _$LoginFailureUnexpectedCopyWith(_LoginFailureUnexpected value,
+          $Res Function(_LoginFailureUnexpected) then) =
+      __$LoginFailureUnexpectedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$LoginFailureUnexpectedCopyWithImpl<$Res>
+    extends _$LoginFailureCopyWithImpl<$Res>
+    implements _$LoginFailureUnexpectedCopyWith<$Res> {
+  __$LoginFailureUnexpectedCopyWithImpl(_LoginFailureUnexpected _value,
+      $Res Function(_LoginFailureUnexpected) _then)
+      : super(_value, (v) => _then(v as _LoginFailureUnexpected));
+
+  @override
+  _LoginFailureUnexpected get _value => super._value as _LoginFailureUnexpected;
+}
+
+/// @nodoc
+
+class _$_LoginFailureUnexpected implements _LoginFailureUnexpected {
+  const _$_LoginFailureUnexpected();
+
+  @override
+  String toString() {
+    return 'LoginFailure.unexpected()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _LoginFailureUnexpected);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() canceled,
+    required TResult Function() missingPermissions,
+    required TResult Function() offline,
+    required TResult Function() unexpected,
+  }) {
+    return unexpected();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? canceled,
+    TResult Function()? missingPermissions,
+    TResult Function()? offline,
+    TResult Function()? unexpected,
+  }) {
+    return unexpected?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? canceled,
+    TResult Function()? missingPermissions,
+    TResult Function()? offline,
+    TResult Function()? unexpected,
+    required TResult orElse(),
+  }) {
+    if (unexpected != null) {
+      return unexpected();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoginFailureCanceled value) canceled,
+    required TResult Function(_LoginFailureMissingPermissions value)
+        missingPermissions,
+    required TResult Function(_LoginFailureOffline value) offline,
+    required TResult Function(_LoginFailureUnexpected value) unexpected,
+  }) {
+    return unexpected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_LoginFailureCanceled value)? canceled,
+    TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
+    TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
+  }) {
+    return unexpected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoginFailureCanceled value)? canceled,
+    TResult Function(_LoginFailureMissingPermissions value)? missingPermissions,
+    TResult Function(_LoginFailureOffline value)? offline,
+    TResult Function(_LoginFailureUnexpected value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (unexpected != null) {
+      return unexpected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoginFailureUnexpected implements LoginFailure {
+  const factory _LoginFailureUnexpected() = _$_LoginFailureUnexpected;
 }

@@ -8,4 +8,5 @@ class LoginFailure with _$LoginFailure {
   const factory LoginFailure.missingPermissions() =
       _LoginFailureMissingPermissions;
   const factory LoginFailure.offline() = _LoginFailureOffline;
+  const factory LoginFailure.unexpected() = _LoginFailureUnexpected;
 }

@@ -27,7 +27,7 @@ class MyApp extends HookConsumerWidget {
           authenticatorState.maybeWhen(
             loaded: (isLoggedIn) => appRouter.pushAndPopUntil(
               isLoggedIn
-                  ? const CounterScreenRoute()
+                  ? const ProfileScreenRoute()
                   : const LoginScreenRoute(),
               predicate: (route) => false,
             ),

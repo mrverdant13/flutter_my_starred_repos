@@ -15,7 +15,7 @@ import 'package:flutter/material.dart' as _i7;
 
 import '../../features/auth/presentation/screens/auth/screen.dart' as _i3;
 import '../../features/auth/presentation/screens/login/screen.dart' as _i2;
-import '../../features/counter/presentation/screens/counter/screen.dart' as _i1;
+import '../../features/profile/presentation/profile_screen.dart' as _i1;
 import '../../features/stared_repos/presentation/screens/starred_repos/screen.dart'
     as _i5;
 import '../../features/users_placeholder/presentation/screens/users/screen.dart'
@@ -27,10 +27,10 @@ class AppRouter extends _i6.RootStackRouter {
 
   @override
   final Map<String, _i6.PageFactory> pagesMap = {
-    CounterScreenRoute.name: (routeData) {
+    ProfileScreenRoute.name: (routeData) {
       return _i6.CustomPage<dynamic>(
           routeData: routeData,
-          child: _i1.CounterScreen(),
+          child: const _i1.ProfileScreen(),
           opaque: true,
           barrierDismissible: false);
     },
@@ -69,7 +69,7 @@ class AppRouter extends _i6.RootStackRouter {
 
   @override
   List<_i6.RouteConfig> get routes => [
-        _i6.RouteConfig(CounterScreenRoute.name, path: '/'),
+        _i6.RouteConfig(ProfileScreenRoute.name, path: '/'),
         _i6.RouteConfig(LoginScreenRoute.name, path: '/login-screen'),
         _i6.RouteConfig(AuthScreenRoute.name, path: '/auth-screen'),
         _i6.RouteConfig(UsersScreenRoute.name, path: '/users-screen'),
@@ -79,11 +79,11 @@ class AppRouter extends _i6.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.CounterScreen]
-class CounterScreenRoute extends _i6.PageRouteInfo<void> {
-  const CounterScreenRoute() : super(CounterScreenRoute.name, path: '/');
+/// [_i1.ProfileScreen]
+class ProfileScreenRoute extends _i6.PageRouteInfo<void> {
+  const ProfileScreenRoute() : super(ProfileScreenRoute.name, path: '/');
 
-  static const String name = 'CounterScreenRoute';
+  static const String name = 'ProfileScreenRoute';
 }
 
 /// generated route for

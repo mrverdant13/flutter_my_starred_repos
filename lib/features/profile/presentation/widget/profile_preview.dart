@@ -35,6 +35,8 @@ class ProfilePreview extends HookConsumerWidget {
             ),
           if (profile.hasValidStatus)
             Card(
+              margin: const EdgeInsets.only(top: 15),
+              elevation: 5,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(profile.status!.readable),

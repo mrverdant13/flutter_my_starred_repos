@@ -12,14 +12,18 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit({
     required ProfileRepo profileRepo,
   })  : _profileRepo = profileRepo,
-        super(const ProfileState.loading());
+        super(
+          const ProfileState.loading(
+            profile: Profile(username: '', avatarUrl: ''),
+          ),
+        );
 
   final ProfileRepo _profileRepo;
 
   StreamSubscription<Profile>? _profileSubscription;
 
   Future<void> watchProfile() async {
-    emit(const ProfileState.loading());
+    emit(ProfileState.loading(profile: state.profile));
     _profileSubscription?.cancel();
     _profileSubscription = _profileRepo.watchProfile().listen(
           (profile) => emit(
@@ -31,11 +35,16 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> refreshProfile() async {
-    emit(const ProfileState.loading());
+    emit(ProfileState.loading(profile: state.profile));
     final result = await _profileRepo.refreshProfile();
     result.when(
       ok: (_) {},
-      err: (failure) => emit(ProfileState.failure(failure: failure)),
+      err: (failure) => emit(
+        ProfileState.failure(
+          profile: state.profile,
+          failure: failure,
+        ),
+      ),
     );
   }
 

@@ -29,20 +29,8 @@ class ProfileScreen extends HookConsumerWidget {
                   padding: const EdgeInsets.all(20),
                   child: BlocBuilder<ProfileCubit, ProfileState>(
                     bloc: ref.watch(profileCubitPod),
-                    builder: (context, profileState) => profileState.when(
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      loaded: (profile) => ProfilePreview(profile: profile),
-                      failure: (failure) => Center(
-                        child: Text(
-                          failure.when(
-                            offline: () => 'Unreliable connection',
-                            unexpected: () => 'Unexpected error',
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                    builder: (context, profileState) => ProfilePreview(
+                      profile: profileState.profile,
                     ),
                   ),
                 ),

@@ -18,8 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ProfileStateTearOff {
   const _$ProfileStateTearOff();
 
-  _ProfileStateLoading loading() {
-    return const _ProfileStateLoading();
+  _ProfileStateLoading loading({required Profile profile}) {
+    return _ProfileStateLoading(
+      profile: profile,
+    );
   }
 
   _ProfileStateLoaded loaded({required Profile profile}) {
@@ -28,8 +30,10 @@ class _$ProfileStateTearOff {
     );
   }
 
-  _ProfileStateFailure failure({required GetProfileFailure failure}) {
+  _ProfileStateFailure failure(
+      {required Profile profile, required GetProfileFailure failure}) {
     return _ProfileStateFailure(
+      profile: profile,
       failure: failure,
     );
   }
@@ -40,25 +44,28 @@ const $ProfileState = _$ProfileStateTearOff();
 
 /// @nodoc
 mixin _$ProfileState {
+  Profile get profile => throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(Profile profile) loading,
     required TResult Function(Profile profile) loaded,
-    required TResult Function(GetProfileFailure failure) failure,
+    required TResult Function(Profile profile, GetProfileFailure failure)
+        failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(Profile profile)? loading,
     TResult Function(Profile profile)? loaded,
-    TResult Function(GetProfileFailure failure)? failure,
+    TResult Function(Profile profile, GetProfileFailure failure)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(Profile profile)? loading,
     TResult Function(Profile profile)? loaded,
-    TResult Function(GetProfileFailure failure)? failure,
+    TResult Function(Profile profile, GetProfileFailure failure)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -84,6 +91,10 @@ mixin _$ProfileState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ProfileStateCopyWith<ProfileState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -91,6 +102,9 @@ abstract class $ProfileStateCopyWith<$Res> {
   factory $ProfileStateCopyWith(
           ProfileState value, $Res Function(ProfileState) then) =
       _$ProfileStateCopyWithImpl<$Res>;
+  $Res call({Profile profile});
+
+  $ProfileCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -100,13 +114,38 @@ class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
   final ProfileState _value;
   // ignore: unused_field
   final $Res Function(ProfileState) _then;
+
+  @override
+  $Res call({
+    Object? profile = freezed,
+  }) {
+    return _then(_value.copyWith(
+      profile: profile == freezed
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile,
+    ));
+  }
+
+  @override
+  $ProfileCopyWith<$Res> get profile {
+    return $ProfileCopyWith<$Res>(_value.profile, (value) {
+      return _then(_value.copyWith(profile: value));
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$ProfileStateLoadingCopyWith<$Res> {
+abstract class _$ProfileStateLoadingCopyWith<$Res>
+    implements $ProfileStateCopyWith<$Res> {
   factory _$ProfileStateLoadingCopyWith(_ProfileStateLoading value,
           $Res Function(_ProfileStateLoading) then) =
       __$ProfileStateLoadingCopyWithImpl<$Res>;
+  @override
+  $Res call({Profile profile});
+
+  @override
+  $ProfileCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -119,57 +158,82 @@ class __$ProfileStateLoadingCopyWithImpl<$Res>
 
   @override
   _ProfileStateLoading get _value => super._value as _ProfileStateLoading;
+
+  @override
+  $Res call({
+    Object? profile = freezed,
+  }) {
+    return _then(_ProfileStateLoading(
+      profile: profile == freezed
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_ProfileStateLoading implements _ProfileStateLoading {
-  const _$_ProfileStateLoading();
+  const _$_ProfileStateLoading({required this.profile});
+
+  @override
+  final Profile profile;
 
   @override
   String toString() {
-    return 'ProfileState.loading()';
+    return 'ProfileState.loading(profile: $profile)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ProfileStateLoading);
+        (other.runtimeType == runtimeType &&
+            other is _ProfileStateLoading &&
+            const DeepCollectionEquality().equals(other.profile, profile));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(profile));
+
+  @JsonKey(ignore: true)
+  @override
+  _$ProfileStateLoadingCopyWith<_ProfileStateLoading> get copyWith =>
+      __$ProfileStateLoadingCopyWithImpl<_ProfileStateLoading>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(Profile profile) loading,
     required TResult Function(Profile profile) loaded,
-    required TResult Function(GetProfileFailure failure) failure,
+    required TResult Function(Profile profile, GetProfileFailure failure)
+        failure,
   }) {
-    return loading();
+    return loading(profile);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(Profile profile)? loading,
     TResult Function(Profile profile)? loaded,
-    TResult Function(GetProfileFailure failure)? failure,
+    TResult Function(Profile profile, GetProfileFailure failure)? failure,
   }) {
-    return loading?.call();
+    return loading?.call(profile);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(Profile profile)? loading,
     TResult Function(Profile profile)? loaded,
-    TResult Function(GetProfileFailure failure)? failure,
+    TResult Function(Profile profile, GetProfileFailure failure)? failure,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(profile);
     }
     return orElse();
   }
@@ -210,16 +274,27 @@ class _$_ProfileStateLoading implements _ProfileStateLoading {
 }
 
 abstract class _ProfileStateLoading implements ProfileState {
-  const factory _ProfileStateLoading() = _$_ProfileStateLoading;
+  const factory _ProfileStateLoading({required Profile profile}) =
+      _$_ProfileStateLoading;
+
+  @override
+  Profile get profile;
+  @override
+  @JsonKey(ignore: true)
+  _$ProfileStateLoadingCopyWith<_ProfileStateLoading> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ProfileStateLoadedCopyWith<$Res> {
+abstract class _$ProfileStateLoadedCopyWith<$Res>
+    implements $ProfileStateCopyWith<$Res> {
   factory _$ProfileStateLoadedCopyWith(
           _ProfileStateLoaded value, $Res Function(_ProfileStateLoaded) then) =
       __$ProfileStateLoadedCopyWithImpl<$Res>;
+  @override
   $Res call({Profile profile});
 
+  @override
   $ProfileCopyWith<$Res> get profile;
 }
 
@@ -244,13 +319,6 @@ class __$ProfileStateLoadedCopyWithImpl<$Res>
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile,
     ));
-  }
-
-  @override
-  $ProfileCopyWith<$Res> get profile {
-    return $ProfileCopyWith<$Res>(_value.profile, (value) {
-      return _then(_value.copyWith(profile: value));
-    });
   }
 }
 
@@ -287,9 +355,10 @@ class _$_ProfileStateLoaded implements _ProfileStateLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(Profile profile) loading,
     required TResult Function(Profile profile) loaded,
-    required TResult Function(GetProfileFailure failure) failure,
+    required TResult Function(Profile profile, GetProfileFailure failure)
+        failure,
   }) {
     return loaded(profile);
   }
@@ -297,9 +366,9 @@ class _$_ProfileStateLoaded implements _ProfileStateLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(Profile profile)? loading,
     TResult Function(Profile profile)? loaded,
-    TResult Function(GetProfileFailure failure)? failure,
+    TResult Function(Profile profile, GetProfileFailure failure)? failure,
   }) {
     return loaded?.call(profile);
   }
@@ -307,9 +376,9 @@ class _$_ProfileStateLoaded implements _ProfileStateLoaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(Profile profile)? loading,
     TResult Function(Profile profile)? loaded,
-    TResult Function(GetProfileFailure failure)? failure,
+    TResult Function(Profile profile, GetProfileFailure failure)? failure,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -357,19 +426,25 @@ abstract class _ProfileStateLoaded implements ProfileState {
   const factory _ProfileStateLoaded({required Profile profile}) =
       _$_ProfileStateLoaded;
 
+  @override
   Profile get profile;
+  @override
   @JsonKey(ignore: true)
   _$ProfileStateLoadedCopyWith<_ProfileStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ProfileStateFailureCopyWith<$Res> {
+abstract class _$ProfileStateFailureCopyWith<$Res>
+    implements $ProfileStateCopyWith<$Res> {
   factory _$ProfileStateFailureCopyWith(_ProfileStateFailure value,
           $Res Function(_ProfileStateFailure) then) =
       __$ProfileStateFailureCopyWithImpl<$Res>;
-  $Res call({GetProfileFailure failure});
+  @override
+  $Res call({Profile profile, GetProfileFailure failure});
 
+  @override
+  $ProfileCopyWith<$Res> get profile;
   $GetProfileFailureCopyWith<$Res> get failure;
 }
 
@@ -386,9 +461,14 @@ class __$ProfileStateFailureCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? profile = freezed,
     Object? failure = freezed,
   }) {
     return _then(_ProfileStateFailure(
+      profile: profile == freezed
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile,
       failure: failure == freezed
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -407,14 +487,16 @@ class __$ProfileStateFailureCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ProfileStateFailure implements _ProfileStateFailure {
-  const _$_ProfileStateFailure({required this.failure});
+  const _$_ProfileStateFailure({required this.profile, required this.failure});
 
+  @override
+  final Profile profile;
   @override
   final GetProfileFailure failure;
 
   @override
   String toString() {
-    return 'ProfileState.failure(failure: $failure)';
+    return 'ProfileState.failure(profile: $profile, failure: $failure)';
   }
 
   @override
@@ -422,12 +504,15 @@ class _$_ProfileStateFailure implements _ProfileStateFailure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ProfileStateFailure &&
+            const DeepCollectionEquality().equals(other.profile, profile) &&
             const DeepCollectionEquality().equals(other.failure, failure));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(failure));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(profile),
+      const DeepCollectionEquality().hash(failure));
 
   @JsonKey(ignore: true)
   @override
@@ -438,33 +523,34 @@ class _$_ProfileStateFailure implements _ProfileStateFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(Profile profile) loading,
     required TResult Function(Profile profile) loaded,
-    required TResult Function(GetProfileFailure failure) failure,
+    required TResult Function(Profile profile, GetProfileFailure failure)
+        failure,
   }) {
-    return failure(this.failure);
+    return failure(profile, this.failure);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(Profile profile)? loading,
     TResult Function(Profile profile)? loaded,
-    TResult Function(GetProfileFailure failure)? failure,
+    TResult Function(Profile profile, GetProfileFailure failure)? failure,
   }) {
-    return failure?.call(this.failure);
+    return failure?.call(profile, this.failure);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(Profile profile)? loading,
     TResult Function(Profile profile)? loaded,
-    TResult Function(GetProfileFailure failure)? failure,
+    TResult Function(Profile profile, GetProfileFailure failure)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
-      return failure(this.failure);
+      return failure(profile, this.failure);
     }
     return orElse();
   }
@@ -505,10 +591,14 @@ class _$_ProfileStateFailure implements _ProfileStateFailure {
 }
 
 abstract class _ProfileStateFailure implements ProfileState {
-  const factory _ProfileStateFailure({required GetProfileFailure failure}) =
-      _$_ProfileStateFailure;
+  const factory _ProfileStateFailure(
+      {required Profile profile,
+      required GetProfileFailure failure}) = _$_ProfileStateFailure;
 
+  @override
+  Profile get profile;
   GetProfileFailure get failure;
+  @override
   @JsonKey(ignore: true)
   _$ProfileStateFailureCopyWith<_ProfileStateFailure> get copyWith =>
       throw _privateConstructorUsedError;

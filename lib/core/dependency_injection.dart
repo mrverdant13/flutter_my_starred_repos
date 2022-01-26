@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql/client.dart';
@@ -32,6 +33,10 @@ final gqlClientPod = Provider<GraphQLClient>(
       HttpLink('https://api.github.com/graphql'),
     ]),
   ),
+);
+
+final dioPod = Provider(
+  (ref) => Dio(),
 );
 
 Future<List<Override>> getInjectionOverrides({

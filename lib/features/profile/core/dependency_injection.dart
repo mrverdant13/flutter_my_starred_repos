@@ -1,4 +1,5 @@
 import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:profile/profile.dart';
 
@@ -9,9 +10,16 @@ final profileApiPod = Provider(
   ),
 );
 
+final profileStoragePod = Provider(
+  (ref) => ProfileStorage(
+    sembastDatabase: ref.watch(sembastDbPod),
+  ),
+);
+
 final profileRepoPod = Provider(
   (ref) => ProfileRepo(
     profileApi: ref.watch(profileApiPod),
+    profileStorage: ref.watch(profileStoragePod),
   ),
 );
 

@@ -122,13 +122,12 @@ THEN the resulting creds should be returned
               redirectBaseEndpoint;
 
           when(
-            () => oauthResponseHandlerWrapper.handler,
-          ).thenReturn(
-            ({
-              required AuthorizationCodeGrant grant,
-              required Uri redirectEndpoint,
-            }) async =>
-                Client(creds),
+            () => oauthResponseHandlerWrapper.call(
+              grant: any(named: 'grant'),
+              redirectEndpoint: any(named: 'redirectEndpoint'),
+            ),
+          ).thenAnswer(
+            (_) async => Client(creds),
           );
 
           // ACT
@@ -161,13 +160,12 @@ THEN an exception indicating permission issues should be thrown
               redirectBaseEndpoint;
 
           when(
-            () => oauthResponseHandlerWrapper.handler,
-          ).thenReturn(
-            ({
-              required AuthorizationCodeGrant grant,
-              required Uri redirectEndpoint,
-            }) async =>
-                Client(creds),
+            () => oauthResponseHandlerWrapper.call(
+              grant: any(named: 'grant'),
+              redirectEndpoint: any(named: 'redirectEndpoint'),
+            ),
+          ).thenAnswer(
+            (_) async => Client(creds),
           );
 
           // ACT
@@ -206,13 +204,12 @@ THEN an exception indicating that the action was canceled should be thrown
               null;
 
           when(
-            () => oauthResponseHandlerWrapper.handler,
-          ).thenReturn(
-            ({
-              required AuthorizationCodeGrant grant,
-              required Uri redirectEndpoint,
-            }) async =>
-                Client(creds),
+            () => oauthResponseHandlerWrapper.call(
+              grant: any(named: 'grant'),
+              redirectEndpoint: any(named: 'redirectEndpoint'),
+            ),
+          ).thenAnswer(
+            (_) async => Client(creds),
           );
 
           // ACT
@@ -249,13 +246,12 @@ THEN an exception indicating permission issues should be thrown
           }
 
           when(
-            () => oauthResponseHandlerWrapper.handler,
-          ).thenReturn(
-            ({
-              required AuthorizationCodeGrant grant,
-              required Uri redirectEndpoint,
-            }) async =>
-                throw AuthorizationException('error', null, null),
+            () => oauthResponseHandlerWrapper.call(
+              grant: any(named: 'grant'),
+              redirectEndpoint: any(named: 'redirectEndpoint'),
+            ),
+          ).thenThrow(
+            AuthorizationException('error', null, null),
           );
 
           // ACT

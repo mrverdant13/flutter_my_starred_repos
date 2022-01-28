@@ -5,22 +5,14 @@ typedef AuthResponseHandlerCallback = Future<Client> Function({
   required Uri redirectEndpoint,
 });
 
-// coverage:ignore-start
 class OauthResponseHandlerWrapper {
-  const OauthResponseHandlerWrapper({
-    required this.handler,
-  });
+  const OauthResponseHandlerWrapper();
 
-  final AuthResponseHandlerCallback handler;
-}
-
-final defaultOauthResponseHandlerWrapper = OauthResponseHandlerWrapper(
-  handler: ({
+  Future<Client> call({
     required AuthorizationCodeGrant grant,
     required Uri redirectEndpoint,
-  }) async =>
+  }) =>
       grant.handleAuthorizationResponse(
-    redirectEndpoint.queryParameters,
-  ),
-);
-// coverage:ignore-end
+        redirectEndpoint.queryParameters,
+      );
+}

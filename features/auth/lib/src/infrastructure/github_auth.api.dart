@@ -13,7 +13,7 @@ class GithubAuthApi {
     required GithubAuthConfig githubAuthConfig,
     OauthResponseHandlerWrapper? oauthResponseHandlerWrapper,
   })  : _oauthResponseHandlerWrapper =
-            oauthResponseHandlerWrapper ?? defaultOauthResponseHandlerWrapper,
+            oauthResponseHandlerWrapper ?? const OauthResponseHandlerWrapper(),
         _clientId = githubAuthConfig.clientId,
         _clientSecret = githubAuthConfig.clientSecret;
 
@@ -123,7 +123,7 @@ class GithubAuthApi {
     // from it.
     late final Client httpClient;
     try {
-      httpClient = await _oauthResponseHandlerWrapper.handler(
+      httpClient = await _oauthResponseHandlerWrapper(
         grant: grant,
         redirectEndpoint: redirectEndpoint,
       );

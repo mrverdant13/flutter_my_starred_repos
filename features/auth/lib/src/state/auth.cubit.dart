@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth.cubit.freezed.dart';
+part 'auth.failure.dart';
 part 'auth.state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -32,7 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
       failureOrNothing.when(
         err: (f) => AuthState.failure(
           isLoggedIn: state.isLoggedIn,
-          failure: AuthenticatorFailure.logIn(f),
+          failure: AuthFailure.logIn(f),
         ),
         ok: (_) => const AuthState.loaded(
           isLoggedIn: true,

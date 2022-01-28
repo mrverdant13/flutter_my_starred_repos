@@ -195,7 +195,7 @@ THEN a failure should be reported
             const AuthState.loading(isLoggedIn: false),
             AuthState.failure(
               isLoggedIn: false,
-              failure: AuthenticatorFailure.logIn(
+              failure: AuthFailure.logIn(
                 expectedLoginFailure,
               ),
             ),

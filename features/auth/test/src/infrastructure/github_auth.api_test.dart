@@ -22,52 +22,6 @@ class FakeAuthorizationCodeGrant extends Mock
 class FakeRequest extends Fake implements http.BaseRequest {}
 
 void main() {
-//   test(
-//     '''
-
-// GIVEN a grant-based auth response handler
-// AND a grant
-// AND a redirect endpoint
-// WHEN the reponse handler is invoked using the given grant and redirect endpoint
-// THEN the client wrapping the credentials should be returned
-// ├─ BY calling the grant response handler
-// │  ├─ THAT uses the redirect endpoint query parameters
-// ├─ AND retourning the HTTP client wrapping the resulting credentials
-// ''',
-//     () async {
-//       // ARRANGE
-//       final mockGrant = MockAuthorizationCodeGrant();
-//       final redirectEndpoint = Uri.parse('http://localhost').replace(
-//         queryParameters: {'param': 'param'},
-//       );
-//       final creds = Credentials('access_token');
-//       final client = Client(creds);
-
-//       when(
-//         () => mockGrant.handleAuthorizationResponse(
-//           any(),
-//         ),
-//       ).thenAnswer(
-//         (_) async => client,
-//       );
-
-//       // ACT
-//       final result = await handleAuthorizationResponse(
-//         grant: mockGrant,
-//         redirectEndpoint: redirectEndpoint,
-//       );
-
-//       // ASSERT
-//       verify(
-//         () => mockGrant.handleAuthorizationResponse(
-//           redirectEndpoint.queryParameters,
-//         ),
-//       ).called(1);
-//       expect(result, client);
-//       verifyNoMoreInteractions(mockGrant);
-//     },
-//   );
-
   group(
     '''
 

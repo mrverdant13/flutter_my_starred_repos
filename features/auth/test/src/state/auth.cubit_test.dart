@@ -24,7 +24,7 @@ void main() {
   group(
     '''
 
-GIVEN a authenticator cubit
+GIVEN a auth cubit
 ├─ THAT uses an auth service''',
     () {
       // ARRANGE
@@ -50,10 +50,11 @@ GIVEN a authenticator cubit
         '''
 
 WHEN no interaction
-THEN its initial state should be loading
+THEN its initial state should be loading and not logged in
 ''',
         () async {
           // ASSERT
+          expect(authCubit.isLoading, isTrue);
           expect(
             authCubit.state,
             const AuthState.loading(isLoggedIn: false),
@@ -85,16 +86,14 @@ THEN the auth state should be updated
 
             return authCubit;
           },
-          act: (cubit) {
-            cubit.checkAuthStatus();
-          },
+          act: (cubit) => cubit.checkAuthStatus(),
           expect: () => [
             const AuthState.loading(isLoggedIn: false),
             expectedAuthState,
           ],
-          verify: (bloc) {
-            verify(() => mockAuthService.isLoggedIn()).called(1);
-          },
+          verify: (_) => verify(
+            () => mockAuthService.isLoggedIn(),
+          ).called(1),
         );
       }
 

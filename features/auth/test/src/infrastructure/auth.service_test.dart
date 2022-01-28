@@ -53,8 +53,10 @@ void main() {
     '''
 
 GIVEN an auth service
-├─ THAT uses a GitHub auth api
-├─ AND  uses a credentials storage''',
+├─ THAT uses a GitHub auth API
+├─ AND  uses a credentials storage
+├─ AND  uses a profile API
+├─ AND  uses a profile storage''',
     () {
       // ARRANGE
       late MockGithubAuthApi mockGithubAuthApi;
@@ -82,6 +84,8 @@ GIVEN an auth service
         () {
           verifyNoMoreInteractions(mockGithubAuthApi);
           verifyNoMoreInteractions(mockCredsStorage);
+          verifyNoMoreInteractions(mockProfileApi);
+          verifyNoMoreInteractions(mockProfileStorage);
         },
       );
 
@@ -132,6 +136,7 @@ THEN the user should be authenticated and his/her creds and profile should be pe
           // ARRANGE
           final creds = Credentials('');
           const profile = Profile(username: 'username', avatarUrl: 'avatarUrl');
+
           when(
             () => mockGithubAuthApi.logInWithOAuth(
               callback: any(named: 'callback'),
@@ -163,7 +168,6 @@ THEN the user should be authenticated and his/her creds and profile should be pe
           );
 
           // ASSERT
-          expect(result, Ok<Unit, LoginFailure>(unit));
           verify(
             () => mockGithubAuthApi.logInWithOAuth(
               callback: oauthCallback,
@@ -172,6 +176,7 @@ THEN the user should be authenticated and his/her creds and profile should be pe
           verify(() => mockCredsStorage.set(creds)).called(1);
           verify(() => mockProfileApi.getProfile()).called(1);
           verify(() => mockProfileStorage.setProfile(profile)).called(1);
+          expect(result, Ok<Unit, LoginFailure>(unit));
         },
       );
 
@@ -204,17 +209,17 @@ THEN the auth intent should result in a failure
           );
 
           // ASSERT
+          verify(
+            () => mockGithubAuthApi.logInWithOAuth(
+              callback: oauthCallback,
+            ),
+          ).called(1);
           expect(
             result,
             Err<Unit, LoginFailure>(
               const LoginFailure.offline(),
             ),
           );
-          verify(
-            () => mockGithubAuthApi.logInWithOAuth(
-              callback: oauthCallback,
-            ),
-          ).called(1);
         },
       );
 
@@ -247,17 +252,17 @@ THEN the auth intent should result in a failure
           );
 
           // ASSERT
+          verify(
+            () => mockGithubAuthApi.logInWithOAuth(
+              callback: oauthCallback,
+            ),
+          ).called(1);
           expect(
             result,
             Err<Unit, LoginFailure>(
               const LoginFailure.missingPermissions(),
             ),
           );
-          verify(
-            () => mockGithubAuthApi.logInWithOAuth(
-              callback: oauthCallback,
-            ),
-          ).called(1);
         },
       );
 
@@ -270,7 +275,7 @@ AND the user grants all permissions
 AND the user does not complete the process
 THEN the auth intent should result in a failure
 ├─ BY trying to collect creds with the GitHub auth api
-├─ AND returning a failure indicating hat the action was canceled
+├─ AND returning a failure indicating that the action was canceled
 ''',
         () async {
           // ARRANGE
@@ -290,17 +295,57 @@ THEN the auth intent should result in a failure
           );
 
           // ASSERT
+          verify(
+            () => mockGithubAuthApi.logInWithOAuth(
+              callback: oauthCallback,
+            ),
+          ).called(1);
           expect(
             result,
             Err<Unit, LoginFailure>(
               const LoginFailure.canceled(),
             ),
           );
+        },
+      );
+
+      test(
+        '''
+
+AND unexpected conditions
+WHEN a OAuth login is triggered
+THEN the auth intent should result in a failure
+├─ BY returning a failure indicating unexpected issues
+''',
+        () async {
+          // ARRANGE
+          when(
+            () => mockGithubAuthApi.logInWithOAuth(
+              callback: any(named: 'callback'),
+            ),
+          ).thenThrow(
+            Exception('Unexpected condition'),
+          );
+
+          // ACT
+          final result = await authService.logIn(
+            method: const LoginMethod.oAuth(
+              callback: oauthCallback,
+            ),
+          );
+
+          // ASSERT
           verify(
             () => mockGithubAuthApi.logInWithOAuth(
               callback: oauthCallback,
             ),
           ).called(1);
+          expect(
+            result,
+            Err<Unit, LoginFailure>(
+              const LoginFailure.unexpected(),
+            ),
+          );
         },
       );
 

@@ -47,19 +47,19 @@ THEN any persisted creds should be removed
               key: any(named: 'key'),
             ),
           ).thenAnswer(
-            (_) async => 0,
+            (_) async {},
           );
 
           // ACT
           await credsStorage.clear();
 
           // ASSERT
-          expect(credsStorage.creds, isNull);
           verify(
             () => mockFlutterSecureStorage.delete(
               key: CredsStorage.credsKey,
             ),
           ).called(1);
+          expect(credsStorage.creds, isNull);
         },
       );
 
@@ -82,27 +82,27 @@ THEN the given credentials should be persisted
               value: any(named: 'value'),
             ),
           ).thenAnswer(
-            (_) async => 0,
+            (_) async {},
           );
 
           // ACT
           await credsStorage.set(creds);
 
           // ASSERT
-          expect(credsStorage.creds, creds);
           verify(
             () => mockFlutterSecureStorage.write(
               key: CredsStorage.credsKey,
               value: creds.toJson(),
             ),
           ).called(1);
+          expect(credsStorage.creds, creds);
         },
       );
 
       test(
         '''
 
-AND cached credentials
+├─ AND cached credentials
 WHEN credentials are requested
 THEN the cached credentials should be returned
 ├─ BY not using the secure storage
@@ -126,8 +126,8 @@ THEN the cached credentials should be returned
       test(
         '''
 
-AND persisted credentials
-AND no cached credentials
+├─ AND persisted credentials
+├─ AND no cached credentials
 WHEN credentials are requested
 THEN the persisted credentials should be cached and returned
 ├─ BY retrieving the persisted creds from the secure storage
@@ -153,15 +153,18 @@ THEN the persisted credentials should be cached and returned
 
           // ASSERT
 
-          // Comparing creds JSON string as it is saver and avoids reference
-          // comparisons.
-          expect(result!.toJson(), resultingCredsJson);
-          expect(credsStorage.creds!.toJson(), resultingCredsJson);
           verify(
             () => mockFlutterSecureStorage.read(
               key: CredsStorage.credsKey,
             ),
           ).called(1);
+
+          // Comparing creds JSON string as it is saver and avoids reference
+          // comparisons.
+          expect(credsStorage.creds, isNotNull);
+          expect(credsStorage.creds!.toJson(), resultingCredsJson);
+          expect(result, isNotNull);
+          expect(result!.toJson(), resultingCredsJson);
         },
       );
     },

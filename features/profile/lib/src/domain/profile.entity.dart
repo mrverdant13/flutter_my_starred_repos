@@ -6,9 +6,11 @@ part 'profile.entity.g.dart';
 
 @freezed
 class Profile with _$Profile {
-// coverage:ignore-start
+  // HACK: Ignoring Freezed factory constructors since they do not get marked as
+  // covered.
+
+  // coverage:ignore-start
   const factory Profile({
-// coverage:ignore-end
     // ignore: invalid_annotation_target
     @JsonKey(name: 'login') required String username,
     required String avatarUrl,
@@ -20,6 +22,7 @@ class Profile with _$Profile {
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);
+// coverage:ignore-end
 
   bool get hasValidStatus => status != null && status!.isValid;
 }

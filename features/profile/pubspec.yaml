@@ -25,6 +25,7 @@ dev_dependencies:
   json_serializable: ^6.1.4
   lint_rules:
     path: ../../lint_rules
+  mocktail: ^0.2.0
 
 dependency_overrides:
   test_api: ^0.4.9

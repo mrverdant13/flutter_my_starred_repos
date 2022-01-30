@@ -8,6 +8,28 @@ import 'package:profile/src/domain/profile.entity.dart';
 
 part 'profile.api.freezed.dart';
 
+@visibleForTesting
+// Ref: https://docs.github.com/en/graphql/reference/queries#user
+final getProfileDoc = gql(
+  '''
+query {
+  viewer {
+    login
+    name
+    avatarUrl
+    status {
+      emoji
+      message
+    }
+  }
+}
+''',
+);
+
+@visibleForTesting
+const emojiEndpoint =
+    'https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json';
+
 class ProfileApi {
   const ProfileApi({
     required GraphQLClient gqlClient,
@@ -19,23 +41,6 @@ class ProfileApi {
   final Dio _dio;
 
   Future<Profile> getProfile() async {
-    // Ref: https://docs.github.com/en/graphql/reference/queries#user
-    const getProfileQuery = '''
-query {
-  viewer {
-    login
-    name
-    avatarUrl
-    status {
-      emoji
-      message
-    }
-  }
-}''';
-    final getProfileDoc = gql(getProfileQuery);
-    const emojiEndpoint =
-        'https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json';
-
     final queryResult = await _gqlClient.query(
       QueryOptions(
         document: getProfileDoc,
@@ -60,13 +65,15 @@ query {
 
     final jsonProfile = queryResult.data!['viewer'] as Map<String, dynamic>;
     final jsonUserStatus = jsonProfile['status'] as Map<String, dynamic>?;
+    final emojiCode = jsonUserStatus?['emoji'] as String?;
 
-    if (jsonUserStatus == null) return Profile.fromJson(jsonProfile);
+    if (jsonUserStatus == null || emojiCode == null) {
+      return Profile.fromJson(jsonProfile);
+    }
 
     final emojiBuf = StringBuffer();
     try {
       final response = await _dio.get(emojiEndpoint);
-      final emojiCode = (jsonUserStatus['emoji'] as String).replaceAll(':', '');
       final data = jsonDecode(response.data as String) as Map<String, dynamic>;
       final emoji = data[emojiCode.replaceAll(':', '')] as String;
       emojiBuf.write(emoji);
@@ -87,7 +94,9 @@ query {
 
 @freezed
 class GetProfileException with _$GetProfileException {
+  // coverage:ignore-start
   const factory GetProfileException.offline() = _GetProfileExceptionOffline;
   const factory GetProfileException.unexpected() =
       _GetProfileExceptionUnexpected;
+  // coverage:ignore-end
 }

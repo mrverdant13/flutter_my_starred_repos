@@ -1,60 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:profile/profile.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
-
-class MockStoreRef extends Mock
-    implements StoreRef<String, Map<String, dynamic>> {}
-
-class FakeRecordRef extends Fake
-    implements RecordRef<String, Map<String, dynamic>> {
-  FakeRecordRef({
-    required this.getValue,
-    required this.onSnapshotValues,
-  });
-
-  final Map<String, dynamic> getValue;
-  final Map<String, Map<String, dynamic>> onSnapshotValues;
-
-  // Implementation needed to use the `get` and `onSnapshot` methods, which are
-  // extension methods, in tests.
-
-  Future<Map<String, dynamic>?> get(
-    Database database,
-  ) async =>
-      getValue;
-
-  Stream<RecordSnapshot<String, Map<String, dynamic>>?> onSnapshot(
-    Database database,
-  ) =>
-      Stream.fromIterable(
-        onSnapshotValues.entries.map(
-          (e) => FakeRecordSnapshot(
-            key: e.key,
-            value: e.value,
-          ),
-        ),
-      );
-}
-
-class FakeDatabase extends Mock implements Database {}
-
-class FakeRecordSnapshot extends Fake
-    implements RecordSnapshot<String, Map<String, dynamic>> {
-  FakeRecordSnapshot({
-    required this.key,
-    required this.value,
-  });
-
-  @override
-  final String key;
-
-  @override
-  final Map<String, dynamic> value;
-}
 
 void main() {
   group(

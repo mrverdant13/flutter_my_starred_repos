@@ -45,7 +45,6 @@ const $Profile = _$ProfileTearOff();
 
 /// @nodoc
 mixin _$Profile {
-// coverage:ignore-end
 // ignore: invalid_annotation_target
   @JsonKey(name: 'login')
   String get username => throw _privateConstructorUsedError;
@@ -183,8 +182,7 @@ class _$_Profile extends _Profile {
   factory _$_Profile.fromJson(Map<String, dynamic> json) =>
       _$$_ProfileFromJson(json);
 
-  @override // coverage:ignore-end
-// ignore: invalid_annotation_target
+  @override // ignore: invalid_annotation_target
   @JsonKey(name: 'login')
   final String username;
   @override
@@ -239,8 +237,7 @@ abstract class _Profile extends Profile {
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$_Profile.fromJson;
 
-  @override // coverage:ignore-end
-// ignore: invalid_annotation_target
+  @override // ignore: invalid_annotation_target
   @JsonKey(name: 'login')
   String get username;
   @override

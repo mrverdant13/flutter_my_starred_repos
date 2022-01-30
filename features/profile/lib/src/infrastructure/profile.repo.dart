@@ -36,6 +36,8 @@ class ProfileRepo {
 
 @freezed
 class GetProfileFailure with _$GetProfileFailure {
+  // coverage:ignore-start
   const factory GetProfileFailure.offline() = _GetProfileFailureOffline;
   const factory GetProfileFailure.unexpected() = _GetProfileFailureUnexpected;
+  // coverage:ignore-end
 }

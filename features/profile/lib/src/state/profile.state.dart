@@ -2,6 +2,7 @@ part of 'profile.cubit.dart';
 
 @freezed
 class ProfileState with _$ProfileState {
+  // coverage:ignore-start
   const factory ProfileState.loading({
     required Profile profile,
   }) = _ProfileStateLoading;
@@ -12,4 +13,8 @@ class ProfileState with _$ProfileState {
     required Profile profile,
     required GetProfileFailure failure,
   }) = _ProfileStateFailure;
+  // coverage:ignore-end
 }
+
+@visibleForTesting
+const initialProfile = Profile(username: '', avatarUrl: '');

@@ -12,11 +12,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit({
     required ProfileRepo profileRepo,
   })  : _profileRepo = profileRepo,
-        super(
-          const ProfileState.loading(
-            profile: Profile(username: '', avatarUrl: ''),
-          ),
-        );
+        super(const ProfileState.loading(profile: initialProfile));
 
   final ProfileRepo _profileRepo;
 

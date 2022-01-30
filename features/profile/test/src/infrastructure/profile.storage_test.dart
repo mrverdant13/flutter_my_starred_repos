@@ -106,19 +106,16 @@ THEN the profile should be continuously returned
 
           // ACT
           final result = profileStorage.watchProfile();
-          final appliedUpdatedProfiles = <Profile>[];
+          final updatedProfilesToApply = [...updatedProfiles];
           late final StreamSubscription subscription;
           subscription = profileStorage.record.onSnapshot(sembastDb).listen(
             (snapshot) async {
-              final newProfile = updatedProfiles[appliedUpdatedProfiles.length];
-              appliedUpdatedProfiles.add(newProfile);
+              final newProfile = updatedProfilesToApply.removeAt(0);
+              if (updatedProfilesToApply.isEmpty) await subscription.cancel();
               await profileStorage.record.put(
                 sembastDb,
                 newProfile.toJson(),
               );
-              if (updatedProfiles.length == appliedUpdatedProfiles.length) {
-                await subscription.cancel();
-              }
             },
           );
 

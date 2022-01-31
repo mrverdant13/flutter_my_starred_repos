@@ -33,10 +33,6 @@ class ProfileStorage {
     return Profile.fromJson(jsonProfile!);
   }
 
-  Stream<Profile> watchProfile() async* {
-    yield await profile;
-    yield* record
-        .onSnapshot(_db)
-        .map((event) => Profile.fromJson(event!.value));
-  }
+  Stream<Profile> watchProfile() =>
+      record.onSnapshot(_db).map((event) => Profile.fromJson(event!.value));
 }

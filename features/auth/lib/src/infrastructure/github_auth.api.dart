@@ -1,5 +1,6 @@
 import 'package:auth/src/domain/github_auth_config.dart';
 import 'package:auth/src/domain/login_method.dart';
+import 'package:auth/src/infrastructure/oauth_response_handler_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart' as http;
@@ -7,31 +8,16 @@ import 'package:oauth2/oauth2.dart';
 
 part 'github_auth.api.freezed.dart';
 
-typedef AuthResponseHandlerCallback = Future<Client> Function({
-  required AuthorizationCodeGrant grant,
-  required Uri redirectEndpoint,
-});
-
-@visibleForTesting
-Future<Client> handleAuthorizationResponse({
-  required AuthorizationCodeGrant grant,
-  required Uri redirectEndpoint,
-}) async {
-  return grant.handleAuthorizationResponse(
-    redirectEndpoint.queryParameters,
-  );
-}
-
 class GithubAuthApi {
   GithubAuthApi({
     required GithubAuthConfig githubAuthConfig,
-    AuthResponseHandlerCallback? authResponseHandlerCallback,
-  })  : _authResponseHandlerCallback =
-            authResponseHandlerCallback ?? handleAuthorizationResponse,
+    OauthResponseHandlerWrapper? oauthResponseHandlerWrapper,
+  })  : _oauthResponseHandlerWrapper =
+            oauthResponseHandlerWrapper ?? const OauthResponseHandlerWrapper(),
         _clientId = githubAuthConfig.clientId,
         _clientSecret = githubAuthConfig.clientSecret;
 
-  final AuthResponseHandlerCallback _authResponseHandlerCallback;
+  final OauthResponseHandlerWrapper _oauthResponseHandlerWrapper;
 
   /// The endpoint that holds the base authorization URL and that is used to
   /// interact withthe user to get the authorization to access the protected
@@ -137,7 +123,7 @@ class GithubAuthApi {
     // from it.
     late final Client httpClient;
     try {
-      httpClient = await _authResponseHandlerCallback(
+      httpClient = await _oauthResponseHandlerWrapper(
         grant: grant,
         redirectEndpoint: redirectEndpoint,
       );
@@ -172,8 +158,13 @@ class OAuthHttpClient extends http.BaseClient {
 
 @freezed
 class LogInException with _$LogInException {
+  // HACK: Ignoring Freezed factory constructors since they do not get marked as
+  // covered.
+
+  // coverage:ignore-start
   const factory LogInException.canceled() = _LogInExceptionCanceled;
   const factory LogInException.missingPermissions() =
       _LogInExceptionMissingPermissions;
   const factory LogInException.offline() = _LogInExceptionOffline;
+  // coverage:ignore-end
 }

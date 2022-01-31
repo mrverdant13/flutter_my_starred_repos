@@ -15,21 +15,21 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$AuthenticatorFailureTearOff {
-  const _$AuthenticatorFailureTearOff();
+class _$AuthFailureTearOff {
+  const _$AuthFailureTearOff();
 
-  _AuthenticatorFailureLogIn logIn(LoginFailure failure) {
-    return _AuthenticatorFailureLogIn(
+  _AuthFailureLogIn logIn(LoginFailure failure) {
+    return _AuthFailureLogIn(
       failure,
     );
   }
 }
 
 /// @nodoc
-const $AuthenticatorFailure = _$AuthenticatorFailureTearOff();
+const $AuthFailure = _$AuthFailureTearOff();
 
 /// @nodoc
-mixin _$AuthenticatorFailure {
+mixin _$AuthFailure {
   LoginFailure get failure => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
@@ -50,44 +50,43 @@ mixin _$AuthenticatorFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AuthenticatorFailureLogIn value) logIn,
+    required TResult Function(_AuthFailureLogIn value) logIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticatorFailureLogIn value)? logIn,
+    TResult Function(_AuthFailureLogIn value)? logIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AuthenticatorFailureLogIn value)? logIn,
+    TResult Function(_AuthFailureLogIn value)? logIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AuthenticatorFailureCopyWith<AuthenticatorFailure> get copyWith =>
+  $AuthFailureCopyWith<AuthFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AuthenticatorFailureCopyWith<$Res> {
-  factory $AuthenticatorFailureCopyWith(AuthenticatorFailure value,
-          $Res Function(AuthenticatorFailure) then) =
-      _$AuthenticatorFailureCopyWithImpl<$Res>;
+abstract class $AuthFailureCopyWith<$Res> {
+  factory $AuthFailureCopyWith(
+          AuthFailure value, $Res Function(AuthFailure) then) =
+      _$AuthFailureCopyWithImpl<$Res>;
   $Res call({LoginFailure failure});
 
   $LoginFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
-class _$AuthenticatorFailureCopyWithImpl<$Res>
-    implements $AuthenticatorFailureCopyWith<$Res> {
-  _$AuthenticatorFailureCopyWithImpl(this._value, this._then);
+class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
+  _$AuthFailureCopyWithImpl(this._value, this._then);
 
-  final AuthenticatorFailure _value;
+  final AuthFailure _value;
   // ignore: unused_field
-  final $Res Function(AuthenticatorFailure) _then;
+  final $Res Function(AuthFailure) _then;
 
   @override
   $Res call({
@@ -110,11 +109,11 @@ class _$AuthenticatorFailureCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$AuthenticatorFailureLogInCopyWith<$Res>
-    implements $AuthenticatorFailureCopyWith<$Res> {
-  factory _$AuthenticatorFailureLogInCopyWith(_AuthenticatorFailureLogIn value,
-          $Res Function(_AuthenticatorFailureLogIn) then) =
-      __$AuthenticatorFailureLogInCopyWithImpl<$Res>;
+abstract class _$AuthFailureLogInCopyWith<$Res>
+    implements $AuthFailureCopyWith<$Res> {
+  factory _$AuthFailureLogInCopyWith(
+          _AuthFailureLogIn value, $Res Function(_AuthFailureLogIn) then) =
+      __$AuthFailureLogInCopyWithImpl<$Res>;
   @override
   $Res call({LoginFailure failure});
 
@@ -123,22 +122,21 @@ abstract class _$AuthenticatorFailureLogInCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AuthenticatorFailureLogInCopyWithImpl<$Res>
-    extends _$AuthenticatorFailureCopyWithImpl<$Res>
-    implements _$AuthenticatorFailureLogInCopyWith<$Res> {
-  __$AuthenticatorFailureLogInCopyWithImpl(_AuthenticatorFailureLogIn _value,
-      $Res Function(_AuthenticatorFailureLogIn) _then)
-      : super(_value, (v) => _then(v as _AuthenticatorFailureLogIn));
+class __$AuthFailureLogInCopyWithImpl<$Res>
+    extends _$AuthFailureCopyWithImpl<$Res>
+    implements _$AuthFailureLogInCopyWith<$Res> {
+  __$AuthFailureLogInCopyWithImpl(
+      _AuthFailureLogIn _value, $Res Function(_AuthFailureLogIn) _then)
+      : super(_value, (v) => _then(v as _AuthFailureLogIn));
 
   @override
-  _AuthenticatorFailureLogIn get _value =>
-      super._value as _AuthenticatorFailureLogIn;
+  _AuthFailureLogIn get _value => super._value as _AuthFailureLogIn;
 
   @override
   $Res call({
     Object? failure = freezed,
   }) {
-    return _then(_AuthenticatorFailureLogIn(
+    return _then(_AuthFailureLogIn(
       failure == freezed
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -149,22 +147,22 @@ class __$AuthenticatorFailureLogInCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
-  const _$_AuthenticatorFailureLogIn(this.failure);
+class _$_AuthFailureLogIn implements _AuthFailureLogIn {
+  const _$_AuthFailureLogIn(this.failure);
 
   @override
   final LoginFailure failure;
 
   @override
   String toString() {
-    return 'AuthenticatorFailure.logIn(failure: $failure)';
+    return 'AuthFailure.logIn(failure: $failure)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AuthenticatorFailureLogIn &&
+            other is _AuthFailureLogIn &&
             const DeepCollectionEquality().equals(other.failure, failure));
   }
 
@@ -174,10 +172,8 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
 
   @JsonKey(ignore: true)
   @override
-  _$AuthenticatorFailureLogInCopyWith<_AuthenticatorFailureLogIn>
-      get copyWith =>
-          __$AuthenticatorFailureLogInCopyWithImpl<_AuthenticatorFailureLogIn>(
-              this, _$identity);
+  _$AuthFailureLogInCopyWith<_AuthFailureLogIn> get copyWith =>
+      __$AuthFailureLogInCopyWithImpl<_AuthFailureLogIn>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -210,7 +206,7 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AuthenticatorFailureLogIn value) logIn,
+    required TResult Function(_AuthFailureLogIn value) logIn,
   }) {
     return logIn(this);
   }
@@ -218,7 +214,7 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticatorFailureLogIn value)? logIn,
+    TResult Function(_AuthFailureLogIn value)? logIn,
   }) {
     return logIn?.call(this);
   }
@@ -226,7 +222,7 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AuthenticatorFailureLogIn value)? logIn,
+    TResult Function(_AuthFailureLogIn value)? logIn,
     required TResult orElse(),
   }) {
     if (logIn != null) {
@@ -236,16 +232,15 @@ class _$_AuthenticatorFailureLogIn implements _AuthenticatorFailureLogIn {
   }
 }
 
-abstract class _AuthenticatorFailureLogIn implements AuthenticatorFailure {
-  const factory _AuthenticatorFailureLogIn(LoginFailure failure) =
-      _$_AuthenticatorFailureLogIn;
+abstract class _AuthFailureLogIn implements AuthFailure {
+  const factory _AuthFailureLogIn(LoginFailure failure) = _$_AuthFailureLogIn;
 
   @override
   LoginFailure get failure;
   @override
   @JsonKey(ignore: true)
-  _$AuthenticatorFailureLogInCopyWith<_AuthenticatorFailureLogIn>
-      get copyWith => throw _privateConstructorUsedError;
+  _$AuthFailureLogInCopyWith<_AuthFailureLogIn> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -265,7 +260,7 @@ class _$AuthStateTearOff {
   }
 
   _AuthStateFailure failure(
-      {required bool isLoggedIn, required AuthenticatorFailure failure}) {
+      {required bool isLoggedIn, required AuthFailure failure}) {
     return _AuthStateFailure(
       isLoggedIn: isLoggedIn,
       failure: failure,
@@ -284,22 +279,21 @@ mixin _$AuthState {
   TResult when<TResult extends Object?>({
     required TResult Function(bool isLoggedIn) loading,
     required TResult Function(bool isLoggedIn) loaded,
-    required TResult Function(bool isLoggedIn, AuthenticatorFailure failure)
-        failure,
+    required TResult Function(bool isLoggedIn, AuthFailure failure) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(bool isLoggedIn)? loading,
     TResult Function(bool isLoggedIn)? loaded,
-    TResult Function(bool isLoggedIn, AuthenticatorFailure failure)? failure,
+    TResult Function(bool isLoggedIn, AuthFailure failure)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool isLoggedIn)? loading,
     TResult Function(bool isLoggedIn)? loaded,
-    TResult Function(bool isLoggedIn, AuthenticatorFailure failure)? failure,
+    TResult Function(bool isLoggedIn, AuthFailure failure)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -429,8 +423,7 @@ class _$_AuthStateLoading implements _AuthStateLoading {
   TResult when<TResult extends Object?>({
     required TResult Function(bool isLoggedIn) loading,
     required TResult Function(bool isLoggedIn) loaded,
-    required TResult Function(bool isLoggedIn, AuthenticatorFailure failure)
-        failure,
+    required TResult Function(bool isLoggedIn, AuthFailure failure) failure,
   }) {
     return loading(isLoggedIn);
   }
@@ -440,7 +433,7 @@ class _$_AuthStateLoading implements _AuthStateLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(bool isLoggedIn)? loading,
     TResult Function(bool isLoggedIn)? loaded,
-    TResult Function(bool isLoggedIn, AuthenticatorFailure failure)? failure,
+    TResult Function(bool isLoggedIn, AuthFailure failure)? failure,
   }) {
     return loading?.call(isLoggedIn);
   }
@@ -450,7 +443,7 @@ class _$_AuthStateLoading implements _AuthStateLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool isLoggedIn)? loading,
     TResult Function(bool isLoggedIn)? loaded,
-    TResult Function(bool isLoggedIn, AuthenticatorFailure failure)? failure,
+    TResult Function(bool isLoggedIn, AuthFailure failure)? failure,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -575,8 +568,7 @@ class _$_AuthStateLoaded implements _AuthStateLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function(bool isLoggedIn) loading,
     required TResult Function(bool isLoggedIn) loaded,
-    required TResult Function(bool isLoggedIn, AuthenticatorFailure failure)
-        failure,
+    required TResult Function(bool isLoggedIn, AuthFailure failure) failure,
   }) {
     return loaded(isLoggedIn);
   }
@@ -586,7 +578,7 @@ class _$_AuthStateLoaded implements _AuthStateLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(bool isLoggedIn)? loading,
     TResult Function(bool isLoggedIn)? loaded,
-    TResult Function(bool isLoggedIn, AuthenticatorFailure failure)? failure,
+    TResult Function(bool isLoggedIn, AuthFailure failure)? failure,
   }) {
     return loaded?.call(isLoggedIn);
   }
@@ -596,7 +588,7 @@ class _$_AuthStateLoaded implements _AuthStateLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool isLoggedIn)? loading,
     TResult Function(bool isLoggedIn)? loaded,
-    TResult Function(bool isLoggedIn, AuthenticatorFailure failure)? failure,
+    TResult Function(bool isLoggedIn, AuthFailure failure)? failure,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -659,9 +651,9 @@ abstract class _$AuthStateFailureCopyWith<$Res>
           _AuthStateFailure value, $Res Function(_AuthStateFailure) then) =
       __$AuthStateFailureCopyWithImpl<$Res>;
   @override
-  $Res call({bool isLoggedIn, AuthenticatorFailure failure});
+  $Res call({bool isLoggedIn, AuthFailure failure});
 
-  $AuthenticatorFailureCopyWith<$Res> get failure;
+  $AuthFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -688,13 +680,13 @@ class __$AuthStateFailureCopyWithImpl<$Res>
       failure: failure == freezed
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
-              as AuthenticatorFailure,
+              as AuthFailure,
     ));
   }
 
   @override
-  $AuthenticatorFailureCopyWith<$Res> get failure {
-    return $AuthenticatorFailureCopyWith<$Res>(_value.failure, (value) {
+  $AuthFailureCopyWith<$Res> get failure {
+    return $AuthFailureCopyWith<$Res>(_value.failure, (value) {
       return _then(_value.copyWith(failure: value));
     });
   }
@@ -708,7 +700,7 @@ class _$_AuthStateFailure implements _AuthStateFailure {
   @override
   final bool isLoggedIn;
   @override
-  final AuthenticatorFailure failure;
+  final AuthFailure failure;
 
   @override
   String toString() {
@@ -741,8 +733,7 @@ class _$_AuthStateFailure implements _AuthStateFailure {
   TResult when<TResult extends Object?>({
     required TResult Function(bool isLoggedIn) loading,
     required TResult Function(bool isLoggedIn) loaded,
-    required TResult Function(bool isLoggedIn, AuthenticatorFailure failure)
-        failure,
+    required TResult Function(bool isLoggedIn, AuthFailure failure) failure,
   }) {
     return failure(isLoggedIn, this.failure);
   }
@@ -752,7 +743,7 @@ class _$_AuthStateFailure implements _AuthStateFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(bool isLoggedIn)? loading,
     TResult Function(bool isLoggedIn)? loaded,
-    TResult Function(bool isLoggedIn, AuthenticatorFailure failure)? failure,
+    TResult Function(bool isLoggedIn, AuthFailure failure)? failure,
   }) {
     return failure?.call(isLoggedIn, this.failure);
   }
@@ -762,7 +753,7 @@ class _$_AuthStateFailure implements _AuthStateFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool isLoggedIn)? loading,
     TResult Function(bool isLoggedIn)? loaded,
-    TResult Function(bool isLoggedIn, AuthenticatorFailure failure)? failure,
+    TResult Function(bool isLoggedIn, AuthFailure failure)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -809,11 +800,11 @@ class _$_AuthStateFailure implements _AuthStateFailure {
 abstract class _AuthStateFailure implements AuthState {
   const factory _AuthStateFailure(
       {required bool isLoggedIn,
-      required AuthenticatorFailure failure}) = _$_AuthStateFailure;
+      required AuthFailure failure}) = _$_AuthStateFailure;
 
   @override
   bool get isLoggedIn;
-  AuthenticatorFailure get failure;
+  AuthFailure get failure;
   @override
   @JsonKey(ignore: true)
   _$AuthStateFailureCopyWith<_AuthStateFailure> get copyWith =>

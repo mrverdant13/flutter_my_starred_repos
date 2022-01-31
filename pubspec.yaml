@@ -19,9 +19,6 @@ dependencies:
   # Authentication
   oauth2: ^2.0.0
 
-  # Dependency injection
-  flutter_riverpod: ^1.0.3
-
   # Functional programming
   dartz: ^0.10.1
   oxidized: ^5.1.0
@@ -67,8 +64,13 @@ dependencies:
   # Auth features
   auth:
     path: features/auth
+  profile:
+    path: features/profile
   starred_repos:
     path: features/starred_repos
+
+  flutter_hooks: ^0.18.2
+  hooks_riverpod: ^1.0.3
 
 dev_dependencies:
   flutter_test:

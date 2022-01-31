@@ -13,16 +13,12 @@ void main() {
 GIVEN an HTTP client
 ├─ THAT uses an auth interceptor
 │  ├─ THAT uses a credentials storage
-AND a request
-├─ THAT uses auth extra data for interception''',
+AND a request''',
     () {
       // ARRANGE
       late MockCredsStorage mockCredsStorage;
       late AuthInterceptor authInterceptor;
       late Dio dio;
-
-      // Using a function to avoid mutability-related issues.
-      RequestOptions request() => RequestOptions(path: 'some.url');
 
       setUp(
         () {
@@ -68,7 +64,7 @@ THEN the auth interceptor should alter the request
           );
 
           // ACT
-          final result = await dio.fetch(request());
+          final result = await dio.fetch(RequestOptions(path: 'some.url'));
 
           // ASSERT
           verify(
@@ -99,7 +95,7 @@ THEN the auth interceptor should not alter the request
           );
 
           // ACT
-          final result = await dio.fetch(request());
+          final result = await dio.fetch(RequestOptions(path: 'some.url'));
 
           // ASSERT
           verify(

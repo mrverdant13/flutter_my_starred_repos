@@ -2,9 +2,16 @@ import 'package:auth/auth.dart';
 import 'package:flutter_my_starred_repos/core/config.dart';
 import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
+import 'package:flutter_my_starred_repos/features/profile/core/dependency_injection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:profile/profile.dart';
 import 'package:test/test.dart';
+
+class FakeProfileApi extends Fake implements ProfileApi {}
+
+class FakeProfileStorage extends Fake implements ProfileStorage {}
 
 void main() {
   group(
@@ -31,6 +38,8 @@ WHEN the injection process is triggered''',
           container = ProviderContainer(
             overrides: [
               appConfigPod.overrideWithValue(appConfig),
+              profileApiPod.overrideWithValue(FakeProfileApi()),
+              profileStoragePod.overrideWithValue(FakeProfileStorage()),
             ],
           );
         },

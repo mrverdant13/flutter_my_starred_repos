@@ -19,13 +19,6 @@ class AppDrawer extends ConsumerWidget {
             Column(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.plus_one),
-                  title: const Text('Counter'),
-                  onTap: () async => context.router.push(
-                    const CounterScreenRoute(),
-                  ),
-                ),
-                ListTile(
                   leading: const Icon(Icons.groups),
                   title: const Text('Users'),
                   onTap: () async => context.router.push(

@@ -17,9 +17,7 @@ class CredsStorage {
 
   Future<void> clear() async {
     // Removes the credentials from the secure storage.
-    await _flutterSecureStorage.delete(
-      key: credsKey,
-    );
+    await _flutterSecureStorage.delete(key: credsKey);
     // Removes the in-memory-cached credentials.
     creds = null;
   }
@@ -41,14 +39,10 @@ class CredsStorage {
     if (creds != null) return creds;
 
     // Reads the stored serialized credentials.
-    final credsJson = await _flutterSecureStorage.read(
-      key: credsKey,
-    );
+    final credsJson = await _flutterSecureStorage.read(key: credsKey);
 
     // Returns the deserialized credentials if they exist.
     if (credsJson == null) return null;
-    return creds = Credentials.fromJson(
-      credsJson,
-    );
+    return creds = Credentials.fromJson(credsJson);
   }
 }

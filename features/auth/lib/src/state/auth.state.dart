@@ -1,14 +1,11 @@
 part of 'auth.cubit.dart';
 
 @freezed
-class AuthenticatorFailure with _$AuthenticatorFailure {
-  const factory AuthenticatorFailure.logIn(
-    LoginFailure failure,
-  ) = _AuthenticatorFailureLogIn;
-}
-
-@freezed
 class AuthState with _$AuthState {
+  // HACK: Ignoring Freezed factory constructors since they do not get marked as
+  // covered.
+
+  // coverage:ignore-start
   const factory AuthState.loading({
     required bool isLoggedIn,
   }) = _AuthStateLoading;
@@ -17,6 +14,7 @@ class AuthState with _$AuthState {
   }) = _AuthStateLoaded;
   const factory AuthState.failure({
     required bool isLoggedIn,
-    required AuthenticatorFailure failure,
+    required AuthFailure failure,
   }) = _AuthStateFailure;
+  // coverage:ignore-end
 }

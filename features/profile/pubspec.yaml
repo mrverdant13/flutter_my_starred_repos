@@ -1,0 +1,32 @@
+name: profile
+description: The implementation of the profile feature
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=2.8.1 <3.0.0"
+
+dependencies:
+  dio: ^4.0.4
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^7.3.3
+  freezed_annotation: ^1.1.0
+  graphql: ^5.0.0
+  oxidized: ^5.1.0
+  sembast: ^3.1.2
+
+dev_dependencies:
+  bloc_test: ^8.5.0
+  build_runner: ^2.1.7
+  flutter_test:
+    sdk: flutter
+  freezed: ^1.1.1
+  json_serializable: ^6.1.4
+  lint_rules:
+    path: ../../lint_rules
+  mocktail: ^0.2.0
+
+dependency_overrides:
+  test_api: ^0.4.9

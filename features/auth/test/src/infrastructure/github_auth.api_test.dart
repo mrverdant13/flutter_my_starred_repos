@@ -2,76 +2,58 @@ import 'dart:io';
 
 import 'package:auth/src/domain/github_auth_config.dart';
 import 'package:auth/src/infrastructure/github_auth.api.dart';
+import 'package:auth/src/infrastructure/oauth_response_handler_wrapper.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
-import 'package:test/test.dart';
 
 class MockAuthorizationCodeGrant extends Mock
     implements AuthorizationCodeGrant {}
 
 class MockHttpClient extends Mock implements http.Client {}
 
+class MockOauthResponseHandlerWrapper extends Mock
+    implements OauthResponseHandlerWrapper {}
+
+class FakeAuthorizationCodeGrant extends Mock
+    implements AuthorizationCodeGrant {}
+
 class FakeRequest extends Fake implements http.BaseRequest {}
 
 void main() {
-  test(
-    '''
-
-GIVEN a grant-based auth response handler
-AND a grant
-AND a redirect endpoint
-WHEN the reponse handler is invoked using the given grant and redirect endpoint
-├─ BY calling the grant response handler
-│  ├─ THAT uses the redirect endpoint query parameters
-├─ AND an receiving an HTTP client wrapping the resulting credentials
-''',
-    () async {
-      // ARRANGE
-      final mockGrant = MockAuthorizationCodeGrant();
-      final redirectEndpoint = Uri.parse('http://localhost').replace(
-        queryParameters: {'param': 'param'},
-      );
-      final creds = Credentials('access_token');
-      final client = Client(creds);
-
-      when(
-        () => mockGrant.handleAuthorizationResponse(
-          any(),
-        ),
-      ).thenAnswer(
-        (_) async => client,
-      );
-
-      // ACT
-      final result = await handleAuthorizationResponse(
-        grant: mockGrant,
-        redirectEndpoint: redirectEndpoint,
-      );
-
-      // ASSERT
-      verify(
-        () => mockGrant.handleAuthorizationResponse(
-          redirectEndpoint.queryParameters,
-        ),
-      ).called(1);
-      expect(result, client);
-      verifyNoMoreInteractions(mockGrant);
-    },
-  );
-
   group(
     '''
 
-GIVEN an github auth api
-AND a GitHub config data holder''',
+GIVEN a github auth api
+├─ THAT uses a GitHub config data holder''',
     () {
       // ARRANGE
-      const githubAuthConfig = GithubAuthConfig(
-        clientId: 'clientId',
-        clientSecret: 'clientSecret',
-      );
+      late GithubAuthConfig githubAuthConfig;
+      late MockOauthResponseHandlerWrapper oauthResponseHandlerWrapper;
+      // late Future<Client> Function() authResponseHandlerCallback;
       late GithubAuthApi githubAuthApi;
+
+      setUpAll(
+        () {
+          registerFallbackValue(FakeAuthorizationCodeGrant());
+          registerFallbackValue(Uri());
+        },
+      );
+
+      setUp(
+        () {
+          githubAuthConfig = const GithubAuthConfig(
+            clientId: 'clientId',
+            clientSecret: 'clientSecret',
+          );
+          oauthResponseHandlerWrapper = MockOauthResponseHandlerWrapper();
+          githubAuthApi = GithubAuthApi(
+            githubAuthConfig: githubAuthConfig,
+            oauthResponseHandlerWrapper: oauthResponseHandlerWrapper,
+          );
+        },
+      );
 
       test(
         '''
@@ -87,23 +69,20 @@ THEN the resulting creds should be returned
             'access_token',
             scopes: GithubAuthApi.expectedReturnedScopes,
           );
-
-          githubAuthApi = GithubAuthApi(
-            githubAuthConfig: githubAuthConfig,
-            authResponseHandlerCallback: ({
-              required AuthorizationCodeGrant grant,
-              required Uri redirectEndpoint,
-            }) async {
-              return Client(creds);
-            },
-          );
-
           Future<Uri?> oauthCallback({
             required Uri authorizationEndpoint,
             required Uri redirectBaseEndpoint,
-          }) async {
-            return redirectBaseEndpoint;
-          }
+          }) async =>
+              redirectBaseEndpoint;
+
+          when(
+            () => oauthResponseHandlerWrapper.call(
+              grant: any(named: 'grant'),
+              redirectEndpoint: any(named: 'redirectEndpoint'),
+            ),
+          ).thenAnswer(
+            (_) async => Client(creds),
+          );
 
           // ACT
           final result = await githubAuthApi.logInWithOAuth(
@@ -128,23 +107,20 @@ THEN an exception indicating permission issues should be thrown
           final creds = Credentials(
             'access_token',
           );
-
-          githubAuthApi = GithubAuthApi(
-            githubAuthConfig: githubAuthConfig,
-            authResponseHandlerCallback: ({
-              required AuthorizationCodeGrant grant,
-              required Uri redirectEndpoint,
-            }) async {
-              return Client(creds);
-            },
-          );
-
           Future<Uri?> oauthCallback({
             required Uri authorizationEndpoint,
             required Uri redirectBaseEndpoint,
-          }) async {
-            return redirectBaseEndpoint;
-          }
+          }) async =>
+              redirectBaseEndpoint;
+
+          when(
+            () => oauthResponseHandlerWrapper.call(
+              grant: any(named: 'grant'),
+              redirectEndpoint: any(named: 'redirectEndpoint'),
+            ),
+          ).thenAnswer(
+            (_) async => Client(creds),
+          );
 
           // ACT
           Future<Credentials> action() => githubAuthApi.logInWithOAuth(
@@ -173,24 +149,22 @@ THEN an exception indicating that the action was canceled should be thrown
           // ARRANGE
           final creds = Credentials(
             'access_token',
+            scopes: GithubAuthApi.expectedReturnedScopes,
           );
-
-          githubAuthApi = GithubAuthApi(
-            githubAuthConfig: githubAuthConfig,
-            authResponseHandlerCallback: ({
-              required AuthorizationCodeGrant grant,
-              required Uri redirectEndpoint,
-            }) async {
-              return Client(creds);
-            },
-          );
-
           Future<Uri?> oauthCallback({
             required Uri authorizationEndpoint,
             required Uri redirectBaseEndpoint,
-          }) async {
-            return null;
-          }
+          }) async =>
+              null;
+
+          when(
+            () => oauthResponseHandlerWrapper.call(
+              grant: any(named: 'grant'),
+              redirectEndpoint: any(named: 'redirectEndpoint'),
+            ),
+          ).thenAnswer(
+            (_) async => Client(creds),
+          );
 
           // ACT
           Future<Credentials> action() => githubAuthApi.logInWithOAuth(
@@ -218,26 +192,21 @@ THEN an exception indicating permission issues should be thrown
 ''',
         () async {
           // ARRANGE
-          githubAuthApi = GithubAuthApi(
-            githubAuthConfig: githubAuthConfig,
-            authResponseHandlerCallback: ({
-              required AuthorizationCodeGrant grant,
-              required Uri redirectEndpoint,
-            }) async {
-              throw AuthorizationException(
-                'error',
-                null,
-                null,
-              );
-            },
-          );
-
           Future<Uri?> oauthCallback({
             required Uri authorizationEndpoint,
             required Uri redirectBaseEndpoint,
           }) async {
             return redirectBaseEndpoint;
           }
+
+          when(
+            () => oauthResponseHandlerWrapper.call(
+              grant: any(named: 'grant'),
+              redirectEndpoint: any(named: 'redirectEndpoint'),
+            ),
+          ).thenThrow(
+            AuthorizationException('error', null, null),
+          );
 
           // ACT
           Future<Credentials> action() => githubAuthApi.logInWithOAuth(

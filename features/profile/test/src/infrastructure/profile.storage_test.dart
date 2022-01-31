@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/profile.dart';
@@ -90,7 +91,7 @@ THEN the profile should be continuously returned
 ''',
         () async {
           // ARRANGE
-          const changesCount = 4;
+          final changesCount = Random().nextInt(10);
           final updatedProfiles = List.generate(
             changesCount,
             (index) => Profile(
@@ -106,12 +107,15 @@ THEN the profile should be continuously returned
 
           // ACT
           final result = profileStorage.watchProfile();
-          final updatedProfilesToApply = [...updatedProfiles];
+          final updatedProfilesToApply = [...updatedProfiles.reversed];
           late final StreamSubscription subscription;
           subscription = profileStorage.record.onSnapshot(sembastDb).listen(
             (snapshot) async {
-              final newProfile = updatedProfilesToApply.removeAt(0);
-              if (updatedProfilesToApply.isEmpty) await subscription.cancel();
+              if (updatedProfilesToApply.isEmpty) {
+                await subscription.cancel();
+                return;
+              }
+              final newProfile = updatedProfilesToApply.removeLast();
               await profileStorage.record.put(
                 sembastDb,
                 newProfile.toJson(),

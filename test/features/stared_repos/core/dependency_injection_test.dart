@@ -111,7 +111,7 @@ THEN the necessary starred-repos-related dependencies should be injected
               );
               expect(
                 container.read(etagsInterceptorPod),
-                isA<EtagsInterceptor>(),
+                isA<StarredReposPageEtagsInterceptor>(),
               );
               expect(
                 container.read(starredReposDioPod),

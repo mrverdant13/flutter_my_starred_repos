@@ -20,8 +20,8 @@ final starredReposPageEtagsStoragePod = Provider<StarredReposPageEtagsStorage>(
   ),
 );
 
-final etagsInterceptorPod = Provider<EtagsInterceptor>(
-  (ref) => EtagsInterceptor(
+final etagsInterceptorPod = Provider<StarredReposPageEtagsInterceptor>(
+  (ref) => StarredReposPageEtagsInterceptor(
     starredReposPageEtagsStorage: ref.watch(starredReposPageEtagsStoragePod),
   ),
 );

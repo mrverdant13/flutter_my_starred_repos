@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:starred_repos/src/infrastructure/starred_repos.api.dart';
 import 'package:starred_repos/src/infrastructure/starred_repos_page_etags.storage.dart';
 
-class EtagsInterceptor extends Interceptor {
-  EtagsInterceptor({
+class StarredReposPageEtagsInterceptor extends Interceptor {
+  StarredReposPageEtagsInterceptor({
     required StarredReposPageEtagsStorage starredReposPageEtagsStorage,
   }) : _starredReposPageEtagsStorage = starredReposPageEtagsStorage;
 

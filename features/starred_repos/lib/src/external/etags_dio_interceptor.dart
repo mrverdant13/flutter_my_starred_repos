@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:starred_repos/src/infrastructure/page_etags.storage.dart';
 import 'package:starred_repos/src/infrastructure/starred_repos.api.dart';
+import 'package:starred_repos/src/infrastructure/starred_repos_page_etags.storage.dart';
 
 class EtagsInterceptor extends Interceptor {
   EtagsInterceptor({
-    required PageEtagsStorage pageEtagsStorage,
-  }) : _pageEtagsStorage = pageEtagsStorage;
+    required StarredReposPageEtagsStorage starredReposPageEtagsStorage,
+  }) : _starredReposPageEtagsStorage = starredReposPageEtagsStorage;
 
-  final PageEtagsStorage _pageEtagsStorage;
+  final StarredReposPageEtagsStorage _starredReposPageEtagsStorage;
 
   @override
   Future<void> onRequest(
@@ -20,7 +20,7 @@ class EtagsInterceptor extends Interceptor {
     if (isRequestingStarredRepos) {
       final page = options.queryParameters['page'];
       if (page is int) {
-        final etag = await _pageEtagsStorage.get(
+        final etag = await _starredReposPageEtagsStorage.get(
           page: page,
         );
         if (etag != null) {
@@ -44,7 +44,7 @@ class EtagsInterceptor extends Interceptor {
       if (etag != null) {
         final page = response.requestOptions.queryParameters['page'];
         if (page is int) {
-          await _pageEtagsStorage.set(
+          await _starredReposPageEtagsStorage.set(
             page: page,
             etag: etag,
           );

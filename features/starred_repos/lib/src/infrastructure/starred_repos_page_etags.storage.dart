@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:sembast/sembast.dart';
 
-class PageEtagsStorage {
-  PageEtagsStorage({
+class StarredReposPageEtagsStorage {
+  StarredReposPageEtagsStorage({
     required Database sembastDatabase,
   })  : _db = sembastDatabase,
         store = StoreRef(storeName);
@@ -18,7 +18,7 @@ class PageEtagsStorage {
   Future<void> set({
     required int page,
     required String etag,
-  }) async =>
+  }) =>
       store.record(page).put(_db, etag);
 
   Future<String?> get({

@@ -111,9 +111,11 @@ extension _ExtendedResponse on Response {
 
 @freezed
 class GetStarredReposPageException with _$GetStarredReposPageException {
+  // coverage:ignore-start
   const GetStarredReposPageException._();
   const factory GetStarredReposPageException.offline() =
       _GetStarredReposPageExceptionOffline;
   const factory GetStarredReposPageException.unmodified() =
       _GetStarredReposPageExceptionUnmodified;
+  // coverage:ignore-end
 }

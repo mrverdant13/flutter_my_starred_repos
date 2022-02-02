@@ -18,21 +18,54 @@ class StarredReposStorage {
   static const storeName = 'starred_repos';
 
   Future<void> set({
-    required int page,
+    required int pageNumber,
     required Page<GithubRepo> starredReposPage,
   }) async {
-    final starredReposPageJson = starredReposPage.toJson((r) => r.toJson());
-    await store.record(page).put(_db, starredReposPageJson);
+    final pageLength = starredReposPage.elements.length;
+    await _db.transaction<void>(
+      (transaction) async {
+        await store.delete(
+          transaction,
+          finder: Finder(
+            offset: (pageNumber - 1) * pageLength,
+          ),
+        );
+        await store.addAll(
+          transaction,
+          starredReposPage.elements.map((r) => r.toJson()).toList(),
+        );
+      },
+    );
   }
 
   Future<Page<GithubRepo>?> get({
-    required int page,
-  }) async {
-    final starredReposPageJson = await store.record(page).get(_db);
-    if (starredReposPageJson == null) return null;
-    return ConvertiblePage.fromJson(
-      starredReposPageJson,
-      (repoJson) => GithubRepo.fromJson(repoJson),
-    );
-  }
+    required int pageNumber,
+    required int pageLength,
+  }) async =>
+      _db.transaction(
+        (transaction) async {
+          final reposCount = await store.count(transaction);
+          if (reposCount == 0) {
+            return const Page<GithubRepo>(
+              lastPage: 0,
+              elements: [],
+            );
+          }
+          final lastPage = (reposCount ~/ pageLength) + 1;
+          final foundReposSnapshot = await store.find(
+            transaction,
+            finder: Finder(
+              offset: (pageNumber - 1) * pageLength,
+              limit: pageLength,
+            ),
+          );
+          final foundRepos = foundReposSnapshot
+              .map((snapshot) => GithubRepo.fromJson(snapshot.value))
+              .toList();
+          return Page<GithubRepo>(
+            lastPage: lastPage,
+            elements: foundRepos,
+          );
+        },
+      );
 }

@@ -39,7 +39,8 @@ class StarredReposCubit extends Cubit<StarredReposState> {
 
     final cacheableStarredReposPage =
         await _starredReposRepo.getStarredReposPage(
-      page: lastCheckedPage + 1,
+      pageNumber: lastCheckedPage + 1,
+      pageLength: 5,
     );
 
     lastCheckedPage++;

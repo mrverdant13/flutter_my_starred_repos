@@ -12,8 +12,6 @@ class GithubAuthConfig with _$GithubAuthConfig {
     checked: true,
     disallowUnrecognizedKeys: true,
   )
-  // HACK: Ignoring Freezed factory constructors since they do not get marked as
-  // covered.
 
   // coverage:ignore-start
   const factory GithubAuthConfig({

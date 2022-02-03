@@ -6,9 +6,6 @@ part 'profile.entity.g.dart';
 
 @freezed
 class Profile with _$Profile {
-  // HACK: Ignoring Freezed factory constructors since they do not get marked as
-  // covered.
-
   // coverage:ignore-start
   const factory Profile({
     // ignore: invalid_annotation_target

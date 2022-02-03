@@ -158,9 +158,6 @@ class OAuthHttpClient extends http.BaseClient {
 
 @freezed
 class LogInException with _$LogInException {
-  // HACK: Ignoring Freezed factory constructors since they do not get marked as
-  // covered.
-
   // coverage:ignore-start
   const factory LogInException.canceled() = _LogInExceptionCanceled;
   const factory LogInException.missingPermissions() =

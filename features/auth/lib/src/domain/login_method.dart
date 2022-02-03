@@ -9,9 +9,6 @@ typedef OAuthCallback = Future<Uri?> Function({
 
 @freezed
 class LoginMethod with _$LoginMethod {
-  // HACK: Ignoring Freezed factory constructors since they do not get marked as
-  // covered.
-
   // coverage:ignore-start
   const factory LoginMethod.oAuth({
     required OAuthCallback callback,

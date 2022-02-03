@@ -2,6 +2,7 @@ part of 'starred_repos.cubit.dart';
 
 @freezed
 class StarredReposState with _$StarredReposState {
+  // coverage:ignore-start
   const factory StarredReposState.loading({
     required List<GithubRepo> repos,
   }) = _StarredReposStateLoading;
@@ -10,4 +11,5 @@ class StarredReposState with _$StarredReposState {
     required bool canLoadMore,
     GetStaredReposWarning? warning,
   }) = _StarredReposStateLoaded;
+  // coverage:ignore-end
 }

@@ -85,10 +85,10 @@ extension _ExtendedResponse on Response {
 
     const lastLinkDataEnding = '>; rel="last"';
 
-    final lastLinkData = linksData.singleWhere(
-      (linkData) => linkData.contains(lastLinkDataEnding),
-      orElse: () => '',
-    );
+    final lastLinkData = linksData.singleWhereOrNull(
+          (linkData) => linkData.contains(lastLinkDataEnding),
+        ) ??
+        '';
 
     if (lastLinkData.isEmpty) return null;
 

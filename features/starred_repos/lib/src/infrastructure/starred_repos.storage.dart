@@ -17,11 +17,11 @@ class StarredReposStorage {
   @visibleForTesting
   static const storeName = 'starred_repos';
 
-  Future<void> set({
+  Future<void> setPage({
     required int pageNumber,
-    required Page<GithubRepo> starredReposPage,
+    required List<GithubRepo> starredRepos,
   }) async {
-    final pageLength = starredReposPage.elements.length;
+    final pageLength = starredRepos.length;
     await _db.transaction<void>(
       (transaction) async {
         await store.delete(
@@ -32,34 +32,29 @@ class StarredReposStorage {
         );
         await store.addAll(
           transaction,
-          starredReposPage.elements.map((r) => r.toJson()).toList(),
+          starredRepos.map((r) => r.toJson()).toList(),
         );
       },
     );
   }
 
-  Future<Page<GithubRepo>?> get({
+  Future<Page<GithubRepo>?> getPage({
     required int pageNumber,
     required int pageLength,
   }) async =>
       _db.transaction(
         (transaction) async {
           final reposCount = await store.count(transaction);
-          if (reposCount == 0) {
-            return const Page<GithubRepo>(
-              lastPage: 0,
-              elements: [],
-            );
-          }
-          final lastPage = (reposCount ~/ pageLength) + 1;
-          final foundReposSnapshot = await store.find(
+          if (reposCount == 0) return null;
+          final lastPage = ((reposCount - 1) ~/ pageLength) + 1;
+          final foundReposSnapshots = await store.find(
             transaction,
             finder: Finder(
-              offset: (pageNumber - 1) * pageLength,
+              offset: pageNumber * pageLength,
               limit: pageLength,
             ),
           );
-          final foundRepos = foundReposSnapshot
+          final foundRepos = foundReposSnapshots
               .map((snapshot) => GithubRepo.fromJson(snapshot.value))
               .toList();
           return Page<GithubRepo>(

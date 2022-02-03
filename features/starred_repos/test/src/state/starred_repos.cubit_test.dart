@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:starred_repos/starred_repos.dart';
+
+import '../../helpers/generators.dart';
 
 class MockStarredReposRepo extends Mock implements StarredReposRepo {}
 
@@ -13,21 +17,22 @@ GIVEN a starred repos cubit
 ├─ THAT uses a starred repositories repo''',
     () {
       // ARRANGE
-      late MockStarredReposRepo mockStarredReposRepo;
+      final r = Random();
+      late StarredReposRepo starredReposRepo;
       late StarredReposCubit starredReposCubit;
 
       setUp(
         () {
-          mockStarredReposRepo = MockStarredReposRepo();
+          starredReposRepo = MockStarredReposRepo();
           starredReposCubit = StarredReposCubit(
-            starredReposRepo: mockStarredReposRepo,
+            starredReposRepo: starredReposRepo,
           );
         },
       );
 
       tearDown(
         () {
-          verifyNoMoreInteractions(mockStarredReposRepo);
+          verifyNoMoreInteractions(starredReposRepo);
         },
       );
 
@@ -41,45 +46,26 @@ THEN its initial state should be loaded
           // ASSERT
           expect(
             starredReposCubit.state,
-            const StarredReposState.loaded(
-              repos: [],
-              canLoadMore: true,
-            ),
+            const StarredReposState.loaded(repos: [], canLoadMore: true),
           );
         },
       );
 
       {
-        const page = 5;
-        const pageLength = 8;
-        final initiallyLoadedStarredRepos = List.generate(
-          pageLength,
-          (index) => GithubRepo(
-            owner: User(
-              username: 'username $index',
-              avatarUrl: 'avatarUrl $index',
-            ),
-            name: 'repo $index',
-            description: 'description $index',
-            starsCount: index,
-          ),
+        final loadedPagesNumber = r.nextInt(10);
+        final loadedReposNumber = loadedPagesNumber * pageLength;
+        final initiallyLoadedStarredRepos = generateStarredRepos(
+          reposCount: loadedReposNumber,
+          reposOffset: 0,
         );
-        final starredRepos = List.generate(
-          pageLength,
-          (index) => GithubRepo(
-            owner: User(
-              username: 'username ${index + pageLength}',
-              avatarUrl: 'avatarUrl ${index + pageLength}',
-            ),
-            name: 'repo ${index + pageLength}',
-            description: 'description ${index + pageLength}',
-            starsCount: index + pageLength,
+        final nextPageNumber = loadedPagesNumber + 1;
+        final lastPageNumber = nextPageNumber * 3;
+        final expectedStarredReposPage = Page(
+          lastPage: lastPageNumber,
+          elements: generateStarredRepos(
+            reposCount: pageLength,
+            reposOffset: loadedReposNumber,
           ),
-        );
-        const expectedLastPage = page + 1;
-        final expectedResultingPage = Page(
-          lastPage: expectedLastPage,
-          elements: starredRepos,
         );
 
         blocTest<StarredReposCubit, StarredReposState>(
@@ -87,7 +73,8 @@ THEN its initial state should be loaded
 
 ├─ THAT holds previously loaded repos
 AND loading minimal conditions
-AND a non-last starred repos page
+AND a non-last starred repos page number
+AND the lenght of the pages
 WHEN a starred repos page is requested
 THEN the load process should be started
 ├─ BY emmiting the loading state
@@ -96,7 +83,7 @@ THEN the load process should be started
 THEN the loaded starred repos should be updated
 ├─ AND emmiting the loaded state
 │  ├─ THAT includes the previously loaded repos
-│  ├─ THAT includes the newly loaded repos
+│  ├─ AND includes the newly loaded repos
 │  ├─ AND does not include any warning
 ''',
           seed: () => StarredReposState.loaded(
@@ -104,22 +91,19 @@ THEN the loaded starred repos should be updated
             canLoadMore: true,
           ),
           build: () {
-            starredReposCubit.lastCheckedPage = page - 1;
-            starredReposCubit.lastAvailblePage = page + 1;
+            starredReposCubit.lastCheckedPage = loadedPagesNumber;
+            starredReposCubit.lastAvailblePage = lastPageNumber;
             when(
-              () => mockStarredReposRepo.getStarredReposPage(
-                page: any(named: 'page'),
+              () => starredReposRepo.getStarredReposPage(
+                pageNumber: any(named: 'pageNumber'),
+                pageLength: any(named: 'pageLength'),
               ),
             ).thenAnswer(
-              (_) async => Payload(
-                expectedResultingPage,
-              ),
+              (_) async => Payload(expectedStarredReposPage),
             );
             return starredReposCubit;
           },
-          act: (cubit) {
-            cubit.load();
-          },
+          act: (cubit) => cubit.load(),
           expect: () => [
             StarredReposState.loading(
               repos: initiallyLoadedStarredRepos,
@@ -127,26 +111,47 @@ THEN the loaded starred repos should be updated
             StarredReposState.loaded(
               repos: [
                 ...initiallyLoadedStarredRepos,
-                ...starredRepos,
+                ...expectedStarredReposPage.elements,
               ],
               canLoadMore: true,
             ),
           ],
           verify: (bloc) {
             verify(
-              () => mockStarredReposRepo.getStarredReposPage(
-                page: page,
+              () => starredReposRepo.getStarredReposPage(
+                pageNumber: nextPageNumber,
+                pageLength: pageLength,
               ),
             ).called(1);
             expect(
-              bloc.state.repos.take(pageLength),
+              bloc.state.repos.take(loadedReposNumber),
               initiallyLoadedStarredRepos,
             );
             expect(
-              bloc.state.repos.skip(initiallyLoadedStarredRepos.length),
-              starredRepos,
+              bloc.state.repos.skip(loadedReposNumber),
+              expectedStarredReposPage.elements,
             );
+            expect(bloc.lastCheckedPage, nextPageNumber);
+            expect(bloc.lastAvailblePage, lastPageNumber);
           },
+        );
+      }
+
+      {
+        final loadedPagesNumber = r.nextInt(10);
+        final loadedReposNumber = loadedPagesNumber * pageLength;
+        final initiallyLoadedStarredRepos = generateStarredRepos(
+          reposCount: loadedReposNumber,
+          reposOffset: 0,
+        );
+        final nextPageNumber = loadedPagesNumber + 1;
+        final lastPageNumber = nextPageNumber * 3;
+        final expectedStarredReposPage = Page(
+          lastPage: lastPageNumber,
+          elements: generateStarredRepos(
+            reposCount: pageLength,
+            reposOffset: loadedReposNumber,
+          ),
         );
 
         blocTest<StarredReposCubit, StarredReposState>(
@@ -154,47 +159,48 @@ THEN the loaded starred repos should be updated
 
 ├─ THAT holds previously loaded repos
 AND no loading minimal conditions
-AND a starred repos page
+AND a non-last starred repos page number
+AND the lenght of the pages
 WHEN a starred repos page is requested
 THEN the load process should be started
-├─ BY emitting the loading state
+├─ BY emmiting the loading state
 │  ├─ THAT includes the previously loaded repos
 ├─ AND trying to retrieve a new repos page with the starred repos repository
 THEN the loaded starred repos should be updated including a warning
-├─ BY emmiting the loaded state
+├─ AND emmiting the loaded state
 │  ├─ THAT includes the previously loaded repos
-│  ├─ THAT includes the newly loaded repos
-│  ├─ AND  includes the loading issue as warning
+│  ├─ AND includes the newly loaded repos
+│  ├─ AND includes any warning
 ''',
           seed: () => StarredReposState.loaded(
             repos: initiallyLoadedStarredRepos,
             canLoadMore: true,
           ),
           build: () {
-            starredReposCubit.lastCheckedPage = page - 1;
-            starredReposCubit.lastAvailblePage = page + 1;
+            starredReposCubit.lastCheckedPage = loadedPagesNumber;
+            starredReposCubit.lastAvailblePage = lastPageNumber;
             when(
-              () => mockStarredReposRepo.getStarredReposPage(
-                page: any(named: 'page'),
+              () => starredReposRepo.getStarredReposPage(
+                pageNumber: any(named: 'pageNumber'),
+                pageLength: any(named: 'pageLength'),
               ),
             ).thenAnswer(
               (_) async => Payload.withWarning(
-                data: expectedResultingPage,
+                data: expectedStarredReposPage,
                 warning: const GetStaredReposWarning.offline(),
               ),
             );
-
             return starredReposCubit;
           },
-          act: (cubit) {
-            cubit.load();
-          },
+          act: (cubit) => cubit.load(),
           expect: () => [
-            StarredReposState.loading(repos: initiallyLoadedStarredRepos),
+            StarredReposState.loading(
+              repos: initiallyLoadedStarredRepos,
+            ),
             StarredReposState.loaded(
               repos: [
                 ...initiallyLoadedStarredRepos,
-                ...starredRepos,
+                ...expectedStarredReposPage.elements,
               ],
               canLoadMore: true,
               warning: const GetStaredReposWarning.offline(),
@@ -202,19 +208,40 @@ THEN the loaded starred repos should be updated including a warning
           ],
           verify: (bloc) {
             verify(
-              () => mockStarredReposRepo.getStarredReposPage(
-                page: page,
+              () => starredReposRepo.getStarredReposPage(
+                pageNumber: nextPageNumber,
+                pageLength: pageLength,
               ),
             ).called(1);
             expect(
-              bloc.state.repos.take(pageLength),
+              bloc.state.repos.take(loadedReposNumber),
               initiallyLoadedStarredRepos,
             );
             expect(
-              bloc.state.repos.skip(initiallyLoadedStarredRepos.length),
-              starredRepos,
+              bloc.state.repos.skip(loadedReposNumber),
+              expectedStarredReposPage.elements,
             );
+            expect(bloc.lastCheckedPage, nextPageNumber);
+            expect(bloc.lastAvailblePage, lastPageNumber);
           },
+        );
+      }
+
+      {
+        final loadedPagesNumber = r.nextInt(10);
+        final loadedReposNumber = loadedPagesNumber * pageLength;
+        final initiallyLoadedStarredRepos = generateStarredRepos(
+          reposCount: loadedReposNumber,
+          reposOffset: 0,
+        );
+        const nextPageNumber = 1;
+        const lastPageNumber = nextPageNumber * 3;
+        final expectedStarredReposPage = Page(
+          lastPage: lastPageNumber,
+          elements: generateStarredRepos(
+            reposCount: pageLength,
+            reposOffset: loadedReposNumber,
+          ),
         );
 
         blocTest<StarredReposCubit, StarredReposState>(
@@ -241,19 +268,18 @@ THEN the loaded starred repos should be updated
           ),
           build: () {
             when(
-              () => mockStarredReposRepo.getStarredReposPage(
-                page: any(named: 'page'),
+              () => starredReposRepo.getStarredReposPage(
+                pageNumber: any(named: 'pageNumber'),
+                pageLength: any(named: 'pageLength'),
               ),
             ).thenAnswer(
               (_) async => Payload(
-                expectedResultingPage,
+                expectedStarredReposPage,
               ),
             );
             return starredReposCubit;
           },
-          act: (cubit) {
-            cubit.reload();
-          },
+          act: (cubit) => cubit.reload(),
           expect: () => [
             const StarredReposState.loaded(
               repos: [],
@@ -263,19 +289,20 @@ THEN the loaded starred repos should be updated
               repos: [],
             ),
             StarredReposState.loaded(
-              repos: starredRepos,
+              repos: expectedStarredReposPage.elements,
               canLoadMore: true,
             ),
           ],
           verify: (bloc) {
             verify(
-              () => mockStarredReposRepo.getStarredReposPage(
-                page: 1,
+              () => starredReposRepo.getStarredReposPage(
+                pageNumber: nextPageNumber,
+                pageLength: pageLength,
               ),
             ).called(1);
             expect(
               bloc.state.repos,
-              starredRepos,
+              expectedStarredReposPage.elements,
             );
           },
         );

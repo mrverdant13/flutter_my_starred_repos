@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:starred_repos/starred_repos.dart';
+
+import '../../helpers/generators.dart';
 
 class MockStarredReposApi extends Mock implements StarredReposApi {}
 
@@ -20,77 +24,71 @@ void main() {
     '''
 
 GIVEN a starred repos repository
-├─ THAT uses a starred repos remote data source
-├─ AND  uses a starred repos local data source
-AND a repos page number''',
+├─ THAT uses a starred repos API
+├─ AND  uses a starred repos storage''',
     () {
       // ARRANGE
-      late MockStarredReposApi mockStarredReposApi;
-      late MockStarredReposStorage mockStarredReposStorage;
+      late Random r;
+      late StarredReposApi starredReposApi;
+      late StarredReposStorage starredReposStorage;
       late StarredReposRepo starredReposRepo;
-
-      const page = 9;
-      const pageLength = 7;
-      const lastPage = 12;
-
-      final reposPage = Page(
-        lastPage: lastPage,
-        elements: List.generate(
-          pageLength,
-          (idx) => GithubRepo(
-            owner: User(
-              username: 'username $idx',
-              avatarUrl: 'avatar url $idx',
-            ),
-            name: 'repo $idx',
-            description: 'description $idx',
-            starsCount: idx,
-          ),
-        ),
-      );
 
       setUp(
         () {
-          mockStarredReposApi = MockStarredReposApi();
-          mockStarredReposStorage = MockStarredReposStorage();
+          r = Random();
+          starredReposApi = MockStarredReposApi();
+          starredReposStorage = MockStarredReposStorage();
           starredReposRepo = StarredReposRepo(
-            starredReposApi: mockStarredReposApi,
-            starredReposStorage: mockStarredReposStorage,
+            starredReposApi: starredReposApi,
+            starredReposStorage: starredReposStorage,
           );
         },
       );
 
       tearDown(
         () {
-          verifyNoMoreInteractions(mockStarredReposApi);
-          verifyNoMoreInteractions(mockStarredReposStorage);
+          verifyNoMoreInteractions(starredReposApi);
+          verifyNoMoreInteractions(starredReposStorage);
         },
       );
 
       test(
         '''
 
-AND no connectivity issues
+AND the number of a starred repos page
+AND the length of a starred repos page
 AND a new version of the repos page in the server
 WHEN the starred repos page is requested
-THEN a starred repos page data holder should be received, persisted and returned
-├─ BY retrieving the repos page with the starred repos remote data source
-├─ AND storing the repos page with the starred repos local data source
+THEN a starred repos page should be received, persisted and returned
+├─ BY retrieving the repos page with the starred repos API
+├─ AND storing the repos page with the starred repos storage
 ├─ AND returning its value
 │  ├─ THAT dows not include any warning
 ''',
         () async {
+          // ARRANGE
+          final pageNumber = r.nextInt(10);
+          final pageLength = r.nextInt(10);
+          final reposOffset = pageNumber * pageLength;
+          final reposPage = Page(
+            lastPage: 2 * pageNumber,
+            elements: generateStarredRepos(
+              reposCount: pageLength,
+              reposOffset: reposOffset,
+            ),
+          );
           when(
-            () => mockStarredReposApi.getStarredReposPage(
-              page: any(named: 'page'),
+            () => starredReposApi.getStarredReposPage(
+              pageNumber: any(named: 'pageNumber'),
+              pageLength: any(named: 'pageLength'),
             ),
           ).thenAnswer(
             (_) async => reposPage,
           );
           when(
-            () => mockStarredReposStorage.set(
-              page: any(named: 'page'),
-              starredReposPage: any(named: 'starredReposPage'),
+            () => starredReposStorage.setPage(
+              pageNumber: any(named: 'pageNumber'),
+              starredRepos: any(named: 'starredRepos'),
             ),
           ).thenAnswer(
             (_) => Future.value(),
@@ -98,19 +96,21 @@ THEN a starred repos page data holder should be received, persisted and returned
 
           // ACT
           final result = await starredReposRepo.getStarredReposPage(
-            page: page,
+            pageNumber: pageNumber,
+            pageLength: pageLength,
           );
 
           // ASSERT
           verify(
-            () => mockStarredReposApi.getStarredReposPage(
-              page: page,
+            () => starredReposApi.getStarredReposPage(
+              pageNumber: pageNumber,
+              pageLength: pageLength,
             ),
           ).called(1);
           verify(
-            () => mockStarredReposStorage.set(
-              page: page,
-              starredReposPage: reposPage,
+            () => starredReposStorage.setPage(
+              pageNumber: pageNumber,
+              starredRepos: reposPage.elements,
             ),
           ).called(1);
           result.when(
@@ -126,12 +126,13 @@ THEN a starred repos page data holder should be received, persisted and returned
       test(
         '''
 
-AND no connectivity issues
-AND no modified data in the server
+AND the number of a starred repos page
+AND the length of a starred repos page
+AND no modified data of the starred repos page in the server
 AND a previously stored version of the repos page
 WHEN a starred repos page is requested
 THEN the persisted repos page should be returned
-├─ BY trying to retrieve a new version of the repos page
+├─ BY trying to retrieve the starred repos page with the starred repos API
 ├─ AND recognizing its unmodified state
 ├─ AND retrieving its previously stored representation
 ├─ AND returning its value
@@ -139,42 +140,55 @@ THEN the persisted repos page should be returned
 ''',
         () async {
           // ARRANGE
-          final initialStarredReposPage = reposPage;
-          final expectedStarredReposPage = initialStarredReposPage;
+          final pageNumber = r.nextInt(10);
+          final pageLength = r.nextInt(10);
+          final reposOffset = pageNumber * pageLength;
+          final reposPage = Page(
+            lastPage: pageNumber * (r.nextInt(10) + 1),
+            elements: generateStarredRepos(
+              reposCount: pageLength,
+              reposOffset: reposOffset,
+            ),
+          );
 
           when(
-            () => mockStarredReposApi.getStarredReposPage(
-              page: any(named: 'page'),
+            () => starredReposApi.getStarredReposPage(
+              pageNumber: any(named: 'pageNumber'),
+              pageLength: any(named: 'pageLength'),
             ),
           ).thenThrow(
             const GetStarredReposPageException.unmodified(),
           );
           when(
-            () => mockStarredReposStorage.get(
-              page: any(named: 'page'),
+            () => starredReposStorage.getPage(
+              pageNumber: any(named: 'pageNumber'),
+              pageLength: any(named: 'pageLength'),
             ),
           ).thenAnswer(
-            (_) async => initialStarredReposPage,
+            (_) async => reposPage,
           );
 
           // ACT
           final result = await starredReposRepo.getStarredReposPage(
-            page: page,
+            pageNumber: pageNumber,
+            pageLength: pageLength,
           );
 
           // ASSERT
           verify(
-            () => mockStarredReposApi.getStarredReposPage(
-              page: page,
+            () => starredReposApi.getStarredReposPage(
+              pageNumber: pageNumber,
+              pageLength: pageLength,
             ),
           ).called(1);
           verify(
-            () => mockStarredReposStorage.get(
-              page: page,
+            () => starredReposStorage.getPage(
+              pageNumber: pageNumber,
+              pageLength: pageLength,
             ),
           ).called(1);
           result.when(
-            (reposPage) => expect(reposPage, expectedStarredReposPage),
+            (_reposPage) => expect(_reposPage, reposPage),
             withWarning: (_, __) => fail(
               'Expected: $PayloadWithoutWarning\n'
               'Actual: ${result.runtimeType}',
@@ -186,11 +200,13 @@ THEN the persisted repos page should be returned
       test(
         '''
 
+AND the number of a starred repos page
+AND the length of a starred repos page
 AND no internet connection
 AND a previously stored version of the repos page
 WHEN a starred repos page is requested
 THEN the persisted repos page should be returned
-├─ BY trying to retrieve a new version of the repos page
+├─ BY trying to retrieve the starred repos page with the starred repos API
 ├─ AND recognizing network issues
 ├─ AND retrieving its previously stored representation
 ├─ AND returning its value
@@ -198,38 +214,51 @@ THEN the persisted repos page should be returned
 ''',
         () async {
           // ARRANGE
-          final initialStarredReposPage = reposPage;
-          final expectedStarredReposPage = initialStarredReposPage;
+          final pageNumber = r.nextInt(10);
+          final pageLength = r.nextInt(10);
+          final reposOffset = pageNumber * pageLength;
+          final reposPage = Page(
+            lastPage: pageNumber * (r.nextInt(10) + 1),
+            elements: generateStarredRepos(
+              reposCount: pageLength,
+              reposOffset: reposOffset,
+            ),
+          );
 
           when(
-            () => mockStarredReposApi.getStarredReposPage(
-              page: any(named: 'page'),
+            () => starredReposApi.getStarredReposPage(
+              pageNumber: any(named: 'pageNumber'),
+              pageLength: any(named: 'pageLength'),
             ),
           ).thenThrow(
             const GetStarredReposPageException.offline(),
           );
           when(
-            () => mockStarredReposStorage.get(
-              page: any(named: 'page'),
+            () => starredReposStorage.getPage(
+              pageNumber: any(named: 'pageNumber'),
+              pageLength: any(named: 'pageLength'),
             ),
           ).thenAnswer(
-            (_) async => initialStarredReposPage,
+            (_) async => reposPage,
           );
 
           // ACT
           final result = await starredReposRepo.getStarredReposPage(
-            page: page,
+            pageNumber: pageNumber,
+            pageLength: pageLength,
           );
 
           // ASSERT
           verify(
-            () => mockStarredReposApi.getStarredReposPage(
-              page: page,
+            () => starredReposApi.getStarredReposPage(
+              pageNumber: pageNumber,
+              pageLength: pageLength,
             ),
           ).called(1);
           verify(
-            () => mockStarredReposStorage.get(
-              page: page,
+            () => starredReposStorage.getPage(
+              pageNumber: pageNumber,
+              pageLength: pageLength,
             ),
           ).called(1);
           result.when(
@@ -237,8 +266,8 @@ THEN the persisted repos page should be returned
               'Expected: $PayloadWithWarning\n'
               'Actual: ${result.runtimeType}',
             ),
-            withWarning: (reposPage, warning) {
-              expect(reposPage, expectedStarredReposPage);
+            withWarning: (_reposPage, warning) {
+              expect(_reposPage, reposPage);
               expect(warning, const GetStaredReposWarning.offline());
             },
           );
@@ -248,6 +277,8 @@ THEN the persisted repos page should be returned
       test(
         '''
 
+AND the number of a starred repos page
+AND the length of a starred repos page
 AND no internet connection
 AND no previously stored version of the repos page
 WHEN a starred repos page is requested
@@ -261,22 +292,25 @@ THEN an empty repos page should be returned
 ''',
         () async {
           // ARRANGE
-          const page = 9;
-          const expectedStarredReposPage = Page<GithubRepo>(
-            lastPage: page,
+          final pageNumber = r.nextInt(10);
+          final pageLength = r.nextInt(10);
+          final reposPage = Page<GithubRepo>(
+            lastPage: pageNumber,
             elements: [],
           );
 
           when(
-            () => mockStarredReposApi.getStarredReposPage(
-              page: any(named: 'page'),
+            () => starredReposApi.getStarredReposPage(
+              pageNumber: any(named: 'pageNumber'),
+              pageLength: any(named: 'pageLength'),
             ),
           ).thenThrow(
             const GetStarredReposPageException.offline(),
           );
           when(
-            () => mockStarredReposStorage.get(
-              page: any(named: 'page'),
+            () => starredReposStorage.getPage(
+              pageNumber: any(named: 'pageNumber'),
+              pageLength: any(named: 'pageLength'),
             ),
           ).thenAnswer(
             (_) => Future.value(),
@@ -284,18 +318,21 @@ THEN an empty repos page should be returned
 
           // ACT
           final result = await starredReposRepo.getStarredReposPage(
-            page: page,
+            pageNumber: pageNumber,
+            pageLength: pageLength,
           );
 
           // ASSERT
           verify(
-            () => mockStarredReposApi.getStarredReposPage(
-              page: page,
+            () => starredReposApi.getStarredReposPage(
+              pageNumber: pageNumber,
+              pageLength: pageLength,
             ),
           ).called(1);
           verify(
-            () => mockStarredReposStorage.get(
-              page: page,
+            () => starredReposStorage.getPage(
+              pageNumber: pageNumber,
+              pageLength: pageLength,
             ),
           ).called(1);
           result.when(
@@ -303,8 +340,8 @@ THEN an empty repos page should be returned
               'Expected: $PayloadWithWarning\n'
               'Actual: ${result.runtimeType}',
             ),
-            withWarning: (reposPage, warning) {
-              expect(reposPage, expectedStarredReposPage);
+            withWarning: (_reposPage, warning) {
+              expect(_reposPage, reposPage);
               expect(warning, const GetStaredReposWarning.offline());
             },
           );

@@ -27,7 +27,7 @@ class StarredReposRepo {
         pageLength: pageLength,
       );
     } on GetStarredReposPageException catch (e) {
-      final starredReposPage = await _starredReposStorage.get(
+      final starredReposPage = await _starredReposStorage.getPage(
         pageNumber: pageNumber,
         pageLength: pageLength,
       );
@@ -46,9 +46,9 @@ class StarredReposRepo {
         ),
       );
     }
-    await _starredReposStorage.set(
+    await _starredReposStorage.setPage(
       pageNumber: pageNumber,
-      starredReposPage: reposPage,
+      starredRepos: reposPage.elements,
     );
     return Payload(reposPage);
   }

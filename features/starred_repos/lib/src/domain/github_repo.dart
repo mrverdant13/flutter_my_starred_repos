@@ -6,6 +6,7 @@ part 'github_repo.g.dart';
 
 @freezed
 class GithubRepo with _$GithubRepo {
+  // coverage:ignore-start
   const factory GithubRepo({
     required User owner,
     required String name,
@@ -19,6 +20,7 @@ class GithubRepo with _$GithubRepo {
 
   factory GithubRepo.fromJson(Map<String, dynamic> json) =>
       _$GithubRepoFromJson(json);
+  // coverage:ignore-end
 
   Uri get urlPath => Uri(
         scheme: 'https',

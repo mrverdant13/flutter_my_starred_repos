@@ -5,6 +5,7 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
+  // coverage:ignore-start
   const factory User({
     // ignore: invalid_annotation_target
     @JsonKey(name: 'login') required String username,
@@ -13,4 +14,5 @@ class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  // coverage:ignore-end
 }

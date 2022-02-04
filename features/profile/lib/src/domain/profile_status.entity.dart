@@ -5,9 +5,6 @@ part 'profile_status.entity.g.dart';
 
 @freezed
 class UserStatus with _$UserStatus {
-  // HACK: Ignoring Freezed factory constructors since they do not get marked as
-  // covered.
-
   // coverage:ignore-start
   const factory UserStatus({
     String? emoji,

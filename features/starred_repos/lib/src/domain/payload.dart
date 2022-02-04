@@ -4,17 +4,13 @@ part 'payload.freezed.dart';
 
 @freezed
 class Payload<D, W> with _$Payload<D, W> {
+  // coverage:ignore-start
   const factory Payload(
     D data,
-  ) = _Payload<D, W>;
+  ) = PayloadWithoutWarning<D, W>;
   const factory Payload.withWarning({
     required D data,
     required W warning,
-  }) = _PayloadWithWarning<D, W>;
+  }) = PayloadWithWarning<D, W>;
+  // coverage:ignore-end
 }
-
-@visibleForTesting
-typedef PayloadWithoutWarning<D, W> = _Payload<D, W>;
-
-@visibleForTesting
-typedef PayloadWithWarning<D, W> = _PayloadWithWarning<D, W>;

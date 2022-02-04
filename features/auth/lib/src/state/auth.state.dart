@@ -2,9 +2,6 @@ part of 'auth.cubit.dart';
 
 @freezed
 class AuthState with _$AuthState {
-  // HACK: Ignoring Freezed factory constructors since they do not get marked as
-  // covered.
-
   // coverage:ignore-start
   const factory AuthState.loading({
     required bool isLoggedIn,

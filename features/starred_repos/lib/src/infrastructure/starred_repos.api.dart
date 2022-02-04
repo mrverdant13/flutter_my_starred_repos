@@ -22,12 +22,9 @@ class StarredReposApi {
   /// https://docs.github.com/en/rest/reference/activity#list-repositories-starred-by-the-authenticated-user
   static const retrieveEndpoint = 'https://api.github.com/user/starred';
 
-  /// The quantity of starred repositories to retrieve per page.
-  @visibleForTesting
-  static const pageLength = 5;
-
   Future<Page<GithubRepo>> getStarredReposPage({
-    required int page,
+    required int pageNumber,
+    required int pageLength,
   }) async {
     late final Response response;
 
@@ -35,7 +32,7 @@ class StarredReposApi {
       response = await _dio.get(
         retrieveEndpoint,
         queryParameters: {
-          'page': page,
+          'page': pageNumber,
           'per_page': pageLength,
         },
         options: Options(
@@ -72,7 +69,7 @@ class StarredReposApi {
         .toList();
 
     return Page(
-      lastPage: response.lastPage ?? page,
+      lastPage: response.lastPage ?? pageNumber,
       elements: repos,
     );
   }
@@ -88,10 +85,10 @@ extension _ExtendedResponse on Response {
 
     const lastLinkDataEnding = '>; rel="last"';
 
-    final lastLinkData = linksData.singleWhere(
-      (linkData) => linkData.contains(lastLinkDataEnding),
-      orElse: () => '',
-    );
+    final lastLinkData = linksData.singleWhereOrNull(
+          (linkData) => linkData.contains(lastLinkDataEnding),
+        ) ??
+        '';
 
     if (lastLinkData.isEmpty) return null;
 
@@ -111,9 +108,11 @@ extension _ExtendedResponse on Response {
 
 @freezed
 class GetStarredReposPageException with _$GetStarredReposPageException {
+  // coverage:ignore-start
   const GetStarredReposPageException._();
   const factory GetStarredReposPageException.offline() =
       _GetStarredReposPageExceptionOffline;
   const factory GetStarredReposPageException.unmodified() =
       _GetStarredReposPageExceptionUnmodified;
+  // coverage:ignore-end
 }

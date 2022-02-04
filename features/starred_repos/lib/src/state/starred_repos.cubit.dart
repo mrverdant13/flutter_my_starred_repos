@@ -7,6 +7,9 @@ import 'package:starred_repos/src/infrastructure/starred_repos.repo.dart';
 part 'starred_repos.cubit.freezed.dart';
 part 'starred_repos.state.dart';
 
+@visibleForTesting
+const pageLength = 5;
+
 class StarredReposCubit extends Cubit<StarredReposState> {
   StarredReposCubit({
     required StarredReposRepo starredReposRepo,
@@ -39,7 +42,8 @@ class StarredReposCubit extends Cubit<StarredReposState> {
 
     final cacheableStarredReposPage =
         await _starredReposRepo.getStarredReposPage(
-      page: lastCheckedPage + 1,
+      pageNumber: lastCheckedPage + 1,
+      pageLength: pageLength,
     );
 
     lastCheckedPage++;

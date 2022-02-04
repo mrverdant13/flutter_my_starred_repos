@@ -14,15 +14,15 @@ final sembastDbPod = Provider<Database>(
   ),
 );
 
-final pageEtagsStoragePod = Provider<PageEtagsStorage>(
-  (ref) => PageEtagsStorage(
+final starredReposPageEtagsStoragePod = Provider<StarredReposPageEtagsStorage>(
+  (ref) => StarredReposPageEtagsStorage(
     sembastDatabase: ref.watch(sembastDbPod),
   ),
 );
 
-final etagsInterceptorPod = Provider<EtagsInterceptor>(
-  (ref) => EtagsInterceptor(
-    pageEtagsStorage: ref.watch(pageEtagsStoragePod),
+final etagsInterceptorPod = Provider<StarredReposPageEtagsInterceptor>(
+  (ref) => StarredReposPageEtagsInterceptor(
+    starredReposPageEtagsStorage: ref.watch(starredReposPageEtagsStoragePod),
   ),
 );
 

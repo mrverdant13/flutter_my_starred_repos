@@ -18,15 +18,15 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$PayloadTearOff {
   const _$PayloadTearOff();
 
-  _Payload<D, W> call<D, W>(D data) {
-    return _Payload<D, W>(
+  PayloadWithoutWarning<D, W> call<D, W>(D data) {
+    return PayloadWithoutWarning<D, W>(
       data,
     );
   }
 
-  _PayloadWithWarning<D, W> withWarning<D, W>(
+  PayloadWithWarning<D, W> withWarning<D, W>(
       {required D data, required W warning}) {
-    return _PayloadWithWarning<D, W>(
+    return PayloadWithWarning<D, W>(
       data: data,
       warning: warning,
     );
@@ -61,20 +61,20 @@ mixin _$Payload<D, W> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value) $default, {
-    required TResult Function(_PayloadWithWarning<D, W> value) withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value) $default, {
+    required TResult Function(PayloadWithWarning<D, W> value) withWarning,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value)? $default, {
-    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value)? $default, {
+    TResult Function(PayloadWithWarning<D, W> value)? withWarning,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value)? $default, {
-    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value)? $default, {
+    TResult Function(PayloadWithWarning<D, W> value)? withWarning,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -115,31 +115,32 @@ class _$PayloadCopyWithImpl<D, W, $Res>
 }
 
 /// @nodoc
-abstract class _$PayloadCopyWith<D, W, $Res>
+abstract class $PayloadWithoutWarningCopyWith<D, W, $Res>
     implements $PayloadCopyWith<D, W, $Res> {
-  factory _$PayloadCopyWith(
-          _Payload<D, W> value, $Res Function(_Payload<D, W>) then) =
-      __$PayloadCopyWithImpl<D, W, $Res>;
+  factory $PayloadWithoutWarningCopyWith(PayloadWithoutWarning<D, W> value,
+          $Res Function(PayloadWithoutWarning<D, W>) then) =
+      _$PayloadWithoutWarningCopyWithImpl<D, W, $Res>;
   @override
   $Res call({D data});
 }
 
 /// @nodoc
-class __$PayloadCopyWithImpl<D, W, $Res>
+class _$PayloadWithoutWarningCopyWithImpl<D, W, $Res>
     extends _$PayloadCopyWithImpl<D, W, $Res>
-    implements _$PayloadCopyWith<D, W, $Res> {
-  __$PayloadCopyWithImpl(
-      _Payload<D, W> _value, $Res Function(_Payload<D, W>) _then)
-      : super(_value, (v) => _then(v as _Payload<D, W>));
+    implements $PayloadWithoutWarningCopyWith<D, W, $Res> {
+  _$PayloadWithoutWarningCopyWithImpl(PayloadWithoutWarning<D, W> _value,
+      $Res Function(PayloadWithoutWarning<D, W>) _then)
+      : super(_value, (v) => _then(v as PayloadWithoutWarning<D, W>));
 
   @override
-  _Payload<D, W> get _value => super._value as _Payload<D, W>;
+  PayloadWithoutWarning<D, W> get _value =>
+      super._value as PayloadWithoutWarning<D, W>;
 
   @override
   $Res call({
     Object? data = freezed,
   }) {
-    return _then(_Payload<D, W>(
+    return _then(PayloadWithoutWarning<D, W>(
       data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -150,8 +151,8 @@ class __$PayloadCopyWithImpl<D, W, $Res>
 
 /// @nodoc
 
-class _$_Payload<D, W> implements _Payload<D, W> {
-  const _$_Payload(this.data);
+class _$PayloadWithoutWarning<D, W> implements PayloadWithoutWarning<D, W> {
+  const _$PayloadWithoutWarning(this.data);
 
   @override
   final D data;
@@ -165,7 +166,7 @@ class _$_Payload<D, W> implements _Payload<D, W> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Payload<D, W> &&
+            other is PayloadWithoutWarning<D, W> &&
             const DeepCollectionEquality().equals(other.data, data));
   }
 
@@ -175,8 +176,9 @@ class _$_Payload<D, W> implements _Payload<D, W> {
 
   @JsonKey(ignore: true)
   @override
-  _$PayloadCopyWith<D, W, _Payload<D, W>> get copyWith =>
-      __$PayloadCopyWithImpl<D, W, _Payload<D, W>>(this, _$identity);
+  $PayloadWithoutWarningCopyWith<D, W, PayloadWithoutWarning<D, W>>
+      get copyWith => _$PayloadWithoutWarningCopyWithImpl<D, W,
+          PayloadWithoutWarning<D, W>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -212,8 +214,8 @@ class _$_Payload<D, W> implements _Payload<D, W> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value) $default, {
-    required TResult Function(_PayloadWithWarning<D, W> value) withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value) $default, {
+    required TResult Function(PayloadWithWarning<D, W> value) withWarning,
   }) {
     return $default(this);
   }
@@ -221,8 +223,8 @@ class _$_Payload<D, W> implements _Payload<D, W> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value)? $default, {
-    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value)? $default, {
+    TResult Function(PayloadWithWarning<D, W> value)? withWarning,
   }) {
     return $default?.call(this);
   }
@@ -230,8 +232,8 @@ class _$_Payload<D, W> implements _Payload<D, W> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value)? $default, {
-    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value)? $default, {
+    TResult Function(PayloadWithWarning<D, W> value)? withWarning,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -241,45 +243,45 @@ class _$_Payload<D, W> implements _Payload<D, W> {
   }
 }
 
-abstract class _Payload<D, W> implements Payload<D, W> {
-  const factory _Payload(D data) = _$_Payload<D, W>;
+abstract class PayloadWithoutWarning<D, W> implements Payload<D, W> {
+  const factory PayloadWithoutWarning(D data) = _$PayloadWithoutWarning<D, W>;
 
   @override
   D get data;
   @override
   @JsonKey(ignore: true)
-  _$PayloadCopyWith<D, W, _Payload<D, W>> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PayloadWithoutWarningCopyWith<D, W, PayloadWithoutWarning<D, W>>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$PayloadWithWarningCopyWith<D, W, $Res>
+abstract class $PayloadWithWarningCopyWith<D, W, $Res>
     implements $PayloadCopyWith<D, W, $Res> {
-  factory _$PayloadWithWarningCopyWith(_PayloadWithWarning<D, W> value,
-          $Res Function(_PayloadWithWarning<D, W>) then) =
-      __$PayloadWithWarningCopyWithImpl<D, W, $Res>;
+  factory $PayloadWithWarningCopyWith(PayloadWithWarning<D, W> value,
+          $Res Function(PayloadWithWarning<D, W>) then) =
+      _$PayloadWithWarningCopyWithImpl<D, W, $Res>;
   @override
   $Res call({D data, W warning});
 }
 
 /// @nodoc
-class __$PayloadWithWarningCopyWithImpl<D, W, $Res>
+class _$PayloadWithWarningCopyWithImpl<D, W, $Res>
     extends _$PayloadCopyWithImpl<D, W, $Res>
-    implements _$PayloadWithWarningCopyWith<D, W, $Res> {
-  __$PayloadWithWarningCopyWithImpl(_PayloadWithWarning<D, W> _value,
-      $Res Function(_PayloadWithWarning<D, W>) _then)
-      : super(_value, (v) => _then(v as _PayloadWithWarning<D, W>));
+    implements $PayloadWithWarningCopyWith<D, W, $Res> {
+  _$PayloadWithWarningCopyWithImpl(PayloadWithWarning<D, W> _value,
+      $Res Function(PayloadWithWarning<D, W>) _then)
+      : super(_value, (v) => _then(v as PayloadWithWarning<D, W>));
 
   @override
-  _PayloadWithWarning<D, W> get _value =>
-      super._value as _PayloadWithWarning<D, W>;
+  PayloadWithWarning<D, W> get _value =>
+      super._value as PayloadWithWarning<D, W>;
 
   @override
   $Res call({
     Object? data = freezed,
     Object? warning = freezed,
   }) {
-    return _then(_PayloadWithWarning<D, W>(
+    return _then(PayloadWithWarning<D, W>(
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -294,8 +296,8 @@ class __$PayloadWithWarningCopyWithImpl<D, W, $Res>
 
 /// @nodoc
 
-class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
-  const _$_PayloadWithWarning({required this.data, required this.warning});
+class _$PayloadWithWarning<D, W> implements PayloadWithWarning<D, W> {
+  const _$PayloadWithWarning({required this.data, required this.warning});
 
   @override
   final D data;
@@ -311,7 +313,7 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PayloadWithWarning<D, W> &&
+            other is PayloadWithWarning<D, W> &&
             const DeepCollectionEquality().equals(other.data, data) &&
             const DeepCollectionEquality().equals(other.warning, warning));
   }
@@ -324,8 +326,8 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
 
   @JsonKey(ignore: true)
   @override
-  _$PayloadWithWarningCopyWith<D, W, _PayloadWithWarning<D, W>> get copyWith =>
-      __$PayloadWithWarningCopyWithImpl<D, W, _PayloadWithWarning<D, W>>(
+  $PayloadWithWarningCopyWith<D, W, PayloadWithWarning<D, W>> get copyWith =>
+      _$PayloadWithWarningCopyWithImpl<D, W, PayloadWithWarning<D, W>>(
           this, _$identity);
 
   @override
@@ -362,8 +364,8 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value) $default, {
-    required TResult Function(_PayloadWithWarning<D, W> value) withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value) $default, {
+    required TResult Function(PayloadWithWarning<D, W> value) withWarning,
   }) {
     return withWarning(this);
   }
@@ -371,8 +373,8 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value)? $default, {
-    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value)? $default, {
+    TResult Function(PayloadWithWarning<D, W> value)? withWarning,
   }) {
     return withWarning?.call(this);
   }
@@ -380,8 +382,8 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Payload<D, W> value)? $default, {
-    TResult Function(_PayloadWithWarning<D, W> value)? withWarning,
+    TResult Function(PayloadWithoutWarning<D, W> value)? $default, {
+    TResult Function(PayloadWithWarning<D, W> value)? withWarning,
     required TResult orElse(),
   }) {
     if (withWarning != null) {
@@ -391,15 +393,15 @@ class _$_PayloadWithWarning<D, W> implements _PayloadWithWarning<D, W> {
   }
 }
 
-abstract class _PayloadWithWarning<D, W> implements Payload<D, W> {
-  const factory _PayloadWithWarning({required D data, required W warning}) =
-      _$_PayloadWithWarning<D, W>;
+abstract class PayloadWithWarning<D, W> implements Payload<D, W> {
+  const factory PayloadWithWarning({required D data, required W warning}) =
+      _$PayloadWithWarning<D, W>;
 
   @override
   D get data;
   W get warning;
   @override
   @JsonKey(ignore: true)
-  _$PayloadWithWarningCopyWith<D, W, _PayloadWithWarning<D, W>> get copyWith =>
+  $PayloadWithWarningCopyWith<D, W, PayloadWithWarning<D, W>> get copyWith =>
       throw _privateConstructorUsedError;
 }

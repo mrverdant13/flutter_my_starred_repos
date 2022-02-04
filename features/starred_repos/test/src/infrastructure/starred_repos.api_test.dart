@@ -1,13 +1,13 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:starred_repos/src/domain/github_repo.dart';
 import 'package:starred_repos/src/domain/page.dart';
-import 'package:starred_repos/src/domain/user.dart';
 import 'package:starred_repos/src/infrastructure/starred_repos.api.dart';
+
+import '../../helpers/generators.dart';
 
 class MockDio extends Mock implements Dio {}
 
@@ -15,108 +15,54 @@ void main() {
   group(
     '''
 
-GIVEN a starred repos remote data source
-├─ THAT uses a Dio HTTP client
-AND an HTTP request
-├─ THAT includes a page number as a query parameter
-├─ AND  includes a page size as a query parameter
-├─ AND  includes the proper `Accept` header to receive a JSON-formatted response
-├─ AND  includes auth extra data for interception
-├─ AND  includes ETags extra data for interception''',
+GIVEN a starred repos API
+├─ THAT uses a Dio HTTP client''',
     () {
       // ARRANGE
-      late MockDio mockDio;
+      late Random r;
+      late Dio dio;
       late StarredReposApi starredReposApi;
-
-      const page = 7;
-      final starredReposJsonList = List.generate(
-        StarredReposApi.pageLength,
-        (index) => <String, dynamic>{
-          'name': 'repo $index',
-          'description': 'description $index',
-          'stargazers_count': index,
-          'owner': {
-            'login': 'username $index',
-            'avatar_url': 'avatarUrl $index',
-          },
-        },
-      );
-      final requestQueryParams = {
-        'page': page,
-        'per_page': StarredReposApi.pageLength,
-      };
-      final requestHeaders = {
-        'Accept': 'application/vnd.github.v3+json',
-      };
-
-      Headers createResponseHeaders({
-        required bool isLastPage,
-      }) {
-        final linksStr = [
-          '<https://www.github.com/search/repositories?q=repo&page=${page - 1}>; rel="prev"',
-          '<https://api.github.com/search/repositories?q=repo&page=1>; rel="first"',
-          if (!isLastPage)
-            '<https://api.github.com/search/repositories?q=repo&page=${page + 1}>; rel="last"',
-        ].join(' ,');
-        return Headers.fromMap({
-          'Link': [linksStr],
-        });
-      }
-
-      Page<GithubRepo> createReposDtosPage({
-        required bool isLastPage,
-      }) =>
-          Page(
-            lastPage: isLastPage ? page : page + 1,
-            elements: List.generate(
-              StarredReposApi.pageLength,
-              (index) => GithubRepo(
-                owner: User(
-                  username: 'username $index',
-                  avatarUrl: 'avatarUrl $index',
-                ),
-                name: 'repo $index',
-                description: 'description $index',
-                starsCount: index,
-              ),
-            ),
-          );
-
-      bool optionsPredicate(Options options) {
-        final headersMatch = mapEquals(options.headers, requestHeaders);
-        if (!headersMatch) return false;
-        return true;
-      }
 
       setUp(
         () {
-          mockDio = MockDio();
-          starredReposApi = StarredReposApi(dio: mockDio);
+          r = Random();
+          dio = MockDio();
+          starredReposApi = StarredReposApi(dio: dio);
         },
       );
 
       tearDown(
         () {
-          verifyNoMoreInteractions(mockDio);
+          verifyNoMoreInteractions(dio);
         },
       );
 
       test(
         '''
 
-AND a non-last starred repos page number
+AND the number of a non-last page of starred repos
+AND a page length
 WHEN the starred repos page is requested
-THEN a starred repos page data holder should be returned
+THEN a starred repos page should be returned
 ├─ BY sending the request
 ├─ AND returning the received repos page
 │  ├─ THAT holds a last page number not equal to the requested page
-      ''',
+''',
         () async {
           // ARRANGE
-          final lastStarredReposPage = createReposDtosPage(isLastPage: false);
+          final pageNumber = r.nextInt(10) + 1;
+          final pageLength = r.nextInt(10) + 1;
+          final reposOffset = pageNumber * pageLength;
+          final totalPages = pageNumber * 2;
+          final nonLastStarredRepos = generateStarredRepos(
+            reposCount: pageLength,
+            reposOffset: reposOffset,
+          );
+          final nonLastStarredReposJson =
+              nonLastStarredRepos.map((r) => r.toJson()).toList();
 
           when(
-            () => mockDio.get(
+            () => dio.get(
               any(),
               queryParameters: any(named: 'queryParameters'),
               options: any(named: 'options'),
@@ -124,29 +70,48 @@ THEN a starred repos page data holder should be returned
           ).thenAnswer(
             (_) async => Response(
               requestOptions: RequestOptions(path: ''),
-              data: starredReposJsonList,
-              headers: createResponseHeaders(isLastPage: false),
+              data: nonLastStarredReposJson,
+              headers: Headers.fromMap({
+                'Link': [
+                  [
+                    if (pageNumber > 1)
+                      '<https://www.github.com/search/repositories?q=repo&page=${pageNumber - 1}>; rel="prev"',
+                    '<https://api.github.com/search/repositories?q=repo&page=1>; rel="first"',
+                    '<https://api.github.com/search/repositories?q=repo&page=$totalPages>; rel="last"',
+                  ].join(' ,'),
+                ],
+              }),
             ),
           );
 
           // ACT
           final result = await starredReposApi.getStarredReposPage(
-            page: page,
+            pageNumber: pageNumber,
+            pageLength: pageLength,
           );
 
           // ASSERT
-          expect(result, lastStarredReposPage);
           expect(
-            lastStarredReposPage.lastPage,
-            predicate<int>((lastPage) => lastPage > page),
+            result,
+            Page(
+              lastPage: totalPages,
+              elements: nonLastStarredRepos,
+            ),
           );
+          expect(result.lastPage, greaterThan(pageNumber));
           verify(
-            () => mockDio.get(
+            () => dio.get(
               StarredReposApi.retrieveEndpoint,
-              queryParameters: requestQueryParams,
+              queryParameters: {
+                'page': pageNumber,
+                'per_page': pageLength,
+              },
               options: any(
                 named: 'options',
-                that: predicate(optionsPredicate),
+                that: predicate<Options>(
+                  (o) =>
+                      o.headers?['Accept'] == 'application/vnd.github.v3+json',
+                ),
               ),
             ),
           ).called(1);
@@ -156,19 +121,29 @@ THEN a starred repos page data holder should be returned
       test(
         '''
 
-AND the last starred repos page number
+AND the number of the last page of starred repos
+AND a page length
 WHEN the starred repos page is requested
-THEN a starred repos page data holder should be returned
+THEN a starred repos page should be returned
 ├─ BY sending the request
 ├─ AND returning the received repos page
 │  ├─ THAT holds a last page number equal to the requested page
-      ''',
+''',
         () async {
           // ARRANGE
-          final lastStarredReposPage = createReposDtosPage(isLastPage: true);
+          final pageNumber = r.nextInt(10) + 1;
+          final pageLength = r.nextInt(10) + 1;
+          final reposOffset = pageNumber * pageLength;
+          final totalPages = pageNumber;
+          final nonLastStarredRepos = generateStarredRepos(
+            reposCount: pageLength,
+            reposOffset: reposOffset,
+          );
+          final nonLastStarredReposJson =
+              nonLastStarredRepos.map((r) => r.toJson()).toList();
 
           when(
-            () => mockDio.get(
+            () => dio.get(
               any(),
               queryParameters: any(named: 'queryParameters'),
               options: any(named: 'options'),
@@ -176,26 +151,48 @@ THEN a starred repos page data holder should be returned
           ).thenAnswer(
             (_) async => Response(
               requestOptions: RequestOptions(path: ''),
-              data: starredReposJsonList,
-              headers: createResponseHeaders(isLastPage: true),
+              data: nonLastStarredReposJson,
+              headers: Headers.fromMap({
+                'Link': [
+                  [
+                    if (pageNumber > 1)
+                      '<https://www.github.com/search/repositories?q=repo&page=${pageNumber - 1}>; rel="prev"',
+                    '<https://api.github.com/search/repositories?q=repo&page=1>; rel="first"',
+                    '<https://api.github.com/search/repositories?q=repo&page=$totalPages>; rel="last"',
+                  ].join(' ,'),
+                ],
+              }),
             ),
           );
 
           // ACT
           final result = await starredReposApi.getStarredReposPage(
-            page: page,
+            pageNumber: pageNumber,
+            pageLength: pageLength,
           );
 
           // ASSERT
-          expect(result, lastStarredReposPage);
-          expect(lastStarredReposPage.lastPage, page);
+          expect(
+            result,
+            Page(
+              lastPage: totalPages,
+              elements: nonLastStarredRepos,
+            ),
+          );
+          expect(result.lastPage, pageNumber);
           verify(
-            () => mockDio.get(
+            () => dio.get(
               StarredReposApi.retrieveEndpoint,
-              queryParameters: requestQueryParams,
+              queryParameters: {
+                'page': pageNumber,
+                'per_page': pageLength,
+              },
               options: any(
                 named: 'options',
-                that: predicate(optionsPredicate),
+                that: predicate<Options>(
+                  (o) =>
+                      o.headers?['Accept'] == 'application/vnd.github.v3+json',
+                ),
               ),
             ),
           ).called(1);
@@ -205,7 +202,7 @@ THEN a starred repos page data holder should be returned
       test(
         '''
 
-AND a repos page number
+AND the number of a starred repos page
 AND no Internet connection
 WHEN the starred repos page is requested
 THEN an exception should be thrown
@@ -214,8 +211,10 @@ THEN an exception should be thrown
 ''',
         () async {
           // ARRANGE
+          final pageNumber = r.nextInt(10) + 1;
+          final pageLength = r.nextInt(10) + 1;
           when(
-            () => mockDio.get(
+            () => dio.get(
               any(),
               queryParameters: any(named: 'queryParameters'),
               options: any(named: 'options'),
@@ -229,7 +228,8 @@ THEN an exception should be thrown
 
           // ACT
           Future<void> action() async => starredReposApi.getStarredReposPage(
-                page: page,
+                pageNumber: pageNumber,
+                pageLength: pageLength,
               );
 
           // ASSERT
@@ -238,12 +238,18 @@ THEN an exception should be thrown
             throwsA(const GetStarredReposPageException.offline()),
           );
           verify(
-            () => mockDio.get(
+            () => dio.get(
               StarredReposApi.retrieveEndpoint,
-              queryParameters: requestQueryParams,
+              queryParameters: {
+                'page': pageNumber,
+                'per_page': pageLength,
+              },
               options: any(
                 named: 'options',
-                that: predicate(optionsPredicate),
+                that: predicate<Options>(
+                  (o) =>
+                      o.headers?['Accept'] == 'application/vnd.github.v3+json',
+                ),
               ),
             ),
           ).called(1);
@@ -253,8 +259,8 @@ THEN an exception should be thrown
       test(
         '''
 
-AND a repos page number
-AND no modifications detected by the server
+AND the number of a starred repos page
+AND no modifications detected by the server for that page
 WHEN the starred repos page is requested
 THEN an exception should be thrown
 ├─ BY sending the HTTP request
@@ -262,8 +268,10 @@ THEN an exception should be thrown
       ''',
         () async {
           // ARRANGE
+          final pageNumber = r.nextInt(10) + 1;
+          final pageLength = r.nextInt(10) + 1;
           when(
-            () => mockDio.get(
+            () => dio.get(
               any(),
               queryParameters: any(named: 'queryParameters'),
               options: any(named: 'options'),
@@ -281,7 +289,8 @@ THEN an exception should be thrown
 
           // ACT
           Future<void> action() async => starredReposApi.getStarredReposPage(
-                page: page,
+                pageNumber: pageNumber,
+                pageLength: pageLength,
               );
 
           // ASSERT
@@ -290,12 +299,18 @@ THEN an exception should be thrown
             throwsA(const GetStarredReposPageException.unmodified()),
           );
           verify(
-            () => mockDio.get(
+            () => dio.get(
               StarredReposApi.retrieveEndpoint,
-              queryParameters: requestQueryParams,
+              queryParameters: {
+                'page': pageNumber,
+                'per_page': pageLength,
+              },
               options: any(
                 named: 'options',
-                that: predicate(optionsPredicate),
+                that: predicate<Options>(
+                  (o) =>
+                      o.headers?['Accept'] == 'application/vnd.github.v3+json',
+                ),
               ),
             ),
           ).called(1);

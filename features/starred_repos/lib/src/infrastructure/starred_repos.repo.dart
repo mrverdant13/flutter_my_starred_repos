@@ -16,21 +16,24 @@ class StarredReposRepo {
   final StarredReposStorage _starredReposStorage;
 
   Future<Payload<Page<GithubRepo>, GetStaredReposWarning>> getStarredReposPage({
-    required int page,
+    required int pageNumber,
+    required int pageLength,
   }) async {
     late final Page<GithubRepo>? reposPage;
 
     try {
       reposPage = await _starredReposApi.getStarredReposPage(
-        page: page,
+        pageNumber: pageNumber,
+        pageLength: pageLength,
       );
     } on GetStarredReposPageException catch (e) {
-      final starredReposPage = await _starredReposStorage.get(
-        page: page,
+      final starredReposPage = await _starredReposStorage.getPage(
+        pageNumber: pageNumber,
+        pageLength: pageLength,
       );
       final cachedReposPage = starredReposPage ??
           Page<GithubRepo>(
-            lastPage: page,
+            lastPage: pageNumber,
             elements: [],
           );
       return e.when(
@@ -43,7 +46,10 @@ class StarredReposRepo {
         ),
       );
     }
-    await _starredReposStorage.set(page: page, starredReposPage: reposPage);
+    await _starredReposStorage.setPage(
+      pageNumber: pageNumber,
+      starredRepos: reposPage.elements,
+    );
     return Payload(reposPage);
   }
 }

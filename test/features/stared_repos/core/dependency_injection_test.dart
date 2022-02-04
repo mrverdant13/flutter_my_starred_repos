@@ -106,12 +106,12 @@ THEN the necessary starred-repos-related dependencies should be injected
                 isA<Database>(),
               );
               expect(
-                container.read(pageEtagsStoragePod),
-                isA<PageEtagsStorage>(),
+                container.read(starredReposPageEtagsStoragePod),
+                isA<StarredReposPageEtagsStorage>(),
               );
               expect(
                 container.read(etagsInterceptorPod),
-                isA<EtagsInterceptor>(),
+                isA<StarredReposPageEtagsInterceptor>(),
               );
               expect(
                 container.read(starredReposDioPod),

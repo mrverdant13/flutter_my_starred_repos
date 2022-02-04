@@ -34,13 +34,10 @@ jobs:
       - name: Check out repo code
         uses: actions/checkout@v2
 
-      - name: Setup Java actions
-        uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
-
       - name: Setup Flutter actions
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.8.1"
 
       - name: Install tools
         run: flutter pub global activate melos
@@ -69,15 +66,10 @@ jobs:
       - name: Check out repo code
         uses: actions/checkout@v2
 
-      - name: Setup Java actions
-        uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
-
       - name: Setup Flutter actions
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: "2.8.1"
 
       - name: Install tools
         run: |

@@ -19,7 +19,7 @@ class Profile with _$Profile {
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);
-// coverage:ignore-end
+  // coverage:ignore-end
 
   bool get hasValidStatus => status != null && status!.isValid;
 }

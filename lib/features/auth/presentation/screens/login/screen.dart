@@ -2,12 +2,11 @@ import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
+import 'package:flutter_my_starred_repos/l10n/l10n.dart';
 import 'package:flutter_my_starred_repos/presentation/routers/app_router.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_my_starred_repos/presentation/routers/app_router.gr.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-import '../../../../../l10n/l10n.dart';
-import '../../../../../presentation/routers/app_router.gr.dart';
 
 part 'dimensions.dart';
 part 'l10n.dart';

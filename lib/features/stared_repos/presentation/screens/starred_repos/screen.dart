@@ -11,10 +11,13 @@ class StarredReposScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
-      ref.read(starredReposCubitPod).load();
-      return;
-    }, []);
+    useEffect(
+      () {
+        ref.read(starredReposCubitPod).load();
+        return;
+      },
+      [],
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Starred Repositorires'),

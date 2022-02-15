@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_my_starred_repos/core/config.dart';
+import 'package:flutter_my_starred_repos/core/flavors.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql/client.dart';
-
-import 'config.dart';
-import 'flavors.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final flavorPod = Provider<Flavor>(
   (_) => throw StateError(

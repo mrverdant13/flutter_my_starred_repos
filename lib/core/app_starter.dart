@@ -4,15 +4,15 @@ import 'package:emoji_lumberdash/emoji_lumberdash.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lumberdash/lumberdash.dart' as logger;
-
-import '../features/stared_repos/core/dependency_injection.dart'
+import 'package:flutter_my_starred_repos/core/config.dart';
+import 'package:flutter_my_starred_repos/core/dependency_injection.dart'
+    as core;
+import 'package:flutter_my_starred_repos/core/flavors.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart'
     as starred_repos;
-import '../presentation/app.dart';
-import 'config.dart';
-import 'dependency_injection.dart' as core;
-import 'flavors.dart';
+import 'package:flutter_my_starred_repos/presentation/app.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lumberdash/lumberdash.dart' as logger;
 
 Future<void> startApp(Flavor flavor) async {
   runZonedGuarded(

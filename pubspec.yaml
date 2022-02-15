@@ -1,100 +1,59 @@
 name: flutter_my_starred_repos
 description: A Flutter app to manage personal GitHub starred repositories.
-
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
-
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.15.1 <3.0.0"
-  flutter: ">=2.8.1 <3.0.0"
+  sdk: ">=2.16.1 <3.0.0"
+  flutter: ">=2.10.1 <3.0.0"
 
 dependencies:
-  cupertino_icons: ^1.0.3
-
-  flutter:
-    sdk: flutter
-
-  # TODO: Remove package.
-  # Authentication
-  oauth2: ^2.0.0
-
-  # Functional programming
-  dartz: ^0.10.1
-  oxidized: ^5.1.0
-
-  # GraphQL client
-  graphql: ^5.0.0
-
-  # HTTP client
-  dio: ^4.0.4
-
-  # Immutable elements
-  freezed_annotation: ^1.1.0
-  kt_dart: ^0.10.0
-
-  # Internationalization
-  flutter_localizations:
-    sdk: flutter
-  intl: ^0.17.0
-
-  # Local storage
-  sembast: ^3.1.1+1
-
-  # Logging
-  emoji_lumberdash: ^2.0.0
-  lumberdash: ^3.0.0
-
-  # Routing/Navigation
-  auto_route: ^3.2.1
-
-  # State management
-  flutter_bloc: ^7.3.3
-
-  # UI
-  cached_network_image: ^3.2.0
-  material_design_icons_flutter: ^5.0.6595
-  webview_flutter: ^3.0.0
-
-  # Utils
-  checked_yaml: ^2.0.1
-  path: ^1.8.0
-  path_provider: ^2.0.8
-
-  # Auth features
   auth:
     path: features/auth
+  auto_route: ^3.2.2
+  cached_network_image: ^3.2.0
+  checked_yaml: ^2.0.1
+  cupertino_icons: ^1.0.3
+  dartz: ^0.10.1
+  dio: ^4.0.4
+  emoji_lumberdash: ^2.0.0
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^7.3.3
+  flutter_hooks: ^0.18.2+1
+  flutter_localizations:
+    sdk: flutter
+  flutter_secure_storage: ^5.0.2
+  freezed_annotation: ^1.1.0
+  graphql: ^5.0.1
+  hooks_riverpod: ^1.0.3
+  intl: ^0.17.0
+  kt_dart: ^0.10.0
+  lumberdash: ^3.0.0
+  material_design_icons_flutter: ^5.0.6595
+  oauth2: ^2.0.0
+  oxidized: ^5.2.0
+  path: ^1.8.0
+  path_provider: ^2.0.9
   profile:
     path: features/profile
+  sembast: ^3.1.2
   starred_repos:
     path: features/starred_repos
-
-  flutter_hooks: ^0.18.2
-  hooks_riverpod: ^1.0.3
+  webview_flutter: ^3.0.0
+  yaml: ^3.1.0
 
 dev_dependencies:
+  auto_route_generator: ^3.2.1
+  bloc_test: ^8.5.0
+  build_runner: ^2.1.7
+  build_verify: ^3.0.0
   flutter_test:
     sdk: flutter
-
-  # Code generation
-  build_runner: ^2.1.7
-
-  # Immutable elements
   freezed: ^1.1.1
-
-  # Linting
+  json_serializable: ^6.1.4
   lint_rules:
     path: lint_rules
-
-  # Routing/Navigation
-  auto_route_generator: ^3.2.1
-
-  # Serialization
-  json_serializable: ^6.1.3
-
-  # Testing
-  bloc_test: ^8.5.0
-  build_verify: ^3.0.0
   mocktail: ^0.2.0
   test: ^1.20.1
 
@@ -104,10 +63,7 @@ dependency_overrides:
 
 flutter:
   uses-material-design: true
-
-  # Flutter generation
   generate: true
-
   assets:
     - assets/app_icon/
     - assets/config/

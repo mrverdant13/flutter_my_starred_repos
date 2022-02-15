@@ -73,6 +73,7 @@ THEN the profile should be returned
             (_) async => QueryResult(
               source: null,
               data: {'viewer': profileJson},
+              parserFn: (json) => json,
             ),
           );
 
@@ -122,6 +123,7 @@ THEN the profile should be returned
             (_) async => QueryResult(
               source: null,
               data: {'viewer': profileJson},
+              parserFn: (json) => json,
             ),
           );
 
@@ -180,6 +182,7 @@ THEN the profile should be returned
             (_) async => QueryResult(
               source: null,
               data: {'viewer': profileJson},
+              parserFn: (json) => json,
             ),
           );
           when(
@@ -233,6 +236,7 @@ THEN an exception should be thrown
                   uri: null,
                 ),
               ),
+              parserFn: (json) => json,
             ),
           );
 
@@ -275,6 +279,7 @@ THEN an exception should be thrown
                   originalException: SocketException(''),
                 ),
               ),
+              parserFn: (json) => json,
             ),
           );
 

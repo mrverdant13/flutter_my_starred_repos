@@ -2,9 +2,11 @@ import 'package:auth/auth.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+// ignore: depend_on_referenced_packages
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:sembast/sembast.dart';
 import 'package:starred_repos/starred_repos.dart';

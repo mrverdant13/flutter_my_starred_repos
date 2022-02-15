@@ -1,9 +1,8 @@
 import 'package:auth/auth.dart';
+import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/profile/core/dependency_injection.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../../../core/dependency_injection.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final githubAuthConfigPod = Provider<GithubAuthConfig>(
   (ref) => ref.watch(appConfigPod).githubAuthConfig,

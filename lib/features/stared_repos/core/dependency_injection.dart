@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:starred_repos/starred_repos.dart';
-
-import '../../auth/core/dependency_injection.dart';
 
 final sembastDbPod = Provider<Database>(
   (_) => throw StateError(

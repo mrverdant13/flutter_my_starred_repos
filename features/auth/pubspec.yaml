@@ -4,8 +4,8 @@ version: 1.0.0+1
 publish_to: none
 
 environment:
-  sdk: ">=2.15.1 <3.0.0"
-  flutter: ">=2.8.1 <3.0.0"
+  sdk: ">=2.16.1 <3.0.0"
+  flutter: ">=2.10.1 <3.0.0"
 
 dependencies:
   bloc: ^7.2.1
@@ -16,7 +16,7 @@ dependencies:
   freezed_annotation: ^1.1.0
   http: ^0.13.4
   oauth2: ^2.0.0
-  oxidized: ^5.1.0
+  oxidized: ^5.2.0
   profile:
     path: ../profile
 
@@ -26,7 +26,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^1.1.1
-  json_serializable: ^6.1.3
+  json_serializable: ^6.1.4
   lint_rules:
     path: ../../lint_rules
   mocktail: ^0.2.0

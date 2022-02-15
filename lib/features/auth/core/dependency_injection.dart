@@ -39,12 +39,13 @@ final authServicePod = Provider<AuthService>(
   ),
 );
 
-final authCubitPod = Provider.autoDispose<AuthCubit>(
+final authNotifierPod =
+    StateNotifierProvider.autoDispose<AuthNotifier, AuthState>(
   (ref) {
-    final cubit = AuthCubit(
+    final notifier = AuthNotifier(
       authService: ref.watch(authServicePod),
     );
-    ref.onDispose(() => cubit.close());
-    return cubit;
+    ref.onDispose(() => notifier.dispose());
+    return notifier;
   },
 );

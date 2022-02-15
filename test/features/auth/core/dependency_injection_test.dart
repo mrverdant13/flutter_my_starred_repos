@@ -79,8 +79,8 @@ THEN the necessary auth dependencies should be injected
             isA<AuthService>(),
           );
           expect(
-            container.read(authCubitPod),
-            isA<AuthCubit>(),
+            container.read(authNotifierPod.notifier),
+            isA<AuthNotifier>(),
           );
         },
       );

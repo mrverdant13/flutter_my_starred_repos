@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:auth/src/domain/login_failure.dart';
 import 'package:auth/src/domain/login_method.dart';
 import 'package:auth/src/infrastructure/auth.service.dart';
-import 'package:auth/src/state/auth.cubit.dart';
-import 'package:bloc_test/bloc_test.dart';
+import 'package:auth/src/state/auth.notifier.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oxidized/oxidized.dart';
+import 'package:state_notifier_test/state_notifier_test.dart';
 import 'package:test/test.dart';
 
 class MockAuthService extends Mock implements AuthService {}
@@ -24,17 +24,17 @@ void main() {
   group(
     '''
 
-GIVEN a auth cubit
+GIVEN an auth notifier
 ├─ THAT uses an auth service''',
     () {
       // ARRANGE
       late MockAuthService mockAuthService;
-      late AuthCubit authCubit;
+      late AuthNotifier authNotifier;
 
       setUp(
         () {
           mockAuthService = MockAuthService();
-          authCubit = AuthCubit(
+          authNotifier = AuthNotifier(
             authService: mockAuthService,
           );
         },
@@ -54,9 +54,9 @@ THEN its initial state should be loading and not logged in
 ''',
         () async {
           // ASSERT
-          expect(authCubit.isLoading, isTrue);
+          expect(authNotifier.isLoading, isTrue);
           expect(
-            authCubit.state,
+            authNotifier.debugState,
             const AuthState.loading(isLoggedIn: false),
           );
         },
@@ -67,7 +67,7 @@ THEN its initial state should be loading and not logged in
         final isAuthenticated = r.nextBool();
         final expectedAuthState = AuthState.loaded(isLoggedIn: isAuthenticated);
 
-        blocTest<AuthCubit, AuthState>(
+        stateNotifierTest<AuthNotifier, AuthState>(
           '''
 
 WHEN the login status is requested
@@ -84,9 +84,9 @@ THEN the auth state should be updated
               (_) async => isAuthenticated,
             );
 
-            return authCubit;
+            return authNotifier;
           },
-          act: (cubit) => cubit.checkAuthStatus(),
+          actions: (notifier) => notifier.checkAuthStatus(),
           expect: () => [
             const AuthState.loading(isLoggedIn: false),
             expectedAuthState,
@@ -120,7 +120,7 @@ THEN the auth state should be updated
           possibleLoginFailures.length,
         )];
 
-        blocTest<AuthCubit, AuthState>(
+        stateNotifierTest<AuthNotifier, AuthState>(
           '''
 
 AND login minimal conditions
@@ -142,10 +142,10 @@ THEN the user should be authenticated
               (_) async => Ok(unit),
             );
 
-            return authCubit;
+            return authNotifier;
           },
-          act: (cubit) {
-            cubit.logIn(
+          actions: (notifier) {
+            notifier.logIn(
               method: loginMethod,
             );
           },
@@ -162,7 +162,7 @@ THEN the user should be authenticated
           },
         );
 
-        blocTest<AuthCubit, AuthState>(
+        stateNotifierTest<AuthNotifier, AuthState>(
           '''
 
 AND no login minimal conditions
@@ -184,10 +184,10 @@ THEN a failure should be reported
               (_) async => Err(expectedLoginFailure),
             );
 
-            return authCubit;
+            return authNotifier;
           },
-          act: (cubit) {
-            cubit.logIn(
+          actions: (notifier) {
+            notifier.logIn(
               method: loginMethod,
             );
           },
@@ -209,7 +209,7 @@ THEN a failure should be reported
           },
         );
 
-        blocTest<AuthCubit, AuthState>(
+        stateNotifierTest<AuthNotifier, AuthState>(
           '''
 
 AND logout minimal conditions
@@ -227,10 +227,10 @@ THEN the user should be unauthenticated
               (_) async => unit,
             );
 
-            return authCubit;
+            return authNotifier;
           },
-          act: (cubit) {
-            cubit.logOut();
+          actions: (notifier) {
+            notifier.logOut();
           },
           expect: () => [
             const AuthState.loading(isLoggedIn: false),

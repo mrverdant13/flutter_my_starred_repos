@@ -13,6 +13,7 @@ class StarredReposScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
       ref.read(starredReposCubitPod).load();
+      return;
     }, []);
     return Scaffold(
       appBar: AppBar(
@@ -20,7 +21,7 @@ class StarredReposScreen extends HookConsumerWidget {
       ),
       body: BlocConsumer<StarredReposCubit, StarredReposState>(
         bloc: ref.watch(starredReposCubitPod),
-        listener: (context, starredReposState) => starredReposState.when(
+        listener: (context, starredReposState) => starredReposState.whenOrNull(
           loaded: (_, __, warning) => warning?.when(
             offline: () {
               ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -33,7 +34,6 @@ class StarredReposScreen extends HookConsumerWidget {
               );
             },
           ),
-          loading: (_) {},
         ),
         builder: (context, starredReposState) {
           final starredRepos = starredReposState.repos;

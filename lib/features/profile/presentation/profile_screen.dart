@@ -16,6 +16,7 @@ class ProfileScreen extends HookConsumerWidget {
       ref.read(profileCubitPod)
         ..watchProfile()
         ..refreshProfile();
+      return;
     }, []);
     return Scaffold(
       drawer: const AppDrawer(),

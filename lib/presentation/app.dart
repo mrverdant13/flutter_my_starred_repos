@@ -18,6 +18,7 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
       ref.read(authCubitPod).checkAuthStatus();
+      return;
     }, []);
     return Consumer(
       builder: (context, ref, _) => BlocListener<AuthCubit, AuthState>(

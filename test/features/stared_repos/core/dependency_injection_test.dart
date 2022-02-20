@@ -1,5 +1,4 @@
 import 'package:auth/auth.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -114,10 +113,6 @@ THEN the necessary starred-repos-related dependencies should be injected
               expect(
                 container.read(etagsInterceptorPod),
                 isA<StarredReposPageEtagsInterceptor>(),
-              );
-              expect(
-                container.read(starredReposDioPod),
-                isA<Dio>(),
               );
               expect(
                 container.read(starredReposApiPod),

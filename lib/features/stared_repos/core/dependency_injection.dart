@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
+import 'package:flutter_my_starred_repos/core/dependency_injection.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
@@ -25,17 +24,9 @@ final etagsInterceptorPod = Provider<StarredReposPageEtagsInterceptor>(
   ),
 );
 
-final starredReposDioPod = Provider<Dio>(
-  (ref) => Dio()
-    ..interceptors.addAll([
-      ref.watch(authInterceptorPod),
-      ref.watch(etagsInterceptorPod),
-    ]),
-);
-
 final starredReposApiPod = Provider<StarredReposApi>(
   (ref) => StarredReposApi(
-    dio: ref.watch(starredReposDioPod),
+    dio: ref.watch(dioPod),
   ),
 );
 
@@ -53,14 +44,10 @@ final starredReposRepoPod = Provider<StarredReposRepo>(
 );
 
 final starredReposNotifierPod =
-    StateNotifierProvider.autoDispose<StarredReposNotifier, StarredReposState>(
-  (ref) {
-    final notifier = StarredReposNotifier(
-      starredReposRepo: ref.watch(starredReposRepoPod),
-    );
-    ref.onDispose(() => notifier.dispose());
-    return notifier;
-  },
+    StateNotifierProvider<StarredReposNotifier, StarredReposState>(
+  (ref) => StarredReposNotifier(
+    starredReposRepo: ref.watch(starredReposRepoPod),
+  ),
 );
 
 Future<List<Override>> getInjectionOverrides() async {

@@ -54,7 +54,7 @@ THEN the necessary auth dependencies should be injected
 ├─ AND injecting a single auth interceptor
 ├─ AND injecting a single authenticator data source
 ├─ AND injecting a single auth service
-├─ AND injecting an auth cubit factory
+├─ AND injecting an auth notifier factory
 ''',
         () async {
           // ASSERT

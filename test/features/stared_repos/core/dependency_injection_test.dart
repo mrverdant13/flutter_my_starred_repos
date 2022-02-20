@@ -99,7 +99,7 @@ THEN the necessary starred-repos-related dependencies should be injected
 ├─ AND injecting a single starred repos remote data source
 ├─ AND injecting a single starred repos local data source
 ├─ AND injecting a single starred repos repository
-├─ AND injecting a single starred repos cubit
+├─ AND injecting a single starred repos notifier
 ''',
             () async {
               // ASSERT

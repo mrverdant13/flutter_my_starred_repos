@@ -132,7 +132,7 @@ THEN the necessary starred-repos-related dependencies should be injected
                 isA<StarredReposRepo>(),
               );
               expect(
-                container.read(starredReposNotifierPod),
+                container.read(starredReposNotifierPod.notifier),
                 isA<StarredReposNotifier>(),
               );
             },

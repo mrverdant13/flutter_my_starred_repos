@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_my_starred_repos/core/config.dart';
 import 'package:flutter_my_starred_repos/core/flavors.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
+import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -34,8 +35,12 @@ final gqlClientPod = Provider<GraphQLClient>(
   ),
 );
 
-final dioPod = Provider(
-  (ref) => Dio(),
+final dioPod = Provider<Dio>(
+  (ref) => Dio()
+    ..interceptors.addAll([
+      ref.watch(authInterceptorPod),
+      ref.watch(etagsInterceptorPod),
+    ]),
 );
 
 Future<List<Override>> getInjectionOverrides({

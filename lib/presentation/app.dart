@@ -1,6 +1,5 @@
 import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -16,35 +15,34 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AuthState>(
+      authNotifierPod,
+      (_, authState) => authState.whenOrNull(
+        loaded: (isLoggedIn) => ref.read(appRouterPod).pushAndPopUntil(
+              isLoggedIn
+                  ? const ProfileScreenRoute()
+                  : const LoginScreenRoute(),
+              predicate: (route) => false,
+            ),
+      ),
+    );
     useEffect(
       () {
-        ref.read(authCubitPod).checkAuthStatus();
+        WidgetsBinding.instance?.addPostFrameCallback(
+          (_) => ref.read(authNotifierPod.notifier).checkAuthStatus(),
+        );
         return;
       },
       [],
     );
-    return Consumer(
-      builder: (context, ref, _) => BlocListener<AuthCubit, AuthState>(
-        bloc: ref.watch(authCubitPod),
-        listener: (context, authenticatorState) =>
-            authenticatorState.whenOrNull(
-          loaded: (isLoggedIn) => ref.read(appRouterPod).pushAndPopUntil(
-                isLoggedIn
-                    ? const ProfileScreenRoute()
-                    : const LoginScreenRoute(),
-                predicate: (route) => false,
-              ),
-        ),
-        child: MaterialApp.router(
-          title: 'App (${ref.watch(flavorPod).tag})',
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          routerDelegate: ref.watch(appRouterPod).delegate(),
-          routeInformationParser: ref.watch(appRouterPod).defaultRouteParser(),
-        ),
-      ),
+    return MaterialApp.router(
+      title: 'App (${ref.watch(flavorPod).tag})',
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      routerDelegate: ref.watch(appRouterPod).delegate(),
+      routeInformationParser: ref.watch(appRouterPod).defaultRouteParser(),
     );
   }
 }

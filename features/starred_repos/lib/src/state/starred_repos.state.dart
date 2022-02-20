@@ -1,4 +1,4 @@
-part of 'starred_repos.cubit.dart';
+part of 'starred_repos.notifier.dart';
 
 @freezed
 class StarredReposState with _$StarredReposState {

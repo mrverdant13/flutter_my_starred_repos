@@ -1,4 +1,4 @@
-part of 'profile.cubit.dart';
+part of 'profile.notifier.dart';
 
 @freezed
 class ProfileState with _$ProfileState {

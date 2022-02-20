@@ -1,5 +1,4 @@
 import 'package:auth/auth.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_my_starred_repos/features/auth/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/stared_repos/core/dependency_injection.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,7 +28,7 @@ void main() {
   group(
     '''
 
-GIVEN a depencencies container''',
+GIVEN a dependencies container''',
     () {
       test(
         '''
@@ -72,7 +71,7 @@ WHEN the injection process is triggered''',
           setUp(
             () async {
               // ARRANGE
-              final preconditionalOverrides = [
+              final preConditionalOverrides = [
                 authInterceptorPod.overrideWithValue(MockAuthInterceptor()),
               ];
               PathProviderPlatform.instance = FakePathProviderPlatform();
@@ -81,7 +80,7 @@ WHEN the injection process is triggered''',
               final overrides = await getInjectionOverrides();
               container = ProviderContainer(
                 overrides: [
-                  ...preconditionalOverrides,
+                  ...preConditionalOverrides,
                   ...overrides,
                 ],
               );
@@ -99,7 +98,7 @@ THEN the necessary starred-repos-related dependencies should be injected
 ├─ AND injecting a single starred repos remote data source
 ├─ AND injecting a single starred repos local data source
 ├─ AND injecting a single starred repos repository
-├─ AND injecting a single starred repos cubit
+├─ AND injecting a single starred repos notifier
 ''',
             () async {
               // ASSERT
@@ -116,10 +115,6 @@ THEN the necessary starred-repos-related dependencies should be injected
                 isA<StarredReposPageEtagsInterceptor>(),
               );
               expect(
-                container.read(starredReposDioPod),
-                isA<Dio>(),
-              );
-              expect(
                 container.read(starredReposApiPod),
                 isA<StarredReposApi>(),
               );
@@ -132,8 +127,8 @@ THEN the necessary starred-repos-related dependencies should be injected
                 isA<StarredReposRepo>(),
               );
               expect(
-                container.read(starredReposCubitPod),
-                isA<StarredReposCubit>(),
+                container.read(starredReposNotifierPod.notifier),
+                isA<StarredReposNotifier>(),
               );
             },
           );

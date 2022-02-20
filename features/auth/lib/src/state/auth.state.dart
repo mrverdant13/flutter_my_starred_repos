@@ -1,4 +1,4 @@
-part of 'auth.cubit.dart';
+part of 'auth.notifier.dart';
 
 @freezed
 class AuthState with _$AuthState {

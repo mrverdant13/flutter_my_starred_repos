@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_my_starred_repos/features/profile/core/dependency_injection.dart';
 import 'package:flutter_my_starred_repos/features/profile/presentation/widget/profile_preview.dart';
@@ -12,11 +11,17 @@ class ProfileScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<ProfileState>(
+      profileNotifierPod,
+      (_, profileState) => _profileStateListener(context, profileState),
+    );
     useEffect(
       () {
-        ref.read(profileCubitPod)
-          ..watchProfile()
-          ..refreshProfile();
+        WidgetsBinding.instance?.addPostFrameCallback(
+          (_) => ref.read<ProfileNotifier>(profileNotifierPod.notifier)
+            ..watchProfile()
+            ..refreshProfile(),
+        );
         return;
       },
       [],
@@ -25,17 +30,18 @@ class ProfileScreen extends HookConsumerWidget {
       drawer: const AppDrawer(),
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: () => ref.read(profileCubitPod).refreshProfile(),
+          onRefresh: () =>
+              ref.read(profileNotifierPod.notifier).refreshProfile(),
           child: CustomScrollView(
             slivers: [
               SliverFillRemaining(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: BlocConsumer<ProfileCubit, ProfileState>(
-                    bloc: ref.watch(profileCubitPod),
-                    listener: _profileStateListener,
-                    builder: (context, profileState) => ProfilePreview(
-                      profile: profileState.profile,
+                  child: ProfilePreview(
+                    profile: ref.watch<Profile>(
+                      profileNotifierPod.select(
+                        (s) => s.profile,
+                      ),
                     ),
                   ),
                 ),

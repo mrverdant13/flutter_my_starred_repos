@@ -12,7 +12,11 @@ class StarredReposScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(
       () {
-        ref.read(starredReposNotifierPod.notifier).load();
+        final repos = ref.read(starredReposNotifierPod).repos;
+        if (repos.isNotEmpty) return;
+        WidgetsBinding.instance?.addPostFrameCallback(
+          (_) => ref.read(starredReposNotifierPod.notifier).reload(),
+        );
         return;
       },
       [],
@@ -22,16 +26,15 @@ class StarredReposScreen extends HookConsumerWidget {
       starredReposNotifierPod,
       (_, starredReposState) => starredReposState.whenOrNull(
         loaded: (_, __, warning) => warning?.when(
-          offline: () {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-            return ScaffoldMessenger.of(context).showSnackBar(
+          offline: () => ScaffoldMessenger.of(context)
+            ..removeCurrentSnackBar()
+            ..showSnackBar(
               const SnackBar(
                 content: Text(
                   'No reliable Internet connection. Showing cached data.',
                 ),
               ),
-            );
-          },
+            ),
         ),
       ),
     );
@@ -69,22 +72,21 @@ class StarredReposScreen extends HookConsumerWidget {
                 ),
               )
             : ListView.builder(
-                itemCount: starredRepos.length +
-                    starredReposState.maybeWhen(
-                      loading: (_) => 1,
-                      orElse: () => 0,
-                    ),
+                itemCount: starredRepos.length + 1,
                 itemBuilder: (context, index) {
                   if (index == starredRepos.length) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.0),
-                      child: LinearProgressIndicator(minHeight: 10.0),
+                    WidgetsBinding.instance?.addPostFrameCallback(
+                      (_) => ref.read(starredReposNotifierPod.notifier).load(),
+                    );
+                    return starredReposState.maybeWhen(
+                      loading: (_) => const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                        child: LinearProgressIndicator(minHeight: 10.0),
+                      ),
+                      orElse: () => const SizedBox.shrink(),
                     );
                   }
                   final starredRepo = starredRepos[index];
-                  if (starredRepo == starredRepos.last) {
-                    ref.read(starredReposNotifierPod.notifier).load();
-                  }
                   return ListTile(
                     key: ValueKey(starredRepo.urlPath),
                     leading: AspectRatio(

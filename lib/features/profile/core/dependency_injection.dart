@@ -23,10 +23,13 @@ final profileRepoPod = Provider(
   ),
 );
 
-final profileCubitPod = Provider.autoDispose((ref) {
-  final cubit = ProfileCubit(
-    profileRepo: ref.watch(profileRepoPod),
-  );
-  ref.onDispose(() => cubit.close());
-  return cubit;
-});
+final profileNotifierPod =
+    StateNotifierProvider.autoDispose<ProfileNotifier, ProfileState>(
+  (ref) {
+    final notifier = ProfileNotifier(
+      profileRepo: ref.watch(profileRepoPod),
+    );
+    ref.onDispose(() => notifier.dispose());
+    return notifier;
+  },
+);

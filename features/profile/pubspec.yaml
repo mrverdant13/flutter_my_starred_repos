@@ -11,14 +11,13 @@ dependencies:
   dio: ^4.0.4
   flutter:
     sdk: flutter
-  flutter_bloc: ^7.3.3
   freezed_annotation: ^1.1.0
   graphql: ^5.0.1
   oxidized: ^5.2.0
   sembast: ^3.1.2
+  state_notifier: ^0.7.2+1
 
 dev_dependencies:
-  bloc_test: ^8.5.0
   build_runner: ^2.1.7
   flutter_test:
     sdk: flutter

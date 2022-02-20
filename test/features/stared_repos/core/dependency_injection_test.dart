@@ -29,7 +29,7 @@ void main() {
   group(
     '''
 
-GIVEN a depencencies container''',
+GIVEN a dependencies container''',
     () {
       test(
         '''
@@ -72,7 +72,7 @@ WHEN the injection process is triggered''',
           setUp(
             () async {
               // ARRANGE
-              final preconditionalOverrides = [
+              final preConditionalOverrides = [
                 authInterceptorPod.overrideWithValue(MockAuthInterceptor()),
               ];
               PathProviderPlatform.instance = FakePathProviderPlatform();
@@ -81,7 +81,7 @@ WHEN the injection process is triggered''',
               final overrides = await getInjectionOverrides();
               container = ProviderContainer(
                 overrides: [
-                  ...preconditionalOverrides,
+                  ...preConditionalOverrides,
                   ...overrides,
                 ],
               );
@@ -132,8 +132,8 @@ THEN the necessary starred-repos-related dependencies should be injected
                 isA<StarredReposRepo>(),
               );
               expect(
-                container.read(starredReposCubitPod),
-                isA<StarredReposCubit>(),
+                container.read(starredReposNotifierPod),
+                isA<StarredReposNotifier>(),
               );
             },
           );

@@ -1,21 +1,21 @@
-import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:starred_repos/src/domain/get_starred_repos_warnings.dart';
 import 'package:starred_repos/src/domain/github_repo.dart';
 import 'package:starred_repos/src/infrastructure/starred_repos.repo.dart';
+import 'package:state_notifier/state_notifier.dart';
 
-part 'starred_repos.cubit.freezed.dart';
+part 'starred_repos.notifier.freezed.dart';
 part 'starred_repos.state.dart';
 
 @visibleForTesting
 const pageLength = 5;
 
-class StarredReposCubit extends Cubit<StarredReposState> {
-  StarredReposCubit({
+class StarredReposNotifier extends StateNotifier<StarredReposState> {
+  StarredReposNotifier({
     required StarredReposRepo starredReposRepo,
   })  : _starredReposRepo = starredReposRepo,
         lastCheckedPage = 0,
-        lastAvailblePage = 1,
+        lastAvailablePage = 1,
         super(
           const StarredReposState.loaded(
             repos: [],
@@ -29,16 +29,16 @@ class StarredReposCubit extends Cubit<StarredReposState> {
   int lastCheckedPage;
 
   @visibleForTesting
-  int lastAvailblePage;
+  int lastAvailablePage;
 
-  bool get _canLoadMore => lastAvailblePage > lastCheckedPage;
+  bool get _canLoadMore => lastAvailablePage > lastCheckedPage;
 
   bool get _isLoading => state is _StarredReposStateLoading;
 
   Future<void> load() async {
     if (_isLoading || !_canLoadMore) return;
 
-    emit(StarredReposState.loading(repos: state.repos));
+    state = StarredReposState.loading(repos: state.repos);
 
     final cacheableStarredReposPage =
         await _starredReposRepo.getStarredReposPage(
@@ -47,33 +47,29 @@ class StarredReposCubit extends Cubit<StarredReposState> {
     );
 
     lastCheckedPage++;
-    lastAvailblePage = cacheableStarredReposPage.data.lastPage;
+    lastAvailablePage = cacheableStarredReposPage.data.lastPage;
 
     final resultingRepos = [
       ...state.repos,
       ...cacheableStarredReposPage.data.elements,
     ];
 
-    emit(
-      StarredReposState.loaded(
-        canLoadMore: _canLoadMore,
-        repos: resultingRepos,
-        warning: cacheableStarredReposPage.when(
-          (_) => null,
-          withWarning: (_, w) => w,
-        ),
+    state = StarredReposState.loaded(
+      canLoadMore: _canLoadMore,
+      repos: resultingRepos,
+      warning: cacheableStarredReposPage.when(
+        (_) => null,
+        withWarning: (_, w) => w,
       ),
     );
   }
 
   Future<void> reload() async {
     lastCheckedPage = 0;
-    lastAvailblePage = 1;
-    emit(
-      const StarredReposState.loaded(
-        repos: [],
-        canLoadMore: true,
-      ),
+    lastAvailablePage = 1;
+    state = const StarredReposState.loaded(
+      repos: [],
+      canLoadMore: true,
     );
     await load();
   }

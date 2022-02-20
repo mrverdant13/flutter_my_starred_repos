@@ -52,13 +52,14 @@ final starredReposRepoPod = Provider<StarredReposRepo>(
   ),
 );
 
-final starredReposCubitPod = Provider.autoDispose<StarredReposCubit>(
+final starredReposNotifierPod =
+    StateNotifierProvider.autoDispose<StarredReposNotifier, StarredReposState>(
   (ref) {
-    final cubit = StarredReposCubit(
+    final notifier = StarredReposNotifier(
       starredReposRepo: ref.watch(starredReposRepoPod),
     );
-    ref.onDispose(() => cubit.close());
-    return cubit;
+    ref.onDispose(() => notifier.dispose());
+    return notifier;
   },
 );
 

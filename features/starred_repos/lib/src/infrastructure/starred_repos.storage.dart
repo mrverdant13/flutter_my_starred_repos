@@ -50,7 +50,7 @@ class StarredReposStorage {
           final foundReposSnapshots = await store.find(
             transaction,
             finder: Finder(
-              offset: pageNumber * pageLength,
+              offset: (pageNumber - 1) * pageLength,
               limit: pageLength,
             ),
           );

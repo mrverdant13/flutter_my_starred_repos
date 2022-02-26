@@ -14,10 +14,9 @@ class StarredReposNotifier extends StateNotifier<StarredReposState> {
   StarredReposNotifier({
     required StarredReposRepo starredReposRepo,
   })  : _starredReposRepo = starredReposRepo,
-        lastCheckedPage = 0,
-        lastAvailablePage = 1,
         super(
           const StarredReposState.loaded(
+            currentPage: 0,
             repos: [],
             canLoadMore: true,
           ),
@@ -25,39 +24,33 @@ class StarredReposNotifier extends StateNotifier<StarredReposState> {
 
   final StarredReposRepo _starredReposRepo;
 
-  @visibleForTesting
-  int lastCheckedPage;
-
-  @visibleForTesting
-  int lastAvailablePage;
-
-  bool get _canLoadMore => lastAvailablePage > lastCheckedPage;
-
-  bool get _isLoading => state is _StarredReposStateLoading;
-
   Future<void> load() async {
-    if (_isLoading || !_canLoadMore) return;
+    final canLoadMore = state.map(
+      loading: (_) => false,
+      loaded: (s) => s.canLoadMore,
+    );
+    if (!canLoadMore) return;
 
-    state = StarredReposState.loading(repos: state.repos);
+    state = StarredReposState.loading(
+      currentPage: state.currentPage,
+      repos: state.repos,
+    );
 
-    final cacheableStarredReposPage =
-        await _starredReposRepo.getStarredReposPage(
-      pageNumber: lastCheckedPage + 1,
+    final newStarredReposPage = await _starredReposRepo.getStarredReposPage(
+      pageNumber: state.currentPage + 1,
       pageLength: pageLength,
     );
 
-    lastCheckedPage++;
-    lastAvailablePage = cacheableStarredReposPage.data.lastPage;
-
     final resultingRepos = [
       ...state.repos,
-      ...cacheableStarredReposPage.data.elements,
+      ...newStarredReposPage.data.elements,
     ];
 
     state = StarredReposState.loaded(
-      canLoadMore: _canLoadMore,
+      currentPage: state.currentPage + 1,
       repos: resultingRepos,
-      warning: cacheableStarredReposPage.when(
+      canLoadMore: newStarredReposPage.data.elements.isNotEmpty,
+      warning: newStarredReposPage.when(
         (_) => null,
         withWarning: (_, w) => w,
       ),
@@ -65,9 +58,8 @@ class StarredReposNotifier extends StateNotifier<StarredReposState> {
   }
 
   Future<void> reload() async {
-    lastCheckedPage = 0;
-    lastAvailablePage = 1;
     state = const StarredReposState.loaded(
+      currentPage: 0,
       repos: [],
       canLoadMore: true,
     );

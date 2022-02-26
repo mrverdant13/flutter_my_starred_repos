@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sembast/sembast.dart' as db;
 import 'package:sembast/sembast_memory.dart';
 import 'package:starred_repos/starred_repos.dart';
@@ -34,63 +35,90 @@ GIVEN a starred repos storage
       test(
         '''
 
-AND a collection of starred repos
 AND a page number
+AND a starred repos page
 AND persisted starred repos for that page number and the following ones
+AND a persisted last page number
 WHEN the page data is sent to be stored with the page number
 THEN the page data should be persisted
-├─ BY removing existing starred repos for that page number and the following ones
-├─ AND storing the starred repos
+├─ BY storing the starred repos
+├─ AND storing the new last page number
 ''',
         () async {
           // ARRANGE
-          final pageNumber = r.nextInt(93) + 1;
-          final pageLength = r.nextInt(14) + 1;
-          final reposOffset = pageNumber * pageLength;
-          final starredReposToAdd = generateStarredRepos(
+          final pageLength = r.nextInt(10) + 1;
+
+          final previouslyStoredLastPage = r.nextInt(100) + 1;
+          final previouslyStoredStarredRepos = generateStarredRepos(
+            reposCount: previouslyStoredLastPage * pageLength,
+            reposOffset: 0,
+            prefix: 'previous',
+          );
+          final previouslyStoredStarredReposJson = previouslyStoredStarredRepos
+              .map((repo) => repo.toJson())
+              .toList();
+
+          final newPageNumber = r.nextInt(100) + 1;
+          final newStarredReposOffset = (newPageNumber - 1) * pageLength;
+          final newLastPage = r.nextInt(100) + newPageNumber;
+          final newStarredRepos = generateStarredRepos(
             reposCount: pageLength,
-            reposOffset: reposOffset,
+            reposOffset: newStarredReposOffset,
             prefix: 'new',
           );
-          final expectedAddedStarredReposJson = starredReposToAdd.map(
-            (r) => r.toJson(),
+          final newStarredReposPage = Page(
+            lastPage: newLastPage,
+            elements: newStarredRepos,
           );
-          final existingStarredReposJson = generateStarredRepos(
-            reposCount: 2 * pageNumber * pageLength,
-            reposOffset: 0,
-            prefix: 'old',
-          ).map((r) => r.toJson()).toList();
-          await starredReposStorage.store.addAll(
+          final newStarredReposJson =
+              newStarredRepos.map((repo) => repo.toJson()).toList();
+
+          await starredReposStorage.starredReposStore.addAll(
             sembastDb,
+            previouslyStoredStarredReposJson,
+          );
+          final existingLastPage =
+              await starredReposStorage.totalPagesRecord.put(
+            sembastDb,
+            previouslyStoredLastPage,
+          );
+          final existingStarredReposSnapshots =
+              await starredReposStorage.starredReposStore.find(
+            sembastDb,
+          );
+          final existingStarredReposJson =
+              existingStarredReposSnapshots.map((snapshot) => snapshot.value);
+
+          expect(
             existingStarredReposJson,
-          );
-          final existingReposCount = await starredReposStorage.store.count(
-            sembastDb,
+            previouslyStoredStarredReposJson,
           );
           expect(
-            existingReposCount,
-            greaterThan(pageNumber * pageLength),
+            existingLastPage,
+            previouslyStoredLastPage,
           );
 
           // ACT
           await starredReposStorage.setPage(
-            pageNumber: pageNumber,
-            starredRepos: starredReposToAdd,
+            pageNumber: newPageNumber,
+            starredReposPage: newStarredReposPage,
           );
 
           // ASSERT
-          final storedStarredReposSnapshots =
-              await starredReposStorage.store.find(
+          final resultingNewLastPage =
+              await starredReposStorage.totalPagesRecord.get(
             sembastDb,
-            finder: db.Finder(
-              offset: (pageNumber - 1) * pageLength,
-              limit: pageLength,
-            ),
           );
-          final storedStarredReposJson = storedStarredReposSnapshots.map(
-            (snapshot) => snapshot.value,
+          final resultingNewStarredReposKeys = List.generate(
+            pageLength,
+            (idx) => idx + newStarredReposOffset + 1, // Keys are 1-based
           );
-          expect(storedStarredReposJson, expectedAddedStarredReposJson);
+          final resultingNewStarredReposJson = await starredReposStorage
+              .starredReposStore
+              .records(resultingNewStarredReposKeys)
+              .get(sembastDb);
+          expect(resultingNewLastPage, newLastPage);
+          expect(resultingNewStarredReposJson, newStarredReposJson);
         },
       );
 
@@ -99,65 +127,33 @@ THEN the page data should be persisted
 
 AND a page number
 AND a page length
-AND no previously persisted starred repos
+AND no previously persisted starred repos for that page number
+AND a previously persisted last page number
 WHEN a starred repos page is requested
-THEN nothing should be returned
+THEN an empty page should be returned
 ├─ BY trying to retrieve the persisted starred repos from the database
-├─ AND not returning anything
+├─ AND retrieving the stored last page number
+├─ AND returning the page with the data
 ''',
         () async {
           // ARRANGE
-          final pageNumber = r.nextInt(10);
-          final pageLength = r.nextInt(10);
-          final existingReposCount = await starredReposStorage.store.count(
-            sembastDb,
-          );
-          expect(existingReposCount, isZero);
-
-          // ACT
-          final result = await starredReposStorage.getPage(
-            pageNumber: pageNumber,
-            pageLength: pageLength,
-          );
-
-          // ASSERT
-          expect(result, isNull);
-        },
-      );
-
-      test(
-        '''
-
-AND a page number
-AND a page length
-AND previously persisted starred repos for that page number
-WHEN a starred repos page is requested
-THEN a starred repos page should be returned
-├─ BY retrieving the persisted starred repos from the database
-├─ AND returning the starred repos page
-''',
-        () async {
-          // ARRANGE
-          final pageNumber = r.nextInt(10) + 1;
           final pageLength = r.nextInt(10) + 1;
-          final reposOffset = pageNumber * pageLength;
-          final expectedStarredRepos = generateStarredRepos(
-            reposCount: pageLength,
-            reposOffset: reposOffset,
-          );
-          final expectedExistingReposCount = 2 * pageNumber * pageLength;
-          final existingStarredReposJson = generateStarredRepos(
-            reposCount: expectedExistingReposCount,
-            reposOffset: 0,
-          ).map((r) => r.toJson()).toList();
-          await starredReposStorage.store.addAll(
-            sembastDb,
-            existingStarredReposJson,
-          );
-          final existingReposCount = await starredReposStorage.store.count(
+
+          final pageNumber = r.nextInt(10) + 1;
+          final storedLastPage = r.nextInt(100) + pageNumber;
+
+          final existingStarredReposCount =
+              await starredReposStorage.starredReposStore.count(
             sembastDb,
           );
-          expect(existingReposCount, expectedExistingReposCount);
+          final existingLastPage =
+              await starredReposStorage.totalPagesRecord.put(
+            sembastDb,
+            storedLastPage,
+          );
+
+          expect(existingStarredReposCount, isZero);
+          expect(existingLastPage, storedLastPage);
 
           // ACT
           final result = await starredReposStorage.getPage(
@@ -168,9 +164,73 @@ THEN a starred repos page should be returned
           // ASSERT
           expect(
             result,
-            Page(
-              lastPage: 2 * pageNumber,
-              elements: expectedStarredRepos,
+            Page<GithubRepo>(lastPage: storedLastPage, elements: []),
+          );
+        },
+      );
+
+      test(
+        '''
+
+AND a page number
+AND a page length
+AND previously persisted starred repos for that page number
+AND a previously persisted last page number
+WHEN a starred repos page is requested
+THEN a starred repos page should be returned
+├─ BY retrieving the persisted starred repos from the database
+├─ AND retrieving the stored last page number
+├─ AND returning the page with the data
+''',
+        () async {
+          // ARRANGE
+          final pageLength = r.nextInt(10) + 1;
+
+          final pageNumber = r.nextInt(10) + 1;
+          final reposOffset = (pageNumber - 1) * pageLength;
+
+          final previouslyStoredLastPage = r.nextInt(100) + pageNumber;
+          final previouslyStoredStarredRepos = generateStarredRepos(
+            reposCount: pageLength,
+            reposOffset: reposOffset,
+          );
+          final previouslyStoredStarredReposJson = previouslyStoredStarredRepos
+              .map((repo) => repo.toJson())
+              .toList();
+          final previouslyStoredStarredReposKeys = previouslyStoredStarredRepos
+              .mapIndexed((i, _) => i + reposOffset);
+
+          await starredReposStorage.starredReposStore
+              .records(previouslyStoredStarredReposKeys)
+              .put(
+                sembastDb,
+                previouslyStoredStarredReposJson,
+              );
+          final existingStarredReposCount =
+              await starredReposStorage.starredReposStore.count(
+            sembastDb,
+          );
+          final existingLastPage =
+              await starredReposStorage.totalPagesRecord.put(
+            sembastDb,
+            previouslyStoredLastPage,
+          );
+
+          expect(existingStarredReposCount, isNonZero);
+          expect(existingLastPage, previouslyStoredLastPage);
+
+          // ACT
+          final result = await starredReposStorage.getPage(
+            pageNumber: pageNumber,
+            pageLength: pageLength,
+          );
+
+          // ASSERT
+          expect(
+            result,
+            Page<GithubRepo>(
+              lastPage: previouslyStoredLastPage,
+              elements: previouslyStoredStarredRepos,
             ),
           );
         },

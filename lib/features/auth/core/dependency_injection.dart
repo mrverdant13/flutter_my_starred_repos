@@ -39,13 +39,8 @@ final authServicePod = Provider<AuthService>(
   ),
 );
 
-final authNotifierPod =
-    StateNotifierProvider.autoDispose<AuthNotifier, AuthState>(
-  (ref) {
-    final notifier = AuthNotifier(
-      authService: ref.watch(authServicePod),
-    );
-    ref.onDispose(() => notifier.dispose());
-    return notifier;
-  },
+final authNotifierPod = StateNotifierProvider<AuthNotifier, AuthState>(
+  (ref) => AuthNotifier(
+    authService: ref.watch(authServicePod),
+  ),
 );

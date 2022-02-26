@@ -9,7 +9,7 @@ List<GithubRepo> generateStarredRepos({
     List.generate(
       reposCount,
       (index) {
-        final refValue = index + reposOffset + 1;
+        final refValue = index + reposOffset;
         return GithubRepo(
           owner: User(
             username: '$prefix username $refValue',

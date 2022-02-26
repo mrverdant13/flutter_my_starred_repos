@@ -45,7 +45,11 @@ THEN its initial state should be loaded
           // ASSERT
           expect(
             starredReposNotifier.debugState,
-            const StarredReposState.loaded(repos: [], canLoadMore: true),
+            const StarredReposState.loaded(
+              currentPage: 0,
+              repos: [],
+              canLoadMore: true,
+            ),
           );
         },
       );
@@ -88,12 +92,11 @@ THEN the loaded starred repos should be updated
 
           // ignore: invalid_use_of_protected_member
           starredReposNotifier.state = StarredReposState.loaded(
+            currentPage: loadedPagesNumber,
             repos: initiallyLoadedStarredRepos,
             canLoadMore: true,
           );
 
-          starredReposNotifier.lastCheckedPage = loadedPagesNumber;
-          starredReposNotifier.lastAvailablePage = lastPageNumber;
           when(
             () => starredReposRepo.getStarredReposPage(
               pageNumber: any(named: 'pageNumber'),
@@ -117,9 +120,11 @@ THEN the loaded starred repos should be updated
             states,
             [
               StarredReposState.loading(
+                currentPage: loadedPagesNumber,
                 repos: initiallyLoadedStarredRepos,
               ),
               StarredReposState.loaded(
+                currentPage: nextPageNumber,
                 repos: [
                   ...initiallyLoadedStarredRepos,
                   ...expectedStarredReposPage.elements,
@@ -142,8 +147,6 @@ THEN the loaded starred repos should be updated
             starredReposNotifier.debugState.repos.skip(loadedReposNumber),
             expectedStarredReposPage.elements,
           );
-          expect(starredReposNotifier.lastCheckedPage, nextPageNumber);
-          expect(starredReposNotifier.lastAvailablePage, lastPageNumber);
         },
       );
 
@@ -185,12 +188,11 @@ THEN the loaded starred repos should be updated including a warning
 
           // ignore: invalid_use_of_protected_member
           starredReposNotifier.state = StarredReposState.loaded(
+            currentPage: loadedPagesNumber,
             repos: initiallyLoadedStarredRepos,
             canLoadMore: true,
           );
 
-          starredReposNotifier.lastCheckedPage = loadedPagesNumber;
-          starredReposNotifier.lastAvailablePage = lastPageNumber;
           when(
             () => starredReposRepo.getStarredReposPage(
               pageNumber: any(named: 'pageNumber'),
@@ -215,9 +217,11 @@ THEN the loaded starred repos should be updated including a warning
             states,
             [
               StarredReposState.loading(
+                currentPage: loadedPagesNumber,
                 repos: initiallyLoadedStarredRepos,
               ),
               StarredReposState.loaded(
+                currentPage: nextPageNumber,
                 repos: [
                   ...initiallyLoadedStarredRepos,
                   ...expectedStarredReposPage.elements,
@@ -241,8 +245,6 @@ THEN the loaded starred repos should be updated including a warning
             starredReposNotifier.debugState.repos.skip(loadedReposNumber),
             expectedStarredReposPage.elements,
           );
-          expect(starredReposNotifier.lastCheckedPage, nextPageNumber);
-          expect(starredReposNotifier.lastAvailablePage, lastPageNumber);
         },
       );
 
@@ -284,6 +286,7 @@ THEN the loaded starred repos should be updated
 
           // ignore: invalid_use_of_protected_member
           starredReposNotifier.state = StarredReposState.loaded(
+            currentPage: loadedPagesNumber,
             repos: initiallyLoadedStarredRepos,
             canLoadMore: true,
           );
@@ -311,13 +314,16 @@ THEN the loaded starred repos should be updated
             states,
             [
               const StarredReposState.loaded(
+                currentPage: 0,
                 repos: [],
                 canLoadMore: true,
               ),
               const StarredReposState.loading(
+                currentPage: 0,
                 repos: [],
               ),
               StarredReposState.loaded(
+                currentPage: nextPageNumber,
                 repos: expectedStarredReposPage.elements,
                 canLoadMore: true,
               ),

@@ -27,15 +27,10 @@ class StarredReposRepo {
         pageLength: pageLength,
       );
     } on GetStarredReposPageException catch (e) {
-      final starredReposPage = await _starredReposStorage.getPage(
+      final cachedReposPage = await _starredReposStorage.getPage(
         pageNumber: pageNumber,
         pageLength: pageLength,
       );
-      final cachedReposPage = starredReposPage ??
-          Page<GithubRepo>(
-            lastPage: pageNumber,
-            elements: [],
-          );
       return e.when(
         offline: () => Payload.withWarning(
           data: cachedReposPage,
@@ -48,7 +43,7 @@ class StarredReposRepo {
     }
     await _starredReposStorage.setPage(
       pageNumber: pageNumber,
-      starredRepos: reposPage.elements,
+      starredReposPage: reposPage,
     );
     return Payload(reposPage);
   }

@@ -25,7 +25,7 @@ class StarredReposScreen extends HookConsumerWidget {
     ref.listen<StarredReposState>(
       starredReposNotifierPod,
       (_, starredReposState) => starredReposState.whenOrNull(
-        loaded: (_, __, warning) => warning?.when(
+        loaded: (_, __, ___, warning) => warning?.when(
           offline: () => ScaffoldMessenger.of(context)
             ..removeCurrentSnackBar()
             ..showSnackBar(
@@ -54,7 +54,7 @@ class StarredReposScreen extends HookConsumerWidget {
                   child: SizedBox(
                     height: constraints.maxHeight,
                     child: Center(
-                      child: starredReposState.maybeWhen(
+                      child: starredReposState.maybeMap(
                         loading: (_) => Column(
                           mainAxisSize: MainAxisSize.min,
                           children: const [
@@ -78,7 +78,7 @@ class StarredReposScreen extends HookConsumerWidget {
                     WidgetsBinding.instance?.addPostFrameCallback(
                       (_) => ref.read(starredReposNotifierPod.notifier).load(),
                     );
-                    return starredReposState.maybeWhen(
+                    return starredReposState.maybeMap(
                       loading: (_) => const Padding(
                         padding: EdgeInsets.symmetric(vertical: 5.0),
                         child: LinearProgressIndicator(minHeight: 10.0),

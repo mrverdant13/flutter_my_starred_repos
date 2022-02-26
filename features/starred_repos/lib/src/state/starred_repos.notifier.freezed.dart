@@ -18,17 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$StarredReposStateTearOff {
   const _$StarredReposStateTearOff();
 
-  _StarredReposStateLoading loading({required List<GithubRepo> repos}) {
+  _StarredReposStateLoading loading(
+      {required int currentPage, required List<GithubRepo> repos}) {
     return _StarredReposStateLoading(
+      currentPage: currentPage,
       repos: repos,
     );
   }
 
   _StarredReposStateLoaded loaded(
-      {required List<GithubRepo> repos,
+      {required int currentPage,
+      required List<GithubRepo> repos,
       required bool canLoadMore,
       GetStaredReposWarning? warning}) {
     return _StarredReposStateLoaded(
+      currentPage: currentPage,
       repos: repos,
       canLoadMore: canLoadMore,
       warning: warning,
@@ -41,28 +45,29 @@ const $StarredReposState = _$StarredReposStateTearOff();
 
 /// @nodoc
 mixin _$StarredReposState {
+  int get currentPage => throw _privateConstructorUsedError;
   List<GithubRepo> get repos => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<GithubRepo> repos) loading,
-    required TResult Function(List<GithubRepo> repos, bool canLoadMore,
-            GetStaredReposWarning? warning)
+    required TResult Function(int currentPage, List<GithubRepo> repos) loading,
+    required TResult Function(int currentPage, List<GithubRepo> repos,
+            bool canLoadMore, GetStaredReposWarning? warning)
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<GithubRepo> repos)? loading,
-    TResult Function(List<GithubRepo> repos, bool canLoadMore,
+    TResult Function(int currentPage, List<GithubRepo> repos)? loading,
+    TResult Function(int currentPage, List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<GithubRepo> repos)? loading,
-    TResult Function(List<GithubRepo> repos, bool canLoadMore,
+    TResult Function(int currentPage, List<GithubRepo> repos)? loading,
+    TResult Function(int currentPage, List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
     required TResult orElse(),
@@ -98,7 +103,7 @@ abstract class $StarredReposStateCopyWith<$Res> {
   factory $StarredReposStateCopyWith(
           StarredReposState value, $Res Function(StarredReposState) then) =
       _$StarredReposStateCopyWithImpl<$Res>;
-  $Res call({List<GithubRepo> repos});
+  $Res call({int currentPage, List<GithubRepo> repos});
 }
 
 /// @nodoc
@@ -112,9 +117,14 @@ class _$StarredReposStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? currentPage = freezed,
     Object? repos = freezed,
   }) {
     return _then(_value.copyWith(
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
       repos: repos == freezed
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
@@ -130,7 +140,7 @@ abstract class _$StarredReposStateLoadingCopyWith<$Res>
           $Res Function(_StarredReposStateLoading) then) =
       __$StarredReposStateLoadingCopyWithImpl<$Res>;
   @override
-  $Res call({List<GithubRepo> repos});
+  $Res call({int currentPage, List<GithubRepo> repos});
 }
 
 /// @nodoc
@@ -147,9 +157,14 @@ class __$StarredReposStateLoadingCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? currentPage = freezed,
     Object? repos = freezed,
   }) {
     return _then(_StarredReposStateLoading(
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
       repos: repos == freezed
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
@@ -161,14 +176,17 @@ class __$StarredReposStateLoadingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_StarredReposStateLoading implements _StarredReposStateLoading {
-  const _$_StarredReposStateLoading({required this.repos});
+  const _$_StarredReposStateLoading(
+      {required this.currentPage, required this.repos});
 
+  @override
+  final int currentPage;
   @override
   final List<GithubRepo> repos;
 
   @override
   String toString() {
-    return 'StarredReposState.loading(repos: $repos)';
+    return 'StarredReposState.loading(currentPage: $currentPage, repos: $repos)';
   }
 
   @override
@@ -176,12 +194,16 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _StarredReposStateLoading &&
+            const DeepCollectionEquality()
+                .equals(other.currentPage, currentPage) &&
             const DeepCollectionEquality().equals(other.repos, repos));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(repos));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(currentPage),
+      const DeepCollectionEquality().hash(repos));
 
   @JsonKey(ignore: true)
   @override
@@ -192,36 +214,36 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<GithubRepo> repos) loading,
-    required TResult Function(List<GithubRepo> repos, bool canLoadMore,
-            GetStaredReposWarning? warning)
+    required TResult Function(int currentPage, List<GithubRepo> repos) loading,
+    required TResult Function(int currentPage, List<GithubRepo> repos,
+            bool canLoadMore, GetStaredReposWarning? warning)
         loaded,
   }) {
-    return loading(repos);
+    return loading(currentPage, repos);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<GithubRepo> repos)? loading,
-    TResult Function(List<GithubRepo> repos, bool canLoadMore,
+    TResult Function(int currentPage, List<GithubRepo> repos)? loading,
+    TResult Function(int currentPage, List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
   }) {
-    return loading?.call(repos);
+    return loading?.call(currentPage, repos);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<GithubRepo> repos)? loading,
-    TResult Function(List<GithubRepo> repos, bool canLoadMore,
+    TResult Function(int currentPage, List<GithubRepo> repos)? loading,
+    TResult Function(int currentPage, List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(repos);
+      return loading(currentPage, repos);
     }
     return orElse();
   }
@@ -259,9 +281,12 @@ class _$_StarredReposStateLoading implements _StarredReposStateLoading {
 }
 
 abstract class _StarredReposStateLoading implements StarredReposState {
-  const factory _StarredReposStateLoading({required List<GithubRepo> repos}) =
-      _$_StarredReposStateLoading;
+  const factory _StarredReposStateLoading(
+      {required int currentPage,
+      required List<GithubRepo> repos}) = _$_StarredReposStateLoading;
 
+  @override
+  int get currentPage;
   @override
   List<GithubRepo> get repos;
   @override
@@ -278,7 +303,8 @@ abstract class _$StarredReposStateLoadedCopyWith<$Res>
       __$StarredReposStateLoadedCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<GithubRepo> repos,
+      {int currentPage,
+      List<GithubRepo> repos,
       bool canLoadMore,
       GetStaredReposWarning? warning});
 
@@ -299,11 +325,16 @@ class __$StarredReposStateLoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? currentPage = freezed,
     Object? repos = freezed,
     Object? canLoadMore = freezed,
     Object? warning = freezed,
   }) {
     return _then(_StarredReposStateLoaded(
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
       repos: repos == freezed
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
@@ -335,8 +366,13 @@ class __$StarredReposStateLoadedCopyWithImpl<$Res>
 
 class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   const _$_StarredReposStateLoaded(
-      {required this.repos, required this.canLoadMore, this.warning});
+      {required this.currentPage,
+      required this.repos,
+      required this.canLoadMore,
+      this.warning});
 
+  @override
+  final int currentPage;
   @override
   final List<GithubRepo> repos;
   @override
@@ -346,7 +382,7 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
 
   @override
   String toString() {
-    return 'StarredReposState.loaded(repos: $repos, canLoadMore: $canLoadMore, warning: $warning)';
+    return 'StarredReposState.loaded(currentPage: $currentPage, repos: $repos, canLoadMore: $canLoadMore, warning: $warning)';
   }
 
   @override
@@ -354,6 +390,8 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _StarredReposStateLoaded &&
+            const DeepCollectionEquality()
+                .equals(other.currentPage, currentPage) &&
             const DeepCollectionEquality().equals(other.repos, repos) &&
             const DeepCollectionEquality()
                 .equals(other.canLoadMore, canLoadMore) &&
@@ -363,6 +401,7 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(currentPage),
       const DeepCollectionEquality().hash(repos),
       const DeepCollectionEquality().hash(canLoadMore),
       const DeepCollectionEquality().hash(warning));
@@ -376,36 +415,36 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<GithubRepo> repos) loading,
-    required TResult Function(List<GithubRepo> repos, bool canLoadMore,
-            GetStaredReposWarning? warning)
+    required TResult Function(int currentPage, List<GithubRepo> repos) loading,
+    required TResult Function(int currentPage, List<GithubRepo> repos,
+            bool canLoadMore, GetStaredReposWarning? warning)
         loaded,
   }) {
-    return loaded(repos, canLoadMore, warning);
+    return loaded(currentPage, repos, canLoadMore, warning);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<GithubRepo> repos)? loading,
-    TResult Function(List<GithubRepo> repos, bool canLoadMore,
+    TResult Function(int currentPage, List<GithubRepo> repos)? loading,
+    TResult Function(int currentPage, List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
   }) {
-    return loaded?.call(repos, canLoadMore, warning);
+    return loaded?.call(currentPage, repos, canLoadMore, warning);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<GithubRepo> repos)? loading,
-    TResult Function(List<GithubRepo> repos, bool canLoadMore,
+    TResult Function(int currentPage, List<GithubRepo> repos)? loading,
+    TResult Function(int currentPage, List<GithubRepo> repos, bool canLoadMore,
             GetStaredReposWarning? warning)?
         loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(repos, canLoadMore, warning);
+      return loaded(currentPage, repos, canLoadMore, warning);
     }
     return orElse();
   }
@@ -444,10 +483,13 @@ class _$_StarredReposStateLoaded implements _StarredReposStateLoaded {
 
 abstract class _StarredReposStateLoaded implements StarredReposState {
   const factory _StarredReposStateLoaded(
-      {required List<GithubRepo> repos,
+      {required int currentPage,
+      required List<GithubRepo> repos,
       required bool canLoadMore,
       GetStaredReposWarning? warning}) = _$_StarredReposStateLoaded;
 
+  @override
+  int get currentPage;
   @override
   List<GithubRepo> get repos;
   bool get canLoadMore;

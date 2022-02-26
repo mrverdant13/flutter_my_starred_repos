@@ -5,9 +5,8 @@ import 'package:sembast/sembast.dart';
 class ProfileStorage {
   ProfileStorage({
     required Database sembastDatabase,
-    StoreRef<String, Map<String, dynamic>>? store,
   })  : _db = sembastDatabase,
-        store = store ?? StoreRef(storeName);
+        store = StoreRef(storeName);
 
   final Database _db;
 
